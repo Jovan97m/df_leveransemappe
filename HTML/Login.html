@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>df_leveransemappe</title>
+        <title >df_leveransemappe</title>
+        <link rel = "icon" href = "login.jpg"  type = "image/x-icon">
         <meta charset="utf-8">
         <meta name = "viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
@@ -19,7 +20,7 @@
                       <div class="text-center m-auto">
                          <h4 class="text-uppercase text-center">Login</h4>
                       </div>
-                      <form action="#" method="post">
+                      <form action="/Klijent.html" method="GET">
                          <input type="hidden" name="csrftoken" value="ea49375f43c7e6a59c77df1e4de562b3f1350124eeb70e5d5124e4ce3b5251c2b4d12e9aaf2a3ddc618c178c8dc4620b">
                          <div class="form-group mb-3">
                             <label for="number">Orgnummer </label>
@@ -42,20 +43,12 @@
                             </div>
                          </div>
                          <div class="form-group mb-0 text-center" >
-                            <button type="submit" class="btn btn-primary btn-block" id="clickMe" name="submit"> Logg Inn </button>
+                            <button type="submit" class="btn btn-primary shadow btn-block" id="clickMe" name="submit"> Logg Inn </button>
                          </div>
                          <script>
-
                             $(document).ready(function() {
-
-                              var btn = document.getElementById("clickMe");
-                              //btn.addEventListener("click", alertMe);
-
-                              function alertMe(){
-                                 alert("The button has been clicked!");};
                                 $("#show_hide_password a").on('click', function(event) {
-                                   // event.preventDefault();
-                                    event.alertMe.on.ready;
+                                   event.preventDefault();
                                     if($('#show_hide_password input').attr("type") == "text"){
                                         $('#show_hide_password input').attr('type', 'password');
                                         $('#show_hide_password i').addClass( "fa-eye-slash" );
@@ -67,7 +60,6 @@
                                     }
                                 });
                             });
-                         
                          </script>
                       </form>
                    </div>
