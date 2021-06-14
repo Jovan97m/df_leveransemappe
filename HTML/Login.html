@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title >df_leveransemappe</title>
+        <title >Df_leveransemappe</title>
         <link rel = "icon" href = "login.jpg"  type = "image/x-icon">
         <meta charset="utf-8">
         <meta name = "viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/custom.css">
     </head>
-    <body>
+    <body style="background: #ccffff ;">
         <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="../node_modules/jquery/dist/jquery.min.js"></script>
         <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
-
+        
         <div class="container mt-5 pt-5 mb-5">
           <div class="row justify-content-center">
              <div class="col-md-6 col-lg-4 col-xl-4">
-                <div class="card">
-                   <div class="card-body">
+                <div class="card shadow-lg p-5 mb-7 bg-white rounded">
+                   <div class="card-title">
                       <div class="text-center m-auto">
-                         <h4 class="text-uppercase text-center">Login</h4>
+                         <h3 class="text-uppercase text-center" style="font-weight: bold;">Login</h3>
                       </div>
+
                       <form action="/Klijent.html" method="GET">
                          <input type="hidden" name="csrftoken" value="ea49375f43c7e6a59c77df1e4de562b3f1350124eeb70e5d5124e4ce3b5251c2b4d12e9aaf2a3ddc618c178c8dc4620b">
                          <div class="form-group mb-3">
                             <label for="number">Orgnummer </label>
                             <input type="username" name="number" placeholder="skriv inn orgnummer" class="form-control form-icon-trailing" required="">
-                            
                          </div>
                          <div class="form-group mb-3">
                             <label for="password">Passord</label>
                             <div class="input-group bg-light" id="show_hide_password">
-                               <input type="password" class="form-control" id="password"  name="password"  placeholder="oppgi passord" required="">
+                               <input type="password" class="form-control form-icon-trailing " id="password"  name="password"  placeholder="oppgi passord" required="">
                                <div class="input-group-addon">
                                   <a href=""><i class="fa fa-lg fa-eye" style="padding-top: 10px; padding-left: 10px; padding-right: 10px;" aria-hidden="true"></i></a>
                                </div>
@@ -38,12 +39,12 @@
                          </div>
                          <div class="form-group mb-3">
                             <div class="custom-control custom-checkbox checkbox-success">
-                               <input type="checkbox" class="custom-control-input" id="checkbox-signin" checked>
+                               <input type="checkbox" class="custom-control-input" id="checkbox-signin" unchecked data-toggle="tooltip" data-placement="bottom" title="Check this to rememberusername and password">
                                <label class="custom-control-label" for="checkbox-signin">Husk meg</label>
                             </div>
                          </div>
                          <div class="form-group mb-0 text-center" >
-                            <button type="submit" class="btn btn-primary shadow btn-block" id="clickMe" name="submit"> Logg Inn </button>
+                            <button type="submit" class="btn btn-primary shadow btn-block" name="submit"> Logg Inn </button>
                          </div>
                          <script>
                             $(document).ready(function() {
