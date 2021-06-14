@@ -4,9 +4,11 @@
         <title>df_leveransemappe</title>
         <meta charset="utf-8">
         <meta name = "viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../HTML/sass/Style.css">
         <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+       
     </head>
-    <body style="background: #ccffff ;>
+    <body style="background: #ccffff ;">
         <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="../node_modules/jquery/dist/jquery.min.js"></script>
         <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
@@ -30,7 +32,7 @@
             </ul>
           </div>
         </nav>
-            <a class="btn btn-primary btn-sm shadow-lg" href="../DodajTabelu.html" role="button" style="margin:5px; padding: 5px;" ><span class="glyphicon glyphicon-search">Gå inn i tabellen</span></a>
+            <a class="btn btn-primary btn-sm shadow-lg" href="../HTML/DodajTabelu.html" role="button" style="margin:5px; padding: 5px;" ><span class="glyphicon glyphicon-search">Gå inn i tabellen</span></a>
 
       
             <div class="table-responsive-sm shadow-lg">
@@ -48,7 +50,8 @@
                   <th scope="col">Ekstra talesim</th>
                   <th scope="col">Ekstra datasim</th>
                 </tr>
-
+              </thead>
+              <tbody>
                 <tr>
                   <th scope="row">1</th>
                   <td>122345678978</td>
@@ -61,18 +64,15 @@
                   <td>/</td>
                   <td>/</td>
                 </tr>
-              </thead>
-              <tbody>
-                
               </tbody>
             </table>
           </div>
             <div>
-                <a href="#" class="btn btn-primary btn-lg active shadow-lg" role="button" aria-pressed="true" style="margin:5px; padding: 15px;">+</a>
+                <a href="#" onclick="DodajRed()" class="btn btn-primary btn-lg active shadow-lg" role="button" aria-pressed="true" style="margin:5px;  ">+</a>
             </div>
 
             <div>
-                <a href="Login.html" class="btn btn-primary btn-lg active shadow-lg" role="button" aria-pressed="true" style="margin:5px; padding: 5px;">Sende</a>
+                <a href="Login.html" class="btn btn-primary btn-lg active shadow-lg" role="button" aria-pressed="true" style="margin:5px; padding: 5px; float:right;">Sende</a>
             </div>
             
              
