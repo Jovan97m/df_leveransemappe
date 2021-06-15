@@ -4,7 +4,6 @@
         <title>df_leveransemappe</title>
         <meta charset="utf-8">
         <meta name = "viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../HTML/sass/Style.css">
         <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
        
     </head>
@@ -32,13 +31,12 @@
             </ul>
           </div>
         </nav>
-            <a class="btn btn-primary btn-sm shadow-lg" href="../HTML/DodajTabelu.html" role="button" style="margin:5px; padding: 5px;" ><span class="glyphicon glyphicon-search">Gå inn i tabellen</span></a>
-
+            <a class="btn btn-primary btn-sm shadow-lg" href="../DodajTabelu.html" role="button" style="margin-left: 20px; margin-top: 10px; padding: 5px;" ><span class="glyphicon glyphicon-search">Gå inn i tabellen</span></a>
       
-            <div class="table-responsive-sm shadow-lg">
+            <div class="table-responsive-sm shadow-lg" style = "margin-top: 25px; margin-left: 20px; margin-right: 20px;">
             <table class="table table-hover table-bordered" style="border-color: black;">
-              <thead>
-                <tr>
+              <thead style="background-color: cyan;">
+                <tr style="padding: 50px;">
                   <th scope="col">#</th>
                   <th scope="col">Telefonnummer</th>
                   <th scope="col">Abonnementstype</th>
@@ -68,14 +66,82 @@
             </table>
           </div>
             <div>
-                <a href="#" onclick="DodajRed()" class="btn btn-primary btn-lg active shadow-lg" role="button" aria-pressed="true" style="margin:5px;  ">+</a>
+                <a href="#" class="btn btn-primary btn-lg active shadow-lg" role="button" id="insertRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Add new row</a>
+            </div>
+            <div>
+              <a href="#" class="btn btn-danger btn-lg active shadow-lg" role="button" id="deleteRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Delete selected row</a>
+            </div>
+            <div>
+              <a href="#" class="btn btn-info btn-lg active shadow-lg" role="button" id="updateRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Update selected row</a>
             </div>
 
             <div>
-                <a href="Login.html" class="btn btn-primary btn-lg active shadow-lg" role="button" aria-pressed="true" style="margin:5px; padding: 5px; float:right;">Sende</a>
+              <hr/>
+                <a href="Login.html" class="btn btn-primary btn-lg active shadow-lg" role="button" aria-pressed="true" style="margin-left:20px; padding: 10px; text-align: center;">Sende</a>
             </div>
             
-             
+          <script>
+              $(function () {
+                  var counter = 2; // pocne od 2 da broji,jer 1 je vec uneta po default-u
+                  var prikazCounter= 2;
+                  $("#insertRow").on("click", function (event) {
+                      event.preventDefault();
+
+                      var newRow = $("<tr>");
+                      var cols = '';
+
+                      // Table columns
+                      cols += '<th scrope="row">' + prikazCounter + '</th>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Telefonnummer" placeholder="Telefonnummer"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Abonnementstype" placeholder="Abonnementstype"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Fornavn" placeholder="Fornavn"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Etternavn" placeholder="Etternavn"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Epost" placeholder="Epost"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Kostnadsted" placeholder="Kostnadsted"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Tilleggsinfo" placeholder="Tilleggsinfo"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Ekstra talesim" placeholder="Ekstra talesim"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Ekstra datasim" placeholder="Ekstra datasim"></td>';
+                      cols += '<td><button class="btn btn-success rounded-0" id ="buttonDone" data-toggle="tooltip" data-placement="left" title="Thiss buttons allows you to add this row to database"><i class="fa fa-trash"></i></button><button class="btn btn-danger rounded-0" id ="deleteRow" data-toggle="tooltip" data-placement="left" title="This button allows you to delete row,and cancel creating new row."><i class="fa fa-trash"></i></button></td>';
+
+                      // Insert the columns inside a row
+                      newRow.append(cols);
+                      // Insert the row inside a table
+                      $("table").append(newRow);
+                      prikazCounter++;
+                      // Increase counter after each row insertion
+
+              });
+              // Remove row when delete btn is clicked
+                   $("table").on("click", "#deleteRow", function (event) {
+                   $(this).closest("tr").remove();
+                   counter -= 1
+                   prikazCounter-= 1;
+                  });
+                  
+                  //zvanican upis
+                  $("table").on("click", "#buttonDone", function (event) {
+
+                  var newRow = $("<tr>");
+                  var cols = '';
+                  cols += '<th scope="row">' + counter + '</th>'; // broj kolone
+                  cols += '<td>' + document.querySelector('[name="Telefonnummer"]').value + '</td>';
+                  cols += '<td>' + document.querySelector('[name="Abonnementstype"]').value + '</td>';
+                  cols += '<td>' + document.querySelector('[name="Fornavn"]').value + '</td>';
+                  cols += '<td>' + document.querySelector('[name="Etternavn"]').value + '</td>';
+                  cols += '<td>' + document.querySelector('[name="Epost"]').value + '</td>';
+                  cols += '<td>' + document.querySelector('[name="Kostnadsted"]').value + '</td>';
+                  cols += '<td>' + document.querySelector('[name="Tilleggsinfo"]').value + '</td>';
+                  cols += '<td>' + document.querySelector('[name="Ekstra talesim"]').value + '</td>';
+                  cols += '<td>' + document.querySelector('[name="Ekstra datasim"]').value + '</td></tr>';
+
+                  $(this).closest("tr").remove(); // obrise ovaj red sa textboxom i sa ona 2 buttona na kraju
+                  newRow.append(cols);
+                  $("table").append(newRow); // ubaci na to mesto,novo formirani red
+                  counter++;  
+               });
+
+      });
+          </script>
             
     </body>
 </html>
