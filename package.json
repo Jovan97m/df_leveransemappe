@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Jovan97m/df_leveransemappe#readme",
   "dependencies": {
     "bootstrap": "^5.0.0-alpha1",
-    "jquery": "^3.6.0"
+    "jquery": "^3.6.0",
+    "xlsx": "^0.17.0"
   }
 }

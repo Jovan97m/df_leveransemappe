@@ -31,10 +31,10 @@
             </ul>
           </div>
         </nav>
-            <a class="btn btn-primary btn-sm shadow-lg" href="../DodajTabelu.html" role="button" style="margin-left: 20px; margin-top: 10px; padding: 5px;" ><span class="glyphicon glyphicon-search">Gå inn i tabellen</span></a>
+            <a class="btn btn-primary btn-sm shadow-lg" id="DodajTabelu" href="../HTML/DodajTabelu.html" role="button" style="margin-left: 20px; margin-top: 10px; padding: 5px;" ><span class="glyphicon glyphicon-search">Gå inn i tabellen</span></a>
       
             <div class="table-responsive-sm shadow-lg" style = "margin-top: 25px; margin-left: 20px; margin-right: 20px;">
-            <table class="table table-hover table-bordered" style="border-color: black;">
+            <table class="table table-hover table-bordered" id="Tabela" style="border-color: black;">
               <thead style="background-color: cyan;">
                 <tr style="padding: 50px;">
                   <th scope="col">#</th>
@@ -51,7 +51,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">1</th>
+                  <th scope="row"><input type="radio" id="male" name="gender" value="male">1</th>
                   <td>122345678978</td>
                   <td>Type </td>
                   <td>John</td>
@@ -69,7 +69,7 @@
                 <a href="#" class="btn btn-primary btn-lg active shadow-lg" role="button" id="insertRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Add new row</a>
             </div>
             <div>
-              <a href="#" class="btn btn-danger btn-lg active shadow-lg" role="button" id="deleteRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Delete selected row</a>
+              <a href="#" class="btn btn-danger btn-lg active shadow-lg" role="button" id="deleteSelectedRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Delete selected row</a>
             </div>
             <div>
               <a href="#" class="btn btn-info btn-lg active shadow-lg" role="button" id="updateRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Update selected row</a>
@@ -79,9 +79,11 @@
               <hr/>
                 <a href="Login.html" class="btn btn-primary btn-lg active shadow-lg" role="button" aria-pressed="true" style="margin-left:20px; padding: 10px; text-align: center;">Sende</a>
             </div>
-            
+          
           <script>
+              
               $(function () {
+                             
                   var counter = 2; // pocne od 2 da broji,jer 1 je vec uneta po default-u
                   var prikazCounter= 2;
                   $("#insertRow").on("click", function (event) {
@@ -110,20 +112,24 @@
                       prikazCounter++;
                       // Increase counter after each row insertion
 
-              });
-              // Remove row when delete btn is clicked
-                   $("table").on("click", "#deleteRow", function (event) {
-                   $(this).closest("tr").remove();
-                   counter -= 1
-                   prikazCounter-= 1;
-                  });
+                    });
+                    
+                    
+
+                    // Remove row when delete btn is clicked
+                   $("table").on("click", "#deleteRow", function (event) 
+                   {
+                      $(this).closest("tr").remove();
+                      counter -= 1
+                      prikazCounter-= 1;
+                    });
                   
                   //zvanican upis
                   $("table").on("click", "#buttonDone", function (event) {
 
-                  var newRow = $("<tr>");
+                  var newRow = $("<tr id='tr"+counter+"'>");
                   var cols = '';
-                  cols += '<th scope="row">' + counter + '</th>'; // broj kolone
+                  cols += '<th scope="row">'+'<input type="radio" id="radio" name="gender" value="'+counter+'">' + counter + '</th>'; // broj kolone
                   cols += '<td>' + document.querySelector('[name="Telefonnummer"]').value + '</td>';
                   cols += '<td>' + document.querySelector('[name="Abonnementstype"]').value + '</td>';
                   cols += '<td>' + document.querySelector('[name="Fornavn"]').value + '</td>';
@@ -139,6 +145,17 @@
                   $("table").append(newRow); // ubaci na to mesto,novo formirani red
                   counter++;  
                });
+               $("#deleteSelectedRow").on("click",function(event){
+                      event.preventDefault();
+                      red = document.querySelector('#radio:checked').value;
+                      
+                      alert(red); 
+                      
+                   $(this).closest("#tr"+red).remove();
+                   counter -= 1
+                   prikazCounter-= 1;
+                                     
+                    });
 
       });
           </script>
