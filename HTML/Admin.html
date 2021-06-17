@@ -13,25 +13,23 @@
         <script src="../node_modules/jquery/dist/jquery.min.js"></script>
         <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
         
-        <nav class="navbar navbar-expand-sm navbar-light bg-primary sticky-top" style="height: 85px; font-size: 20px; font-weight:bold;">
-            <div class="container-fluid">
-                
-                <div class ="navbar-header" >
-                    <a class="navbar-brand" href="#">Name of site</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarID"
-                       aria-controls="navbarID" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse" id="navbarID">
-                    <div class="navbar-nav">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>                    
-                   </div>
-                   <div class="navbar-nav">
-                    <a class="nav-link" aria-current="page" href="#">Help</a>                    
-               </div>
-                    </div>
+        <nav class="navbar navbar-expand-sm navbar-light bg-primary sticky-top">
+            <div class ="navbar-header" >
+                <a class="navbar-brand" href="#">Name of site</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarID"
+                   aria-controls="navbarID" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
             </div>
+            <div class="collapse navbar-collapse" id="navbarID">
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>                    
+               </div>
+               <div class="navbar-nav">
+                <a class="nav-link" aria-current="page" href="#">Help</a>                    
+           </div>
+                </div>
+            
         </nav>
         <div class="row">
             <form>
@@ -59,8 +57,8 @@
               <th scope="col">Fornavn</th>
               <th scope="col">Etternavn</th>
               <th scope="col">Epost</th>
-              <th scope="col">Kostnadsted <input class="form-check-input" type="checkbox" value="" id="KostnadstedRadio"></th>
-              <th scope="col">Tilleggsinfo <input class="form-check-input" type="checkbox" value="" id="TilleggsinfoRadio"></th>
+              <th scope="col">Kostnadsted <button type="button" class="btn btn-secondary btn-lg" style="background-color: red;" ></button></th>
+              <th scope="col">Tilleggsinfo <button type="button" class="btn btn-secondary btn-lg" style="background-color: red;" ></button></th>
               <th scope="col">Ekstra talesim</th>
               <th scope="col">Ekstra datasim</th>
             </tr>
