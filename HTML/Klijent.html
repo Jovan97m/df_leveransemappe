@@ -137,12 +137,19 @@
     <a href="#" class="btn btn-primary btn-lg active shadow-lg" role="button" id="insertRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Legg til ny rad</a>
         <a href="#" class="btn btn-danger btn-lg active shadow-lg" role="button" id="deleteSelectedRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Slett valgt rad</a>
         <a href="#" onclick="JSalert()" class="btn btn-info btn-lg active shadow-lg" role="button" id="updateRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Oppdater valgt rad</a>
-        <a href="Login.html" onclick="alert('Du har sendt inn data')" class="btn btn-primary btn-lg active shadow-lg" role="button" aria-pressed="true" style="margin:5px; margin-left: 20px; float:right;">Sende</a>
+        <a href="#"  class="btn btn-primary btn-lg active shadow-lg" role="button" aria-pressed="true"id="Sende" style="margin:5px; margin-left: 20px; float:right;">Sende</a>
     <hr/>
           <script>
               $(function () {              
                   var counter = 3; // pocne od 2 da broji,jer 1 je vec uneta po default-u
                   var prikazCounter= 3;
+                  $('#Sende').on("click",function(event){
+                    $('#insertRow').addClass('disabled');
+                    $('#deleteSelectedRow').addClass('disabled');
+                    $('#updateRow').addClass('disabled');
+                    $('#Sende').addClass('disabled');
+                    alert("Data sendt!");
+                  });
                   $('table').find('td').each(function() {
                   $(this).click(function() {
                   $('table td').not($(this)).prop('contenteditable', false);
@@ -213,11 +220,13 @@
                       $("#deleteSelectedRow").on("click",function(event){
                       event.preventDefault();
                       red = document.querySelector('#radio:checked').value;
-                      alert(red); 
-                      $("#tr"+red).remove();
-                      counter -= 1
-                      prikazCounter-= 1;
-                                     
+                      if (confirm("Are you sure you want to delete this row? " +red ) == true) {
+			            $("#tr"+red).remove();
+                        counter -= 1
+                        prikazCounter-= 1; 
+		            } else {
+			            alert("Deletion canceled");
+		            }
                     });
                    // $("#brojTelefona").onkeypress( event,function (){return event.charCode >= 48 && event.charCode <= 57});
 

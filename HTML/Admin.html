@@ -90,9 +90,10 @@
               </tr>
           </tbody>
         </table></div></div>
-            <a href="Reg1.html" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="margin:10px; margin-right:20px;">Legg til et selskap</a>
-            <a href="#" class="btn btn-danger btn-lg active shadow-lg" role="button" id="deleteSelectedRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Delete selected row</a>
-            <a href="#" onclick="JSalert()" class="btn btn-info btn-lg active shadow-lg" role="button" id="updateRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Update selected row</a>
+            <a href="Reg1.html" class="btn btn-primary btn-lg active" id="reg" role="button" aria-pressed="true" style="margin:10px; margin-right:20px;">Legg til et selskap</a>
+            <a href="#" class="btn btn-danger btn-lg active shadow-lg" role="button" id="deleteSelectedRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Slett valgt rad</a>
+            <a href="#" onclick="JSalert()" class="btn btn-info btn-lg active shadow-lg" role="button" id="updateRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Oppdater valgt rad</a>
+            <a href="#"  class="btn btn-primary btn-lg active shadow-lg" role="button" aria-pressed="true"id="Låse" style="margin:5px; margin-left: 20px; float:right;">Låse</a>
         <hr/>
         <label for="Organization" style="margin-left: 10px; font-weight: bold;">Produkter</label><h5 style="font-style: italic; font-size: 15px; margin-left:15px;">Trykk på de produktene du ønsker for å åpne respektive faner. Hver fane må så fylles ut.				
         </h5>
@@ -129,12 +130,19 @@
                              
                   var counter = 2; // pocne od 2 da broji,jer 1 je vec uneta po default-u
                   var prikazCounter= 2;
+                  $('#Låse').on("click",function(event){
+                    $('#reg').addClass('disabled');
+                    $('#deleteSelectedRow').addClass('disabled');
+                    $('#updateRow').addClass('disabled');
+                    $('#Låse').addClass('disabled');
+                    alert("Innholdet er låst!");
+                    });
                   $("#insertRow").on("click", function (event) {
                       event.preventDefault();
 
                       var newRow = $("<tr>");
                       var cols = '';
-
+                    
                       // Table columns
                       cols += '<th scrope="row">' + prikazCounter + '</th>';
                       cols += '<td><input class="form-control rounded-0" type="text" name="Telefonnummer" placeholder="Telefonnummer"></td>';
