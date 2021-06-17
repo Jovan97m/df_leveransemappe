@@ -3,21 +3,25 @@
     <head>
         <title>df_leveransemappe</title>
         <meta charset="utf-8">
+        <link rel = "icon" href = "login.jpg"  type = "image/x-icon">
         <meta name = "viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+
     </head>
     <body>
         <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="../node_modules/jquery/dist/jquery.min.js"></script>
         <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
         
-            <nav class="navbar navbar-expand-sm navbar-light bg-primary">
+            <nav class="navbar navbar-expand-sm navbar-light bg-primary sticky-top">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">primary</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarID"
-                        aria-controls="navbarID" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                    <div class ="navbar-header">
+                        <a class="navbar-brand" href="#">Name of site</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarID"
+                            aria-controls="navbarID" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                </div>
                     <div class="collapse navbar-collapse" id="navbarID">
                         <div class="navbar-nav">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
@@ -26,20 +30,26 @@
                     </div>
                 </div>
             </nav>
-        <div>
-            <select class="form-select " aria-label="Default select example">
-                <option selected>Velg et selskap</option>
-                <option value="1">fast 1</option>
-                <option value="2">fast 2</option>
-                <option value="3">fast 3 </option>
-            </select>
+        <div class="row">
+            <form>
+                <label for="Organization" style="margin-left: 10px; font-weight: bold;">Choose organization</label>
+                <select name="Org_Select" aria-label="Default select example" style="margin:20px; padding: 10px;">
+                    <option selected>Velg et selskap</option>
+                    <option value="1">fast 1</option>
+                    <option value="2">fast 2</option>
+                    <option value="3">fast 3 </option>
+                </select>
+                <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="false">Load data</a>
+            </div>
+            <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="margin-left: 10px;">Visninger</a>
+
         </div>
-        <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Visninger</a>
-     
-        <table class="table-responsive-sm shadow-lg" >
-          <thead>
+    <div class="row">
+        <div class="table-responsive-sm ">
+        <table class="table table-hover table-bordered table-striped shadow-lg"  style = "margin-top: 25px; margin-left: 5px; margin-right:25px; ">
+          <thead style="background-color:#0066cc; color: white;text-shadow: 1px 2px black;">
             <tr>
-              <th scope="col">#</th>
+              <th scope="row">#</th>
               <th scope="col">Telefonnummer</th>
               <th scope="col">Abonnementstype</th>
               <th scope="col">Fornavn</th>
@@ -52,12 +62,140 @@
             </tr>
           </thead>
           <tbody>
-            
+            <tr id="tr1">
+                <th scope="row"><input type="radio" id="radio" name="gender" value="1">1</th>
+                <td>122345678978</td>
+                <td>Type </td>
+                <td>John</td>
+                <td>Doe</td>
+                <td>john.Doe77@gmail.com</td>
+                <td>esp</td>
+                <td>Explanation additional</td>
+                <td>/</td>
+                <td>/</td>
+              </tr>
+              <tr id="tr2">
+                <th scope="row"><input type="radio" id="radio" name="gender" value="2">2</th>
+                <td>122345678978</td>
+                <td>Type </td>
+                <td>John</td>
+                <td>Doe</td>
+                <td>john.Doe77@gmail.com</td>
+                <td>esp</td>
+                <td>Explanation additional</td>
+                <td>/</td>
+                <td>/</td>
+              </tr>
           </tbody>
-        </table>
-        <a href="Reg1.html" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Legg til et selskap
-        </a>
-         
-        
+        </table></div></div>
+            <a href="Reg1.html" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="margin:10px; margin-right:20px;">Legg til et selskap</a>
+            <a href="#" class="btn btn-danger btn-lg active shadow-lg" role="button" id="deleteSelectedRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Delete selected row</a>
+            <a href="#" onclick="JSalert()" class="btn btn-info btn-lg active shadow-lg" role="button" id="updateRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Update selected row</a>
+        <hr/>
+        <label for="Organization" style="margin-left: 10px; font-weight: bold;">Produkter</label><h5 style="font-style: italic; font-size: 15px; margin-left:15px;">Trykk på de produktene du ønsker for å åpne respektive faner. Hver fane må så fylles ut.				
+        </h5>
+
+        <div class="row" style="margin-top:10px;margin-left: 10px">
+            <div class="col-6 col-sm-3"><a href="" class="btn btn-info btn-lg active" role="button" aria-pressed="true" style="box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4);">Fakturaoppset</a></div>
+            <div class="col-6 col-sm-3"><a href="" class="btn btn-info btn-lg active" role="button" aria-pressed="true" style="box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4);">TBN SIP Trunk</a></div>
+            <div class="col-6 col-sm-3"><a href="" class="btn btn-info btn-lg active" role="button" aria-pressed="true" style="margin-top:1px; box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4);">Etiketter</a></div></div>
+        </div>
+        <div class="row" style="margin-top:10px;margin-left: 10px">
+            <div class="col-6 col-sm-3"><a href="" class="btn btn-info btn-lg active" role="button" aria-pressed="true" style="box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4);">BrukerListe</a></div>
+            <div class="col-6 col-sm-3"><a href="" class="btn btn-info btn-lg active" role="button" aria-pressed="true" style="box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4);">TBN Tale and Teams</a></div></div>
+        </div>
+        <div class="row" style="margin-top:10px;margin-left: 10px">
+            <div class="col-6 col-sm-3"><a href="" class="btn btn-info btn-lg active" role="button" aria-pressed="true" style="box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4);">TBN_konfigurajson</a></div>
+            <div class="col-6 col-sm-3"><a href="" class="btn btn-info btn-lg active" role="button" aria-pressed="true" style="box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4);">Exchange</a></div></div>
+        </div>
+        <div class="row" style="margin-top:10px;margin-left: 10px">
+            <div class="col-6 col-sm-3"><a href="" class="btn btn-info btn-lg active" role="button" aria-pressed="true" style="box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4);">TBN Brukere</a></div>
+            <div class="col-6 col-sm-3"><a href="" class="btn btn-info btn-lg active" role="button" aria-pressed="true" style="box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4);">AD</a></div>
+        </div>
+        <div class="row" style="margin-top:10px;margin-left: 10px">
+            <div class="col-6 col-sm-3"><a href="" class="btn btn-info btn-lg active" role="button" aria-pressed="true" style="box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4);">IKKE i BRUK</a></div>
+        </div>
+        <div class="row" style="margin-top:10px;margin-left: 10px">
+            <div class="col-6 col-sm-3"><a href="" class="btn btn-info btn-lg active" role="button" aria-pressed="true" style="box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4);">One Number</a></div>
+          </div>
+        <hr/> 
+
+
+
+        <script>
+            $(function () {
+                             
+                  var counter = 2; // pocne od 2 da broji,jer 1 je vec uneta po default-u
+                  var prikazCounter= 2;
+                  $("#insertRow").on("click", function (event) {
+                      event.preventDefault();
+
+                      var newRow = $("<tr>");
+                      var cols = '';
+
+                      // Table columns
+                      cols += '<th scrope="row">' + prikazCounter + '</th>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Telefonnummer" placeholder="Telefonnummer"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Abonnementstype" placeholder="Abonnementstype"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Fornavn" placeholder="Fornavn"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Etternavn" placeholder="Etternavn"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Epost" placeholder="Epost"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Kostnadsted" placeholder="Kostnadsted"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Tilleggsinfo" placeholder="Tilleggsinfo"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Ekstra talesim" placeholder="Ekstra talesim"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Ekstra datasim" placeholder="Ekstra datasim"></td>';
+                      cols += '<td><button class="btn btn-success rounded-0" id ="buttonDone" data-toggle="tooltip" data-placement="left" title="Thiss buttons allows you to add this row to database"><i class="fa fa-trash"></i></button><button class="btn btn-danger rounded-0" id ="deleteRow" data-toggle="tooltip" data-placement="left" title="This button allows you to delete row,and cancel creating new row."><i class="fa fa-trash"></i></button></td>';
+
+                      // Insert the columns inside a row
+                      newRow.append(cols);
+                      // Insert the row inside a table
+                      $("table").append(newRow);
+                      prikazCounter++;
+                      // Increase counter after each row insertion
+
+                    });
+                    // Remove row when delete btn is clicked
+                   $("table").on("click", "#deleteRow", function (event) 
+                   {
+                      $(this).closest("tr").remove();
+                      counter -= 1
+                      prikazCounter-= 1;
+                    });
+                  
+                  //zvanican upis
+                  $("table").on("click", "#buttonDone", function (event) {
+
+                    var newRow = $("<tr id='tr"+counter+"'>");
+                    var cols = '';
+                    cols += '<th scope="row">'+'<input type="radio" id="radio" name="gender" value="'+counter+'">' + counter + '</th>'; // broj kolone
+                    cols += '<td>' + document.querySelector('[name="Telefonnummer"]').value + '</td>';
+                    cols += '<td>' + document.querySelector('[name="Abonnementstype"]').value + '</td>';
+                    cols += '<td>' + document.querySelector('[name="Fornavn"]').value + '</td>';
+                    cols += '<td>' + document.querySelector('[name="Etternavn"]').value + '</td>';
+                    cols += '<td>' + document.querySelector('[name="Epost"]').value + '</td>';
+                    cols += '<td>' + document.querySelector('[name="Kostnadsted"]').value + '</td>';
+                    cols += '<td>' + document.querySelector('[name="Tilleggsinfo"]').value + '</td>';
+                    cols += '<td>' + document.querySelector('[name="Ekstra talesim"]').value + '</td>';
+                    cols += '<td>' + document.querySelector('[name="Ekstra datasim"]').value + '</td></tr>';
+
+                    $(this).closest("tr").remove(); // obrise ovaj red sa textboxom i sa ona 2 buttona na kraju
+                      newRow.append(cols);
+                      $("table").append(newRow); // ubaci na to mesto,novo formirani red
+                      counter++;  
+               });
+               $("#deleteSelectedRow").on("click",function(event){
+                      event.preventDefault();
+                      red = document.querySelector('#radio:checked').value;
+                      alert(red); 
+                      $("#tr"+red).remove();
+                      counter -= 1
+                      prikazCounter-= 1;           
+                    });
+
+      });
+        </script>
+
+        <footer style="margin-left: 15px;">	<small>&copy; Copyright 12_03_2021, telia_leveransemappe</small>
+        </footer>
     </body>
 </html>
