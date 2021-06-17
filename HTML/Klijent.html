@@ -5,86 +5,138 @@
         <meta charset="utf-8">
         <meta name = "viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        
+      
        
     </head>
-    <body style="background: #ccffff ;">
+    <body>
         <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="../node_modules/jquery/dist/jquery.min.js"></script>
         <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
-        <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color:#64B5F6">
-          <a class="navbar-brand" href="#"><img src="Logo.jpg" alt="" width="100" height="45"></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Help</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-            <a class="btn btn-primary btn-sm shadow-lg" id="DodajTabelu" href="../HTML/DodajTabelu.html" role="button" style="margin-left: 20px; margin-top: 10px; padding: 5px;" ><span class="glyphicon glyphicon-search">Gå inn i tabellen</span></a>
-            <div class="table-responsive-sm shadow-lg" style = "margin-top: 25px; margin-left: 20px; margin-right: 20px;">
-            <table class="table table-hover table-bordered" id="Tabela" style="border-color: black;">
-              <thead style="background-color: cyan;">
-                <tr style="padding: 50px;">
-                  <th scope="col">#</th>
-                  <th scope="col">Telefonnummer</th>
-                  <th scope="col">Abonnementstype</th>
-                  <th scope="col">Fornavn</th>
-                  <th scope="col">Etternavn</th>
-                  <th scope="col">Epost</th>
-                  <th scope="col">Kostnadsted</th>
-                  <th scope="col">Tilleggsinfo</th>
-                  <th scope="col">Ekstra talesim</th>
-                  <th scope="col">Ekstra datasim</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr id="tr1">
-                  <th scope="row"><input type="radio" id="radio" name="gender" value="1">1</th>
-                  <td>122345678978</td>
-                  <td>Type </td>
-                  <td>John</td>
-                  <td>Doe</td>
-                  <td>john.Doe77@gmail.com</td>
-                  <td>esp</td>
-                  <td>Explanation additional</td>
-                  <td>/</td>
-                  <td>/</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-            <div>
-                <a href="#" class="btn btn-primary btn-lg active shadow-lg" role="button" id="insertRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Add new row</a>
-            </div>
-            <div>
-              <a href="#" class="btn btn-danger btn-lg active shadow-lg" role="button" id="deleteSelectedRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Delete selected row</a>
-            </div>
-            <div>
-              <a href="#" class="btn btn-info btn-lg active shadow-lg" role="button" id="updateRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Update selected row</a>
-            </div>
 
-            <div>
-              <hr/>
-                <a href="Login.html" class="btn btn-primary btn-lg active shadow-lg" role="button" aria-pressed="true" style="margin-left:20px; padding: 10px; text-align: center;">Sende</a>
+        <nav class="navbar navbar-expand-sm navbar-light bg-primary sticky-top">
+          <div class="container-fluid">
+              <div class ="navbar-header">
+                  <a class="navbar-brand" href="#">Name of site</a>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarID"
+                      aria-controls="navbarID" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                  </button>
+          </div>
+              <div class="collapse navbar-collapse" id="navbarID">
+                  <div class="navbar-nav">
+                      <a class="nav-link active" aria-current="page" href="#">Home</a>
+                      
+                  </div>
+              </div>
+          </div>
+      </nav>
+      <div class="row">
+        <form> 
+          <a class="btn btn-primary btn-lg active" data-bs-toggle="modal" data-bs-target="#myModal" id="DodajTabelu"  role="button" style="margin-left: 20px; margin-top: 10px; padding: 5px;" ><span class="glyphicon glyphicon-search">Gå inn i tabellen</span></a>
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: blue;">
+                        <h5 class="modal-title">Contact Us</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="input-group mb-3">
+                            <div class="custom-file " style="margin-top: 10px; margin-left: 20px;">
+                              <input type="file" class="custom-file-input" id="inputGroupFile02">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <select class="form-control">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <select class="form-control">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <a href="#" class="btn btn-primary btn-sm active col-sm-2" role="button"  aria-pressed="true">KOBLE</a>                          
+                        </div>
+                    </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
-          
+        </div>
+        </div>
+
+    </div>
+<div class="row">
+    <div class="table-responsive-sm ">
+    <table class="table table-hover table-bordered table-striped shadow-lg"  style = "margin-top: 25px; margin-left: 5px; margin-right:25px; ">
+      <thead style="background-color:#0066cc; color: white;text-shadow: 1px 2px black;">
+        <tr>
+          <th scope="row">#</th>
+          <th scope="col">Telefonnummer</th>
+          <th scope="col">Abonnementstype</th>
+          <th scope="col">Fornavn</th>
+          <th scope="col">Etternavn</th>
+          <th scope="col">Epost</th>
+          <th scope="col">Kostnadsted</th>
+          <th scope="col">Tilleggsinfo</th>
+          <th scope="col">Ekstra talesim</th>
+          <th scope="col">Ekstra datasim</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id="tr1">
+            <th scope="row"><input type="radio" id="radio" name="gender" value="1">1</th>
+            <td>122345678978</td>
+            <td>Type </td>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john.Doe77@gmail.com</td>
+            <td>esp</td>
+            <td>Explanation additional</td>
+            <td>/</td>
+            <td>/</td>
+          </tr>
+          <tr id="tr2">
+            <th scope="row"><input type="radio" id="radio" name="gender" value="2">2</th>
+            <td>122345678978</td>
+            <td>Type </td>
+            <td>John</td>
+            <td>Doe</td>
+            <td>john.Doe77@gmail.com</td>
+            <td>esp</td>
+            <td>Explanation additional</td>
+            <td>/</td>
+            <td>/</td>
+          </tr>
+      </tbody>
+    </table></div></div>
+    <a href="#" class="btn btn-primary btn-lg active shadow-lg" role="button" id="insertRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Add new row</a>
+        <a href="#" class="btn btn-danger btn-lg active shadow-lg" role="button" id="deleteSelectedRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Delete selected row</a>
+        <a href="#" onclick="JSalert()" class="btn btn-info btn-lg active shadow-lg" role="button" id="updateRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Update selected row</a>
+        <a href="Login.html" onclick="alert('Du har sendt inn data')" class="btn btn-primary btn-lg active shadow-lg" role="button" aria-pressed="true" style="margin:5px; margin-left: 20px; float:right;">Sende</a>
+    <hr/>
           <script>
-              
-              $(function () {
-                             
-                  var counter = 2; // pocne od 2 da broji,jer 1 je vec uneta po default-u
-                  var prikazCounter= 2;
+              $(function () {              
+                  var counter = 3; // pocne od 2 da broji,jer 1 je vec uneta po default-u
+                  var prikazCounter= 3;
                   $("#insertRow").on("click", function (event) {
                       event.preventDefault();
 
@@ -140,8 +192,8 @@
                       newRow.append(cols);
                       $("table").append(newRow); // ubaci na to mesto,novo formirani red
                       counter++;  
-               });
-               $("#deleteSelectedRow").on("click",function(event){
+                      });
+                      $("#deleteSelectedRow").on("click",function(event){
                       event.preventDefault();
                       red = document.querySelector('#radio:checked').value;
                       alert(red); 
@@ -155,7 +207,7 @@
                       event.preventDefault();
                       red = document.querySelector('#radio:checked').value;
                       alert(red); 
-                    //update:
+                      //update:
 
 
 
@@ -166,7 +218,7 @@
                       var values = 
                       // Table columns
                       cols += '<th scrope="row">' + prikazCounter + '</th>';
-                      cols += '<td><input class="form-control rounded-0" type="text" name="Telefonnummer" placeholder="Telefonnummer">'value '</td>';
+                      cols += '<td><input class="form-control rounded-0" type="text" name="Telefonnummer" placeholder="Telefonnummer">'+value+ '</td>';
                       cols += '<td><input class="form-control rounded-0" type="text" name="Abonnementstype" placeholder="Abonnementstype"></td>';
                       cols += '<td><input class="form-control rounded-0" type="text" name="Fornavn" placeholder="Fornavn"></td>';
                       cols += '<td><input class="form-control rounded-0" type="text" name="Etternavn" placeholder="Etternavn"></td>';
@@ -178,15 +230,15 @@
                       cols += '<td><button class="btn btn-success rounded-0" id ="buttonDone" data-toggle="tooltip" data-placement="left" title="Thiss buttons allows you to add this row to database"><i class="fa fa-trash"></i></button><button class="btn btn-danger rounded-0" id ="deleteRow" data-toggle="tooltip" data-placement="left" title="This button allows you to delete row,and cancel creating new row."><i class="fa fa-trash"></i></button></td>';
 
                       // Insert the columns inside a row
-                      newRow.append(cols);
-
-
-
-                                     
-                    });   
-
-      });
-          </script>
-            
+                      newRow.append(cols);               
+                    }); 
+                  });
+          </script>  
+          </form>
+      </div>
     </body>
+    
+    <footer style="margin-left: 15px;">	<small>&copy; Copyright 12_03_2021, telia_leveransemappe</small>
+      
+    </footer>
 </html>
