@@ -59,8 +59,8 @@
               <th scope="col">Fornavn</th>
               <th scope="col">Etternavn</th>
               <th scope="col">Epost</th>
-              <th scope="col">Kostnadsted</th>
-              <th scope="col">Tilleggsinfo</th>
+              <th scope="col">Kostnadsted <input class="form-check-input" type="checkbox" value="" id="KostnadstedRadio"></th>
+              <th scope="col">Tilleggsinfo <input class="form-check-input" type="checkbox" value="" id="TilleggsinfoRadio"></th>
               <th scope="col">Ekstra talesim</th>
               <th scope="col">Ekstra datasim</th>
             </tr>
@@ -199,7 +199,15 @@
 			            alert("Deletion canceled");
 		            }
                     });
-
+                    $('table').find('td').each(function() {
+                  $(this).click(function() {
+                  $('table td').not($(this)).prop('contenteditable', false);
+                  $(this).prop('contenteditable', true);
+                  });
+                  $(this).blur(function() {
+                  $(this).prop('contenteditable', false);
+                  });
+                  });
       });
         </script>
 

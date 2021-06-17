@@ -28,11 +28,17 @@
           </div>
               <div class="collapse navbar-collapse" id="navbarID">
                   <div class="navbar-nav">
-                      <a class="nav-link active" aria-current="page" href="#">Home</a>
-                      
+                      <a class="nav-link active " aria-current="page" href="#">Home</a>
+                  </div>
+                  </div>
+                  <div class="collapse navbar-collapse" id="navbarID">
+                  
+                  <div class="navbar-nav ms-auto" >
+                    <a type="button"  class="btn btn-outline-primary nav-link" href="Login.html"style="background-color: red;">Logg ut</a >                
                   </div>
               </div>
           </div>
+          
       </nav>
       <div class="row">
         <form> 
@@ -75,8 +81,8 @@
                     </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Sende inn</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Lukk</button>
                     </div>
                 </div>
             </div>
@@ -86,7 +92,7 @@
     </div>
 <div class="row">
     <div class="table-responsive-sm ">
-    <table class="table table-hover table-bordered table-striped shadow-lg"  style = "margin-top: 25px; margin-left: 5px; margin-right:25px; ">
+    <table  class="table table-hover table-bordered table-striped shadow-lg"  style = "margin-top: 25px; margin-left: 5px; margin-right:25px; ">
       <thead style="background-color:#0066cc; color: white;text-shadow: 1px 2px black;">
         <tr>
           <th scope="row">#</th>
@@ -95,8 +101,8 @@
           <th scope="col">Fornavn</th>
           <th scope="col">Etternavn</th>
           <th scope="col">Epost</th>
-          <th scope="col">Kostnadsted</th>
-          <th scope="col">Tilleggsinfo</th>
+          <th scope="col">Kostnadsted <input class="form-check-input" type="checkbox" value="" id="KostnadstedRadio"></th>
+          <th scope="col">Tilleggsinfo <input class="form-check-input" type="checkbox" value="" id="TilleggsinfoRadio"></th>
           <th scope="col">Ekstra talesim</th>
           <th scope="col">Ekstra datasim</th>
         </tr>
@@ -128,20 +134,31 @@
           </tr>
       </tbody>
     </table></div></div>
-    <a href="#" class="btn btn-primary btn-lg active shadow-lg" role="button" id="insertRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Add new row</a>
-        <a href="#" class="btn btn-danger btn-lg active shadow-lg" role="button" id="deleteSelectedRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Delete selected row</a>
-        <a href="#" onclick="JSalert()" class="btn btn-info btn-lg active shadow-lg" role="button" id="updateRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Update selected row</a>
+    <a href="#" class="btn btn-primary btn-lg active shadow-lg" role="button" id="insertRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Legg til ny rad</a>
+        <a href="#" class="btn btn-danger btn-lg active shadow-lg" role="button" id="deleteSelectedRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Slett valgt rad</a>
+        <a href="#" onclick="JSalert()" class="btn btn-info btn-lg active shadow-lg" role="button" id="updateRow" aria-pressed="true" style="margin:5px; margin-left: 20px;">Oppdater valgt rad</a>
         <a href="Login.html" onclick="alert('Du har sendt inn data')" class="btn btn-primary btn-lg active shadow-lg" role="button" aria-pressed="true" style="margin:5px; margin-left: 20px; float:right;">Sende</a>
     <hr/>
           <script>
               $(function () {              
                   var counter = 3; // pocne od 2 da broji,jer 1 je vec uneta po default-u
                   var prikazCounter= 3;
+                  $('table').find('td').each(function() {
+                  $(this).click(function() {
+                  $('table td').not($(this)).prop('contenteditable', false);
+                  $(this).prop('contenteditable', true);
+                  });
+                  $(this).blur(function() {
+                  $(this).prop('contenteditable', false);
+                  });
+                  });
                   $("#insertRow").on("click", function (event) {
                       event.preventDefault();
 
                       var newRow = $("<tr>");
                       var cols = '';
+                      
+                      
 
                       // Table columns
                       cols += '<th scrope="row">' + prikazCounter + '</th>';
@@ -240,7 +257,9 @@
       </div>
     </body>
     
-    <footer style="margin-left: 15px;">	<small>&copy; Copyright 12_03_2021, telia_leveransemappe</small>
+    <footer class="mt-auto" style=" position: absolute; bottom: 0;">	
+      
+      <small >&copy; Copyright 12_03_2021, telia_leveransemappe</small>
       
     </footer>
 </html>
