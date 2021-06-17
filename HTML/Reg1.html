@@ -115,6 +115,7 @@
                         <option value="2">36 mnd</option>
                         
                     </select>
+                    
                 </form>
             </div>
             <div class="col-md-3">
@@ -132,14 +133,26 @@
                         <label for="text text-left" >Tlfnr</label>
                         <input type="text text-center" name="text" class="form-control">
                     </div>
-                    <label>TBN:</label>
-                    <select class="form-select " aria-label="Default select example">
+                    <div class="row-md-12">
+                        <label>TBN:</label>
+                        <select class="form-select " aria-label="Default select example">
                         
-                        <option value="1">TBN</option>
-                        <option value="2">Ingen løsning</option>
-                        <option value="3">Mobilstatus (kun Uninett)</option>
+                            <option value="1">TBN</option>
+                            <option value="2">Ingen løsning</option>
+                            <option value="3">Mobilstatus (kun Uninett)</option>
                         
-                    </select>
+                        </select>
+                    </div>
+                    <div class="row-md-12" style="border: black solid 1px;">
+                        <label for="password">Passord</label>
+                        <div class="input-group bg-light" id="show_hide_password"></div>
+                        <input type="password" class="form-control form-icon-trailing " id="password"  name="password"  placeholder="oppgi passord" required="">
+                    
+                        <label for="password">Bekreft passord</label>
+                        <div class="input-group bg-light" id="show_hide_password"></div>
+                        <input type="password" class="form-control form-icon-trailing " id="password"  name="password"  placeholder="oppgi passord" required="">
+                    </div>
+                    
                 </form>
             </div>
             <div class="col-md-3">
