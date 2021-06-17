@@ -145,7 +145,7 @@
 
                       // Table columns
                       cols += '<th scrope="row">' + prikazCounter + '</th>';
-                      cols += '<td><input class="form-control rounded-0" type="text" name="Telefonnummer" placeholder="Telefonnummer"></td>';
+                      cols += '<td><input class="form-control rounded-0" type="text"  name="Telefonnummer" placeholder="Telefonnummer" required></td>';
                       cols += '<td><input class="form-control rounded-0" type="text" name="Abonnementstype" placeholder="Abonnementstype"></td>';
                       cols += '<td><input class="form-control rounded-0" type="text" name="Fornavn" placeholder="Fornavn"></td>';
                       cols += '<td><input class="form-control rounded-0" type="text" name="Etternavn" placeholder="Etternavn"></td>';
@@ -202,6 +202,8 @@
                       prikazCounter-= 1;
                                      
                     });
+                   // $("#brojTelefona").onkeypress( event,function (){return event.charCode >= 48 && event.charCode <= 57});
+
 
                     $("#updateRow").on("click",function(event){
                       event.preventDefault();
