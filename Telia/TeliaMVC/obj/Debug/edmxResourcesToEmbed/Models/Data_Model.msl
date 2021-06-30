@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TeliaModelStoreContainer" CdmEntityContainer="TeliaEntities">
+    <EntitySetMapping Name="Admins">
+      <EntityTypeMapping TypeName="TeliaModel.Admin">
+        <MappingFragment StoreEntitySet="Admin">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Fakturaoppsetts">
+      <EntityTypeMapping TypeName="TeliaModel.Fakturaoppsett">
+        <MappingFragment StoreEntitySet="Fakturaoppsett">
+          <ScalarProperty Name="NavnPaKostnadssted" ColumnName="NavnPaKostnadssted" />
+          <ScalarProperty Name="Tileggsinfo_kostnadssted" ColumnName="Tileggsinfo kostnadssted" />
+          <ScalarProperty Name="Fakturaformat" ColumnName="Fakturaformat" />
+          <ScalarProperty Name="Fakturaadresse" ColumnName="Fakturaadresse" />
+          <ScalarProperty Name="Husnr" ColumnName="Husnr" />
+          <ScalarProperty Name="Bokstav" ColumnName="Bokstav" />
+          <ScalarProperty Name="Postnummer" ColumnName="Postnummer" />
+          <ScalarProperty Name="Sted" ColumnName="Sted" />
+          <ScalarProperty Name="Epost" ColumnName="Epost" />
+          <ScalarProperty Name="Kostnadssted" ColumnName="Kostnadssted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Nummers">
+      <EntityTypeMapping TypeName="TeliaModel.Nummer">
+        <MappingFragment StoreEntitySet="Nummer">
+          <ScalarProperty Name="Telefonnummer" ColumnName="Telefonnummer" />
+          <ScalarProperty Name="Abonnementstype" ColumnName="Abonnementstype" />
+          <ScalarProperty Name="Fornavn" ColumnName="Fornavn" />
+          <ScalarProperty Name="Etternavn" ColumnName="Etternavn" />
+          <ScalarProperty Name="Bedrift_som_skal_faktureres" ColumnName="Bedrift som skal faktureres" />
+          <ScalarProperty Name="c_o_adresse_for_SIM_levering" ColumnName="c/o adresse for SIM levering" />
+          <ScalarProperty Name="Gateadresse_SIM_Skal_sendes_til" ColumnName="Gateadresse SIM Skal sendes til" />
+          <ScalarProperty Name="Hus_nummer" ColumnName="Hus nummer" />
+          <ScalarProperty Name="Hus_bokstav" ColumnName="Hus bokstav" />
+          <ScalarProperty Name="post_nr_" ColumnName="post nr." />
+          <ScalarProperty Name="Post_sted" ColumnName="Post sted" />
+          <ScalarProperty Name="Epost_for_sporings_informasjon" ColumnName="Epost for sporings informasjon" />
+          <ScalarProperty Name="Epost" ColumnName="Epost" />
+          <ScalarProperty Name="Kostnadsted" ColumnName="Kostnadsted" />
+          <ScalarProperty Name="Tilleggsinfo_ansatt_ID" ColumnName="Tilleggsinfo/ansatt ID" />
+          <ScalarProperty Name="Ekstra_talesim_" ColumnName="Ekstra talesim " />
+          <ScalarProperty Name="Ekstra_datasim" ColumnName="Ekstra datasim" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

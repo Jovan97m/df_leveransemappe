@@ -1,0 +1,123 @@
+﻿@model IEnumerable<TeliaMVC.Models.Nummer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Abonnementstype)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fornavn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Etternavn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bedrift_som_skal_faktureres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.c_o_adresse_for_SIM_levering)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gateadresse_SIM_Skal_sendes_til)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Hus_nummer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Hus_bokstav)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.post_nr_)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Post_sted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Epost_for_sporings_informasjon)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Epost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tilleggsinfo_ansatt_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ekstra_talesim_)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ekstra_datasim)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fakturaoppsett.NavnPaKostnadssted)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Abonnementstype)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fornavn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Etternavn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Bedrift_som_skal_faktureres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.c_o_adresse_for_SIM_levering)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gateadresse_SIM_Skal_sendes_til)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Hus_nummer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Hus_bokstav)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.post_nr_)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Post_sted)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Epost_for_sporings_informasjon)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Epost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tilleggsinfo_ansatt_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ekstra_talesim_)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ekstra_datasim)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fakturaoppsett.NavnPaKostnadssted)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Telefonnummer }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Telefonnummer }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Telefonnummer })
+        </td>
+    </tr>
+}
+
+</table>

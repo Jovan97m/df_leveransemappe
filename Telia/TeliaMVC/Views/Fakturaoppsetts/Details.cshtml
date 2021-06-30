@@ -1,0 +1,90 @@
+﻿@model TeliaMVC.Models.Fakturaoppsett
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Fakturaoppsett</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NavnPaKostnadssted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NavnPaKostnadssted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tileggsinfo_kostnadssted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tileggsinfo_kostnadssted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fakturaformat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fakturaformat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fakturaadresse)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fakturaadresse)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Husnr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Husnr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bokstav)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bokstav)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Postnummer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Postnummer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Epost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Epost)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Kostnadssted }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

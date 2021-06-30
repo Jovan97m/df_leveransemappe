@@ -1,0 +1,152 @@
+﻿@model TeliaMVC.Models.Nummer
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Nummer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Abonnementstype)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Abonnementstype)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fornavn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fornavn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Etternavn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Etternavn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bedrift_som_skal_faktureres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bedrift_som_skal_faktureres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.c_o_adresse_for_SIM_levering)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.c_o_adresse_for_SIM_levering)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gateadresse_SIM_Skal_sendes_til)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gateadresse_SIM_Skal_sendes_til)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Hus_nummer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hus_nummer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Hus_bokstav)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hus_bokstav)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.post_nr_)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.post_nr_)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Post_sted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Post_sted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Epost_for_sporings_informasjon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Epost_for_sporings_informasjon)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Epost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Epost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tilleggsinfo_ansatt_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tilleggsinfo_ansatt_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ekstra_talesim_)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ekstra_talesim_)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ekstra_datasim)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ekstra_datasim)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fakturaoppsett.NavnPaKostnadssted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fakturaoppsett.NavnPaKostnadssted)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

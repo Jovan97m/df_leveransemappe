@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TeliaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Fakturaoppsett">
+    <Key>
+      <PropertyRef Name="Kostnadssted" />
+    </Key>
+    <Property Name="NavnPaKostnadssted" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Tileggsinfo kostnadssted" Type="nvarchar" MaxLength="200" />
+    <Property Name="Fakturaformat" Type="nvarchar" MaxLength="50" />
+    <Property Name="Fakturaadresse" Type="nvarchar" MaxLength="50" />
+    <Property Name="Husnr" Type="int" />
+    <Property Name="Bokstav" Type="nvarchar" MaxLength="200" />
+    <Property Name="Postnummer" Type="int" />
+    <Property Name="Sted" Type="nvarchar" MaxLength="50" />
+    <Property Name="Epost" Type="nvarchar" MaxLength="50" />
+    <Property Name="Kostnadssted" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Nummer">
+    <Key>
+      <PropertyRef Name="Telefonnummer" />
+    </Key>
+    <Property Name="Telefonnummer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Abonnementstype" Type="nvarchar" MaxLength="20" />
+    <Property Name="Fornavn" Type="nvarchar" MaxLength="50" />
+    <Property Name="Etternavn" Type="nvarchar" MaxLength="50" />
+    <Property Name="Bedrift som skal faktureres" Type="nvarchar" MaxLength="50" />
+    <Property Name="c/o adresse for SIM levering" Type="nvarchar" MaxLength="50" />
+    <Property Name="Gateadresse SIM Skal sendes til" Type="nvarchar" MaxLength="50" />
+    <Property Name="Hus nummer" Type="int" />
+    <Property Name="Hus bokstav" Type="nvarchar" MaxLength="50" />
+    <Property Name="post nr." Type="int" />
+    <Property Name="Post sted" Type="nvarchar" MaxLength="50" />
+    <Property Name="Epost for sporings informasjon" Type="nvarchar" MaxLength="50" />
+    <Property Name="Epost" Type="nvarchar" MaxLength="50" />
+    <Property Name="Kostnadsted" Type="nvarchar" MaxLength="50" />
+    <Property Name="Tilleggsinfo/ansatt ID" Type="int" />
+    <Property Name="Ekstra talesim " Type="int" />
+    <Property Name="Ekstra datasim" Type="int" />
+  </EntityType>
+  <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
+    <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Nummer" Type="Self.Nummer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fakturaoppsett">
+        <PropertyRef Name="Kostnadssted" />
+      </Principal>
+      <Dependent Role="Nummer">
+        <PropertyRef Name="Kostnadsted" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TeliaModelStoreContainer">
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Fakturaoppsett" EntityType="Self.Fakturaoppsett" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Nummer" EntityType="Self.Nummer" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" Association="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
+      <End Role="Fakturaoppsett" EntitySet="Fakturaoppsett" />
+      <End Role="Nummer" EntitySet="Nummer" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

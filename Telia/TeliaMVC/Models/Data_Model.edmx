@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TeliaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fakturaoppsett">
+          <Key>
+            <PropertyRef Name="Kostnadssted" />
+          </Key>
+          <Property Name="NavnPaKostnadssted" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tileggsinfo kostnadssted" Type="nvarchar" MaxLength="200" />
+          <Property Name="Fakturaformat" Type="nvarchar" MaxLength="50" />
+          <Property Name="Fakturaadresse" Type="nvarchar" MaxLength="50" />
+          <Property Name="Husnr" Type="int" />
+          <Property Name="Bokstav" Type="nvarchar" MaxLength="200" />
+          <Property Name="Postnummer" Type="int" />
+          <Property Name="Sted" Type="nvarchar" MaxLength="50" />
+          <Property Name="Epost" Type="nvarchar" MaxLength="50" />
+          <Property Name="Kostnadssted" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nummer">
+          <Key>
+            <PropertyRef Name="Telefonnummer" />
+          </Key>
+          <Property Name="Telefonnummer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Abonnementstype" Type="nvarchar" MaxLength="20" />
+          <Property Name="Fornavn" Type="nvarchar" MaxLength="50" />
+          <Property Name="Etternavn" Type="nvarchar" MaxLength="50" />
+          <Property Name="Bedrift som skal faktureres" Type="nvarchar" MaxLength="50" />
+          <Property Name="c/o adresse for SIM levering" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gateadresse SIM Skal sendes til" Type="nvarchar" MaxLength="50" />
+          <Property Name="Hus nummer" Type="int" />
+          <Property Name="Hus bokstav" Type="nvarchar" MaxLength="50" />
+          <Property Name="post nr." Type="int" />
+          <Property Name="Post sted" Type="nvarchar" MaxLength="50" />
+          <Property Name="Epost for sporings informasjon" Type="nvarchar" MaxLength="50" />
+          <Property Name="Epost" Type="nvarchar" MaxLength="50" />
+          <Property Name="Kostnadsted" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tilleggsinfo/ansatt ID" Type="int" />
+          <Property Name="Ekstra talesim " Type="int" />
+          <Property Name="Ekstra datasim" Type="int" />
+        </EntityType>
+        <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
+          <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nummer" Type="Self.Nummer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fakturaoppsett">
+              <PropertyRef Name="Kostnadssted" />
+            </Principal>
+            <Dependent Role="Nummer">
+              <PropertyRef Name="Kostnadsted" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TeliaModelStoreContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fakturaoppsett" EntityType="Self.Fakturaoppsett" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Nummer" EntityType="Self.Nummer" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" Association="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
+            <End Role="Fakturaoppsett" EntitySet="Fakturaoppsett" />
+            <End Role="Nummer" EntitySet="Nummer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TeliaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fakturaoppsett">
+          <Key>
+            <PropertyRef Name="Kostnadssted" />
+          </Key>
+          <Property Name="NavnPaKostnadssted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tileggsinfo_kostnadssted" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Fakturaformat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fakturaadresse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Husnr" Type="Int32" />
+          <Property Name="Bokstav" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Postnummer" Type="Int32" />
+          <Property Name="Sted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Epost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Kostnadssted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Nummers" Relationship="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" FromRole="Fakturaoppsett" ToRole="Nummer" />
+        </EntityType>
+        <EntityType Name="Nummer">
+          <Key>
+            <PropertyRef Name="Telefonnummer" />
+          </Key>
+          <Property Name="Telefonnummer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Abonnementstype" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Fornavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Etternavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Bedrift_som_skal_faktureres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="c_o_adresse_for_SIM_levering" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gateadresse_SIM_Skal_sendes_til" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Hus_nummer" Type="Int32" />
+          <Property Name="Hus_bokstav" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="post_nr_" Type="Int32" />
+          <Property Name="Post_sted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Epost_for_sporings_informasjon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Epost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Kostnadsted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tilleggsinfo_ansatt_ID" Type="Int32" />
+          <Property Name="Ekstra_talesim_" Type="Int32" />
+          <Property Name="Ekstra_datasim" Type="Int32" />
+          <NavigationProperty Name="Fakturaoppsett" Relationship="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" FromRole="Nummer" ToRole="Fakturaoppsett" />
+        </EntityType>
+        <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
+          <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Nummer" Type="Self.Nummer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fakturaoppsett">
+              <PropertyRef Name="Kostnadssted" />
+            </Principal>
+            <Dependent Role="Nummer">
+              <PropertyRef Name="Kostnadsted" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TeliaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="Fakturaoppsetts" EntityType="Self.Fakturaoppsett" />
+          <EntitySet Name="Nummers" EntityType="Self.Nummer" />
+          <AssociationSet Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" Association="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
+            <End Role="Fakturaoppsett" EntitySet="Fakturaoppsetts" />
+            <End Role="Nummer" EntitySet="Nummers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TeliaModelStoreContainer" CdmEntityContainer="TeliaEntities">
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="TeliaModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fakturaoppsetts">
+            <EntityTypeMapping TypeName="TeliaModel.Fakturaoppsett">
+              <MappingFragment StoreEntitySet="Fakturaoppsett">
+                <ScalarProperty Name="NavnPaKostnadssted" ColumnName="NavnPaKostnadssted" />
+                <ScalarProperty Name="Tileggsinfo_kostnadssted" ColumnName="Tileggsinfo kostnadssted" />
+                <ScalarProperty Name="Fakturaformat" ColumnName="Fakturaformat" />
+                <ScalarProperty Name="Fakturaadresse" ColumnName="Fakturaadresse" />
+                <ScalarProperty Name="Husnr" ColumnName="Husnr" />
+                <ScalarProperty Name="Bokstav" ColumnName="Bokstav" />
+                <ScalarProperty Name="Postnummer" ColumnName="Postnummer" />
+                <ScalarProperty Name="Sted" ColumnName="Sted" />
+                <ScalarProperty Name="Epost" ColumnName="Epost" />
+                <ScalarProperty Name="Kostnadssted" ColumnName="Kostnadssted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nummers">
+            <EntityTypeMapping TypeName="TeliaModel.Nummer">
+              <MappingFragment StoreEntitySet="Nummer">
+                <ScalarProperty Name="Telefonnummer" ColumnName="Telefonnummer" />
+                <ScalarProperty Name="Abonnementstype" ColumnName="Abonnementstype" />
+                <ScalarProperty Name="Fornavn" ColumnName="Fornavn" />
+                <ScalarProperty Name="Etternavn" ColumnName="Etternavn" />
+                <ScalarProperty Name="Bedrift_som_skal_faktureres" ColumnName="Bedrift som skal faktureres" />
+                <ScalarProperty Name="c_o_adresse_for_SIM_levering" ColumnName="c/o adresse for SIM levering" />
+                <ScalarProperty Name="Gateadresse_SIM_Skal_sendes_til" ColumnName="Gateadresse SIM Skal sendes til" />
+                <ScalarProperty Name="Hus_nummer" ColumnName="Hus nummer" />
+                <ScalarProperty Name="Hus_bokstav" ColumnName="Hus bokstav" />
+                <ScalarProperty Name="post_nr_" ColumnName="post nr." />
+                <ScalarProperty Name="Post_sted" ColumnName="Post sted" />
+                <ScalarProperty Name="Epost_for_sporings_informasjon" ColumnName="Epost for sporings informasjon" />
+                <ScalarProperty Name="Epost" ColumnName="Epost" />
+                <ScalarProperty Name="Kostnadsted" ColumnName="Kostnadsted" />
+                <ScalarProperty Name="Tilleggsinfo_ansatt_ID" ColumnName="Tilleggsinfo/ansatt ID" />
+                <ScalarProperty Name="Ekstra_talesim_" ColumnName="Ekstra talesim " />
+                <ScalarProperty Name="Ekstra_datasim" ColumnName="Ekstra datasim" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

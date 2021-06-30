@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TeliaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Fakturaoppsett">
+    <Key>
+      <PropertyRef Name="Kostnadssted" />
+    </Key>
+    <Property Name="NavnPaKostnadssted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Tileggsinfo_kostnadssted" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Fakturaformat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Fakturaadresse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Husnr" Type="Int32" />
+    <Property Name="Bokstav" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Postnummer" Type="Int32" />
+    <Property Name="Sted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Epost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Kostnadssted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Nummers" Relationship="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" FromRole="Fakturaoppsett" ToRole="Nummer" />
+  </EntityType>
+  <EntityType Name="Nummer">
+    <Key>
+      <PropertyRef Name="Telefonnummer" />
+    </Key>
+    <Property Name="Telefonnummer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Abonnementstype" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Fornavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Etternavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Bedrift_som_skal_faktureres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="c_o_adresse_for_SIM_levering" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Gateadresse_SIM_Skal_sendes_til" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Hus_nummer" Type="Int32" />
+    <Property Name="Hus_bokstav" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="post_nr_" Type="Int32" />
+    <Property Name="Post_sted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Epost_for_sporings_informasjon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Epost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Kostnadsted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Tilleggsinfo_ansatt_ID" Type="Int32" />
+    <Property Name="Ekstra_talesim_" Type="Int32" />
+    <Property Name="Ekstra_datasim" Type="Int32" />
+    <NavigationProperty Name="Fakturaoppsett" Relationship="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" FromRole="Nummer" ToRole="Fakturaoppsett" />
+  </EntityType>
+  <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
+    <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Nummer" Type="Self.Nummer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fakturaoppsett">
+        <PropertyRef Name="Kostnadssted" />
+      </Principal>
+      <Dependent Role="Nummer">
+        <PropertyRef Name="Kostnadsted" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TeliaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Admins" EntityType="Self.Admin" />
+    <EntitySet Name="Fakturaoppsetts" EntityType="Self.Fakturaoppsett" />
+    <EntitySet Name="Nummers" EntityType="Self.Nummer" />
+    <AssociationSet Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" Association="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
+      <End Role="Fakturaoppsett" EntitySet="Fakturaoppsetts" />
+      <End Role="Nummer" EntitySet="Nummers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
