@@ -1,85 +1,100 @@
 ﻿@model IEnumerable<TeliaMVC.Models.Fakturaoppsett>
-
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "FakturaOppsett";
 }
 
-<h2>Index</h2>
+<h2>Fakturaoppsett</h2>
 
-<p class="btn-primary btn-sm" style="background-color: purple; width: 85px; color:white;">
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table table-hover table-responsive" style="border:1px  solid black">
-    <tr style="        background-color: mediumpurple;
+
+
+
+<div class="row">
+    <div class="col-md-6" style="margin-bottom: 5px;">
+        <button class="btn-primary btn-lg shadow-lg" onclick="location.href='@Url.Action("Create", "Fakturaoppsetts")'" style="background-color: purple;
+        font-size: medium;
         font-weight: bold;
-        text-shadow: 1px 0.5px white;
-        border: 2px solid black;
-">
-        <th>
-            @Html.DisplayNameFor(model => model.NavnPaKostnadssted)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tileggsinfo_kostnadssted)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Fakturaformat)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Fakturaadresse)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Husnr)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Bokstav)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Postnummer)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Sted)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Epost)
-        </th>
-        <th></th>
-    </tr>
+        color: white;
+        text-shadow: 1px 1px black;
+        float: left;
+        border-radius: 12px;
+    " >Create</button>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NavnPaKostnadssted)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tileggsinfo_kostnadssted)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fakturaformat)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fakturaadresse)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Husnr)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Bokstav)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Postnummer)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Sted)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Epost)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Kostnadssted }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Kostnadssted }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Kostnadssted })
-        </td>
-    </tr>
-}
-
-</table>
+    </div>
+</div>
+<div class="row">
+    <div style="overflow-x:auto; margin-left:15px; margin-right:15px;">
+        <table class="table table-striped table-bordered shadow-lg" style="border:2px  solid black;" cellspacing="0"  >
+            <thead style="background-color:purple; color: white;text-shadow: 1px 2px black;">
+                <tr>
+                    <th scope="row">
+                        @Html.DisplayNameFor(model => model.NavnPaKostnadssted)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tileggsinfo_kostnadssted)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Fakturaformat)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Fakturaadresse)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Husnr)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Bokstav)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Postnummer)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Sted)
+                    </th>
+                    <th >
+                        @Html.DisplayNameFor(model => model.Epost)
+                    </th>
+                    <th ></th>
+                </tr>
+            </thead>
+            <tbody style="font-weight:bold; color:black; font-size: small;">
+                @foreach (var item in Model)
+                {
+                    <tr style="vertical-align:center;">
+                        <td class="col-sm-1" >
+                            @Html.DisplayFor(modelItem => item.NavnPaKostnadssted)
+                        </td>
+                        <td class="col-sm-1">
+                            @Html.DisplayFor(modelItem => item.Tileggsinfo_kostnadssted)
+                        </td>
+                        <td class="col-sm-1">
+                            @Html.DisplayFor(modelItem => item.Fakturaformat)
+                        </td>
+                        <td class="col-sm-1">
+                            @Html.DisplayFor(modelItem => item.Fakturaadresse)
+                        </td>
+                        <td class="col-sm-1">
+                            @Html.DisplayFor(modelItem => item.Husnr)
+                        </td>
+                        <td class="col-sm-1">
+                            @Html.DisplayFor(modelItem => item.Bokstav)
+                        </td>
+                        <td class="col-sm-1">
+                            @Html.DisplayFor(modelItem => item.Postnummer)
+                        </td>
+                        <td class="col-sm-1">
+                            @Html.DisplayFor(modelItem => item.Sted)
+                        </td>
+                        <td class="text-primary">
+                            @Html.DisplayFor(modelItem => item.Epost)
+                        </td>
+                        <td class="col-sm-2" style="background-color:azure; font-style:italic;font-size: 15px;">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Kostnadssted  }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Kostnadssted }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Kostnadssted })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

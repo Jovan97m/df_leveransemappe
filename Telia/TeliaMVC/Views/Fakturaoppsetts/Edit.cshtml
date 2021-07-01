@@ -3,15 +3,11 @@
 @{
     ViewBag.Title = "Edit";
 }
-
-<h2>Edit</h2>
-
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
+    <div class="form-horizontal" style="margin-left: 10px; position:center;">
         <h4>Fakturaoppsett</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -89,17 +85,33 @@
 
         @Html.HiddenFor(model => model.Kostnadssted)
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn-primary btn-lg shadow-lg" style="
+                font-size: medium;
+                font-weight: bold;
+                color: white;
+                margin_right: 10px;
+                text-shadow: 1px 1px black;
+                border-radius: 12px;" />
+        </div>
+        <div class="col-md-offset-2 col-md-10">
+            <button class="btn-danger btn-lg shadow-lg" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts")'" style="
+                font-size: medium;
+                font-weight: bold;
+                color: white;
+                text-shadow: 1px 1px black;
+                border-radius: 12px;
+                margin-top:5px;
+                ">
+                Back
+            </button>
+        </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
