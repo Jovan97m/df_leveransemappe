@@ -9,7 +9,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.NavnPaKostnadssted, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -100,6 +99,18 @@
                 text-shadow: 1px 1px black;
                 border-radius: 12px;" />
             </div>
+            <div class="col-md-offset-2 col-md-10">
+            <button class="btn-danger btn-lg shadow-lg" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts")';return false;" style="
+                font-size: medium;
+                font-weight: bold;
+                color: white;
+                text-shadow: 1px 1px black;
+                border-radius: 12px;
+                margin-top:5px;
+                ">
+                Back
+            </button>
+        </div>
         </div>
     </div>
 }

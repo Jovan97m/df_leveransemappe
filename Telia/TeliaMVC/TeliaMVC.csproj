@@ -179,6 +179,7 @@
       <DependentUpon>Data_Model.edmx</DependentUpon>
       <LastGenOutput>Data_Model.cs</LastGenOutput>
     </Content>
+    <Content Include="Resources\telia.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\Data_Model.edmx">

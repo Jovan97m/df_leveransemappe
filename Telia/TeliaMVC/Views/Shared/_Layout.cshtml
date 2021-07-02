@@ -3,12 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="icon" href="@Url.Content("~/Resources/telia.png")"/>
+    <title>@ViewBag.Title - TELIA Company</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:purple;">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: black;font-size:large;">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -29,16 +30,15 @@
             </div>
         </div>
     </div>
-
-
-
+<!-- RenderBody crta ceo View. 
+    -->
     <div style="margin-left: 13px; margin-right:12px;">
         @RenderBody()
     </div>
     <hr />
 
     <footer>
-        <p>&copy; @DateTime.Now.Year - Telia</p>
+        <p>&copy;CopyRight @DateTime.Now.Year - Telia Company</p>
     </footer>
 
     @Scripts.Render("~/bundles/jquery")

@@ -60,7 +60,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Postnummer, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Postnummer, htmlAttributes: new { @class = "label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Postnummer, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Postnummer, "", new { @class = "text-danger" })
@@ -87,16 +87,15 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn-primary btn-lg shadow-lg" style="
+            <input type="submit" value="Save" class="btn-success btn-lg shadow-lg" style="
                 font-size: medium;
                 font-weight: bold;
                 color: white;
-                margin_right: 10px;
                 text-shadow: 1px 1px black;
                 border-radius: 12px;" />
         </div>
         <div class="col-md-offset-2 col-md-10">
-            <button class="btn-danger btn-lg shadow-lg" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts")'" style="
+            <button class="btn-danger btn-lg shadow-lg" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts")';return false;" style="
                 font-size: medium;
                 font-weight: bold;
                 color: white;
