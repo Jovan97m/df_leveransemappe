@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TeliaMVC.Models;
+using PagedList; // dodato za prikaz podataka po stranicama
 
 namespace TeliaMVC.Controllers
 {
@@ -15,9 +16,26 @@ namespace TeliaMVC.Controllers
         private TeliaEntities db = new TeliaEntities();
 
         // GET: Fakturaoppsetts
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder,int? page)
         {
-            return View(db.Fakturaoppsetts.ToList());
+            ViewBag.CurrentSort = sortOrder; 
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            var faktures = from s in db.Fakturaoppsetts
+                           select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    faktures = faktures.OrderByDescending(s => s.NavnPaKostnadssted);
+                    break;
+                default:  // Name ascending 
+                    faktures = faktures.OrderBy(s => s.NavnPaKostnadssted);
+                    break;
+            }
+
+
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(faktures.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Fakturaoppsetts/Details/5

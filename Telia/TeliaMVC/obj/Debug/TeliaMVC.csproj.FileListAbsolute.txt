@@ -81,3 +81,7 @@ E:\GitHub\df_leveransemappe\Telia\TeliaMVC\obj\Debug\TeliaMVC.csproj.CoreCompile
 E:\GitHub\df_leveransemappe\Telia\TeliaMVC\obj\Debug\TeliaMVC.csproj.CopyComplete
 E:\GitHub\df_leveransemappe\Telia\TeliaMVC\obj\Debug\TeliaMVC.dll
 E:\GitHub\df_leveransemappe\Telia\TeliaMVC\obj\Debug\TeliaMVC.pdb
+E:\GitHub\df_leveransemappe\Telia\TeliaMVC\bin\PagedList.dll
+E:\GitHub\df_leveransemappe\Telia\TeliaMVC\bin\PagedList.Mvc.dll
+E:\GitHub\df_leveransemappe\Telia\TeliaMVC\bin\PagedList.xml
+E:\GitHub\df_leveransemappe\Telia\TeliaMVC\bin\PagedList.Mvc.xml
