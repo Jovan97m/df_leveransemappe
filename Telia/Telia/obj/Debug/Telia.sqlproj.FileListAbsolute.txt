@@ -4,3 +4,9 @@ E:\GitHub\df_leveransemappe\Telia\Telia\bin\Debug\Telia.pdb
 E:\GitHub\df_leveransemappe\Telia\Telia\obj\Debug\Telia.sqlprojAssemblyReference.cache
 E:\GitHub\df_leveransemappe\Telia\Telia\obj\Debug\Telia.dll
 E:\GitHub\df_leveransemappe\Telia\Telia\obj\Debug\Telia.pdb
+D:\GitHub\df_leveransemappe\Telia\Telia\bin\Debug\Telia.dacpac
+D:\GitHub\df_leveransemappe\Telia\Telia\bin\Debug\Telia.dll
+D:\GitHub\df_leveransemappe\Telia\Telia\bin\Debug\Telia.pdb
+D:\GitHub\df_leveransemappe\Telia\Telia\obj\Debug\Telia.sqlproj.AssemblyReference.cache
+D:\GitHub\df_leveransemappe\Telia\Telia\obj\Debug\Telia.dll
+D:\GitHub\df_leveransemappe\Telia\Telia\obj\Debug\Telia.pdb

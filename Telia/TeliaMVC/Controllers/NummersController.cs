@@ -7,18 +7,36 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TeliaMVC.Models;
+using PagedList;
 
 namespace TeliaMVC.Controllers
 {
     public class NummersController : Controller
     {
+        
         private TeliaEntities db = new TeliaEntities();
 
         // GET: Nummers
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, int? page)
         {
-            var nummers = db.Nummers.Include(n => n.Fakturaoppsett);
-            return View(nummers.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            var nummers = from s in db.Nummers
+                select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    nummers = nummers.OrderByDescending(s => s.Telefonnummer);
+                    break;
+                default:  // Name ascending 
+                   nummers = nummers.OrderBy(s => s.Telefonnummer);
+                    break;
+            }
+
+
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(nummers.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Nummers/Details/5

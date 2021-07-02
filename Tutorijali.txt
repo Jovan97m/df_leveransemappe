@@ -1,0 +1,2 @@
+1.Add sorting, filtering, and paging with the Entity Framework in an ASP.NET MVC application
+	Link: https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application?fbclid=IwAR3R9Ddxm6rCDYGW3Md9isFk3xol-S2o8xV1e2J2yzk8NxH10-ugAEnkn2c
