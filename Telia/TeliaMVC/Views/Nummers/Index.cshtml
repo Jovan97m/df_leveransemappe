@@ -27,7 +27,7 @@
     @using (Html.BeginForm("Index", "Nummers", FormMethod.Get))
     {
         <p style="font-size: medium;font-weight:bold;color:black;margin-left:15px;">
-            Søk etter navn: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            Søk etter telefonmummer: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
             <input type="submit" value="Search" class="btn btn-info shadow-lg" style="        color: black;
                                                                                       font-size: medium;
                                                                                       border-radius: 14px;
@@ -42,159 +42,161 @@
                           color: white;
                           text-shadow: 1px 2px black;">
             <tr>
-                <th scope="row">
+                <th scope="row" class="col-sm-2">
+                    Telefonnummer
+                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Telefonnummer, currentFilter = ViewBag.CurrentFilter })'">
+                        <span class="glyphicon glyphicon-sort"></span>
+                    </button>
+                </th>
+                <th scope="row" class="col-sm-2">
                     Abonnementstype
-                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Telefonnummer, currentFilter = ViewBag.CurrentFilter })'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
-                <th>
+                <th class="col-sm-2">
                     Fornavn
                     <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
-                <th>
+                <th class="col-sm-2">
                     Etternavn
                     <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
-                <th>
+                <th class="col-sm-2">
                     Bedrift_som_skal_faktureres
                     <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
-                <th>
+                <th class="col-sm-2">
                     c_o_adresse_for_SIM_levering
                     <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href='@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
-                <th>
+                <th class="col-sm-2">
                     Gateadresse_SIM_Skal_sendes_til
                     <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
-                <th>
+                <th class="col-sm-2">
                     Hus_nummer
                     <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
-                <th>
+                <th class="col-sm-2">
                     Hus_bokstav
                     <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
-                <th>
+                <th class="col-sm-2">
                     post_nr_
                 </th>
-                <th>
+                <th class="col-sm-2">
                     Post_sted
                 </th>
-                <th>
+                <th class="col-sm-2">
                     Epost_for_sporings_informasjon
                 </th>
-                <th>
+                <th class="col-sm-2" >
                     Epost
                 </th>
-                <th>
+                <th class="col-sm-2">
                     Tilleggsinfo_ansatt_ID
                 </th>
-                <th>
+                <th class="col-sm-2">
                     Ekstra_talesim_
                 </th>
-                <th>
+                <th class="col-sm-2">
                     Ekstra_datasim
                 </th>
-                <th>
+                <th class="col-sm-2">
                     NavnPaKostnadssted
                 </th>
-                <th></th>
-                <th></th>
+                <th style="width:35px;"></th>
             </tr>
             </thead>
-            <tbody style="font-weight: bold; color: black; font-size: 16px;">
+            <tbody style=" color: black; font-size: 13px;">
             @foreach (var item in Model)
             {
                 <tr>
-                    <td >
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.Telefonnummer)
+                    </td>
+                    <td class="col-sm-1">
                         @Html.DisplayFor(modelItem => item.Abonnementstype)
                     </td>
-                    <td >
+                    <td class="col-sm-1">
                         @Html.DisplayFor(modelItem => item.Fornavn)
                     </td>
-                    <td >
+                    <td class="col-sm-1">
                         @Html.DisplayFor(modelItem => item.Etternavn)
                     </td>
-                    <td >
+                    <td class="col-sm-1">
                         @Html.DisplayFor(modelItem => item.Bedrift_som_skal_faktureres)
                     </td>
-                    <td >
+                    <td class="col-sm-1">
                         @Html.DisplayFor(modelItem => item.c_o_adresse_for_SIM_levering)
                     </td>
-                    <td >
+                    <td class="col-sm-1">
                         @Html.DisplayFor(modelItem => item.Gateadresse_SIM_Skal_sendes_til)
                     </td>
-                    <td >
+                    <td class="col-sm-1">
                         @Html.DisplayFor(modelItem => item.Hus_nummer)
                     </td>
-                    <td >
+                    <td class="col-sm-1">
                         @Html.DisplayFor(modelItem => item.Hus_bokstav)
                     </td>
-                    <td >
+                    <td class="col-sm-1">
                         @Html.DisplayFor(modelItem => item.post_nr_)
                     </td>
-                    <td >
+                    <td class="col-sm-1">
                         @Html.DisplayFor(modelItem => item.Post_sted)
                     </td>
-                    <td >
+                    <td class="col-sm-1" style="color:darkblue; font-style:italic;font-weight: bold;">
                         @Html.DisplayFor(modelItem => item.Epost_for_sporings_informasjon)
                     </td>
-                    <td >
+                    <td class="col-sm-1" style="color:darkblue; font-style:italic;font-weight: bold;">
                         @Html.DisplayFor(modelItem => item.Epost)
                     </td>
-                    <td >
+                    <td class="col-sm-1">
                         @Html.DisplayFor(modelItem => item.Tilleggsinfo_ansatt_ID)
                     </td>
-                    <td >
+                    <td class="col-sm-1">
                         @Html.DisplayFor(modelItem => item.Ekstra_talesim_)
                     </td>
-                    <td >
+                    <td class="col-sm-1">
                         @Html.DisplayFor(modelItem => item.Ekstra_datasim)
                     </td>
-                    <td >
+                    <td class="col-sm-1">
                         @Html.DisplayFor(modelItem => item.Fakturaoppsett.NavnPaKostnadssted)
                     </td>
                     <td style="background-color: azure; font-style: italic; font-size: 15px;" class="col-sm-2">
-                        <div class="btn-group" role="group" aria-label="Basic example">
+                        <div style="display:flex; align-items:stretch;">
                             <button class="btn-primary btn-group-sm shadow-lg" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
-                                    onclick="location.href = '@Url.Action("Edit", "Nummers", new {id = item.Telefonnummer})'" style=" font-size: large; font-weight: bold; color: white; text-shadow: 1px 1px black; border-radius: 12px; ">
+                                    onclick="location.href = '@Url.Action("Edit", "Nummers", new {id = item.Telefonnummer})'" style=" font-size: smaller;
+                                      color: white;
+                                      text-shadow: 1px 1px black;
+                                      margin-right: 2px;
+                                      margin-bottom:2px;
+                                      border-radius: 12px; ">
                                 <span class="glyphicon glyphicon-pencil"></span>
 
                             </button>
-                            <!--
-                            <button class="btn-info btn-group-sm shadow-lg" onclick="location.href='@Url.Action("Details", "Nummers", new {id = item.Telefonnummer})'" style="
-                 font-size: medium;
-                 font-weight: bold;
-                 color: white;
-                 text-shadow: 1px 1px black;
-                 border-radius: 12px;
-                ">
-                                Details
-                            </button>
-                            -->
-
-                        </div>
-                    </td>
-                    <td style="background-color: azure; font-style: italic; font-size: 15px;" class="col-sm-2">
-                        <div class="btn-group" role="group" aria-label="Basic example">
                             <button class="btn-danger btn-group-sm shadow-lg" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du slette valgt rad"
-                                    onclick="location.href = '@Url.Action("Delete", "Nummers", new {id = item.Telefonnummer})'" style="font-size: medium; font-weight: bold; font-size: large; color: white; text-shadow: 1px 1px black; border-radius: 12px; ">
+                                    onclick="location.href = '@Url.Action("Delete", "Nummers", new {id = item.Telefonnummer})'" style="font-size: smaller;
+                                     color: white;
+                                     text-shadow: 1px 1px black;
+                                     margin-bottom:2px;
+                                     margin-left:2px;
+                                     border-radius: 12px; ">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </div>

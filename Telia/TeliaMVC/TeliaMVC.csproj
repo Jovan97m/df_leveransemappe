@@ -143,6 +143,8 @@
     <Compile Include="Models\Admin.cs">
       <DependentUpon>Data_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataSIM2.cs" />
+    <Compile Include="Models\DataSIM5.cs" />
     <Compile Include="Models\Data_Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -164,6 +166,7 @@
     <Compile Include="Models\Nummer.cs">
       <DependentUpon>Data_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TelefonnummerCheck.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

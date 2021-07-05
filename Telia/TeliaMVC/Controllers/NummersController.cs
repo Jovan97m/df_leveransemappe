@@ -21,7 +21,7 @@ namespace TeliaMVC.Controllers
         {
             ViewBag.CurrentSort = sortOrder;
             //Viewbags- za sortiranja svake kolone;
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.Telefonnummer = String.IsNullOrEmpty(sortOrder) ? "telefonnummer_desc" : "";
             ViewBag.TilegsSortParm = sortOrder == "Tilegs" ? "tilegs_desc" : "Tilegs"; // mislim da ne bi trebalo da ima ova
             ViewBag.EtternavnSortParm = sortOrder == "Etternavn" ? "etternavn_desc" : "EtternavnFormat";
             ViewBag.Bedrift_som_skal_faktureresSortParm = sortOrder == "Bedrift_som_skal_faktureres	" ? "bedrift_som_skal_faktureres_desc" : "Bedrift_som_skal_faktureres";
@@ -47,14 +47,14 @@ namespace TeliaMVC.Controllers
             //pretrazivanje pre rasporedjivanja:
             if (!String.IsNullOrEmpty(searchString))
             {
-                nummers = nummers.Where(s => s.Abonnementstype.Contains(searchString));
+                nummers = nummers.Where(s => s.Fornavn.Contains(searchString));
             }
 
 
             switch (sortOrder)
             {
                 //prva kolona
-                case "name_desc":
+                case "telefonnummer_desc":
                     nummers = nummers.OrderByDescending(s => s.Telefonnummer);
                     break;
                 //druga kolona:
@@ -104,7 +104,11 @@ namespace TeliaMVC.Controllers
                 case "postnummer_desc":
                     nummers = nummers.OrderByDescending(s => s.Hus_bokstav);
                     break;
+                default:
+                    nummers = nummers.OrderBy(s => s.Telefonnummer);
+                    break;
             }
+
             int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(nummers.ToPagedList(pageNumber, pageSize));
@@ -139,6 +143,7 @@ namespace TeliaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim")] Nummer nummer)
         {
+            nummer.Abonnementstype = nummer.Abonnementstype + "GB";
             if (ModelState.IsValid)
             {
                 db.Nummers.Add(nummer);

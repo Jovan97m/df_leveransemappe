@@ -11,24 +11,41 @@ namespace TeliaMVC.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations; // za anotacije
+
     public partial class Fakturaoppsett
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Fakturaoppsett()
+        public Fakturaoppsett() // kreira se tabela
         {
             this.Nummers = new HashSet<Nummer>();
         }
-    
+        //Data anotacije za CLIENT-SIDE:
+
+        [StringLength(60)]
         public string NavnPaKostnadssted { get; set; }
+        [StringLength(200)]
         public string Tileggsinfo_kostnadssted { get; set; }
-        public string Fakturaformat { get; set; }
+        [Required(ErrorMessage = "Fakturaformat is needed")]
+        [StringLength(30)]
+        public string Fakturaformat { get; set; } // mora da postoji
+        [Required(ErrorMessage = "Fakturaadresse is needed")]
+        [StringLength(30)]
         public string Fakturaadresse { get; set; }
         public Nullable<int> Husnr { get; set; }
         public string Bokstav { get; set; }
         public Nullable<int> Postnummer { get; set; }
         public string Sted { get; set; }
+
+        [Display(Name = "Email address")]
+        [Required(ErrorMessage = "The email address is required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Epost { get; set; }
+
+
+        //Primary Key
+        [Required(ErrorMessage = "Kostnadssted is needed")]
+        [StringLength(40)]
         public string Kostnadssted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
