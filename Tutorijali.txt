@@ -1,2 +1,15 @@
 1.Add sorting, filtering, and paging with the Entity Framework in an ASP.NET MVC application
 	Link: https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/getting-started-with-ef-using-mvc/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application?fbclid=IwAR3R9Ddxm6rCDYGW3Md9isFk3xol-S2o8xV1e2J2yzk8NxH10-ugAEnkn2c
+
+
+2.Vezano za Login,resetovanje passworda:
+https://www.c-sharpcorner.com/article/forgot-password-and-reset-password-link-on-email-in-mvc/#:~:text=In%20this%20article%20we%20will%20see%20how%20to,will%20see%20how%20to%20reset%20the%20password%20
+
+3. Data-validation
+https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/database-first-development/enhancing-data-validation
+
+4.POST i GET metode
+https://www.w3.org/2001/tag/doc/whenToUseGet.html
+
+5. Deploy na sajt
+https://www.youtube.com/watch?v=UFyVZ-mAnpQ

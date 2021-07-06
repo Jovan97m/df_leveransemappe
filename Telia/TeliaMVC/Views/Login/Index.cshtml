@@ -8,36 +8,64 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login</title>
     <link rel="icon" href="@Url.Content("~/Resources/telia.png")" />
     <style>
         #login-div {
             position: absolute;
             left: 40%;
             top: 40%;
-            
-            padding: 10px 10px;
-            
+            font-size: larger;
+            padding: 12px 12px;
+            height: 245px;
+            width: 340px;
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2), 0 8px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 16px;
+            background-color: #b83bf7;
         }
+        input {
+            color: black;
+            background-color: honeydew;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 13px;
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2), 0 8px 21px 0 rgba(0, 0, 0, 0.21);
+        }
+        table{
+            background-color:transparent;
+            color:white;
+            font-weight: bold;
+            text-shadow:2px 1px black;
+            font-size: 25px;
+            text-decoration: none;
+            font-family: 'Franklin Gothic';
 
+        }
         .field-validation-error {
-            color: red;
+            color: white;
+            text-shadow: 1px 2px red;
+            font-size: medium;
+            font-weight: bold;
+            font-style: italic;
+        }
+        input[type=text]:focus {
+            background-color: lightblue;
         }
         
     </style>
 </head>
-<body style="background-color: #990ae3; background-image: url('../../Resources/telia.png'); background-repeat: no-repeat;
-             background-attachment: fixed;
-             background-position: center; ">
+<body style="background-color: #990ae3; ">
     <div id="login-div">
         @using (Html.BeginForm("Authorise", "Login", FormMethod.Post))
         {
             <table>
-                <tr>
-                    <td></td>
-                    <td style="text-align: center">Login</td>
-                </tr>
+                <thead >
+                    <tr>
+                        <th>  </th>
+                        <th style="text-align: center; position:center;">Login</th>
+                    </tr>
+                </thead>
                 <tr>
                     <td> @Html.LabelFor(model => model.UserName)</td>
                     <td>@Html.EditorFor(model => model.UserName)</td>
@@ -62,14 +90,12 @@
                 <tr>
                     <td></td>
                     <td>
-                        <input type="submit" value="Login" />
-                        <input type="reset" value="Clear" />
+                        <input type="submit" value="Login"  style="border-radius:12px;margin-top:3px; font-size: large;"/>
+                        <input type="reset" value="Clear" style="border-radius:12px; margin-left:5px; font-size: large;" />
                     </td>
                 </tr>
             </table>
-
         }
-
         <script src="~/Scripts/jquery-3.4.1.min.js"></script>
         <script src="~/Scripts/jquery.validate.min.js"></script>
         <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

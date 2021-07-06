@@ -121,8 +121,11 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Kostnadsted, "Kostnadsted", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("Kostnadsted", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Kostnadsted, "", new { @class = "text-danger" })
+            <div style="display:inline-block;">
+                @Html.DropDownList("Kostnadsted", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Kostnadsted, "", new { @class = "text-danger" })
+                <a class="btn btn-success btn-sm" style="margin-top:10px;" href="">New &raquo;</a>
+            </div>
         </div>
     </div>
 
