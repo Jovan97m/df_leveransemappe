@@ -27,14 +27,16 @@
         
     </style>
 </head>
-<body style="background-color: #990ae3" >
+<body style="background-color: #990ae3; background-image: url('../../Resources/telia.png'); background-repeat: no-repeat;
+             background-attachment: fixed;
+             background-position: center; ">
     <div id="login-div">
         @using (Html.BeginForm("Authorise", "Login", FormMethod.Post))
         {
             <table>
                 <tr>
                     <td></td>
-                    <td style="text-decoration:underline">Login</td>
+                    <td style="text-align: center">Login</td>
                 </tr>
                 <tr>
                     <td> @Html.LabelFor(model => model.UserName)</td>
