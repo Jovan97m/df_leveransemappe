@@ -4,6 +4,10 @@
 
 @{
     ViewBag.Title = "FakturaOppsett";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
 }
 
 <h2>Fakturaoppsett</h2>

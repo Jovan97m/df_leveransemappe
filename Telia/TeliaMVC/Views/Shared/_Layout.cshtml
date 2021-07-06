@@ -28,13 +28,15 @@
                     <li> @Html.ActionLink(" Nummers", "Index", "Nummers")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-
+                    <li><a href="@Url.Action("LogOut","Login")"> Logout</a></li>
+                    
                 </ul>
             </div>
         </div>
     </div>
 <!-- RenderBody crta ceo View. 
-    -->
+-->
+    
     <div style="margin-left: 13px; margin-right:12px;">
         @RenderBody()
     </div>
