@@ -29,6 +29,7 @@
     <EntitySetMapping Name="Nummers">
       <EntityTypeMapping TypeName="TeliaModel.Nummer">
         <MappingFragment StoreEntitySet="Nummer">
+          <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Telefonnummer" ColumnName="Telefonnummer" />
           <ScalarProperty Name="Abonnementstype" ColumnName="Abonnementstype" />
           <ScalarProperty Name="Fornavn" ColumnName="Fornavn" />

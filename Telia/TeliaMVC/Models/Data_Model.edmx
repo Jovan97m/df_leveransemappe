@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TeliaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TeliaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="Id" />
@@ -30,9 +30,10 @@
         </EntityType>
         <EntityType Name="Nummer">
           <Key>
-            <PropertyRef Name="Telefonnummer" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Telefonnummer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Telefonnummer" Type="nvarchar" MaxLength="20" />
           <Property Name="Abonnementstype" Type="nvarchar" MaxLength="20" />
           <Property Name="Fornavn" Type="nvarchar" MaxLength="50" />
           <Property Name="Etternavn" Type="nvarchar" MaxLength="50" />
@@ -73,8 +74,7 @@
             <End Role="Nummer" EntitySet="Nummer" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TeliaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -104,9 +104,9 @@
         </EntityType>
         <EntityType Name="Nummer">
           <Key>
-            <PropertyRef Name="Telefonnummer" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Telefonnummer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Telefonnummer" Type="String" annotation:StoreGeneratedPattern="None" MaxLength="20" Unicode="true" FixedLength="false" />
           <Property Name="Abonnementstype" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Fornavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Etternavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -124,6 +124,7 @@
           <Property Name="Ekstra_talesim_" Type="Int32" />
           <Property Name="Ekstra_datasim" Type="Int32" />
           <NavigationProperty Name="Fakturaoppsett" Relationship="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" FromRole="Nummer" ToRole="Fakturaoppsett" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
           <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">
@@ -182,6 +183,7 @@
           <EntitySetMapping Name="Nummers">
             <EntityTypeMapping TypeName="TeliaModel.Nummer">
               <MappingFragment StoreEntitySet="Nummer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Telefonnummer" ColumnName="Telefonnummer" />
                 <ScalarProperty Name="Abonnementstype" ColumnName="Abonnementstype" />
                 <ScalarProperty Name="Fornavn" ColumnName="Fornavn" />

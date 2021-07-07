@@ -25,9 +25,10 @@
   </EntityType>
   <EntityType Name="Nummer">
     <Key>
-      <PropertyRef Name="Telefonnummer" />
+      <PropertyRef Name="ID" />
     </Key>
-    <Property Name="Telefonnummer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Telefonnummer" Type="nvarchar" MaxLength="20" />
     <Property Name="Abonnementstype" Type="nvarchar" MaxLength="20" />
     <Property Name="Fornavn" Type="nvarchar" MaxLength="50" />
     <Property Name="Etternavn" Type="nvarchar" MaxLength="50" />

@@ -17,7 +17,7 @@ namespace TeliaMVC.Models
     {
         [Required]
         [TelefonnummerCheck]
-        public int Telefonnummer { get; set; }
+        public string Telefonnummer { get; set; }
         [Required]
         public string Abonnementstype { get; set; }
         [Required]
@@ -51,6 +51,7 @@ namespace TeliaMVC.Models
         public Nullable<int> Ekstra_talesim_ { get; set; }
         [DataSIM5]
         public Nullable<int> Ekstra_datasim { get; set; }
+        public int ID { get; set; }
     
         public virtual Fakturaoppsett Fakturaoppsett { get; set; }
     }

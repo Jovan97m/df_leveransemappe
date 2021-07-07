@@ -1,5 +1,6 @@
 ﻿CREATE TABLE [dbo].[Nummer](
-    [Telefonnummer] INT IDENTITY (1, 1) NOT NULL,
+    [Id] INT IDENTITY (1, 1) NOT NULL,
+    [Telefonnummer] NVARCHAR (20) NULL,
     [Abonnementstype] NVARCHAR (20),
     [Fornavn] NVARCHAR (50),
     [Etternavn] NVARCHAR (50),
@@ -16,7 +17,7 @@
     [Tilleggsinfo/ansatt ID] INT,
     [Ekstra talesim ] INT ,
     [Ekstra datasim] INT ,
-    PRIMARY KEY CLUSTERED ([Telefonnummer] ASC),
+    PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_dbo.Nummer_dbo.Fakturaoppsett_NavnPåKostnadssted] FOREIGN KEY ([Kostnadsted])
         REFERENCES [dbo].[Fakturaoppsett] ([Kostnadssted]) ON DELETE CASCADE
 )

@@ -47,7 +47,7 @@ namespace TeliaMVC.Models
         [Required(ErrorMessage = "Kostnadssted is needed")]
         [StringLength(40)]
         public string Kostnadssted { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Nummer> Nummers { get; set; }
     }
