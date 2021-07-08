@@ -29,6 +29,9 @@
     <EntitySetMapping Name="Nummers">
       <EntityTypeMapping TypeName="TeliaModel.Nummer">
         <MappingFragment StoreEntitySet="Nummer">
+          <ScalarProperty Name="Pending" ColumnName="Pending" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Orgnummer" ColumnName="Orgnummer" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Telefonnummer" ColumnName="Telefonnummer" />
           <ScalarProperty Name="Abonnementstype" ColumnName="Abonnementstype" />
@@ -47,6 +50,16 @@
           <ScalarProperty Name="Tilleggsinfo_ansatt_ID" ColumnName="Tilleggsinfo/ansatt ID" />
           <ScalarProperty Name="Ekstra_talesim_" ColumnName="Ekstra talesim " />
           <ScalarProperty Name="Ekstra_datasim" ColumnName="Ekstra datasim" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="TeliaModel.Client">
+        <MappingFragment StoreEntitySet="Client">
+          <ScalarProperty Name="Id_admin" ColumnName="Id_admin" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Orgnummer" ColumnName="Orgnummer" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

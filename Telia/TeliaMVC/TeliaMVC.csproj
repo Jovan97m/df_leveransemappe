@@ -145,6 +145,9 @@
     <Compile Include="Models\Admin.cs">
       <DependentUpon>Data_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Client.cs">
+      <DependentUpon>Data_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataSIM2.cs" />
     <Compile Include="Models\DataSIM5.cs" />
     <Compile Include="Models\Data_Model.Context.cs">

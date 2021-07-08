@@ -40,11 +40,38 @@ USE [$(DatabaseName)];
 
 
 GO
-PRINT N'Altering [dbo].[Nummer]...';
+PRINT N'Creating [dbo].[Client]...';
 
 
 GO
-ALTER TABLE [dbo].[Nummer] ALTER COLUMN [Telefonnummer] NVARCHAR (20) NULL;
+CREATE TABLE [dbo].[Client] (
+    [Id]        INT           IDENTITY (1, 1) NOT NULL,
+    [Orgnummer] NVARCHAR (50) NOT NULL,
+    [Password]  NVARCHAR (50) NOT NULL,
+    [Id_admin]  INT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[FK_dbo.Admin.Id_Admin]...';
+
+
+GO
+ALTER TABLE [dbo].[Client] WITH NOCHECK
+    ADD CONSTRAINT [FK_dbo.Admin.Id_Admin] FOREIGN KEY ([Id_admin]) REFERENCES [dbo].[Admin] ([Id]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Checking existing data against newly created constraints';
+
+
+GO
+USE [$(DatabaseName)];
+
+
+GO
+ALTER TABLE [dbo].[Client] WITH CHECK CHECK CONSTRAINT [FK_dbo.Admin.Id_Admin];
 
 
 GO

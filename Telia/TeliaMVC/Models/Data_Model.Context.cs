@@ -28,5 +28,6 @@ namespace TeliaMVC.Models
         public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<Fakturaoppsett> Fakturaoppsetts { get; set; }
         public virtual DbSet<Nummer> Nummers { get; set; }
+        public virtual DbSet<Client> Clients { get; set; }
     }
 }

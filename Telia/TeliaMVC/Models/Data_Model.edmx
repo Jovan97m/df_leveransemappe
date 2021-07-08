@@ -13,6 +13,15 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Orgnummer" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id_admin" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Fakturaoppsett">
           <Key>
             <PropertyRef Name="Kostnadssted" />
@@ -50,7 +59,24 @@
           <Property Name="Tilleggsinfo/ansatt ID" Type="int" />
           <Property Name="Ekstra talesim " Type="int" />
           <Property Name="Ekstra datasim" Type="int" />
+          <Property Name="Orgnummer" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Pending" Type="bit" />
         </EntityType>
+        <Association Name="FK_dbo_Admin_Id_Admin">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="Id_admin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
           <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -67,8 +93,13 @@
         </Association>
         <EntityContainer Name="TeliaModelStoreContainer">
           <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fakturaoppsett" EntityType="Self.Fakturaoppsett" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nummer" EntityType="Self.Nummer" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Admin_Id_Admin" Association="Self.FK_dbo_Admin_Id_Admin">
+            <End Role="Admin" EntitySet="Admin" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" Association="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
             <End Role="Fakturaoppsett" EntitySet="Fakturaoppsett" />
             <End Role="Nummer" EntitySet="Nummer" />
@@ -85,6 +116,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Clients" Relationship="TeliaModel.FK_dbo_Admin_Id_Admin" FromRole="Admin" ToRole="Client" />
         </EntityType>
         <EntityType Name="Fakturaoppsett">
           <Key>
@@ -125,6 +157,9 @@
           <Property Name="Ekstra_datasim" Type="Int32" />
           <NavigationProperty Name="Fakturaoppsett" Relationship="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" FromRole="Nummer" ToRole="Fakturaoppsett" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Orgnummer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Pending" Type="Boolean" />
         </EntityType>
         <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
           <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">
@@ -148,7 +183,36 @@
             <End Role="Fakturaoppsett" EntitySet="Fakturaoppsetts" />
             <End Role="Nummer" EntitySet="Nummers" />
           </AssociationSet>
+          <EntitySet Name="Clients" EntityType="TeliaModel.Client" />
+          <AssociationSet Name="FK_dbo_Admin_Id_Admin" Association="TeliaModel.FK_dbo_Admin_Id_Admin">
+            <End Role="Admin" EntitySet="Admins" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Orgnummer" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id_admin" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Admin" Relationship="TeliaModel.FK_dbo_Admin_Id_Admin" FromRole="Client" ToRole="Admin" />
+        </EntityType>
+        <Association Name="FK_dbo_Admin_Id_Admin">
+          <End Type="TeliaModel.Admin" Role="Admin" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TeliaModel.Client" Role="Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="Id_admin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -183,6 +247,9 @@
           <EntitySetMapping Name="Nummers">
             <EntityTypeMapping TypeName="TeliaModel.Nummer">
               <MappingFragment StoreEntitySet="Nummer">
+                <ScalarProperty Name="Pending" ColumnName="Pending" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Orgnummer" ColumnName="Orgnummer" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Telefonnummer" ColumnName="Telefonnummer" />
                 <ScalarProperty Name="Abonnementstype" ColumnName="Abonnementstype" />
@@ -201,6 +268,16 @@
                 <ScalarProperty Name="Tilleggsinfo_ansatt_ID" ColumnName="Tilleggsinfo/ansatt ID" />
                 <ScalarProperty Name="Ekstra_talesim_" ColumnName="Ekstra talesim " />
                 <ScalarProperty Name="Ekstra_datasim" ColumnName="Ekstra datasim" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="TeliaModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Id_admin" ColumnName="Id_admin" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Orgnummer" ColumnName="Orgnummer" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

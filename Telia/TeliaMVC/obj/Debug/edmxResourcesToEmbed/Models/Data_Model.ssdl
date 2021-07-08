@@ -8,6 +8,15 @@
     <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Orgnummer" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Id_admin" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="Fakturaoppsett">
     <Key>
       <PropertyRef Name="Kostnadssted" />
@@ -45,7 +54,24 @@
     <Property Name="Tilleggsinfo/ansatt ID" Type="int" />
     <Property Name="Ekstra talesim " Type="int" />
     <Property Name="Ekstra datasim" Type="int" />
+    <Property Name="Orgnummer" Type="nvarchar" MaxLength="50" />
+    <Property Name="Date" Type="date" />
+    <Property Name="Pending" Type="bit" />
   </EntityType>
+  <Association Name="FK_dbo_Admin_Id_Admin">
+    <End Role="Admin" Type="Self.Admin" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Client" Type="Self.Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="Id_admin" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
     <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -62,8 +88,13 @@
   </Association>
   <EntityContainer Name="TeliaModelStoreContainer">
     <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Fakturaoppsett" EntityType="Self.Fakturaoppsett" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Nummer" EntityType="Self.Nummer" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_dbo_Admin_Id_Admin" Association="Self.FK_dbo_Admin_Id_Admin">
+      <End Role="Admin" EntitySet="Admin" />
+      <End Role="Client" EntitySet="Client" />
+    </AssociationSet>
     <AssociationSet Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" Association="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
       <End Role="Fakturaoppsett" EntitySet="Fakturaoppsett" />
       <End Role="Nummer" EntitySet="Nummer" />

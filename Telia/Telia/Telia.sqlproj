@@ -61,5 +61,6 @@
     <Build Include="Admin.sql" />
     <Build Include="Nummer.sql" />
     <Build Include="FakturaOppset.sql" />
+    <Build Include="Client.sql" />
   </ItemGroup>
 </Project>

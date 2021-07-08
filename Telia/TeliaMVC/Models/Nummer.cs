@@ -32,6 +32,9 @@ namespace TeliaMVC.Models
         public Nullable<int> Ekstra_talesim_ { get; set; }
         public Nullable<int> Ekstra_datasim { get; set; }
         public int ID { get; set; }
+        public string Orgnummer { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
+        public Nullable<bool> Pending { get; set; }
     
         public virtual Fakturaoppsett Fakturaoppsett { get; set; }
     }
