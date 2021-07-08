@@ -4,8 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5804e40a81e34cc5b379a8bab1cc8f54" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="TeliaModel.Admin" Width="1.5" PointX="4.25" PointY="0.5" IsExpanded="true" />
+      <Diagram DiagramId="5804e40a81e34cc5b379a8bab1cc8f54" Name="Diagram1" ZoomLevel="125">
+        <EntityTypeShape EntityType="TeliaModel.Admin" Width="1.5" PointX="6.375" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TeliaModel.Fakturaoppsett" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TeliaModel.Nummer" Width="1.5" PointX="2.5" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="TeliaModel.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" ManuallyRouted="false" />

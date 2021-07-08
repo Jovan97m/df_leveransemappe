@@ -46,7 +46,7 @@
                           color: white;
                           text-shadow: 1px 2px black;">
             <tr>
-                <th scope="row" class="col-sm-2">
+                <th class="col-sm-2">
                     Telefonnummer
                     <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Telefonnummer, currentFilter = ViewBag.CurrentFilter })'">
                         <span class="glyphicon glyphicon-sort"></span>
@@ -185,7 +185,7 @@
                     <td style="background-color: azure; font-style: italic; font-size: 15px;" class="col-sm-2">
                         <div style="display:flex; align-items:stretch;">
                             <button class="btn-primary btn-group-sm shadow-lg" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
-                                    onclick="location.href = '@Url.Action("Edit", "Nummers", new {id = item.Telefonnummer})'" style=" font-size: smaller;
+                                    onclick="location.href = '@Url.Action("Edit", "Nummers", new {id = item.ID})'" style=" font-size: smaller;
                                       color: white;
                                       text-shadow: 1px 1px black;
                                       margin-right: 2px;
@@ -195,7 +195,7 @@
 
                             </button>
                             <button class="btn-danger btn-group-sm shadow-lg" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du slette valgt rad"
-                                    onclick="location.href = '@Url.Action("Delete", "Nummers", new {id = item.Telefonnummer})'" style="font-size: smaller;
+                                    onclick="location.href = '@Url.Action("Delete", "Nummers", new {id = item.ID})'" style="font-size: smaller;
                                      color: white;
                                      text-shadow: 1px 1px black;
                                      margin-bottom:2px;

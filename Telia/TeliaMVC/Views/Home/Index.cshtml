@@ -5,31 +5,57 @@
         Response.Redirect("~/Login/Index");
     }
 }
+<style>
+    .buttonLink {
+        color: black;
+        font-weight: bold;
+        font-size: medium;
+        font-family: 'Times New Roman';
+        border-radius: 14px;
+        box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
+    }
+        .buttonLink:hover {
+            box-shadow: 0 5px 11px 1px rgba(0, 0, 0, 0.21), 0 9px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+}
+    }
+    .jumbo {
+        box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.19), 0 4px 15px 0 rgba(0, 0, 0, 0.17);
+    }
+</style>
+<div class="jumbotron jumbo" style="background-color: #ffaa80; ">
+    <h3>Hjelp</h3>
+    <p class="lead">
+        <span style="font-weight: bold;">Produkter:</span>  Trykk på de produktene du ønsker for å åpne respektive faner. Hver fane må så fylles ut.
+    </p>
+    <p class="lead">
+        <span style="font-weight: bold;">
+            Prisplaner:</span>  Velg type abonnement du ønsker å tilby kunden før listen sendes til kunde! Trykk så Til Forside.
+    </p>
+    <p class="lead">
+        <span style="font-weight: bold;">Binding:</span> Velg om kunden skal ha 24- eller 36mnd bindingsavtale.
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </p>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<div class="row" style="margin-left: 10px;">
+    <h2>Produkter</h2>
+    <div class="col-md-2">
+
+        <p><button class="btn btn-default buttonLink" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts")'">FakturaOppsett &raquo;</button></p>
+        <p><a class="btn btn-default buttonLink">Brukerliste &raquo;</a></p>
+        <p><a class="btn btn-default buttonLink">TBN Konfigurasjon &raquo;</a></p>
+        <p><a class="btn btn-default buttonLink">TBN Brukere &raquo;</a></p>
+        <p><a class="btn btn-default buttonLink">IKKE i BRUK &raquo;</a></p>
+        <p><a class="btn btn-default buttonLink">One Number &raquo;</a></p>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <div class="col-md-2">
+        <p><a class="btn btn-default buttonLink">TBN SIP Trunk &raquo;</a></p>
+        <p><a class="btn btn-default buttonLink">TBN Tale and Teams &raquo;</a></p>
+        <p><a class="btn btn-default buttonLink">Exchange &raquo;</a></p>
+        <p><a class="btn btn-default buttonLink">AD &raquo;</a></p>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="col-md-2">
+        <p><a class="btn btn-default buttonLink">Etiketter &raquo;</a></p>
     </div>
 </div>
