@@ -16,20 +16,38 @@ namespace TeliaMVC.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Authorise(Admin admin)
+        public ActionResult Authorise(Admin admin, Client client,String usertype)
+
         {
             using (TeliaEntities db = new TeliaEntities())
             {
-                var userDetail = db.Admins.Where(x => x.UserName == admin.UserName && x.Password == admin.Password).FirstOrDefault();
-                if (userDetail == null)
+                if (usertype == "Admin")
                 {
-                    admin.LoginErrorMsg = "Invalid UserName or Password";
-                    return View("Index", admin);
+                    var userDetail = db.Admins.Where(x => x.UserName == admin.UserName && x.Password == admin.Password).FirstOrDefault();
+                    if (userDetail == null)
+                    {
+                        admin.LoginErrorMsg = "Invalid UserName or Password";
+                        return View("Index", admin);
+                    }
+                    else
+                    {
+                        Session["Id"] = admin.Id;
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                 {
-                    Session["Id"] = admin.Id;
-                    return RedirectToAction("Index", "Home");
+                    var userDetail = db.Clients.Where(x => x.Orgnummer == admin.UserName  && x.Password == admin.Password).FirstOrDefault();
+                    if (userDetail == null)
+                    {
+                        admin.LoginErrorMsg = "Invalid UserName or Password";
+                        return View("Index", client);
+                    }
+                    else
+                    {
+                        Session["Id"] = client.Id;
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
             }
 

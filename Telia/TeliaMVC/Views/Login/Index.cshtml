@@ -66,6 +66,11 @@
                         <th style="text-align: center; position:center;">Login</th>
                     </tr>
                 </thead>
+
+                <tr>  
+                    <td>Client @Html.RadioButton("usertype", "Client")</td>
+                    <td>Admin @Html.RadioButton("usertype", "Admin")</td>
+                </tr>
                 <tr>
                     <td> @Html.LabelFor(model => model.UserName)</td>
                     <td>@Html.EditorFor(model => model.UserName)</td>
