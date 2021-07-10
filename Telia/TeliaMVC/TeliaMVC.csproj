@@ -247,6 +247,7 @@
     <Content Include="Views\NummersAdmin\Details.cshtml" />
     <Content Include="Views\NummersAdmin\Edit.cshtml" />
     <Content Include="Views\NummersAdmin\Index.cshtml" />
+    <Content Include="Views\Home\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

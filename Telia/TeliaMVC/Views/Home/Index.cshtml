@@ -1,4 +1,11 @@
-﻿@{
+﻿
+@model PagedList.IPagedList<TeliaMVC.Models.Client>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+@{
     ViewBag.Title = "Home Page";
     if (Session["Id"] == null)
     {
@@ -14,25 +21,38 @@
         border-radius: 14px;
         box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
     }
+    .buttonAdd {
+        font-size: medium;
+        font-size: smaller;
+        color: white;
+        text-shadow: 1px 1px black;
+        margin-right: 2px;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        border-radius: 12px;
+    }
         .buttonLink:hover {
             box-shadow: 0 5px 11px 1px rgba(0, 0, 0, 0.21), 0 9px 20px 0 rgba(0, 0, 0, 0.19);
         }
-}
+
+    .text{
+        margin-left: 40%;
     }
     .jumbo {
         box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.19), 0 4px 15px 0 rgba(0, 0, 0, 0.17);
     }
 </style>
 <div class="jumbotron jumbo" style="background-color: #ffaa80; ">
-    <h3>Hjelp</h3>
-    <p class="lead">
+    <h3 class="text">Hjelp</h3>
+    <p class="lead text" >
         <span style="font-weight: bold;">Produkter:</span>  Trykk på de produktene du ønsker for å åpne respektive faner. Hver fane må så fylles ut.
     </p>
-    <p class="lead">
+    <p class="lead text">
         <span style="font-weight: bold;">
-            Prisplaner:</span>  Velg type abonnement du ønsker å tilby kunden før listen sendes til kunde! Trykk så Til Forside.
+            Prisplaner:
+        </span>  Velg type abonnement du ønsker å tilby kunden før listen sendes til kunde! Trykk så Til Forside.
     </p>
-    <p class="lead">
+    <p class="lead text">
         <span style="font-weight: bold;">Binding:</span> Velg om kunden skal ha 24- eller 36mnd bindingsavtale.
 
     </p>
@@ -58,4 +78,53 @@
     <div class="col-md-2">
         <p><a class="btn btn-default buttonLink">Etiketter &raquo;</a></p>
     </div>
-</div>
+    <div class="col-md-2">
+
+        
+        Ostao je Create za ovo da se napravi
+                <button class="btn-danger btn-group-sm shadow-lg" data-toggle="tooltip" data-placement="bottom" title="Legg til ny klient"
+                        onclick="location.href='@Url.Action("Create", "Home")">
+                    <span class="glyphicon glyphicon-plus"></span>
+
+                </button>
+            </div>
+
+            <div class="col-md-2">
+                <p>
+                    Oversikt over kunder:
+                </p>
+                <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-0">
+                                    ID
+                                </th>
+                                <th scope="row" class="col-sm-2">
+                                    OrgNummer
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="col-sm-1">
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td class="col-sm-1">
+                                        @Html.DisplayFor(modelItem => item.Orgnummer)
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("Index",
+                 new { page }))
+                </div>
+
+
+            </div>
+        </div>
