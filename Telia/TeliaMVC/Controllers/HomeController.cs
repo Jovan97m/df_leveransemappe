@@ -47,7 +47,7 @@ namespace TeliaMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Orgnummer,Password,Id_admin")] Client client)
+        public ActionResult Create([Bind(Include = "Orgnummer ,Password,Id_admin")] Client client)
         {
             if (ModelState.IsValid)
             {

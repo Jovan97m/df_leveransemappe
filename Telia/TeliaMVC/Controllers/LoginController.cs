@@ -35,7 +35,7 @@ namespace TeliaMVC.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                 }
-                else
+                else if (usertype=="Client")
                 {
                     var userDetail = db.Clients.Where(x => x.Orgnummer == admin.UserName  && x.Password == admin.Password).FirstOrDefault();
                     if (userDetail == null)
@@ -46,7 +46,7 @@ namespace TeliaMVC.Controllers
                     else
                     {
                         Session["Id"] = client.Id;
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "HomeClient");
                     }
                 }
             }
