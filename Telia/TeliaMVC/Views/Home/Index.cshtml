@@ -60,36 +60,21 @@
 
 <div class="row" style="margin-left: 10px;">
     <h2>Produkter</h2>
-    <div class="col-md-2">
+    <div class="col-md-4">
 
         <p><button class="btn btn-default buttonLink" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts")'">FakturaOppsett &raquo;</button></p>
         <p><a class="btn btn-default buttonLink">Brukerliste &raquo;</a></p>
-        <p><a class="btn btn-default buttonLink">TBN Konfigurasjon &raquo;</a></p>
-        <p><a class="btn btn-default buttonLink">TBN Brukere &raquo;</a></p>
-        <p><a class="btn btn-default buttonLink">IKKE i BRUK &raquo;</a></p>
-        <p><a class="btn btn-default buttonLink">One Number &raquo;</a></p>
-    </div>
-    <div class="col-md-2">
-        <p><a class="btn btn-default buttonLink">TBN SIP Trunk &raquo;</a></p>
-        <p><a class="btn btn-default buttonLink">TBN Tale and Teams &raquo;</a></p>
-        <p><a class="btn btn-default buttonLink">Exchange &raquo;</a></p>
-        <p><a class="btn btn-default buttonLink">AD &raquo;</a></p>
-    </div>
-    <div class="col-md-2">
-        <p><a class="btn btn-default buttonLink">Etiketter &raquo;</a></p>
-    </div>
-    <div class="col-md-2">
-
         
-        Ostao je Create za ovo da se napravi
-                <button class="btn-danger btn-group-sm shadow-lg" data-toggle="tooltip" data-placement="bottom" title="Legg til ny klient"
-                        onclick="location.href='@Url.Action("Create", "Home")">
-                    <span class="glyphicon glyphicon-plus"></span>
+    </div>
+    
+    <div class="col-md-4">
+        <button class="btn-danger btn-group-sm shadow-lg" data-toggle="tooltip" data-placement="bottom" title="Legg til ny klient"
+                onclick="location.href='@Url.Action("Create", "Home")'">
+            <span class="glyphicon glyphicon-plus"></span>    Legg til en klient
+        </button>
+    </div>
 
-                </button>
-            </div>
-
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <p>
                     Oversikt over kunder:
                 </p>

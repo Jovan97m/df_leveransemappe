@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "Telia"
 :setvar DefaultFilePrefix "Telia"
-:setvar DefaultDataPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
-:setvar DefaultLogPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
+:setvar DefaultDataPath "C:\Users\jovan\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
+:setvar DefaultLogPath "C:\Users\jovan\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
 
 GO
 :on error exit
@@ -37,6 +37,201 @@ IF N'$(__IsSqlCmdEnabled)' NOT LIKE N'True'
 
 GO
 USE [$(DatabaseName)];
+
+
+GO
+IF EXISTS (SELECT 1
+           FROM   [master].[dbo].[sysdatabases]
+           WHERE  [name] = N'$(DatabaseName)')
+    BEGIN
+        ALTER DATABASE [$(DatabaseName)]
+            SET ARITHABORT ON,
+                CONCAT_NULL_YIELDS_NULL ON,
+                CURSOR_DEFAULT LOCAL 
+            WITH ROLLBACK IMMEDIATE;
+    END
+
+
+GO
+IF EXISTS (SELECT 1
+           FROM   [master].[dbo].[sysdatabases]
+           WHERE  [name] = N'$(DatabaseName)')
+    BEGIN
+        ALTER DATABASE [$(DatabaseName)]
+            SET PAGE_VERIFY NONE,
+                DISABLE_BROKER 
+            WITH ROLLBACK IMMEDIATE;
+    END
+
+
+GO
+ALTER DATABASE [$(DatabaseName)]
+    SET TARGET_RECOVERY_TIME = 0 SECONDS 
+    WITH ROLLBACK IMMEDIATE;
+
+
+GO
+IF EXISTS (SELECT 1
+           FROM   [master].[dbo].[sysdatabases]
+           WHERE  [name] = N'$(DatabaseName)')
+    BEGIN
+        ALTER DATABASE [$(DatabaseName)]
+            SET QUERY_STORE (QUERY_CAPTURE_MODE = ALL, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 367), MAX_STORAGE_SIZE_MB = 100) 
+            WITH ROLLBACK IMMEDIATE;
+    END
+
+
+GO
+PRINT N'Rename refactoring operation with key 3612fca1-4f17-4b39-b934-d88c654b39d1 is skipped, element [dbo].[Nummer].[11. Katalogoppforing] (SqlSimpleColumn) will not be renamed to Katalogoppforing';
+
+
+GO
+PRINT N'Rename refactoring operation with key c2f7a30c-baad-407f-8bd7-7b012d77f648 is skipped, element [dbo].[Nummer].[13. Porteringsdatoog tid] (SqlSimpleColumn) will not be renamed to Porteringsdatoog tid';
+
+
+GO
+PRINT N'Rename refactoring operation with key b197c2cd-7dba-4677-b31a-6305baa47e1e is skipped, element [dbo].[Nummer].[DeliveryContract] (SqlSimpleColumn) will not be renamed to DeliveryContractCountryCode';
+
+
+GO
+PRINT N'Dropping Foreign Key [dbo].[FK_dbo.Nummer_dbo.Fakturaoppsett_NavnPåKostnadssted]...';
+
+
+GO
+ALTER TABLE [dbo].[Nummer] DROP CONSTRAINT [FK_dbo.Nummer_dbo.Fakturaoppsett_NavnPåKostnadssted];
+
+
+GO
+PRINT N'Starting rebuilding table [dbo].[Nummer]...';
+
+
+GO
+BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+CREATE TABLE [dbo].[tmp_ms_xx_Nummer] (
+    [Id]                              INT           IDENTITY (1, 1) NOT NULL,
+    [Telefonnummer]                   NVARCHAR (20) NULL,
+    [Abonnementstype]                 NVARCHAR (20) NULL,
+    [Fornavn]                         NVARCHAR (50) NULL,
+    [Etternavn]                       NVARCHAR (50) NULL,
+    [Bedrift som skal faktureres]     NVARCHAR (50) NULL,
+    [c/o adresse for SIM levering]    NVARCHAR (50) NULL,
+    [Gateadresse SIM Skal sendes til] NVARCHAR (50) NULL,
+    [Hus nummer]                      INT           NULL,
+    [Hus bokstav]                     NVARCHAR (50) NULL,
+    [post nr.]                        INT           NULL,
+    [Post sted]                       NVARCHAR (50) NULL,
+    [Epost for sporings informasjon]  NVARCHAR (50) NULL,
+    [Epost]                           NVARCHAR (50) NULL,
+    [Kostnadsted]                     NVARCHAR (50) NULL,
+    [Tilleggsinfo/ansatt ID]          INT           NULL,
+    [Ekstra talesim ]                 INT           NULL,
+    [Ekstra datasim]                  INT           NULL,
+    [Orgnummer]                       NVARCHAR (50) NULL,
+    [Date]                            DATE          NULL,
+    [Pending]                         BIT           NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[Nummer])
+    BEGIN
+        INSERT INTO [dbo].[tmp_ms_xx_Nummer] ([Telefonnummer], [Abonnementstype], [Fornavn], [Etternavn], [Bedrift som skal faktureres], [c/o adresse for SIM levering], [Gateadresse SIM Skal sendes til], [Hus nummer], [Hus bokstav], [post nr.], [Post sted], [Epost for sporings informasjon], [Epost], [Kostnadsted], [Tilleggsinfo/ansatt ID], [Ekstra talesim ], [Ekstra datasim])
+        SELECT [Telefonnummer],
+               [Abonnementstype],
+               [Fornavn],
+               [Etternavn],
+               [Bedrift som skal faktureres],
+               [c/o adresse for SIM levering],
+               [Gateadresse SIM Skal sendes til],
+               [Hus nummer],
+               [Hus bokstav],
+               [post nr.],
+               [Post sted],
+               [Epost for sporings informasjon],
+               [Epost],
+               [Kostnadsted],
+               [Tilleggsinfo/ansatt ID],
+               [Ekstra talesim ],
+               [Ekstra datasim]
+        FROM   [dbo].[Nummer];
+    END
+
+DROP TABLE [dbo].[Nummer];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_Nummer]', N'Nummer';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+
+GO
+PRINT N'Creating Table [dbo].[Client]...';
+
+
+GO
+CREATE TABLE [dbo].[Client] (
+    [Id]        INT           IDENTITY (1, 1) NOT NULL,
+    [Orgnummer] NVARCHAR (50) NOT NULL,
+    [Password]  NVARCHAR (50) NOT NULL,
+    [Id_admin]  INT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating Foreign Key [dbo].[FK_dbo.Nummer_dbo.Fakturaoppsett_NavnPåKostnadssted]...';
+
+
+GO
+ALTER TABLE [dbo].[Nummer] WITH NOCHECK
+    ADD CONSTRAINT [FK_dbo.Nummer_dbo.Fakturaoppsett_NavnPåKostnadssted] FOREIGN KEY ([Kostnadsted]) REFERENCES [dbo].[Fakturaoppsett] ([Kostnadssted]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Creating Foreign Key [dbo].[FK_dbo.Admin.Id_Admin]...';
+
+
+GO
+ALTER TABLE [dbo].[Client] WITH NOCHECK
+    ADD CONSTRAINT [FK_dbo.Admin.Id_Admin] FOREIGN KEY ([Id_admin]) REFERENCES [dbo].[Admin] ([Id]) ON DELETE CASCADE;
+
+
+GO
+-- Refactoring step to update target server with deployed transaction logs
+
+IF OBJECT_ID(N'dbo.__RefactorLog') IS NULL
+BEGIN
+    CREATE TABLE [dbo].[__RefactorLog] (OperationKey UNIQUEIDENTIFIER NOT NULL PRIMARY KEY)
+    EXEC sp_addextendedproperty N'microsoft_database_tools_support', N'refactoring log', N'schema', N'dbo', N'table', N'__RefactorLog'
+END
+GO
+IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = '3612fca1-4f17-4b39-b934-d88c654b39d1')
+INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('3612fca1-4f17-4b39-b934-d88c654b39d1')
+IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = 'c2f7a30c-baad-407f-8bd7-7b012d77f648')
+INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('c2f7a30c-baad-407f-8bd7-7b012d77f648')
+IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = 'b197c2cd-7dba-4677-b31a-6305baa47e1e')
+INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('b197c2cd-7dba-4677-b31a-6305baa47e1e')
+
+GO
+
+GO
+PRINT N'Checking existing data against newly created constraints';
+
+
+GO
+USE [$(DatabaseName)];
+
+
+GO
+ALTER TABLE [dbo].[Nummer] WITH CHECK CHECK CONSTRAINT [FK_dbo.Nummer_dbo.Fakturaoppsett_NavnPåKostnadssted];
+
+ALTER TABLE [dbo].[Client] WITH CHECK CHECK CONSTRAINT [FK_dbo.Admin.Id_Admin];
 
 
 GO
