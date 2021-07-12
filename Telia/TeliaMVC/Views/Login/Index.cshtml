@@ -67,9 +67,9 @@
                     </tr>
                 </thead>
 
-                <tr>  
-                    <td>Client @Html.RadioButton("usertype", "Client")</td>
-                    <td>Admin @Html.RadioButton("usertype", "Admin")</td>
+                 <tr>
+                   <td><input type="radio" id="client" name="usertype" value="Client" required="required" checked>Client</td>
+                   <td><input type="radio" id="admin" name="usertype" value="Admin" required="required">Admin</td>
                 </tr>
                 <tr>
                     <td> @Html.LabelFor(model => model.UserName)</td>
