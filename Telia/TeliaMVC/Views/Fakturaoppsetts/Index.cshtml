@@ -12,7 +12,17 @@
 }
 
 <h2>Fakturaoppsett</h2>
-
+<style>
+    .button {
+        font-size: smaller;
+        color: white;
+        text-shadow: 1px 1px black;
+        margin-right: 2px;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        border-radius: 12px;
+    }
+</style>
 <div class="row" style="margin-right:10px;">
     <div class="col-md-6">
         <button class="btn-success btn-lg shadow-lg" data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href='@Url.Action("Create", "Fakturaoppsetts")'" style="
@@ -34,13 +44,10 @@
     {
         <p style="font-size: medium;font-weight:bold;color:black;margin-left:15px;">
             Søk etter navn: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-            <input type="submit" value="Search" class="btn btn-info shadow-lg" style="        color: black;
+            <input type="submit" value="Search" class="btn btn-info shadow-lg" style="color: black;
         font-size: medium;
-        border-radius: 14px;
-" />
-
+        border-radius: 14px;" />
         </p>
-
     }
     <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
         <!--podeseno da se pojavi klizac kad se umanjuje slika-->
@@ -132,36 +139,16 @@
                             <div style="display:flex; align-items:stretch;">
 
                                 <button class="btn-primary btn-group-sm shadow-lg" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
-                                        onclick="location.href='@Url.Action("Edit", "Fakturaoppsetts", new { id = item.Kostnadssted })'" style="
-                                     font-size: smaller;
-                                     color: white;
-                                     text-shadow: 1px 1px black;
-                                     border-radius: 12px;
-                                     margin-left:2px;
-                                     margin-right:2px;
-                                     margin-top: 2px;
-                                     margin-bottom:2px;
-                                    ">
+                                        onclick="location.href='@Url.Action("Edit", "Fakturaoppsetts", new { id = item.Kostnadssted })'">
                                     <span class="glyphicon glyphicon-pencil"></span>
-
                                 </button>
                                 <button class="btn-danger btn-group-sm shadow-lg" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du slette valgt rad"
-                                        onclick="location.href='@Url.Action("Delete", "Fakturaoppsetts", new { id = item.Kostnadssted })'" style="        font-size: medium;
-                                    font-size: smaller;
-                                    color: white;
-                                    text-shadow: 1px 1px black;
-                                    margin-right:2px;
-                                    margin-top: 2px;
-                                    margin-bottom:2px;
-                                    border-radius: 12px;
-                                    ">
+                                        onclick="location.href='@Url.Action("Delete", "Fakturaoppsetts", new { id = item.Kostnadssted })'">
                                     <span class="glyphicon glyphicon-remove"></span>
-
                                 </button>
                             </div>
                         </td>
                     </tr>
-
                 }
             </tbody>
         </table>

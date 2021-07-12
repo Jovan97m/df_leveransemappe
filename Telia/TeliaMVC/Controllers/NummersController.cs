@@ -20,15 +20,19 @@ namespace TeliaMVC.Controllers
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
-            //Viewbags- za sortiranja svake kolone;
             ViewBag.Telefonnummer = String.IsNullOrEmpty(sortOrder) ? "telefonnummer_desc" : "";
-            ViewBag.TilegsSortParm = sortOrder == "Tilegs" ? "tilegs_desc" : "Tilegs"; // mislim da ne bi trebalo da ima ova
-            ViewBag.EtternavnSortParm = sortOrder == "Etternavn" ? "etternavn_desc" : "EtternavnFormat";
+            ViewBag.Abonnementstype = sortOrder == "Abonnementstype" ? "abonnementstype_desc" : "Abonnementstype"; // mislim da ne bi trebalo da ima ova
+            ViewBag.EtternavnSortParm = sortOrder == "Etternavn" ? "etternavn_desc" : "Etternavn";
+            ViewBag.FornavnSortParm = sortOrder == "Fornavn" ? "fornavn_desc" : "Fornavn";
             ViewBag.Bedrift_som_skal_faktureresSortParm = sortOrder == "Bedrift_som_skal_faktureres	" ? "bedrift_som_skal_faktureres_desc" : "Bedrift_som_skal_faktureres";
             ViewBag.c_o_adresse_for_SIM_leveringSortParm = sortOrder == "c_o_adresse_for_SIM_levering" ? "c_o_adresse_for_SIM_levering_desc" : "c_o_adresse_for_SIM_levering";
             ViewBag.Gateadresse_SIM_Skal_sendes_tilSortParm = sortOrder == "Gateadresse_SIM_Skal_sendes_til" ? "gateadresse_SIM_Skal_sendes_til_desc" : "Gateadresse_SIM_Skal_sendes_til";
             ViewBag.Hus_nummerSortParm = sortOrder == "Hus_nummer" ? "hus_nummer_desc" : "Hus_nummer";
             ViewBag.Hus_bokstavSortParm = sortOrder == "Hus_bokstav" ? "hus_bokstav_desc" : "Hus_bokstav";
+            ViewBag.post_nr_SortParm = sortOrder == "post_nr_" ? "post_nr_desc" : "post_nr_";
+            ViewBag.Post_stedSortParm = sortOrder == "Post_sted" ? "post_sted_desc" : "Post_sted";
+            ViewBag.Ekstra_talesimSortParm = sortOrder == "Ekstra_talesim_" ? "ekstra_talesim_desc" : "Ekstra_talesim_";
+            ViewBag.Ekstra_datasimSortParm = sortOrder == "Ekstra_datasim_" ? "ekstra_datasim_desc" : "Ekstra_datasim_";
             //provera za search
             if (searchString != null)
             {
@@ -58,10 +62,10 @@ namespace TeliaMVC.Controllers
                     nummers = nummers.OrderByDescending(s => s.Telefonnummer);
                     break;
                 //druga kolona:
-                case "Tilegs":
+                case "Abonnementstype":
                     nummers = nummers.OrderBy(s => s.Abonnementstype);
                     break;
-                case "tilegs_desc":
+                case "abonnementstype_desc":
                     nummers = nummers.OrderByDescending(s => s.Abonnementstype);
                     break;
 
@@ -72,6 +76,19 @@ namespace TeliaMVC.Controllers
                 case "etternavn_desc":
                     nummers = nummers.OrderByDescending(s => s.Etternavn);
                     break;
+                case "Fornavn":
+                        nummers = nummers.OrderBy(s=>s.Fornavn);
+                    break;
+                case "fornavn_desc":
+                        nummers = nummers.OrderByDescending(s=>s.Fornavn);
+                    break;
+                case "Bedrift_som_skal_faktureres":
+                    nummers = nummers.OrderBy(s=>s.Bedrift_som_skal_faktureres);
+                    break;
+                case "bedrift_som_skal_faktureres_desc":
+                    nummers = nummers.OrderByDescending(s=>s.Bedrift_som_skal_faktureres);
+                    break;
+
 
                 //cetvrta kolona,adrese za fakture
                 case "c_o_adresse_for_SIM_levering":
@@ -85,6 +102,12 @@ namespace TeliaMVC.Controllers
                 case "Gateadresse_SIM_Skal_sendes_til":
                     nummers = nummers.OrderBy(s => s.Gateadresse_SIM_Skal_sendes_til);
                     break;
+
+                case "gateadresse_SIM_Skal_sendes_til_desc":
+                    nummers = nummers.OrderByDescending(s => s.Gateadresse_SIM_Skal_sendes_til);
+                    break;
+
+
                 case "husnr_desc":
                     nummers = nummers.OrderByDescending(s => s.Gateadresse_SIM_Skal_sendes_til);
                     break;
@@ -101,9 +124,37 @@ namespace TeliaMVC.Controllers
                 case "Hus_bokstav":
                     nummers = nummers.OrderBy(s => s.Hus_bokstav);
                     break;
-                case "postnummer_desc":
+                case "hus_bokstav_desc":
                     nummers = nummers.OrderByDescending(s => s.Hus_bokstav);
                     break;
+                 
+                case "post_nr_":
+                    nummers = nummers.OrderBy(s=> s.post_nr_);
+                    break;
+                case "post_nr_desc":
+                    nummers = nummers.OrderByDescending(s=> s.post_nr_);
+                    break;
+
+                case "Post_sted":
+                    nummers = nummers.OrderBy(s => s.Post_sted);
+                    break;
+                case "post_sted_desc":
+                    nummers = nummers.OrderByDescending(s => s.Post_sted);
+                    break;
+
+                case "Ekstra_datasim_":
+                    nummers = nummers.OrderBy(s => s.Ekstra_datasim);
+                    break;
+                case "ekstra_datasim_desc":
+                    nummers = nummers.OrderByDescending(s => s.Ekstra_datasim);
+                    break;
+                case "Ekstra_talesim_":
+                    nummers = nummers.OrderBy(s=>s.Ekstra_talesim_);
+                    break;
+                case "ekstra_talesim_desc":
+                    nummers = nummers.OrderByDescending(s=>s.Ekstra_talesim_);
+                    break;
+
                 default:
                     nummers = nummers.OrderBy(s => s.Telefonnummer);
                     break;

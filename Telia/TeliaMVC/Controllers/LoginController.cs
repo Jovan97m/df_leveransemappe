@@ -49,6 +49,7 @@ namespace TeliaMVC.Controllers
                         return RedirectToAction("Index", "HomeClient");
                     }
                 }
+                else { return View("Index", client); }
             }
 
         }

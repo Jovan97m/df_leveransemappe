@@ -21,7 +21,7 @@ namespace TeliaMVC.Controllers
             //obavezno order
             clients= clients.OrderBy(s => s.Id);
 
-            int pageSize = 10;
+            int pageSize = 6;
             int pageNumber = (page ?? 1);
             return View(clients.ToPagedList(pageNumber, pageSize));
         }
@@ -51,7 +51,7 @@ namespace TeliaMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                client.Id_admin = Convert.ToInt32(Session.SessionID); // stavi id admina koji je kreirao klijenta
+                client.Id_admin = 1; // stavi id admina koji je kreirao klijenta
                 db.Clients.Add(client);
                 db.SaveChanges();
                 return RedirectToAction("Index"); // refresh stranicu opet
