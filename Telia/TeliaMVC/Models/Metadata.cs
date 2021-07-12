@@ -17,6 +17,17 @@ namespace TeliaMVC.Models
         public string Password { get; set; }
         public string LoginErrorMsg { get; set; }
     }
+    public class MetadataClient
+    {
+        public int Id { get; set; }
+        [Display(Name = "OrgNummer")]
+        [Required(ErrorMessage = "This field is Required")]
+        public string Orgnummer { get; set; }
+        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "This field is Required")]
+        public string Password { get; set; }
+        public int Id_admin { get; set; }
+    }
 
     public class MetadataFakturaoppsett
     {

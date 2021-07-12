@@ -11,6 +11,12 @@ namespace TeliaMVC.Models
     {
 
     }
+    [MetadataType(typeof(MetadataClient))]
+    public partial class Client
+    {
+
+    }
+
 
     [MetadataType(typeof(MetadataFakturaoppsett))]
     public partial class Fakturaoppsett
