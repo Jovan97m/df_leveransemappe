@@ -16,7 +16,9 @@ namespace TeliaMVC.Controllers
         private TeliaEntities db = new TeliaEntities();
 
         // GET: Fakturaoppsetts
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+
+        //SearchParameter -je atribut koji se prosledjuje iz selektovanog radio-button-a
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page,string SearchParameter)
         {
             ViewBag.CurrentSort = sortOrder; 
             //Viewbags- za sortiranja svake kolone;
@@ -46,7 +48,18 @@ namespace TeliaMVC.Controllers
             //pretrazivanje pre rasporedjivanja:
             if (!String.IsNullOrEmpty(searchString))
             {
-                faktures = faktures.Where(s => s.NavnPaKostnadssted.Contains(searchString));
+                switch (SearchParameter)
+                {
+                    case "Kostnadsted":
+                        faktures = faktures.Where(s => s.NavnPaKostnadssted.Contains(searchString));
+                        break;
+                    case "Husnr":
+                        faktures = faktures.Where(s => s.Husnr.ToString().Contains(searchString));
+                        break;
+                    case "FakturaFormat":
+                        faktures = faktures.Where(s => s.Fakturaformat.Contains(searchString));
+                        break;
+                }
             }
 
 

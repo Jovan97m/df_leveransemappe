@@ -11,7 +11,6 @@
     }
 }
 
-<h2>Fakturaoppsett</h2>
 <style>
     .button {
         font-size: smaller;
@@ -22,143 +21,218 @@
         margin-bottom: 2px;
         border-radius: 12px;
     }
-</style>
-<div class="row" style="margin-right:10px;">
-    <div class="col-md-6">
-        <button class="btn-success btn-lg shadow-lg" data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href='@Url.Action("Create", "Fakturaoppsetts")'" style="
-    background-color: #990AE4; font-size: medium;
+    .button:active {
+        transform: translateY(+2px);
+    }
+    .ButtonAdd {
+        background-color: #ac23f6;
+        font-size: larger;
         font-weight: bold;
         color: white;
         text-shadow: 1px 1px black;
-        border-radius: 14px;
-    ">
-            <span class="glyphicon glyphicon-plus"></span>Skape
-        </button>
+        outline-offset: 4px;
+        display: block;
+        padding: 12px 42px;
+        border-radius: 12px;
+        font-size: 1.25rem;
+        border: none;
+        margin-bottom:15px;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+        .ButtonAdd:hover {
+            color: white;
+            background-color: #990ae2;
+            box-shadow: 0 12px 18px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        }
+        .ButtonAdd:active {
+            transform: translateY(+2px);
+        }
+    .inputRadio {
+            border-radius: 10px;
+            box-shadow: inset 0 1px 1px hsla(0,0%,100%,.8), 0 0 0 1px hsla(0,0%,0%,.6), 0 2px 3px hsla(0,0%,0%,.6), 0 4px 3px hsla(0,0%,0%,.4), 0 6px 6px hsla(0,0%,0%,.2), 0 10px 6px hsla(0,0%,0%,.2);
+            cursor: pointer;
+            display: inline-block;
+            height: 15px;
+            margin-right: 16px;
+            position: relative;
+            width: 15px;
+            -webkit-appearance: none;
+        }
+    .inputRadio:hover {
+            background-color: #c86cf9;
+        }
+    .inputRadio:checked {
+            background-color: #990ae4;
+        }
 
-    </div>
-</div>
+</style>
 <br />
 
 <div class="row">
-    @using (Html.BeginForm("Index", "Fakturaoppsetts", FormMethod.Get))
-    {
-        <p style="font-size: medium;font-weight:bold;color:black;margin-left:15px;">
-            Søk etter navn: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-            <input type="submit" value="Search" class="btn btn-info shadow-lg" style="color: black;
-        font-size: medium;
-        border-radius: 14px;" />
-        </p>
-    }
     <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
-        <!--podeseno da se pojavi klizac kad se umanjuje slika-->
-        <table class="table-bordered table-sm table-hover table-striped " style="font-size: 15px;table-layout:fixed;">
-            <thead style="background-color: #990AE4;
+
+            <div class="col-sm-5">
+                @using (Html.BeginForm("Index", "Fakturaoppsetts", FormMethod.Get))
+                {
+                    <fieldset>
+                        <legend>Søkealternativer</legend>
+                        <label class="radio-inline">
+                            @Html.RadioButton("SearchParameter", "Kostnadsted", htmlAttributes: new { @class = "inputRadio" })<label>Kostnadsted</label>
+                        </label>
+                        <br />
+                        <label class="radio-inline">
+                            @Html.RadioButton("SearchParameter", "FakturaFormat", htmlAttributes: new { @class = "inputRadio" })<label>FakturaFormat</label>
+                        </label>
+                        <br />
+                        <label class="radio-inline">
+                            @Html.RadioButton("SearchParameter", "Husnr", htmlAttributes: new { @class = "inputRadio" })<label>Husnr</label>
+                        </label>
+                        <br />
+                    </fieldset>
+                    <p style="font-size: medium;font-weight:bold;color:black;margin-left:15px;">
+                        Søk etter @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                        <input type="submit" value="Search" class="btn btn-info shadow-lg" style="color: black;
+                     font-size: medium;
+                        border-radius: 14px;" />
+                    </p>
+                }
+            </div>
+
+            <div class="col-sm-4">
+                <fieldset>
+                    <legend>
+                        Legger til nytt fakturaoppset
+                    </legend>
+                    <button class="shadow-lg ButtonAdd " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href='@Url.Action("Create", "Fakturaoppsetts")'">
+                        <span class="glyphicon glyphicon-plus"></span>   Skape
+                    </button>
+                    <button class=" ButtonAdd " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts")'">
+                        <span class="glyphicon glyphicon-repeat"></span>   Refresh
+                    </button>
+                </fieldset>
+            </div>
+        </div>
+        <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
+            <!--podeseno da se pojavi klizac kad se umanjuje slika-->
+            <table class="table-bordered table-sm table-hover table-striped " style="font-size: 15px;table-layout:fixed;">
+                <thead style="background-color: #990AE4;
                     color: white;
                     text-shadow: 1px 2px black;">
-                <tr>
-                    <th scope="row" class="col-sm-2">
-                        Kostnadssted
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-
-                    <th class="col-sm-2">
-                        Tileggsinfo<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.TilegsSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Fakturaformat<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.FakturaFormatSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Fakturaadresse<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.FakturaAdresseSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Husnr<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.HusnrSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Bokstav<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.BokstavSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Postnummer<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.PostnummerSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Sted<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.StedSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Epost
-                    </th>
-                    <th style="width:35px;"></th>
-                </tr>
-            </thead>
-            <tbody style="color:black; font-size: 13px;">
-                @foreach (var item in Model)
-                {
                     <tr>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.NavnPaKostnadssted)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Tileggsinfo_kostnadssted)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Fakturaformat)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Fakturaadresse)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Husnr)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Bokstav)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Postnummer)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Sted)
-                        </td>
-                        <td style="color:darkblue; font-style:italic;font-weight: bold;">
-                            @Html.DisplayFor(modelItem => item.Epost)
-                        </td>
-                        <td style="background-color:azure;">
-                            <div style="display:flex; align-items:stretch;">
+                        <th scope="row" class="col-sm-2">
+                            Kostnadssted
+                            <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                                <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                            </button>
+                        </th>
 
-                                <button class="btn-primary btn-group-sm shadow-lg" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
-                                        onclick="location.href='@Url.Action("Edit", "Fakturaoppsetts", new { id = item.Kostnadssted })'">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </button>
-                                <button class="btn-danger btn-group-sm shadow-lg" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du slette valgt rad"
-                                        onclick="location.href='@Url.Action("Delete", "Fakturaoppsetts", new { id = item.Kostnadssted })'">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </div>
-                        </td>
+                        <th class="col-sm-2">
+                            Tileggsinfo<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.TilegsSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                                <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                            </button>
+                        </th>
+                        <th class="col-sm-2">
+                            Fakturaformat<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.FakturaFormatSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                                <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                            </button>
+                        </th>
+                        <th class="col-sm-2">
+                            Fakturaadresse<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.FakturaAdresseSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                                <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                            </button>
+                        </th>
+                        <th class="col-sm-2">
+                            Husnr<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.HusnrSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </button>
+                        </th>
+                        <th class="col-sm-2">
+                            Bokstav<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.BokstavSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                                <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                            </button>
+                        </th>
+                        <th class="col-sm-2">
+                            Postnummer<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.PostnummerSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                                <span class="glyphicon glyphicon-sort"></span>
+                            </button>
+                        </th>
+                        <th class="col-sm-2">
+                            Sted<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.StedSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                                <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                            </button>
+                        </th>
+                        <th class="col-sm-2">
+                            Epost
+                        </th>
+                        <th style="width:35px;"></th>
                     </tr>
-                }
-            </tbody>
-        </table>
-        <br />
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-        @Html.PagedListPager(Model, page => Url.Action("Index",
-     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                </thead>
+                <tbody style="color:black; font-size: 13px;">
+                    @if (Model.Count() == 0)
+                    {
+                        <tr >
+                            <td coldspan="10" style="font-size:18px;color:red;margin-left:5px;">
+                                No document found
+                            </td>
+                        </tr>
+                    }
+                    else
+                    { 
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.NavnPaKostnadssted)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Tileggsinfo_kostnadssted)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Fakturaformat)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Fakturaadresse)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Husnr)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Bokstav)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Postnummer)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Sted)
+                            </td>
+                            <td style="color:darkblue; font-style:italic;font-weight: bold;">
+                                @Html.DisplayFor(modelItem => item.Epost)
+                            </td>
+                            <td style="background-color:azure;">
+                                <div style="display:flex; align-items:stretch;">
 
+                                    <button class="btn-primary btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
+                                            onclick="location.href='@Url.Action("Edit", "Fakturaoppsetts", new { id = item.Kostnadssted })'">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
+                                    <button class="btn-danger btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du slette valgt rad"
+                                            onclick="location.href='@Url.Action("Delete", "Fakturaoppsetts", new { id = item.Kostnadssted })'">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    }
+                </tbody>
+            </table>
+            <br />
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+         new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
+        </div>
 
     </div>
-
-</div>
 
