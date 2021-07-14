@@ -1,0 +1,137 @@
+﻿@model TeliaMVC.Models.Client
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/HomeClient/Index.cshtml";
+}
+
+<h2>Profile</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Orgnummer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Orgnummer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirmaNavn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirmaNavn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GateNavn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GateNavn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HusNummer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HusNummer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HusBokStav)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HusBokStav)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostNummer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostNummer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Epost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Epost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KontaktNavn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KontaktNavn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KontaktEpost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KontaktEpost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KontaktTlfnr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KontaktTlfnr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TekniskKontaktNavn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TekniskKontaktNavn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TekniskKontaktEpost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TekniskKontaktEpost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TekniskKontaktTlfnr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TekniskKontaktTlfnr)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

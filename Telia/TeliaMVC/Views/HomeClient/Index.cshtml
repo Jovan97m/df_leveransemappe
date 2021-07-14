@@ -1,9 +1,6 @@
-﻿
-@model PagedList.IPagedList<TeliaMVC.Models.Client>
+﻿@model PagedList.IPagedList<TeliaMVC.Models.Client>
 @using PagedList.Mvc;
-
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
-
 
 @{
     ViewBag.Title = "Home Page";
@@ -32,32 +29,27 @@
         margin-bottom: 2px;
         border-radius: 12px;
     }
-
     .buttonLink:hover {
         box-shadow: 0 5px 11px 1px rgba(0, 0, 0, 0.21), 0 9px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
-    .text {
-        margin-left: 40%;
-    }
-
-    .jumbo {
-        box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.19), 0 4px 15px 0 rgba(0, 0, 0, 0.17);
-    }
 </style>
 
 
-<div class="row" style="margin-left: 10px;">
+<div class="row" style="margin-left: 10px;margin-top:10px;">
 
     <div class="col-md-6">
 
         <p><button class="btn btn-default buttonLink" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts")'">FakturaOppsett &raquo;</button></p>
-
-
     </div>
 
     <div class="col-md-6">
         <p><button class="btn btn-default buttonLink" onclick="location.href = '@Url.Action("Index", "Nummers")'">Nummers &raquo;</button></p>
+    </div>
+
+    <div class="col-md-6">
+
+        <p><button class="btn btn-info buttonLink" onclick="location.href = '@Url.Action("Profile", "HomeClient")'"><span class="glyphicon glyphicon-user"></span>Profile &raquo;</button></p>
     </div>
 
 

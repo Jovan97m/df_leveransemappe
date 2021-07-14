@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "Telia"
 :setvar DefaultFilePrefix "Telia"
-:setvar DefaultDataPath "C:\Users\jovan\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
-:setvar DefaultLogPath "C:\Users\jovan\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
+:setvar DefaultDataPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
+:setvar DefaultLogPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
 
 GO
 :on error exit
@@ -37,6 +37,72 @@ IF N'$(__IsSqlCmdEnabled)' NOT LIKE N'True'
 
 GO
 USE [$(DatabaseName)];
+
+
+GO
+/*
+The column [dbo].[Client].[Id_admin] is being dropped, data loss could occur.
+
+The type for column Epost in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (20) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (20) NULL.
+
+The type for column FirmaNavn in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (50) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (50) NULL.
+
+The type for column GateNavn in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (50) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (50) NULL.
+
+The type for column KontaktEpost in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (20) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (20) NULL.
+
+The type for column KontaktNavn in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (30) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (30) NULL.
+
+The type for column KontaktTlfnr in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (30) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (30) NULL.
+
+The type for column Sted in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (50) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (50) NULL.
+
+The type for column TekniskKontaktEpost in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (30) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (30) NULL.
+
+The type for column TekniskKontaktNavn in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (20) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (20) NULL.
+
+The type for column TekniskKontaktTlfnr in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (30) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (30) NULL.
+*/
+
+IF EXISTS (select top 1 1 from [dbo].[Client])
+    RAISERROR (N'Rows were detected. The schema update is terminating because data loss might occur.', 16, 127) WITH NOWAIT
+
+GO
+PRINT N'Dropping [dbo].[FK_dbo.Admin.Id_Admin]...';
+
+
+GO
+ALTER TABLE [dbo].[Client] DROP CONSTRAINT [FK_dbo.Admin.Id_Admin];
+
+
+GO
+PRINT N'Altering [dbo].[Client]...';
+
+
+GO
+ALTER TABLE [dbo].[Client] DROP COLUMN [Id_admin];
+
+
+GO
+ALTER TABLE [dbo].[Client] ALTER COLUMN [Epost] NVARCHAR (20) NULL;
+
+ALTER TABLE [dbo].[Client] ALTER COLUMN [FirmaNavn] NVARCHAR (50) NULL;
+
+ALTER TABLE [dbo].[Client] ALTER COLUMN [GateNavn] NVARCHAR (50) NULL;
+
+ALTER TABLE [dbo].[Client] ALTER COLUMN [KontaktEpost] NVARCHAR (20) NULL;
+
+ALTER TABLE [dbo].[Client] ALTER COLUMN [KontaktNavn] NVARCHAR (30) NULL;
+
+ALTER TABLE [dbo].[Client] ALTER COLUMN [KontaktTlfnr] NVARCHAR (30) NULL;
+
+ALTER TABLE [dbo].[Client] ALTER COLUMN [Sted] NVARCHAR (50) NULL;
+
+ALTER TABLE [dbo].[Client] ALTER COLUMN [TekniskKontaktEpost] NVARCHAR (30) NULL;
+
+ALTER TABLE [dbo].[Client] ALTER COLUMN [TekniskKontaktNavn] NVARCHAR (20) NULL;
+
+ALTER TABLE [dbo].[Client] ALTER COLUMN [TekniskKontaktTlfnr] NVARCHAR (30) NULL;
 
 
 GO

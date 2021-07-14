@@ -26,7 +26,6 @@ namespace TeliaMVC.Models
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "This field is Required")]
         public string Password { get; set; }
-        public int Id_admin { get; set; }
     }
 
     public class MetadataFakturaoppsett

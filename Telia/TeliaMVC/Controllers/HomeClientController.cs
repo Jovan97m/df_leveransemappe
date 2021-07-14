@@ -11,16 +11,20 @@ namespace TeliaMVC.Controllers
     public class HomeClientController : Controller
     {
         private TeliaEntities db = new TeliaEntities();
-        public ActionResult Index(int? page)
+        public static string orgID = "";
+        public ActionResult Index(string OrgNummer)
         {
-            var clients = from s in db.Clients
-                select s; // vrati sve klijente u jednu listu
-            //obavezno order
-            clients = clients.OrderBy(s => s.Id);
+            orgID = OrgNummer;
+            return View();
+        }
 
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
-            return View(clients.ToPagedList(pageNumber,pageSize));
+
+        //Profile:
+        public ActionResult Profile()
+        {
+            var client = db.Clients.Where(s => s.Orgnummer.Contains(orgID)); ;
+
+            return View(client);
         }
     }
 }

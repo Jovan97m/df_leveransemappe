@@ -7,7 +7,6 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Clients" Relationship="TeliaModel.FK_dbo_Admin_Id_Admin" FromRole="Admin" ToRole="Client" />
   </EntityType>
   <EntityType Name="Fakturaoppsett">
     <Key>
@@ -75,10 +74,6 @@
       <End Role="Nummer" EntitySet="Nummers" />
     </AssociationSet>
     <EntitySet Name="Clients" EntityType="TeliaModel.Client" />
-    <AssociationSet Name="FK_dbo_Admin_Id_Admin" Association="TeliaModel.FK_dbo_Admin_Id_Admin">
-      <End Role="Admin" EntitySet="Admins" />
-      <End Role="Client" EntitySet="Clients" />
-    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Client">
     <Key>
@@ -87,21 +82,18 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Orgnummer" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Id_admin" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Admin" Relationship="TeliaModel.FK_dbo_Admin_Id_Admin" FromRole="Client" ToRole="Admin" />
+    <Property Name="FirmaNavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GateNavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="HusNummer" Type="Int32" />
+    <Property Name="HusBokStav" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="PostNummer" Type="Int32" />
+    <Property Name="Sted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Epost" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="KontaktNavn" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="KontaktEpost" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="KontaktTlfnr" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="TekniskKontaktNavn" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="TekniskKontaktEpost" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="TekniskKontaktTlfnr" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
   </EntityType>
-  <Association Name="FK_dbo_Admin_Id_Admin">
-    <End Type="TeliaModel.Admin" Role="Admin" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Type="TeliaModel.Client" Role="Client" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Admin">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Client">
-        <PropertyRef Name="Id_admin" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema>

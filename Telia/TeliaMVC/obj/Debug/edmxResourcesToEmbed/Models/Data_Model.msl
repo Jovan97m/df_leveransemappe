@@ -56,7 +56,19 @@
     <EntitySetMapping Name="Clients">
       <EntityTypeMapping TypeName="TeliaModel.Client">
         <MappingFragment StoreEntitySet="Client">
-          <ScalarProperty Name="Id_admin" ColumnName="Id_admin" />
+          <ScalarProperty Name="TekniskKontaktTlfnr" ColumnName="TekniskKontaktTlfnr" />
+          <ScalarProperty Name="TekniskKontaktEpost" ColumnName="TekniskKontaktEpost" />
+          <ScalarProperty Name="TekniskKontaktNavn" ColumnName="TekniskKontaktNavn" />
+          <ScalarProperty Name="KontaktTlfnr" ColumnName="KontaktTlfnr" />
+          <ScalarProperty Name="KontaktEpost" ColumnName="KontaktEpost" />
+          <ScalarProperty Name="KontaktNavn" ColumnName="KontaktNavn" />
+          <ScalarProperty Name="Epost" ColumnName="Epost" />
+          <ScalarProperty Name="Sted" ColumnName="Sted" />
+          <ScalarProperty Name="PostNummer" ColumnName="PostNummer" />
+          <ScalarProperty Name="HusBokStav" ColumnName="HusBokStav" />
+          <ScalarProperty Name="HusNummer" ColumnName="HusNummer" />
+          <ScalarProperty Name="GateNavn" ColumnName="GateNavn" />
+          <ScalarProperty Name="FirmaNavn" ColumnName="FirmaNavn" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Orgnummer" ColumnName="Orgnummer" />
           <ScalarProperty Name="Id" ColumnName="Id" />

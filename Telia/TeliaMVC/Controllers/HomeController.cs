@@ -51,7 +51,6 @@ namespace TeliaMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                client.Id_admin = 1; // stavi id admina koji je kreirao klijenta
                 db.Clients.Add(client);
                 db.SaveChanges();
                 return RedirectToAction("Index"); // refresh stranicu opet
