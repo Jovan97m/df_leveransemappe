@@ -40,43 +40,6 @@ USE [$(DatabaseName)];
 
 
 GO
-PRINT N'Dropping Foreign Key [dbo].[FK_dbo.Admin.Id_Admin]...';
-
-
-GO
-ALTER TABLE [dbo].[Client] DROP CONSTRAINT [FK_dbo.Admin.Id_Admin];
-
-
-GO
-PRINT N'Altering Table [dbo].[Client]...';
-
-
-GO
-ALTER TABLE [dbo].[Client] ALTER COLUMN [Id_admin] INT NULL;
-
-
-GO
-PRINT N'Creating Foreign Key [dbo].[FK_dbo.Admin.Id_Admin]...';
-
-
-GO
-ALTER TABLE [dbo].[Client] WITH NOCHECK
-    ADD CONSTRAINT [FK_dbo.Admin.Id_Admin] FOREIGN KEY ([Id_admin]) REFERENCES [dbo].[Admin] ([Id]) ON DELETE CASCADE;
-
-
-GO
-PRINT N'Checking existing data against newly created constraints';
-
-
-GO
-USE [$(DatabaseName)];
-
-
-GO
-ALTER TABLE [dbo].[Client] WITH CHECK CHECK CONSTRAINT [FK_dbo.Admin.Id_Admin];
-
-
-GO
 PRINT N'Update complete.';
 
 
