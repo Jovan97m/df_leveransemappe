@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "Telia"
 :setvar DefaultFilePrefix "Telia"
-:setvar DefaultDataPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
-:setvar DefaultLogPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
+:setvar DefaultDataPath "C:\Users\Ryzen\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
+:setvar DefaultLogPath "C:\Users\Ryzen\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
 
 GO
 :on error exit
@@ -42,33 +42,25 @@ USE [$(DatabaseName)];
 GO
 /*
 The column [dbo].[Client].[Id_admin] is being dropped, data loss could occur.
-
-The type for column Epost in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (20) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (20) NULL.
-
-The type for column FirmaNavn in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (50) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (50) NULL.
-
-The type for column GateNavn in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (50) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (50) NULL.
-
-The type for column KontaktEpost in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (20) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (20) NULL.
-
-The type for column KontaktNavn in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (30) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (30) NULL.
-
-The type for column KontaktTlfnr in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (30) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (30) NULL.
-
-The type for column Sted in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (50) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (50) NULL.
-
-The type for column TekniskKontaktEpost in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (30) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (30) NULL.
-
-The type for column TekniskKontaktNavn in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (20) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (20) NULL.
-
-The type for column TekniskKontaktTlfnr in table [dbo].[Client] is currently  NVARCHAR (100) NULL but is being changed to  NVARCHAR (30) NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  NVARCHAR (30) NULL.
 */
 
 IF EXISTS (select top 1 1 from [dbo].[Client])
     RAISERROR (N'Rows were detected. The schema update is terminating because data loss might occur.', 16, 127) WITH NOWAIT
 
 GO
-PRINT N'Dropping [dbo].[FK_dbo.Admin.Id_Admin]...';
+PRINT N'Rename refactoring operation with key 3612fca1-4f17-4b39-b934-d88c654b39d1 is skipped, element [dbo].[Nummer].[11. Katalogoppforing] (SqlSimpleColumn) will not be renamed to Katalogoppforing';
+
+
+GO
+PRINT N'Rename refactoring operation with key c2f7a30c-baad-407f-8bd7-7b012d77f648 is skipped, element [dbo].[Nummer].[13. Porteringsdatoog tid] (SqlSimpleColumn) will not be renamed to Porteringsdatoog tid';
+
+
+GO
+PRINT N'Rename refactoring operation with key b197c2cd-7dba-4677-b31a-6305baa47e1e is skipped, element [dbo].[Nummer].[DeliveryContract] (SqlSimpleColumn) will not be renamed to DeliveryContractCountryCode';
+
+
+GO
+PRINT N'Dropping Foreign Key [dbo].[FK_dbo.Admin.Id_Admin]...';
 
 
 GO
@@ -76,7 +68,7 @@ ALTER TABLE [dbo].[Client] DROP CONSTRAINT [FK_dbo.Admin.Id_Admin];
 
 
 GO
-PRINT N'Altering [dbo].[Client]...';
+PRINT N'Altering Table [dbo].[Client]...';
 
 
 GO
@@ -84,26 +76,39 @@ ALTER TABLE [dbo].[Client] DROP COLUMN [Id_admin];
 
 
 GO
-ALTER TABLE [dbo].[Client] ALTER COLUMN [Epost] NVARCHAR (20) NULL;
+ALTER TABLE [dbo].[Client]
+    ADD [FirmaNavn]           NVARCHAR (50) NULL,
+        [GateNavn]            NVARCHAR (50) NULL,
+        [HusNummer]           INT           NULL,
+        [HusBokStav]          NVARCHAR (1)  NULL,
+        [PostNummer]          INT           NULL,
+        [Sted]                NVARCHAR (50) NULL,
+        [Epost]               NVARCHAR (20) NULL,
+        [KontaktNavn]         NVARCHAR (30) NULL,
+        [KontaktEpost]        NVARCHAR (20) NULL,
+        [KontaktTlfnr]        NVARCHAR (30) NULL,
+        [TekniskKontaktNavn]  NVARCHAR (20) NULL,
+        [TekniskKontaktEpost] NVARCHAR (30) NULL,
+        [TekniskKontaktTlfnr] NVARCHAR (30) NULL;
 
-ALTER TABLE [dbo].[Client] ALTER COLUMN [FirmaNavn] NVARCHAR (50) NULL;
 
-ALTER TABLE [dbo].[Client] ALTER COLUMN [GateNavn] NVARCHAR (50) NULL;
+GO
+-- Refactoring step to update target server with deployed transaction logs
 
-ALTER TABLE [dbo].[Client] ALTER COLUMN [KontaktEpost] NVARCHAR (20) NULL;
+IF OBJECT_ID(N'dbo.__RefactorLog') IS NULL
+BEGIN
+    CREATE TABLE [dbo].[__RefactorLog] (OperationKey UNIQUEIDENTIFIER NOT NULL PRIMARY KEY)
+    EXEC sp_addextendedproperty N'microsoft_database_tools_support', N'refactoring log', N'schema', N'dbo', N'table', N'__RefactorLog'
+END
+GO
+IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = '3612fca1-4f17-4b39-b934-d88c654b39d1')
+INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('3612fca1-4f17-4b39-b934-d88c654b39d1')
+IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = 'c2f7a30c-baad-407f-8bd7-7b012d77f648')
+INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('c2f7a30c-baad-407f-8bd7-7b012d77f648')
+IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = 'b197c2cd-7dba-4677-b31a-6305baa47e1e')
+INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('b197c2cd-7dba-4677-b31a-6305baa47e1e')
 
-ALTER TABLE [dbo].[Client] ALTER COLUMN [KontaktNavn] NVARCHAR (30) NULL;
-
-ALTER TABLE [dbo].[Client] ALTER COLUMN [KontaktTlfnr] NVARCHAR (30) NULL;
-
-ALTER TABLE [dbo].[Client] ALTER COLUMN [Sted] NVARCHAR (50) NULL;
-
-ALTER TABLE [dbo].[Client] ALTER COLUMN [TekniskKontaktEpost] NVARCHAR (30) NULL;
-
-ALTER TABLE [dbo].[Client] ALTER COLUMN [TekniskKontaktNavn] NVARCHAR (20) NULL;
-
-ALTER TABLE [dbo].[Client] ALTER COLUMN [TekniskKontaktTlfnr] NVARCHAR (30) NULL;
-
+GO
 
 GO
 PRINT N'Update complete.';

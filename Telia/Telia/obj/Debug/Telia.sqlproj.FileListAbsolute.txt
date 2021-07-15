@@ -10,3 +10,9 @@ D:\GitHub\df_leveransemappe\Telia\Telia\obj\Debug\Telia.sqlproj.AssemblyReferenc
 D:\GitHub\df_leveransemappe\Telia\Telia\obj\Debug\Telia.dll
 D:\GitHub\df_leveransemappe\Telia\Telia\obj\Debug\Telia.pdb
 E:\GitHub\df_leveransemappe\Telia\Telia\obj\Debug\Telia.sqlprojAssemblyReference.cache
+F:\Programi\Microsoft Visual Studio\Projekat sa Markom\Telia Git Glavni\df_leveransemappe\Telia\Telia\bin\Debug\Telia.dacpac
+F:\Programi\Microsoft Visual Studio\Projekat sa Markom\Telia Git Glavni\df_leveransemappe\Telia\Telia\bin\Debug\Telia.dll
+F:\Programi\Microsoft Visual Studio\Projekat sa Markom\Telia Git Glavni\df_leveransemappe\Telia\Telia\bin\Debug\Telia.pdb
+F:\Programi\Microsoft Visual Studio\Projekat sa Markom\Telia Git Glavni\df_leveransemappe\Telia\Telia\obj\Debug\Telia.sqlproj.AssemblyReference.cache
+F:\Programi\Microsoft Visual Studio\Projekat sa Markom\Telia Git Glavni\df_leveransemappe\Telia\Telia\obj\Debug\Telia.dll
+F:\Programi\Microsoft Visual Studio\Projekat sa Markom\Telia Git Glavni\df_leveransemappe\Telia\Telia\obj\Debug\Telia.pdb
