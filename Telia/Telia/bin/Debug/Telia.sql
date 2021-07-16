@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "Telia"
 :setvar DefaultFilePrefix "Telia"
-:setvar DefaultDataPath "C:\Users\Ryzen\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
-:setvar DefaultLogPath "C:\Users\Ryzen\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
+:setvar DefaultDataPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
+:setvar DefaultLogPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
 
 GO
 :on error exit
@@ -40,75 +40,43 @@ USE [$(DatabaseName)];
 
 
 GO
-/*
-The column [dbo].[Client].[Id_admin] is being dropped, data loss could occur.
-*/
-
-IF EXISTS (select top 1 1 from [dbo].[Client])
-    RAISERROR (N'Rows were detected. The schema update is terminating because data loss might occur.', 16, 127) WITH NOWAIT
-
-GO
-PRINT N'Rename refactoring operation with key 3612fca1-4f17-4b39-b934-d88c654b39d1 is skipped, element [dbo].[Nummer].[11. Katalogoppforing] (SqlSimpleColumn) will not be renamed to Katalogoppforing';
+PRINT N'Altering [dbo].[Nummer]...';
 
 
 GO
-PRINT N'Rename refactoring operation with key c2f7a30c-baad-407f-8bd7-7b012d77f648 is skipped, element [dbo].[Nummer].[13. Porteringsdatoog tid] (SqlSimpleColumn) will not be renamed to Porteringsdatoog tid';
+ALTER TABLE [dbo].[Nummer]
+    ADD [Katalogoppforing]            NVARCHAR (20) NULL,
+        [Porteringsdatoog tid]        DATETIME      NULL,
+        [Binding]                     NVARCHAR (20) NULL,
+        [Postnummer]                  INT           NULL,
+        [Antall TrillingSIM]          INT           NULL,
+        [allDataSIM]                  INT           NULL,
+        [Manuell Top-up]              NVARCHAR (15) NULL,
+        [Sperre Top-up]               NVARCHAR (15) NULL,
+        [Norden]                      NVARCHAR (20) NULL,
+        [Tale og SMS til EU]          BIT           NULL,
+        [TBN]                         NCHAR (15)    NULL,
+        [HovedSIM]                    INT           NULL,
+        [TrillingSIM1]                INT           NULL,
+        [TrillingSIM2]                INT           NULL,
+        [DataSIM1]                    INT           NULL,
+        [DataSIM2]                    INT           NULL,
+        [DataSIM3]                    INT           NULL,
+        [DataSIM4]                    INT           NULL,
+        [DataSIM5]                    INT           NULL,
+        [DeliveryMethodCode]          NVARCHAR (20) NULL,
+        [DeliveryStreetName]          NVARCHAR (20) NULL,
+        [DeliveryStreetNumber]        NVARCHAR (10) NULL,
+        [DeliveryStreetSuffix]        NVARCHAR (10) NULL,
+        [DeliveryCity]                NVARCHAR (20) NULL,
+        [DeliveryZIP]                 NVARCHAR (20) NULL,
+        [DeliveryCountryCode]         NVARCHAR (20) NULL,
+        [DeliveryContractEmail]       NVARCHAR (20) NULL,
+        [DeliveryContractCountryCode] NVARCHAR (20) NULL,
+        [DeliveryContractLocalNumber] NVARCHAR (20) NULL,
+        [DeliveryIndividualFirstName] NVARCHAR (15) NULL,
+        [DeliveryIndividualLastName]  NVARCHAR (20) NULL;
 
-
-GO
-PRINT N'Rename refactoring operation with key b197c2cd-7dba-4677-b31a-6305baa47e1e is skipped, element [dbo].[Nummer].[DeliveryContract] (SqlSimpleColumn) will not be renamed to DeliveryContractCountryCode';
-
-
-GO
-PRINT N'Dropping Foreign Key [dbo].[FK_dbo.Admin.Id_Admin]...';
-
-
-GO
-ALTER TABLE [dbo].[Client] DROP CONSTRAINT [FK_dbo.Admin.Id_Admin];
-
-
-GO
-PRINT N'Altering Table [dbo].[Client]...';
-
-
-GO
-ALTER TABLE [dbo].[Client] DROP COLUMN [Id_admin];
-
-
-GO
-ALTER TABLE [dbo].[Client]
-    ADD [FirmaNavn]           NVARCHAR (50) NULL,
-        [GateNavn]            NVARCHAR (50) NULL,
-        [HusNummer]           INT           NULL,
-        [HusBokStav]          NVARCHAR (1)  NULL,
-        [PostNummer]          INT           NULL,
-        [Sted]                NVARCHAR (50) NULL,
-        [Epost]               NVARCHAR (20) NULL,
-        [KontaktNavn]         NVARCHAR (30) NULL,
-        [KontaktEpost]        NVARCHAR (20) NULL,
-        [KontaktTlfnr]        NVARCHAR (30) NULL,
-        [TekniskKontaktNavn]  NVARCHAR (20) NULL,
-        [TekniskKontaktEpost] NVARCHAR (30) NULL,
-        [TekniskKontaktTlfnr] NVARCHAR (30) NULL;
-
-
-GO
--- Refactoring step to update target server with deployed transaction logs
-
-IF OBJECT_ID(N'dbo.__RefactorLog') IS NULL
-BEGIN
-    CREATE TABLE [dbo].[__RefactorLog] (OperationKey UNIQUEIDENTIFIER NOT NULL PRIMARY KEY)
-    EXEC sp_addextendedproperty N'microsoft_database_tools_support', N'refactoring log', N'schema', N'dbo', N'table', N'__RefactorLog'
-END
-GO
-IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = '3612fca1-4f17-4b39-b934-d88c654b39d1')
-INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('3612fca1-4f17-4b39-b934-d88c654b39d1')
-IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = 'c2f7a30c-baad-407f-8bd7-7b012d77f648')
-INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('c2f7a30c-baad-407f-8bd7-7b012d77f648')
-IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = 'b197c2cd-7dba-4677-b31a-6305baa47e1e')
-INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('b197c2cd-7dba-4677-b31a-6305baa47e1e')
-
-GO
 
 GO
 PRINT N'Update complete.';

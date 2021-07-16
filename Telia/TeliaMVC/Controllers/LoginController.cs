@@ -21,7 +21,7 @@ namespace TeliaMVC.Controllers
         {
             using (TeliaEntities db = new TeliaEntities())
             {
-                if (usertype == "Admin")
+                if (usertype == "admin")
                 {
                     var userDetail = db.Admins.Where(x => x.UserName == admin.UserName && x.Password == admin.Password).FirstOrDefault();
                     if (userDetail == null)
@@ -35,7 +35,7 @@ namespace TeliaMVC.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                 }
-                else if (usertype=="Client")
+                else if (usertype=="client")
                 {
                     var userDetail = db.Clients.Where(x => x.Orgnummer == admin.UserName  && x.Password == admin.Password).FirstOrDefault();
                     if (userDetail == null)
@@ -49,7 +49,7 @@ namespace TeliaMVC.Controllers
                         return RedirectToAction("Index", "HomeClient",new { userDetail.Orgnummer});
                     }
                 }
-                else { return View("Index", client); }
+                else { return View(); }
             }
 
         }

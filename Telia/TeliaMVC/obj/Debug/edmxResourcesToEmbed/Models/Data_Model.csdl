@@ -50,6 +50,37 @@
     <Property Name="Orgnummer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Date" Type="DateTime" Precision="0" />
     <Property Name="Pending" Type="Boolean" />
+    <Property Name="Katalogoppforing" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Porteringsdatoog_tid" Type="DateTime" Precision="3" />
+    <Property Name="Binding" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Postnummer" Type="Int32" />
+    <Property Name="Antall_TrillingSIM" Type="Int32" />
+    <Property Name="allDataSIM" Type="Int32" />
+    <Property Name="Manuell_Top_up" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Sperre_Top_up" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Norden" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Tale_og_SMS_til_EU" Type="Boolean" />
+    <Property Name="TBN" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="HovedSIM" Type="Int32" />
+    <Property Name="TrillingSIM1" Type="Int32" />
+    <Property Name="TrillingSIM2" Type="Int32" />
+    <Property Name="DataSIM1" Type="Int32" />
+    <Property Name="DataSIM2" Type="Int32" />
+    <Property Name="DataSIM3" Type="Int32" />
+    <Property Name="DataSIM4" Type="Int32" />
+    <Property Name="DataSIM5" Type="Int32" />
+    <Property Name="DeliveryMethodCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryStreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryStreetNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryStreetSuffix" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryCity" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryZIP" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryCountryCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryContractEmail" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryContractCountryCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryContractLocalNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryIndividualFirstName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryIndividualLastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
     <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">

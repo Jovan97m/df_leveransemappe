@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TeliaMVC.Models;
+using PagedList;
 
 namespace TeliaMVC.Controllers
 {
@@ -15,10 +16,164 @@ namespace TeliaMVC.Controllers
         private TeliaEntities db = new TeliaEntities();
 
         // GET: NummersAdmin
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            var nummers = db.Nummers.Include(n => n.Fakturaoppsett);
-            return View(nummers.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.Telefonnummer = String.IsNullOrEmpty(sortOrder) ? "telefonnummer_desc" : "";
+            ViewBag.Abonnementstype = sortOrder == "Abonnementstype" ? "abonnementstype_desc" : "Abonnementstype"; // mislim da ne bi trebalo da ima ova
+            ViewBag.EtternavnSortParm = sortOrder == "Etternavn" ? "etternavn_desc" : "Etternavn";
+            ViewBag.FornavnSortParm = sortOrder == "Fornavn" ? "fornavn_desc" : "Fornavn";
+            ViewBag.Bedrift_som_skal_faktureresSortParm = sortOrder == "Bedrift_som_skal_faktureres	" ? "bedrift_som_skal_faktureres_desc" : "Bedrift_som_skal_faktureres";
+            ViewBag.c_o_adresse_for_SIM_leveringSortParm = sortOrder == "c_o_adresse_for_SIM_levering" ? "c_o_adresse_for_SIM_levering_desc" : "c_o_adresse_for_SIM_levering";
+            ViewBag.Gateadresse_SIM_Skal_sendes_tilSortParm = sortOrder == "Gateadresse_SIM_Skal_sendes_til" ? "gateadresse_SIM_Skal_sendes_til_desc" : "Gateadresse_SIM_Skal_sendes_til";
+            ViewBag.Hus_nummerSortParm = sortOrder == "Hus_nummer" ? "hus_nummer_desc" : "Hus_nummer";
+            ViewBag.Hus_bokstavSortParm = sortOrder == "Hus_bokstav" ? "hus_bokstav_desc" : "Hus_bokstav";
+            ViewBag.post_nr_SortParm = sortOrder == "post_nr_" ? "post_nr_desc" : "post_nr_";
+            ViewBag.Post_stedSortParm = sortOrder == "Post_sted" ? "post_sted_desc" : "Post_sted";
+            ViewBag.Ekstra_talesimSortParm = sortOrder == "Ekstra_talesim_" ? "ekstra_talesim_desc" : "Ekstra_talesim_";
+            ViewBag.Ekstra_datasimSortParm = sortOrder == "Ekstra_datasim_" ? "ekstra_datasim_desc" : "Ekstra_datasim_";
+            //provera za search
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+
+
+
+            var nummers = from s in db.Nummers
+                          select s;
+
+            List<Client> clients = db.Clients.ToList();
+            List<String> orgNummers = new List<String>();
+            foreach (var item in clients)
+            {
+                //kad se doda u bazu
+                //string final = item.Orgnummer + "-" + item.FirmaNavn;
+                orgNummers.Add(item.Orgnummer);
+            }
+
+            ViewBag.nummers = orgNummers;
+
+            //pretrazivanje pre rasporedjivanja:
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                nummers = nummers.Where(s => s.Fornavn.Contains(searchString));
+            }
+
+
+            switch (sortOrder)
+            {
+                //prva kolona
+                case "telefonnummer_desc":
+                    nummers = nummers.OrderByDescending(s => s.Telefonnummer);
+                    break;
+                //druga kolona:
+                case "Abonnementstype":
+                    nummers = nummers.OrderBy(s => s.Abonnementstype);
+                    break;
+                case "abonnementstype_desc":
+                    nummers = nummers.OrderByDescending(s => s.Abonnementstype);
+                    break;
+
+                //treca kolona,fakture
+                case "Etternavn":
+                    nummers = nummers.OrderBy(s => s.Etternavn);
+                    break;
+                case "etternavn_desc":
+                    nummers = nummers.OrderByDescending(s => s.Etternavn);
+                    break;
+                case "Fornavn":
+                    nummers = nummers.OrderBy(s => s.Fornavn);
+                    break;
+                case "fornavn_desc":
+                    nummers = nummers.OrderByDescending(s => s.Fornavn);
+                    break;
+                case "Bedrift_som_skal_faktureres":
+                    nummers = nummers.OrderBy(s => s.Bedrift_som_skal_faktureres);
+                    break;
+                case "bedrift_som_skal_faktureres_desc":
+                    nummers = nummers.OrderByDescending(s => s.Bedrift_som_skal_faktureres);
+                    break;
+
+
+                //cetvrta kolona,adrese za fakture
+                case "c_o_adresse_for_SIM_levering":
+                    nummers = nummers.OrderBy(s => s.c_o_adresse_for_SIM_levering);
+                    break;
+                case "c_o_adresse_for_SIM_levering_desc":
+                    nummers = nummers.OrderByDescending(s => s.c_o_adresse_for_SIM_levering);
+                    break;
+
+                //Peta kolona, Husnr
+                case "Gateadresse_SIM_Skal_sendes_til":
+                    nummers = nummers.OrderBy(s => s.Gateadresse_SIM_Skal_sendes_til);
+                    break;
+
+                case "gateadresse_SIM_Skal_sendes_til_desc":
+                    nummers = nummers.OrderByDescending(s => s.Gateadresse_SIM_Skal_sendes_til);
+                    break;
+
+
+                case "husnr_desc":
+                    nummers = nummers.OrderByDescending(s => s.Gateadresse_SIM_Skal_sendes_til);
+                    break;
+
+                //sesta kolona, Bokstav , mozda i ne mora
+                case "Hus_nummer":
+                    nummers = nummers.OrderBy(s => s.Hus_nummer);
+                    break;
+                case "hus_nummer_desc":
+                    nummers = nummers.OrderByDescending(s => s.Hus_nummer);
+                    break;
+
+                //sedma kolona PostNummer
+                case "Hus_bokstav":
+                    nummers = nummers.OrderBy(s => s.Hus_bokstav);
+                    break;
+                case "hus_bokstav_desc":
+                    nummers = nummers.OrderByDescending(s => s.Hus_bokstav);
+                    break;
+
+                case "post_nr_":
+                    nummers = nummers.OrderBy(s => s.post_nr_);
+                    break;
+                case "post_nr_desc":
+                    nummers = nummers.OrderByDescending(s => s.post_nr_);
+                    break;
+
+                case "Post_sted":
+                    nummers = nummers.OrderBy(s => s.Post_sted);
+                    break;
+                case "post_sted_desc":
+                    nummers = nummers.OrderByDescending(s => s.Post_sted);
+                    break;
+
+                case "Ekstra_datasim_":
+                    nummers = nummers.OrderBy(s => s.Ekstra_datasim);
+                    break;
+                case "ekstra_datasim_desc":
+                    nummers = nummers.OrderByDescending(s => s.Ekstra_datasim);
+                    break;
+                case "Ekstra_talesim_":
+                    nummers = nummers.OrderBy(s => s.Ekstra_talesim_);
+                    break;
+                case "ekstra_talesim_desc":
+                    nummers = nummers.OrderByDescending(s => s.Ekstra_talesim_);
+                    break;
+
+                default:
+                    nummers = nummers.OrderBy(s => s.Telefonnummer);
+                    break;
+            }
+
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(nummers.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: NummersAdmin/Details/5

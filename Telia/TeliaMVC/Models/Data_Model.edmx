@@ -74,6 +74,37 @@
           <Property Name="Orgnummer" Type="nvarchar" MaxLength="50" />
           <Property Name="Date" Type="date" />
           <Property Name="Pending" Type="bit" />
+          <Property Name="Katalogoppforing" Type="nvarchar" MaxLength="20" />
+          <Property Name="Porteringsdatoog tid" Type="datetime" />
+          <Property Name="Binding" Type="nvarchar" MaxLength="20" />
+          <Property Name="Postnummer" Type="int" />
+          <Property Name="Antall TrillingSIM" Type="int" />
+          <Property Name="allDataSIM" Type="int" />
+          <Property Name="Manuell Top-up" Type="nvarchar" MaxLength="15" />
+          <Property Name="Sperre Top-up" Type="nvarchar" MaxLength="15" />
+          <Property Name="Norden" Type="nvarchar" MaxLength="20" />
+          <Property Name="Tale og SMS til EU" Type="bit" />
+          <Property Name="TBN" Type="nchar" MaxLength="15" />
+          <Property Name="HovedSIM" Type="int" />
+          <Property Name="TrillingSIM1" Type="int" />
+          <Property Name="TrillingSIM2" Type="int" />
+          <Property Name="DataSIM1" Type="int" />
+          <Property Name="DataSIM2" Type="int" />
+          <Property Name="DataSIM3" Type="int" />
+          <Property Name="DataSIM4" Type="int" />
+          <Property Name="DataSIM5" Type="int" />
+          <Property Name="DeliveryMethodCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="DeliveryStreetName" Type="nvarchar" MaxLength="20" />
+          <Property Name="DeliveryStreetNumber" Type="nvarchar" MaxLength="10" />
+          <Property Name="DeliveryStreetSuffix" Type="nvarchar" MaxLength="10" />
+          <Property Name="DeliveryCity" Type="nvarchar" MaxLength="20" />
+          <Property Name="DeliveryZIP" Type="nvarchar" MaxLength="20" />
+          <Property Name="DeliveryCountryCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="DeliveryContractEmail" Type="nvarchar" MaxLength="20" />
+          <Property Name="DeliveryContractCountryCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="DeliveryContractLocalNumber" Type="nvarchar" MaxLength="20" />
+          <Property Name="DeliveryIndividualFirstName" Type="nvarchar" MaxLength="15" />
+          <Property Name="DeliveryIndividualLastName" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
           <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">
@@ -153,6 +184,37 @@
           <Property Name="Orgnummer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Date" Type="DateTime" Precision="0" />
           <Property Name="Pending" Type="Boolean" />
+          <Property Name="Katalogoppforing" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Porteringsdatoog_tid" Type="DateTime" Precision="3" />
+          <Property Name="Binding" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Postnummer" Type="Int32" />
+          <Property Name="Antall_TrillingSIM" Type="Int32" />
+          <Property Name="allDataSIM" Type="Int32" />
+          <Property Name="Manuell_Top_up" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Sperre_Top_up" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Norden" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Tale_og_SMS_til_EU" Type="Boolean" />
+          <Property Name="TBN" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="HovedSIM" Type="Int32" />
+          <Property Name="TrillingSIM1" Type="Int32" />
+          <Property Name="TrillingSIM2" Type="Int32" />
+          <Property Name="DataSIM1" Type="Int32" />
+          <Property Name="DataSIM2" Type="Int32" />
+          <Property Name="DataSIM3" Type="Int32" />
+          <Property Name="DataSIM4" Type="Int32" />
+          <Property Name="DataSIM5" Type="Int32" />
+          <Property Name="DeliveryMethodCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryStreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryStreetNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryStreetSuffix" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryCity" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryZIP" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryCountryCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryContractEmail" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryContractCountryCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryContractLocalNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryIndividualFirstName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryIndividualLastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
           <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">
@@ -233,6 +295,37 @@
           <EntitySetMapping Name="Nummers">
             <EntityTypeMapping TypeName="TeliaModel.Nummer">
               <MappingFragment StoreEntitySet="Nummer">
+                <ScalarProperty Name="DeliveryIndividualLastName" ColumnName="DeliveryIndividualLastName" />
+                <ScalarProperty Name="DeliveryIndividualFirstName" ColumnName="DeliveryIndividualFirstName" />
+                <ScalarProperty Name="DeliveryContractLocalNumber" ColumnName="DeliveryContractLocalNumber" />
+                <ScalarProperty Name="DeliveryContractCountryCode" ColumnName="DeliveryContractCountryCode" />
+                <ScalarProperty Name="DeliveryContractEmail" ColumnName="DeliveryContractEmail" />
+                <ScalarProperty Name="DeliveryCountryCode" ColumnName="DeliveryCountryCode" />
+                <ScalarProperty Name="DeliveryZIP" ColumnName="DeliveryZIP" />
+                <ScalarProperty Name="DeliveryCity" ColumnName="DeliveryCity" />
+                <ScalarProperty Name="DeliveryStreetSuffix" ColumnName="DeliveryStreetSuffix" />
+                <ScalarProperty Name="DeliveryStreetNumber" ColumnName="DeliveryStreetNumber" />
+                <ScalarProperty Name="DeliveryStreetName" ColumnName="DeliveryStreetName" />
+                <ScalarProperty Name="DeliveryMethodCode" ColumnName="DeliveryMethodCode" />
+                <ScalarProperty Name="DataSIM5" ColumnName="DataSIM5" />
+                <ScalarProperty Name="DataSIM4" ColumnName="DataSIM4" />
+                <ScalarProperty Name="DataSIM3" ColumnName="DataSIM3" />
+                <ScalarProperty Name="DataSIM2" ColumnName="DataSIM2" />
+                <ScalarProperty Name="DataSIM1" ColumnName="DataSIM1" />
+                <ScalarProperty Name="TrillingSIM2" ColumnName="TrillingSIM2" />
+                <ScalarProperty Name="TrillingSIM1" ColumnName="TrillingSIM1" />
+                <ScalarProperty Name="HovedSIM" ColumnName="HovedSIM" />
+                <ScalarProperty Name="TBN" ColumnName="TBN" />
+                <ScalarProperty Name="Tale_og_SMS_til_EU" ColumnName="Tale og SMS til EU" />
+                <ScalarProperty Name="Norden" ColumnName="Norden" />
+                <ScalarProperty Name="Sperre_Top_up" ColumnName="Sperre Top-up" />
+                <ScalarProperty Name="Manuell_Top_up" ColumnName="Manuell Top-up" />
+                <ScalarProperty Name="allDataSIM" ColumnName="allDataSIM" />
+                <ScalarProperty Name="Antall_TrillingSIM" ColumnName="Antall TrillingSIM" />
+                <ScalarProperty Name="Postnummer" ColumnName="Postnummer" />
+                <ScalarProperty Name="Binding" ColumnName="Binding" />
+                <ScalarProperty Name="Porteringsdatoog_tid" ColumnName="Porteringsdatoog tid" />
+                <ScalarProperty Name="Katalogoppforing" ColumnName="Katalogoppforing" />
                 <ScalarProperty Name="Pending" ColumnName="Pending" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Orgnummer" ColumnName="Orgnummer" />

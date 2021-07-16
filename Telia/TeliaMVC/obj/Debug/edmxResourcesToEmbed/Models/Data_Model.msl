@@ -29,6 +29,37 @@
     <EntitySetMapping Name="Nummers">
       <EntityTypeMapping TypeName="TeliaModel.Nummer">
         <MappingFragment StoreEntitySet="Nummer">
+          <ScalarProperty Name="DeliveryIndividualLastName" ColumnName="DeliveryIndividualLastName" />
+          <ScalarProperty Name="DeliveryIndividualFirstName" ColumnName="DeliveryIndividualFirstName" />
+          <ScalarProperty Name="DeliveryContractLocalNumber" ColumnName="DeliveryContractLocalNumber" />
+          <ScalarProperty Name="DeliveryContractCountryCode" ColumnName="DeliveryContractCountryCode" />
+          <ScalarProperty Name="DeliveryContractEmail" ColumnName="DeliveryContractEmail" />
+          <ScalarProperty Name="DeliveryCountryCode" ColumnName="DeliveryCountryCode" />
+          <ScalarProperty Name="DeliveryZIP" ColumnName="DeliveryZIP" />
+          <ScalarProperty Name="DeliveryCity" ColumnName="DeliveryCity" />
+          <ScalarProperty Name="DeliveryStreetSuffix" ColumnName="DeliveryStreetSuffix" />
+          <ScalarProperty Name="DeliveryStreetNumber" ColumnName="DeliveryStreetNumber" />
+          <ScalarProperty Name="DeliveryStreetName" ColumnName="DeliveryStreetName" />
+          <ScalarProperty Name="DeliveryMethodCode" ColumnName="DeliveryMethodCode" />
+          <ScalarProperty Name="DataSIM5" ColumnName="DataSIM5" />
+          <ScalarProperty Name="DataSIM4" ColumnName="DataSIM4" />
+          <ScalarProperty Name="DataSIM3" ColumnName="DataSIM3" />
+          <ScalarProperty Name="DataSIM2" ColumnName="DataSIM2" />
+          <ScalarProperty Name="DataSIM1" ColumnName="DataSIM1" />
+          <ScalarProperty Name="TrillingSIM2" ColumnName="TrillingSIM2" />
+          <ScalarProperty Name="TrillingSIM1" ColumnName="TrillingSIM1" />
+          <ScalarProperty Name="HovedSIM" ColumnName="HovedSIM" />
+          <ScalarProperty Name="TBN" ColumnName="TBN" />
+          <ScalarProperty Name="Tale_og_SMS_til_EU" ColumnName="Tale og SMS til EU" />
+          <ScalarProperty Name="Norden" ColumnName="Norden" />
+          <ScalarProperty Name="Sperre_Top_up" ColumnName="Sperre Top-up" />
+          <ScalarProperty Name="Manuell_Top_up" ColumnName="Manuell Top-up" />
+          <ScalarProperty Name="allDataSIM" ColumnName="allDataSIM" />
+          <ScalarProperty Name="Antall_TrillingSIM" ColumnName="Antall TrillingSIM" />
+          <ScalarProperty Name="Postnummer" ColumnName="Postnummer" />
+          <ScalarProperty Name="Binding" ColumnName="Binding" />
+          <ScalarProperty Name="Porteringsdatoog_tid" ColumnName="Porteringsdatoog tid" />
+          <ScalarProperty Name="Katalogoppforing" ColumnName="Katalogoppforing" />
           <ScalarProperty Name="Pending" ColumnName="Pending" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="Orgnummer" ColumnName="Orgnummer" />

@@ -1,7 +1,13 @@
-﻿@model IEnumerable<TeliaMVC.Models.Nummer>
+﻿@model PagedList.IPagedList<TeliaMVC.Models.Nummer>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    Layout = null;
+    ViewBag.Title = "Brukerliste";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
 }
 
 <!DOCTYPE html>
@@ -9,129 +15,585 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefonnummer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Abonnementstype)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fornavn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Etternavn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bedrift_som_skal_faktureres)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.c_o_adresse_for_SIM_levering)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gateadresse_SIM_Skal_sendes_til)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Hus_nummer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Hus_bokstav)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.post_nr_)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Post_sted)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Epost_for_sporings_informasjon)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Epost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tilleggsinfo_ansatt_ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ekstra_talesim_)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ekstra_datasim)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fakturaoppsett.NavnPaKostnadssted)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefonnummer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Abonnementstype)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fornavn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Etternavn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Bedrift_som_skal_faktureres)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.c_o_adresse_for_SIM_levering)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gateadresse_SIM_Skal_sendes_til)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Hus_nummer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Hus_bokstav)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.post_nr_)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Post_sted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Epost_for_sporings_informasjon)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Epost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tilleggsinfo_ansatt_ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ekstra_talesim_)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ekstra_datasim)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fakturaoppsett.NavnPaKostnadssted)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-            </td>
-        </tr>
-    }
-    
-    </table>
+    <style>
+        .button {
+            font-size: smaller;
+            color: white;
+            text-shadow: 1px 1px black;
+            margin-right: 2px;
+            margin-bottom: 2px;
+            border-radius: 12px;
+        }
+
+        .NotNeeded {
+            background-color: #F9B3A7;
+        }
+
+        .ButtonAdd {
+            background-color: #ac23f6;
+            font-size: larger;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px black;
+            outline-offset: 4px;
+            display: block;
+            padding: 12px 42px;
+            border-radius: 12px;
+            font-size: 1.25rem;
+            border: none;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+        }
+
+            .ButtonAdd:hover {
+                color: white;
+                background-color: #990ae2;
+                box-shadow: 0 12px 18px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+            }
+
+            .ButtonAdd:active {
+                transform: translateY(+2px);
+            }
+
+        .inputRadio {
+            border-radius: 10px;
+            box-shadow: inset 0 1px 1px hsla(0,0%,100%,.8), 0 0 0 1px hsla(0,0%,0%,.6), 0 2px 3px hsla(0,0%,0%,.6), 0 4px 3px hsla(0,0%,0%,.4), 0 6px 6px hsla(0,0%,0%,.2), 0 10px 6px hsla(0,0%,0%,.2);
+            cursor: pointer;
+            display: inline-block;
+            height: 15px;
+            margin-right: 16px;
+            position: relative;
+            width: 15px;
+            -webkit-appearance: none;
+        }
+
+            .inputRadio:hover {
+                background-color: #c86cf9;
+            }
+
+            .inputRadio:checked {
+                background-color: #990ae4;
+            }
+
+        .SelectBox {
+            color: black;
+            font-size: medium;
+            font-weight: bold;
+            margin-right: 2px;
+            margin-bottom: 2px;
+            border-radius: 16px;
+            outline-offset: 4px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+        }
+    </style>
+    <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
+
+        <div class="col-sm-5">
+            @using (Html.BeginForm("Index", "NummersAdmin", FormMethod.Get))
+            {
+                <fieldset>
+                    <legend>Søkealternativer</legend>
+                    <label class="radio-inline">
+                        @Html.RadioButton("SearchParameter", "Telefonnummer", htmlAttributes: new { @class = "inputRadio" })<label>Telefonnummer</label>
+                    </label>
+                    <br />
+                    <label class="radio-inline">
+                        @Html.RadioButton("SearchParameter", "Fornavn", htmlAttributes: new { @class = "inputRadio" })<label>Fornavn</label>
+                    </label>
+                    <br />
+                    <label class="radio-inline">
+                        @Html.RadioButton("SearchParameter", "Binding", htmlAttributes: new { @class = "inputRadio" })<label>Binding</label>
+                    </label>
+                    <br />
+                </fieldset>
+                <p style="font-size: medium;font-weight:bold;color:black;margin-left:15px;">
+                    Søk etter @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                    <input type="submit" value="Search" class="btn btn-info shadow-lg" style="color: black;
+                     font-size: medium;
+                        border-radius: 14px;" />
+                </p>
+            }
+        </div>
+
+        <div class="col-sm-4" >
+            <fieldset>
+                <legend>
+                    Legger til nytt fakturaoppset
+                </legend>
+                <button class="shadow-lg ButtonAdd " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href='@Url.Action("Create", "Fakturaoppsetts")'">
+                    <span class="glyphicon glyphicon-plus"></span>   Skape
+                </button>
+                <button class=" ButtonAdd " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts")'">
+                    <span class="glyphicon glyphicon-repeat"></span>   Refresh
+                </button>
+            </fieldset>
+        </div>
+
+    </div>
+    <div class="row" style="margin-left:15px; margin-right:15px;" >
+        <div class="col-sm-4">
+            <fieldset>
+                <legend>
+                    Velg firmaet du vil vise data for
+                </legend>
+                <p>
+                    @Html.DropDownList("Orgnummers", new SelectList(ViewBag.nummers), "Choose Orgnummer", new { @class = "form-control SelectBox" });
+                </p>
+            </fieldset>
+        </div>
+    </div>
+    <div style="overflow-x: auto; margin-left: 15px; margin-right: 15px;" class="shadow">
+        <table class="table-bordered table-sm table-hover table-striped " style="font-size: 15px;table-layout:fixed;">
+            <thead style="background-color: #990AE4;
+                          color: white;
+                          text-shadow: 1px 2px black;">
+                <tr>
+                    <th class="col-sm-2">
+                        Telefonnummer
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Telefonnummer, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort"></span>
+                        </button>
+                    </th>
+
+                    <th class="col-sm-2">
+                        Fornavn
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.FornavnSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        Etternavn
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.EtternavnSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <!--
+                    <th class="col-sm-2">
+                        Bedrift_som_skal_faktureres
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Bedrift_som_skal_faktureresSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        c_o_adresse_for_SIM_levering
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href='@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.c_o_adresse_for_SIM_leveringSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        Gateadresse_SIM_Skal_sendes_til
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Gateadresse_SIM_Skal_sendes_tilSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                        -->
+                    <th class="col-sm-2">
+                        Hus_nummer
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Hus_nummerSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        Hus_bokstav
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Hus_bokstavSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        Postnummer
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.PostnummerSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        Katalogoppføring
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.KatalogoSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+
+                    <th class="col-sm-2">
+                        Kostnadssted(BAN)
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.KostnadsstedSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        Porteringsdato og tid
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.PorteridSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th scope="row" class="col-sm-2">
+                        Abonnementstype
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Abonnementstype, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        Binding
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.BindingSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        Antall TrillingSIM
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.AntallSIMSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        allDataSIM
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.allDataSIMSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        Manuell Top-up
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.ManuelSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        Sperre Top-up
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.SperreSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        Norden
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.NordenSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        Tale og SMS til EU
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.TaleSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        TBN
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.TBNSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        HovedSIM
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.HovedSIMSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        TrillingSIM1
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.TrillingSIM1SortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        TrillingSIM2
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.TrillingSIM2SortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        DataSIM1
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DataSIM1SortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        DataSIM2
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DataSIM2SortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        DataSIM3
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DataSIM3SortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        DataSIM4
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DataSIM4SortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        DataSIM5
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DataSIM5SortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <!-- SAD ONI DELIVERY-->
+                    <th class="col-sm-2">
+                        DeliveryMethodCode
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DeliveryMethodCodeSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+
+                    <th class="col-sm-2">
+                        DeliveryStreetName
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DeliveryStreetNameSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+
+                    <th class="col-sm-2">
+                        DeliveryStreetNumber
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DeliveryStreetNumberSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+
+                    <th class="col-sm-2">
+                        DeliveryStreetSuffix
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DeliveryStreetSuffixSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        DeliveryCity
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DeliveryCitySortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        DeliveryZIP
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DeliveryZIPSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+
+                    <th class="col-sm-2">
+                        DeliveryCountryCode
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DeliveryCountryCodeSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+
+                    <th class="col-sm-2">
+                        DeliveryContractEmail
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DeliveryContractEmailSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+
+                    <th class="col-sm-2">
+                        DeliveryContractCountryCode
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DeliveryContractCountryCodeSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+
+                    <th class="col-sm-2">
+                        DeliveryContractLocalNumber
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DeliveryContractLocalNumberSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+
+                    <th class="col-sm-2">
+                        DeliveryIndividualFirstName
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DeliveryIndividualFirstNameSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+
+                    <th class="col-sm-2">
+                        DeliveryIndividualLastName
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.DeliveryIndividualLastNameSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+
+
+                    <!--Ova cuda ne bi trebalo dase prikazu:-->
+                    <!--
+                    <th class="col-sm-2">
+                        Post_sted
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Post_stedSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        Epost_for_sporings_informasjon
+                    </th>
+                    <th class="col-sm-2">
+                        Epost
+                    </th>
+                    <th class="col-sm-2">
+                        Tilleggsinfo_ansatt_ID
+                    </th>
+                    <th class="col-sm-2">
+                        Ekstra_talesim_
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Ekstra_talesimSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                    <th class="col-sm-2">
+                        Ekstra_datasim
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Ekstra_datasimSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                    </th>
+                        -->
+                    <th style="width:35px;"></th>
+                </tr>
+            </thead>
+            <tbody style=" color: black; font-size: 13px;">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="col-sm-1">
+                            @Html.DisplayFor(modelItem => item.Telefonnummer)
+                        </td>
+
+                        <td class="col-sm-1">
+                            @Html.DisplayFor(modelItem => item.Fornavn)
+                        </td>
+                        <td class="col-sm-1">
+                            @Html.DisplayFor(modelItem => item.Etternavn)
+                        </td>
+
+                        <td class="col-sm-1">
+                            @Html.DisplayFor(modelItem => item.Hus_nummer)
+                        </td>
+                        <td class="col-sm-1">
+                            @Html.DisplayFor(modelItem => item.Hus_bokstav)
+                        </td>
+                        <td class="col-sm-1">
+                            @Html.DisplayFor(modelItem => item.Postnummer)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.Katalogoppforing)
+                        </td>
+                        <td class="col-sm-1">
+                            @Html.DisplayFor(modelItem => item.Fakturaoppsett.NavnPaKostnadssted)
+                        </td>
+                        <td class="col-sm-1 ">
+
+                            @Html.DisplayFor(modelItem => item.Porteringsdatoog_tid)
+                        </td>
+                        <!-- Ovde treba jos ona 2 da se dodaju , Navarende-->
+                        <!-- pa posle ide ovo:-->
+                        <td class="col-sm-1">
+                            @Html.DisplayFor(modelItem => item.Abonnementstype)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.Binding)
+                        </td>
+
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.Antall_TrillingSIM)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.allDataSIM)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.Manuell_Top_up)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.Sperre_Top_up)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.Norden)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.Tale_og_SMS_til_EU)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.TBN)
+                        </td>
+                        <td class="col-sm-1">
+                            @Html.DisplayFor(modelItem => item.HovedSIM)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.TrillingSIM1)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.TrillingSIM2)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DataSIM1)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DataSIM2)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DataSIM3)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DataSIM4)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DataSIM5)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DeliveryMethodCode)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DeliveryStreetName)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DeliveryStreetNumber)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DeliveryStreetSuffix)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DeliveryCity)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DeliveryZIP)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DeliveryCountryCode)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DeliveryContractEmail)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DeliveryContractCountryCode)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DeliveryContractLocalNumber)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DeliveryIndividualFirstName)
+                        </td>
+                        <td class="col-sm-1 NotNeeded">
+                            @Html.DisplayFor(modelItem => item.DeliveryIndividualLastName)
+                        </td>
+                        <td style="background-color: azure; font-style: italic; font-size: 15px;" class="col-sm-2">
+                            <div style="display:flex; align-items:stretch;">
+                                <button class="btn-primary btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
+                                        onclick="location.href = '@Url.Action("Edit", "Nummers", new {id = item.ID})'">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+
+                                </button>
+                                <button class="btn-danger btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du slette valgt rad"
+                                        onclick="location.href = '@Url.Action("Delete", "Nummers", new {id = item.ID})'">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page, currentFilter = ViewBag.CurrentFilter }))
+
+    </div>
+    </div>
 </body>
 </html>

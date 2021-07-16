@@ -69,6 +69,37 @@
     <Property Name="Orgnummer" Type="nvarchar" MaxLength="50" />
     <Property Name="Date" Type="date" />
     <Property Name="Pending" Type="bit" />
+    <Property Name="Katalogoppforing" Type="nvarchar" MaxLength="20" />
+    <Property Name="Porteringsdatoog tid" Type="datetime" />
+    <Property Name="Binding" Type="nvarchar" MaxLength="20" />
+    <Property Name="Postnummer" Type="int" />
+    <Property Name="Antall TrillingSIM" Type="int" />
+    <Property Name="allDataSIM" Type="int" />
+    <Property Name="Manuell Top-up" Type="nvarchar" MaxLength="15" />
+    <Property Name="Sperre Top-up" Type="nvarchar" MaxLength="15" />
+    <Property Name="Norden" Type="nvarchar" MaxLength="20" />
+    <Property Name="Tale og SMS til EU" Type="bit" />
+    <Property Name="TBN" Type="nchar" MaxLength="15" />
+    <Property Name="HovedSIM" Type="int" />
+    <Property Name="TrillingSIM1" Type="int" />
+    <Property Name="TrillingSIM2" Type="int" />
+    <Property Name="DataSIM1" Type="int" />
+    <Property Name="DataSIM2" Type="int" />
+    <Property Name="DataSIM3" Type="int" />
+    <Property Name="DataSIM4" Type="int" />
+    <Property Name="DataSIM5" Type="int" />
+    <Property Name="DeliveryMethodCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="DeliveryStreetName" Type="nvarchar" MaxLength="20" />
+    <Property Name="DeliveryStreetNumber" Type="nvarchar" MaxLength="10" />
+    <Property Name="DeliveryStreetSuffix" Type="nvarchar" MaxLength="10" />
+    <Property Name="DeliveryCity" Type="nvarchar" MaxLength="20" />
+    <Property Name="DeliveryZIP" Type="nvarchar" MaxLength="20" />
+    <Property Name="DeliveryCountryCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="DeliveryContractEmail" Type="nvarchar" MaxLength="20" />
+    <Property Name="DeliveryContractCountryCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="DeliveryContractLocalNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="DeliveryIndividualFirstName" Type="nvarchar" MaxLength="15" />
+    <Property Name="DeliveryIndividualLastName" Type="nvarchar" MaxLength="20" />
   </EntityType>
   <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
     <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">

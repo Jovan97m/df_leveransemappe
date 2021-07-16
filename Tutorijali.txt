@@ -13,3 +13,6 @@ https://www.w3.org/2001/tag/doc/whenToUseGet.html
 
 5. Deploy na sajt
 https://www.youtube.com/watch?v=UFyVZ-mAnpQ
+
+6. DropDownMenu:
+https://dotnettutorials.net/lesson/dropdownlist-html-helper-mvc/#:~:text=DropDownListFor%20HTML%20Helper%20in%20ASP.NET%20MVC%20Application%3A%20The,to%20be%20specified%20by%20using%20a%20lambda%20expression.

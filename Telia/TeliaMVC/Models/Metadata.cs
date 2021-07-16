@@ -93,6 +93,40 @@ namespace TeliaMVC.Models
         [DataSIM5]
         public Nullable<int> Ekstra_datasim { get; set; }
         public int ID { get; set; }
+        public string Orgnummer { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
+        public Nullable<bool> Pending { get; set; }
+        public string Katalogoppforing { get; set; }
+        public Nullable<System.DateTime> Porteringsdatoog_tid { get; set; }
+        public string Binding { get; set; }
+        public Nullable<int> Postnummer { get; set; }
+        public Nullable<int> Antall_TrillingSIM { get; set; }
+        public Nullable<int> allDataSIM { get; set; }
+        public string Manuell_Top_up { get; set; }
+        public string Sperre_Top_up { get; set; }
+        public string Norden { get; set; }
+        public Nullable<bool> Tale_og_SMS_til_EU { get; set; }
+        public string TBN { get; set; }
+        public Nullable<int> HovedSIM { get; set; }
+        public Nullable<int> TrillingSIM1 { get; set; }
+        public Nullable<int> TrillingSIM2 { get; set; }
+        public Nullable<int> DataSIM1 { get; set; }
+        public Nullable<int> DataSIM2 { get; set; }
+        public Nullable<int> DataSIM3 { get; set; }
+        public Nullable<int> DataSIM4 { get; set; }
+        public Nullable<int> DataSIM5 { get; set; }
+        public string DeliveryMethodCode { get; set; }
+        public string DeliveryStreetName { get; set; }
+        public string DeliveryStreetNumber { get; set; }
+        public string DeliveryStreetSuffix { get; set; }
+        public string DeliveryCity { get; set; }
+        public string DeliveryZIP { get; set; }
+        public string DeliveryCountryCode { get; set; }
+        public string DeliveryContractEmail { get; set; }
+        public string DeliveryContractCountryCode { get; set; }
+        public string DeliveryContractLocalNumber { get; set; }
+        public string DeliveryIndividualFirstName { get; set; }
+        public string DeliveryIndividualLastName { get; set; }
 
     }
 }
