@@ -8,6 +8,7 @@
     {
         Response.Redirect("~/Login/Index");
     }
+
 }
 
 <!DOCTYPE html>
@@ -89,12 +90,18 @@
             cursor: pointer;
             box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
         }
+        .HeaderTable {
+            background-color: #990AE4;
+            color: white;
+            text-shadow: 1px 2px black;
+        }
     </style>
     <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
 
         <div class="col-sm-5">
             @using (Html.BeginForm("Index", "NummersAdmin", FormMethod.Get))
             {
+
                 <fieldset>
                     <legend>Søkealternativer</legend>
                     <label class="radio-inline">
@@ -112,10 +119,17 @@
                 </fieldset>
                 <p style="font-size: medium;font-weight:bold;color:black;margin-left:15px;">
                     Søk etter @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-                    <input type="submit" value="Search" class="btn btn-info shadow-lg" style="color: black;
-                     font-size: medium;
-                        border-radius: 14px;" />
+                    <input type="submit" value="Search" class="btn btn-info shadow-lg" style="color: black;font-size: medium;border-radius: 14px;" />
                 </p>
+                <fieldset>
+                    <legend>
+                        Velg firmaet du vil vise data for
+                    </legend>
+                    <p>
+                        @Html.DropDownList("selected", new SelectList(ViewBag.nummers), "Choose Orgnummer", new { @class = "form-control SelectBox" });
+                        <input type="submit" value="Load" class="ButtonAdd shadow-lg" />
+                    </p>
+                </fieldset>
             }
         </div>
 
@@ -132,25 +146,11 @@
                 </button>
             </fieldset>
         </div>
+    </div>
 
-    </div>
-    <div class="row" style="margin-left:15px; margin-right:15px;" >
-        <div class="col-sm-4">
-            <fieldset>
-                <legend>
-                    Velg firmaet du vil vise data for
-                </legend>
-                <p>
-                    @Html.DropDownList("Orgnummers", new SelectList(ViewBag.nummers), "Choose Orgnummer", new { @class = "form-control SelectBox" });
-                </p>
-            </fieldset>
-        </div>
-    </div>
     <div style="overflow-x: auto; margin-left: 15px; margin-right: 15px;" class="shadow">
-        <table class="table-bordered table-sm table-hover table-striped " style="font-size: 15px;table-layout:fixed;">
-            <thead style="background-color: #990AE4;
-                          color: white;
-                          text-shadow: 1px 2px black;">
+        <table class="table-bordered table-sm table-hover table-striped " style="font-size: 16px;font-weight:bold;table-layout:fixed;">
+            <thead class="HeaderTable">
                 <tr>
                     <th class="col-sm-2">
                         Telefonnummer

@@ -21,7 +21,7 @@ namespace TeliaMVC.Controllers
 
         public ActionResult Index(string OrgNummer)
         {
-            orgID = OrgNummer;
+            ViewBag.id_sesije = OrgNummer;
             return View();
         }
 
@@ -29,7 +29,8 @@ namespace TeliaMVC.Controllers
         //Profile:
         public ActionResult Profile()
         {
-            var client = db.Clients.Where(s => s.Orgnummer.Contains(orgID)); 
+            var client = ViewBag.id_sesije;
+
 
             return View(client);
         }

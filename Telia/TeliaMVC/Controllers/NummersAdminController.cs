@@ -16,7 +16,7 @@ namespace TeliaMVC.Controllers
         private TeliaEntities db = new TeliaEntities();
 
         // GET: NummersAdmin
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString,string SearchParameter,string selected, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.Telefonnummer = String.IsNullOrEmpty(sortOrder) ? "telefonnummer_desc" : "";
@@ -48,24 +48,47 @@ namespace TeliaMVC.Controllers
             var nummers = from s in db.Nummers
                           select s;
 
+            //Deo za selectBox,da se ucita uvek u dropdown menu.
             List<Client> clients = db.Clients.ToList();
             List<String> orgNummers = new List<String>();
+
+            orgNummers.Add("All");
             foreach (var item in clients)
             {
                 //kad se doda u bazu
                 //string final = item.Orgnummer + "-" + item.FirmaNavn;
                 orgNummers.Add(item.Orgnummer);
             }
-
             ViewBag.nummers = orgNummers;
+
+            //Ovde izmeni brojeve koji treba da se prikazu na osnovu selektovanog  
+            if (selected != null)
+            {
+                if (selected != "All")
+                {
+                    nummers = nummers.Where(s => s.Orgnummer.Contains(selected));
+                }
+            }
+
 
             //pretrazivanje pre rasporedjivanja:
             if (!String.IsNullOrEmpty(searchString))
             {
-                nummers = nummers.Where(s => s.Fornavn.Contains(searchString));
+                switch (SearchParameter)
+                {
+                    case "Telefonnummer":
+                        nummers = nummers.Where(s => s.Telefonnummer.Contains(searchString));
+                        break;
+                    case "Binding":
+                        nummers = nummers.Where(s=> s.Binding.Contains(searchString));
+                        break;
+                    case "Fornavn":
+                        nummers = nummers.Where(s=> s.Fornavn.Contains(searchString));
+                        break;
+                    default:
+                        break;
+                }
             }
-
-
             switch (sortOrder)
             {
                 //prva kolona
@@ -195,6 +218,15 @@ namespace TeliaMVC.Controllers
         public ActionResult Create()
         {
             ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted");
+            //sa 4 opcija
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            items.Add(new SelectListItem { Text = "Opcija 1", Value = "0", Selected = true });
+            items.Add(new SelectListItem { Text = "Opcija 2", Value = "1" });
+            items.Add(new SelectListItem { Text = "Opcija 3", Value = "2" });
+            items.Add(new SelectListItem { Text = "Opcija 4", Value = "3" });
+
+            ViewBag.Katalogoppforing = items;
             return View();
         }
 
@@ -203,16 +235,25 @@ namespace TeliaMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,ID")] Nummer nummer)
+        public ActionResult Create([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,ID,Pending,Katalogoppforing,Porteringsdatoog_tid,Binding,Postnummer,Antall_TrillingSIM,allDataSIM,Manuell_Top_up,Sperre_Top_up,Norden,Tale_og_SMS_til_EU,TBN,HovedSIM,TrillingSIM1,TrillingSIM2,DataSIM1,DataSIM2,DataSIM3,DataSIM4,DataSIM5,DeliveryStreetName,DeliveryStreetNumber,DeliveryStreetSuffix,DeliveryCity,DeliveryZIP,DeliveryContractEmail,DeliveryContractCountyCode,DeliveryContractLocalNumber,DeliveryIndividualFirstName,DeliveryIndividualLastName")] Nummer nummer)
         {
             if (ModelState.IsValid)
             {
+                nummer.Pending = false; // oznaci da je admin obradio ovu informaciju
+                nummer.DeliveryMethodCode = "LETTER";
+                nummer.DeliveryCountryCode = "47";
+
+
                 db.Nummers.Add(nummer);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted", nummer.Kostnadsted);
+            ViewBag.Clients = new SelectList(db.Clients, "Clients", "Orgnummer", nummer.Orgnummer);
+
+            
+
             return View(nummer);
         }
 
@@ -229,6 +270,8 @@ namespace TeliaMVC.Controllers
                 return HttpNotFound();
             }
             ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted", nummer.Kostnadsted);
+            ViewBag.Clients = new SelectList(db.Clients,"Client","Orgnummer",nummer.Orgnummer);
+
             return View(nummer);
         }
 
@@ -283,5 +326,37 @@ namespace TeliaMVC.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        public ActionResult Load(int? page)
+        {
+            //load sve podatke
+            var nummers = from s in db.Nummers
+                          select s;
+            //load u selectList
+            List<Client> clients = db.Clients.ToList();
+            List<String> orgNummers = new List<String>();
+            foreach (var item in clients)
+            {
+                //kad se doda u bazu
+                //string final = item.Orgnummer + "-" + item.FirmaNavn;
+                orgNummers.Add(item.Orgnummer);
+            }
+            ViewBag.nummers = orgNummers;
+
+            //orderby da bi radio Paging
+            nummers = nummers.OrderBy(s => s.Telefonnummer);
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(nummers.ToPagedList(pageNumber, pageSize));
+        }
+
+
+
+
+
+
+
+
     }
 }

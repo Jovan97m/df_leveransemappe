@@ -98,6 +98,7 @@ namespace TeliaMVC.Models
         public Nullable<bool> Pending { get; set; }
         public string Katalogoppforing { get; set; }
         public Nullable<System.DateTime> Porteringsdatoog_tid { get; set; }
+        [StringLength(20)]
         public string Binding { get; set; }
         public Nullable<int> Postnummer { get; set; }
         public Nullable<int> Antall_TrillingSIM { get; set; }
@@ -107,6 +108,7 @@ namespace TeliaMVC.Models
         public string Norden { get; set; }
         public Nullable<bool> Tale_og_SMS_til_EU { get; set; }
         public string TBN { get; set; }
+        [Required]
         public Nullable<int> HovedSIM { get; set; }
         public Nullable<int> TrillingSIM1 { get; set; }
         public Nullable<int> TrillingSIM2 { get; set; }
@@ -122,10 +124,14 @@ namespace TeliaMVC.Models
         public string DeliveryCity { get; set; }
         public string DeliveryZIP { get; set; }
         public string DeliveryCountryCode { get; set; }
+
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string DeliveryContractEmail { get; set; }
         public string DeliveryContractCountryCode { get; set; }
         public string DeliveryContractLocalNumber { get; set; }
+        [StringLength(20)]
         public string DeliveryIndividualFirstName { get; set; }
+        [StringLength(20)]
         public string DeliveryIndividualLastName { get; set; }
 
     }

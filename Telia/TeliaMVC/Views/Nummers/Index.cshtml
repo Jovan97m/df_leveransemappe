@@ -9,6 +9,7 @@
     {
         Response.Redirect("~/Login/Index");
     }
+    ViewBag.Session = Session["Id"];
 }
 
 <h2>Nummer</h2>
@@ -28,7 +29,7 @@
     <div class="col-md-6" style="margin-bottom: 5px;">
         <button class="btn-primary btn-lg shadow-lg" data-toggle="tooltip" data-placement="bottom"
                 title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett"
-                onclick="location.href = '@Url.Action("Create", "Nummers")'" style="background-color: #990AE4; font-size: medium; font-weight: bold; color: white; text-shadow: 1px 1px black; float: left; border-radius: 12px; padding: 10px; ">
+                onclick="location.href = '@Url.Action("Create", "Nummers",new { ViewBag.Session })'" style="background-color: #990AE4; font-size: medium; font-weight: bold; color: white; text-shadow: 1px 1px black; float: left; border-radius: 12px; padding: 10px; ">
             <span class="glyphicon glyphicon-plus"></span> Skape
         </button>
 

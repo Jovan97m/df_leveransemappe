@@ -55,4 +55,5 @@
     PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_dbo.Nummer_dbo.Fakturaoppsett_NavnPåKostnadssted] FOREIGN KEY ([Kostnadsted])
         REFERENCES [dbo].[Fakturaoppsett] ([Kostnadssted]) ON DELETE CASCADE
+        
 )

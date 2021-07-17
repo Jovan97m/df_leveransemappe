@@ -17,7 +17,7 @@ namespace TeliaMVC.Controllers
         private TeliaEntities db = new TeliaEntities();
 
         // GET: Nummers
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString,string id_sesije, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.Telefonnummer = String.IsNullOrEmpty(sortOrder) ? "telefonnummer_desc" : "";
@@ -53,6 +53,7 @@ namespace TeliaMVC.Controllers
             {
                 nummers = nummers.Where(s => s.Fornavn.Contains(searchString));
             }
+            nummers = nummers.Where(s=>s.Orgnummer.Contains(id_sesije));
 
 
             switch (sortOrder)
@@ -181,9 +182,10 @@ namespace TeliaMVC.Controllers
         }
 
         // GET: Nummers/Create
-        public ActionResult Create()
+        public ActionResult Create(string sesija)
         {
             ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted");
+            ViewBag.OrgNummer = sesija;
             return View();
         }
 
@@ -192,10 +194,10 @@ namespace TeliaMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,Orgnummer,Pending")] Nummer nummer)
+        public ActionResult Create([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,Orgnummer,Pending")] Nummer nummer,string id_sesije)
         {
             nummer.Abonnementstype = nummer.Abonnementstype + "GB";
-            nummer.Orgnummer = "1111";
+            nummer.Orgnummer = id_sesije;
             nummer.Pending = true;
             if (ModelState.IsValid)
             {
