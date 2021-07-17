@@ -2,6 +2,10 @@
 
 @{
     Layout = null;
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
 }
 
 <!DOCTYPE html>

@@ -3,6 +3,10 @@
 @{
     ViewBag.Title = "Profile";
     Layout = "~/Views/HomeClient/Index.cshtml";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
 }
 
 <h2>Profile</h2>

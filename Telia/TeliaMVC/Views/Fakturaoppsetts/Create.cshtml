@@ -2,6 +2,10 @@
 
 @{
     ViewBag.Title = "Create";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
 }
 <h1>New</h1>
 @using (Html.BeginForm()) 

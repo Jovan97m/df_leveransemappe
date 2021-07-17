@@ -2,6 +2,10 @@
 
 @{
     ViewBag.Title = "Delete";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
 }
 
 <h1 style="color:red;font-weight:bold;font-size:large;">Are you sure you want to delete selected item?</h1>
