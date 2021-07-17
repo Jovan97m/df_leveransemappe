@@ -192,10 +192,10 @@
             @Html.LabelFor(model => model.Katalogoppforing, htmlAttributes: new { @class = "control-label col-md-5" })
             <div class="col-md-5">
                 @Html.DropDownList("Katalogoppforing", new List<SelectListItem>
-                                 { new SelectListItem { Text = "Opcija 1", Value = "Prva opcija", Selected=true},
-                                   new SelectListItem { Text = "Opcija 2", Value = "Druga opcija"},
-                                   new SelectListItem { Text = "Opcija 3", Value = "Treca opcija"},
-            new SelectListItem { Text = "Opcija 4", Value = "Cetvrta opcija"}}, htmlAttributes: new { @class = "form-control" })
+                                 { new SelectListItem { Text = "Ingen oppføring", Value = "Ingen oppføring", Selected=true},
+                                   new SelectListItem { Text = "Komplett oppføring Juridisk eier", Value = "Komplett oppføring Juridisk eier"},
+                                   new SelectListItem { Text = "Komplett oppføring Bruker", Value = "Komplett oppføring Bruker"},
+            new SelectListItem { Text = "Bare brukers navn", Value = "Bare brukers navn"}}, htmlAttributes: new { @class = "form-control" })
                
                 @Html.ValidationMessageFor(model => model.Katalogoppforing, "", new { @class = "text-danger" })
             </div>

@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "Telia"
 :setvar DefaultFilePrefix "Telia"
-:setvar DefaultDataPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
-:setvar DefaultLogPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
+:setvar DefaultDataPath "C:\Users\jovan\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
+:setvar DefaultLogPath "C:\Users\jovan\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
 
 GO
 :on error exit
@@ -37,45 +37,6 @@ IF N'$(__IsSqlCmdEnabled)' NOT LIKE N'True'
 
 GO
 USE [$(DatabaseName)];
-
-
-GO
-PRINT N'Altering [dbo].[Nummer]...';
-
-
-GO
-ALTER TABLE [dbo].[Nummer]
-    ADD [Katalogoppforing]            NVARCHAR (20) NULL,
-        [Porteringsdatoog tid]        DATETIME      NULL,
-        [Binding]                     NVARCHAR (20) NULL,
-        [Postnummer]                  INT           NULL,
-        [Antall TrillingSIM]          INT           NULL,
-        [allDataSIM]                  INT           NULL,
-        [Manuell Top-up]              NVARCHAR (15) NULL,
-        [Sperre Top-up]               NVARCHAR (15) NULL,
-        [Norden]                      NVARCHAR (20) NULL,
-        [Tale og SMS til EU]          BIT           NULL,
-        [TBN]                         NCHAR (15)    NULL,
-        [HovedSIM]                    INT           NULL,
-        [TrillingSIM1]                INT           NULL,
-        [TrillingSIM2]                INT           NULL,
-        [DataSIM1]                    INT           NULL,
-        [DataSIM2]                    INT           NULL,
-        [DataSIM3]                    INT           NULL,
-        [DataSIM4]                    INT           NULL,
-        [DataSIM5]                    INT           NULL,
-        [DeliveryMethodCode]          NVARCHAR (20) NULL,
-        [DeliveryStreetName]          NVARCHAR (20) NULL,
-        [DeliveryStreetNumber]        NVARCHAR (10) NULL,
-        [DeliveryStreetSuffix]        NVARCHAR (10) NULL,
-        [DeliveryCity]                NVARCHAR (20) NULL,
-        [DeliveryZIP]                 NVARCHAR (20) NULL,
-        [DeliveryCountryCode]         NVARCHAR (20) NULL,
-        [DeliveryContractEmail]       NVARCHAR (20) NULL,
-        [DeliveryContractCountryCode] NVARCHAR (20) NULL,
-        [DeliveryContractLocalNumber] NVARCHAR (20) NULL,
-        [DeliveryIndividualFirstName] NVARCHAR (15) NULL,
-        [DeliveryIndividualLastName]  NVARCHAR (20) NULL;
 
 
 GO
