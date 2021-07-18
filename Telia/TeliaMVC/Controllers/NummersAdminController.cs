@@ -258,21 +258,11 @@ namespace TeliaMVC.Controllers
         }
 
         // GET: NummersAdmin/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Nummer nummer = db.Nummers.Find(id);
-            if (nummer == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted", nummer.Kostnadsted);
-            ViewBag.Clients = new SelectList(db.Clients,"Client","Orgnummer",nummer.Orgnummer);
-
-            return View(nummer);
+            ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted");
+            
+            return View();
         }
 
         // POST: NummersAdmin/Edit/5

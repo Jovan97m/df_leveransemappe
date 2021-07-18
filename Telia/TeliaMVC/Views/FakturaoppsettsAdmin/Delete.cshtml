@@ -1,0 +1,121 @@
+﻿@model TeliaMVC.Models.Fakturaoppsett
+
+@{
+    ViewBag.Title = "Delete";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<h1 style="color:red;font-weight:bold;font-size:large;">Are you sure you want to delete selected item?</h1>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NavnPaKostnadssted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NavnPaKostnadssted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tileggsinfo_kostnadssted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tileggsinfo_kostnadssted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fakturaformat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fakturaformat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fakturaadresse)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fakturaadresse)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Husnr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Husnr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bokstav)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bokstav)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Postnummer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Postnummer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Epost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Epost)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Delete" class="btn-success btn-lg shadow-lg" style="
+                font-size: medium;
+                font-weight: bold;
+                color: white;
+                text-shadow: 1px 1px black;
+                border-radius: 12px;" />
+            </div>
+
+            <div class="col-md-offset-2 col-md-10">
+                <!-- ovaj poziv Url.Action("Funkcija","kontroler koji poziva");
+                        Ovo sledece sto pise ";return false;"  se koristi da bi se izbegao POST metod.posto je u form control delu
+                -->
+                <button class="btn-danger btn-lg shadow-lg" onclick="location.href ='@Url.Action("Index", "FakturaoppsettsAdmin")';return false;" style="
+                    font-size: medium;
+                    font-weight: bold;
+                    color: white;
+                    text-shadow: 1px 1px black;
+                    border-radius: 12px;
+                    margin-top:5px;
+                    ">
+                    <span class="glyphicon glyphicon-fast-backward"></span>
+                    Back
+                </button>
+            </div>
+        </div>
+    }
+</div>

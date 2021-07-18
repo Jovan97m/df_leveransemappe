@@ -1,26 +1,25 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TeliaMVC.Models;
-using PagedList; // dodato za prikaz podataka po stranicama
 
 namespace TeliaMVC.Controllers
 {
-    public class FakturaoppsettsController : Controller
+    public class FakturaoppsettsAdminController : Controller
     {
         private TeliaEntities db = new TeliaEntities();
 
         // GET: Fakturaoppsetts
 
         //SearchParameter -je atribut koji se prosledjuje iz selektovanog radio-button-a
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page,string SearchParameter)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page,string selected,int? Orgnummer, string SearchParameter)
         {
-            ViewBag.CurrentSort = sortOrder; 
+            ViewBag.CurrentSort = sortOrder;
             //Viewbags- za sortiranja svake kolone;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.TilegsSortParm = sortOrder == "Tilegs" ? "tilegs_desc" : "Tilegs"; // mislim da ne bi trebalo da ima ova
@@ -45,6 +44,11 @@ namespace TeliaMVC.Controllers
 
             var faktures = from s in db.Fakturaoppsetts
                            select s;
+
+            
+
+            
+
             //pretrazivanje pre rasporedjivanja:
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -62,9 +66,9 @@ namespace TeliaMVC.Controllers
                 }
             }
 
-            
 
-            
+
+
 
             switch (sortOrder)
             {
@@ -138,7 +142,7 @@ namespace TeliaMVC.Controllers
             int pageNumber = (page ?? 1);
             return View(faktures.ToPagedList(pageNumber, pageSize));
         }
-       
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -218,6 +222,29 @@ namespace TeliaMVC.Controllers
             return View(fakturaoppsett);
         }
 
+        public ActionResult Load(int? page)
+        {
+            //load sve podatke
+            var nummers = from s in db.Nummers
+                select s;
+            //load u selectList
+            List<Client> clients = db.Clients.ToList();
+            List<String> orgNummers = new List<String>();
+            foreach (var item in clients)
+            {
+                //kad se doda u bazu
+                //string final = item.Orgnummer + "-" + item.FirmaNavn;
+                orgNummers.Add(item.Orgnummer);
+            }
+            ViewBag.nummers = orgNummers;
+
+            //orderby da bi radio Paging
+            nummers = nummers.OrderBy(s => s.Telefonnummer);
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(nummers.ToPagedList(pageNumber, pageSize));
+        }
+
         // POST: Fakturaoppsetts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -242,6 +269,6 @@ namespace TeliaMVC.Controllers
             return View(fakturaoppsett);
         }
         #endregion
-       
+
     }
 }

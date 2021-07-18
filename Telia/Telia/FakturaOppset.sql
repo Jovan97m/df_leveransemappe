@@ -9,5 +9,7 @@
     [Sted] NVARCHAR(50),
     [Epost] NVARCHAR(50),
     [Kostnadssted] NVARCHAR(50) NOT NULL,
+    [Orgnummer] NVARCHAR (50),
+    [Date] DATE,
     PRIMARY KEY CLUSTERED ([Kostnadssted])
 )
