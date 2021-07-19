@@ -22,6 +22,7 @@
         margin-bottom: 2px;
         border-radius: 12px;
     }
+
 </style>
 
 <div class="row">
@@ -29,7 +30,7 @@
     <div class="col-md-6" style="margin-bottom: 5px;">
         <button class="btn-primary btn-lg shadow-lg" data-toggle="tooltip" data-placement="bottom"
                 title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett"
-                onclick="location.href = '@Url.Action("Create", "Nummers",new { ViewBag.Session })'" style="background-color: #990AE4; font-size: medium; font-weight: bold; color: white; text-shadow: 1px 1px black; float: left; border-radius: 12px; padding: 10px; ">
+                onclick="location.href = '@Url.Action("Create", "Nummers",new { sesija = ViewBag.ID })'" style="background-color: #990AE4; font-size: medium; font-weight: bold; color: white; text-shadow: 1px 1px black; float: left; border-radius: 12px; padding: 10px; ">
             <span class="glyphicon glyphicon-plus"></span> Skape
         </button>
 
@@ -43,13 +44,8 @@
     {
         <p style="font-size: medium;font-weight:bold;color:black;margin-left:15px;">
             Søk etter telefonmummer: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-            <input type="submit" value="Search" class="btn btn-info shadow-lg" style="        color: black;
-                                                                                      font-size: medium;
-                                                                                      border-radius: 14px;
-                                                                                  " />
-
+            <input type="submit" value="Search" class="btn btn-info shadow-lg" style="color: black;font-size: medium;border-radius: 14px;" />
         </p>
-
     }
     <div style="overflow-x: auto; margin-left: 15px; margin-right: 15px;" class="shadow">
         <table class="table-bordered table-sm table-hover table-striped " style="font-size: 15px;table-layout:fixed;">
@@ -59,67 +55,67 @@
             <tr>
                 <th class="col-sm-2">
                     Telefonnummer
-                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Telefonnummer, currentFilter = ViewBag.CurrentFilter })'">
+                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Telefonnummer, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
                         <span class="glyphicon glyphicon-sort"></span>
                     </button>
                 </th>
                 <th scope="row" class="col-sm-2">
                     Abonnementstype
-                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Abonnementstype, currentFilter = ViewBag.CurrentFilter })'">
+                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Abonnementstype, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
                 <th class="col-sm-2">
                     Fornavn
-                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.FornavnSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.FornavnSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
                 <th class="col-sm-2">
                     Etternavn
-                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.EtternavnSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.EtternavnSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
                 <th class="col-sm-2">
                     Bedrift_som_skal_faktureres
-                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Bedrift_som_skal_faktureresSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Bedrift_som_skal_faktureresSortParm, currentFilter = ViewBag.CurrentFilter , id_sesije = ViewBag.ID})'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
                 <th class="col-sm-2">
                     c_o_adresse_for_SIM_levering
-                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href='@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.c_o_adresse_for_SIM_leveringSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href='@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.c_o_adresse_for_SIM_leveringSortParm, currentFilter = ViewBag.CurrentFilter , id_sesije = ViewBag.ID})'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
                 <th class="col-sm-2">
                     Gateadresse_SIM_Skal_sendes_til
-                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Gateadresse_SIM_Skal_sendes_tilSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Gateadresse_SIM_Skal_sendes_tilSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
                 <th class="col-sm-2">
                     Hus_nummer
-                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Hus_nummerSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Hus_nummerSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
                 <th class="col-sm-2">
                     Hus_bokstav
-                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Hus_bokstavSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Hus_bokstavSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
                 <th class="col-sm-2">
                     post_nr_
-                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.post_nr_SortParm, currentFilter = ViewBag.CurrentFilter })'">
+                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.post_nr_SortParm, currentFilter = ViewBag.CurrentFilter , id_sesije = ViewBag.ID})'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
                 <th class="col-sm-2">
                     Post_sted
-                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Post_stedSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Post_stedSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
@@ -132,15 +128,15 @@
                 <th class="col-sm-2">
                     Tilleggsinfo_ansatt_ID
                 </th>
-                <th class="col-sm-2">
+                <th class="col-sm-2" >
                     Ekstra_talesim_
-                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Ekstra_talesimSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Ekstra_talesimSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
                 <th class="col-sm-2">
                     Ekstra_datasim
-                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Ekstra_datasimSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Ekstra_datasimSortParm, currentFilter = ViewBag.CurrentFilter , id_sesije = ViewBag.ID})'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
@@ -196,10 +192,10 @@
                     <td class="col-sm-1">
                         @Html.DisplayFor(modelItem => item.Tilleggsinfo_ansatt_ID)
                     </td>
-                    <td class="col-sm-1">
+                    <td class="col-sm-1" style="background-color: #F9B3A7;">
                         @Html.DisplayFor(modelItem => item.Ekstra_talesim_)
                     </td>
-                    <td class="col-sm-1">
+                    <td class="col-sm-1" style="background-color: #F9B3A7;">
                         @Html.DisplayFor(modelItem => item.Ekstra_datasim)
                     </td>
                     <td class="col-sm-1">

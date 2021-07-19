@@ -26,6 +26,19 @@ namespace TeliaMVC.Models
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "This field is Required")]
         public string Password { get; set; }
+        public string FirmaNavn { get; set; }
+        public string GateNavn { get; set; }
+        public Nullable<int> HusNummer { get; set; }
+        public string HusBokStav { get; set; }
+        public Nullable<int> PostNummer { get; set; }
+        public string Sted { get; set; }
+        public string Epost { get; set; }
+        public string KontaktNavn { get; set; }
+        public string KontaktEpost { get; set; }
+        public string KontaktTlfnr { get; set; }
+        public string TekniskKontaktNavn { get; set; }
+        public string TekniskKontaktEpost { get; set; }
+        public string TekniskKontaktTlfnr { get; set; }
     }
 
     public class MetadataFakturaoppsett

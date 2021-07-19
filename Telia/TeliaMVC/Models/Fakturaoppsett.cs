@@ -30,6 +30,8 @@ namespace TeliaMVC.Models
         public string Sted { get; set; }
         public string Epost { get; set; }
         public string Kostnadssted { get; set; }
+        public string Orgnummer { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Nummer> Nummers { get; set; }

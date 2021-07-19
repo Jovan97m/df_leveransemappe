@@ -18,7 +18,7 @@
     <Property Name="FirmaNavn" Type="nvarchar" MaxLength="50" />
     <Property Name="GateNavn" Type="nvarchar" MaxLength="50" />
     <Property Name="HusNummer" Type="int" />
-    <Property Name="HusBokStav" Type="nvarchar" MaxLength="1" />
+    <Property Name="HusBokStav" Type="nvarchar" MaxLength="20" />
     <Property Name="PostNummer" Type="int" />
     <Property Name="Sted" Type="nvarchar" MaxLength="50" />
     <Property Name="Epost" Type="nvarchar" MaxLength="20" />
@@ -43,6 +43,8 @@
     <Property Name="Sted" Type="nvarchar" MaxLength="50" />
     <Property Name="Epost" Type="nvarchar" MaxLength="50" />
     <Property Name="Kostnadssted" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Orgnummer" Type="nvarchar" MaxLength="50" />
+    <Property Name="Date" Type="date" />
   </EntityType>
   <EntityType Name="Nummer">
     <Key>

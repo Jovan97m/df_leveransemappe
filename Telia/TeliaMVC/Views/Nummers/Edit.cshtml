@@ -164,7 +164,7 @@
                 border-radius: 12px;" />
         </div>
         <div class="col-md-offset-2 col-md-10">
-            <button class="btn-danger btn-lg shadow-lg" onclick="location.href='@Url.Action("Index", "Nummers")';return false;" style="
+            <button class="btn-danger btn-lg shadow-lg" onclick="location.href='@Url.Action("Index" , "Nummers",new { id_sesije = ViewBag.ID})';return false;" style="
                 font-size: medium;
                 font-weight: bold;
                 color: white;
@@ -180,7 +180,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", "Nummers", new { id_sesije = ViewBag.ID })
 </div>
 
 @section Scripts {

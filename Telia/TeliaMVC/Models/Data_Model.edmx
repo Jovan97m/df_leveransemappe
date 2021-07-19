@@ -23,7 +23,7 @@
           <Property Name="FirmaNavn" Type="nvarchar" MaxLength="50" />
           <Property Name="GateNavn" Type="nvarchar" MaxLength="50" />
           <Property Name="HusNummer" Type="int" />
-          <Property Name="HusBokStav" Type="nvarchar" MaxLength="1" />
+          <Property Name="HusBokStav" Type="nvarchar" MaxLength="20" />
           <Property Name="PostNummer" Type="int" />
           <Property Name="Sted" Type="nvarchar" MaxLength="50" />
           <Property Name="Epost" Type="nvarchar" MaxLength="20" />
@@ -48,6 +48,8 @@
           <Property Name="Sted" Type="nvarchar" MaxLength="50" />
           <Property Name="Epost" Type="nvarchar" MaxLength="50" />
           <Property Name="Kostnadssted" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Orgnummer" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date" Type="date" />
         </EntityType>
         <EntityType Name="Nummer">
           <Key>
@@ -157,6 +159,8 @@
           <Property Name="Epost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Kostnadssted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Nummers" Relationship="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" FromRole="Fakturaoppsett" ToRole="Nummer" />
+          <Property Name="Orgnummer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Nummer">
           <Key>
@@ -250,7 +254,7 @@
           <Property Name="FirmaNavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="GateNavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="HusNummer" Type="Int32" />
-          <Property Name="HusBokStav" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="HusBokStav" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="PostNummer" Type="Int32" />
           <Property Name="Sted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Epost" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
@@ -279,6 +283,8 @@
           <EntitySetMapping Name="Fakturaoppsetts">
             <EntityTypeMapping TypeName="TeliaModel.Fakturaoppsett">
               <MappingFragment StoreEntitySet="Fakturaoppsett">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Orgnummer" ColumnName="Orgnummer" />
                 <ScalarProperty Name="NavnPaKostnadssted" ColumnName="NavnPaKostnadssted" />
                 <ScalarProperty Name="Tileggsinfo_kostnadssted" ColumnName="Tileggsinfo kostnadssted" />
                 <ScalarProperty Name="Fakturaformat" ColumnName="Fakturaformat" />

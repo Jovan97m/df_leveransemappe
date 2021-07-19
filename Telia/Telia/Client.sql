@@ -6,7 +6,7 @@
     [FirmaNavn] NVARCHAR(50),
     [GateNavn] NVARCHAR(50),
     [HusNummer] INT,
-    [HusBokStav] NVARCHAR(1),
+    [HusBokStav] NVARCHAR(20),
     [PostNummer] INT,
     [Sted] NVARCHAR(50),
     [Epost] NVARCHAR(20),

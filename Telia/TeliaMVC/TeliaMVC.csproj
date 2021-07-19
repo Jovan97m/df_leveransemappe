@@ -326,7 +326,7 @@
     <Content Include="Views\Home\Create.cshtml" />
     <Content Include="Views\HomeClient\Index.cshtml" />
     <Content Include="Views\HomeClient\Edit.cshtml" />
-    <Content Include="Views\HomeClient\Profile.cshtml" />
+    <Content Include="Views\HomeClient\Details.cshtml" />
     <Content Include="Views\FakturaoppsettsAdmin\Index.cshtml" />
     <Content Include="Views\FakturaoppsettsAdmin\Create.cshtml" />
     <Content Include="Views\FakturaoppsettsAdmin\Edit.cshtml" />

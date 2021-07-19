@@ -46,8 +46,8 @@ namespace TeliaMVC.Controllers
                     }
                     else
                     {
-                        Session["Id"] = userDetail.Orgnummer; // mora orgnummer,da bi mogao da ima njegov broj firme
-                        return RedirectToAction("Index", "HomeClient",new { userDetail.Orgnummer});
+                        Session["Id"] = userDetail.Id; // mora orgnummer,da bi mogao da ima njegov broj firme
+                        return RedirectToAction("Index", "HomeClient",new { userDetail.Id});
                     }
                 }
                 else { return View(); }
