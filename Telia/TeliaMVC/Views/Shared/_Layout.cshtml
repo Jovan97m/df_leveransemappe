@@ -26,10 +26,7 @@
             margin: 5%;
         }
         .dugmeLogout {
-            
-            border: 1px solid red;
-            background-color: red;
-            margin-bottom: 4%;
+            background-color: #1a001a;
             width: 100%;
             border-radius: 6px;
         }
@@ -54,34 +51,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Forside", "Index", "Nummers")</li>
+                    
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right" >
-                    <li class="dropdown " >
-                        <a href="#" data-toggle="dropdown" class="dugme btn  dropdown-toggle dropdown-toggle-split">
-                              <span class="glyphicon glyphicon-chevron-down"></span>
-                        </a>
-                        <div class="dropdown-menu Padajuci">
-                            <ul>
-                            
-                                <li>
-                                    <a type="button" class="dropdown-item senka" href="#"> <span class="glyphicon glyphicon-user"></span>Profil</a> 
-                                </li>
-                                <li>
-                                    <a type="button" class="dropdown-item senka" href="#"> <span class="glyphicon glyphicon-edit"></span>Edit</a>
-                                </li>
-                                <li>
-                                    <a type="button" class="dropdown-item dugmeLogout senka" href="@Url.Action("LogOut", "Login")"> <span class="glyphicon glyphicon-log-out"></span>Logout</a>
-                                </li>
-                            </ul>
-                        </div>
+                    <li>
+                        <a type="button" class="dropdown-item dugmeLogout" href="@Url.Action("LogOut", "Login")"> Logout  <span class="glyphicon glyphicon-log-out"></span></a>
                     </li>
                 </ul>
-                                
-                
             </div>
         </div>
     </div>
