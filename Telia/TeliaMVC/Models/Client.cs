@@ -30,5 +30,6 @@ namespace TeliaMVC.Models
         public string TekniskKontaktNavn { get; set; }
         public string TekniskKontaktEpost { get; set; }
         public string TekniskKontaktTlfnr { get; set; }
+        public string LoginErrorMsg { get; set; }
     }
 }

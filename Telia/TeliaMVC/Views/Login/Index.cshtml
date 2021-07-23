@@ -9,7 +9,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Login</title>
+    <title>Login</title>
+    <link rel="icon" href="@Url.Content("~/Resources/telia.png")" />
     <style>
         body, html {
             height: 100%;
@@ -65,7 +66,7 @@
             grid-gap: 0.5em;
         }
 
-        .textInput input{
+        .textInput input {
             width: 120%;
             padding: 7px 14px;
             margin: 4px 0;
@@ -93,8 +94,9 @@
             margin: 4px 2px;
             cursor: pointer;
         }
-        .form-error-message{
-            color:red;
+
+        .form-error-message {
+            color: red;
         }
 
 
@@ -137,7 +139,8 @@
                         <input type="radio" name="usertype" id="radioButtonAdmin" class="radio" value="admin">
                         <span class="radio__control">
                         </span>
-                        Admin
+                    Admin
+                    </span>
                 </label>
             </div>
             <br />
@@ -155,11 +158,13 @@
                 @Html.EditorFor(model => model.Password)
                 <div class="form-error-message">
                     @Html.ValidationMessageFor(model => model.Password)
+
+                </div>
+                <div class="form-error-message">
+                    @Html.DisplayFor(model => model.LoginErrorMsg)
                 </div>
             </div>
-            <div class="form-error-message">
-                @Html.DisplayFor(model => model.LoginErrorMsg)
-            </div>
+            
             <br />
             <div id="form-submit">
                 <input type="submit" value="Login">

@@ -42,7 +42,7 @@ namespace TeliaMVC.Controllers
                     if (userDetail == null)
                     {
                         admin.LoginErrorMsg = "Invalid UserName or Password";
-                        return View("Index", client);
+                        return View("Index", admin);
                     }
                     else
                     {
