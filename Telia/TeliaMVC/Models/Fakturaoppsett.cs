@@ -32,8 +32,10 @@ namespace TeliaMVC.Models
         public string Kostnadssted { get; set; }
         public string Orgnummer { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
+        public Nullable<int> Id_client { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Nummer> Nummers { get; set; }
+        public virtual Client Client { get; set; }
     }
 }

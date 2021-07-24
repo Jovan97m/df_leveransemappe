@@ -45,6 +45,7 @@
     <Property Name="Kostnadssted" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Orgnummer" Type="nvarchar" MaxLength="50" />
     <Property Name="Date" Type="date" />
+    <Property Name="Id_client" Type="int" />
   </EntityType>
   <EntityType Name="Nummer">
     <Key>
@@ -103,6 +104,20 @@
     <Property Name="DeliveryIndividualFirstName" Type="nvarchar" MaxLength="15" />
     <Property Name="DeliveryIndividualLastName" Type="nvarchar" MaxLength="20" />
   </EntityType>
+  <Association Name="FK_dbo_Client_dbo_Client_Id">
+    <End Role="Client" Type="Self.Client" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Fakturaoppsett">
+        <PropertyRef Name="Id_client" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
     <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -122,6 +137,10 @@
     <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Fakturaoppsett" EntityType="Self.Fakturaoppsett" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Nummer" EntityType="Self.Nummer" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_dbo_Client_dbo_Client_Id" Association="Self.FK_dbo_Client_dbo_Client_Id">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Fakturaoppsett" EntitySet="Fakturaoppsett" />
+    </AssociationSet>
     <AssociationSet Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" Association="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
       <End Role="Fakturaoppsett" EntitySet="Fakturaoppsett" />
       <End Role="Nummer" EntitySet="Nummer" />

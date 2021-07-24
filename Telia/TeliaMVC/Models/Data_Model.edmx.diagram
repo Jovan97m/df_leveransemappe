@@ -10,6 +10,7 @@
         <EntityTypeShape EntityType="TeliaModel.Nummer" Width="1.5" PointX="2.5" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="TeliaModel.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" ManuallyRouted="false" />
         <EntityTypeShape EntityType="TeliaModel.Client" Width="1.5" PointX="6.125" PointY="0.5" />
+        <AssociationConnector Association="TeliaModel.FK_dbo_Client_dbo_Client_Id" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

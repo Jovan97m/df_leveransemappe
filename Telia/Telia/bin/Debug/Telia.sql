@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "Telia"
 :setvar DefaultFilePrefix "Telia"
-:setvar DefaultDataPath "C:\Users\jovan\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
-:setvar DefaultLogPath "C:\Users\jovan\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
+:setvar DefaultDataPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
+:setvar DefaultLogPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
 
 GO
 :on error exit
@@ -40,11 +40,33 @@ USE [$(DatabaseName)];
 
 
 GO
-PRINT N'Altering Table [dbo].[Client]...';
+PRINT N'Altering [dbo].[Fakturaoppsett]...';
 
 
 GO
-ALTER TABLE [dbo].[Client] ALTER COLUMN [HusBokStav] NVARCHAR (20) NULL;
+ALTER TABLE [dbo].[Fakturaoppsett]
+    ADD [Id_client] INT NULL;
+
+
+GO
+PRINT N'Creating [dbo].[FK_dbo.Client_dbo.Client_Id]...';
+
+
+GO
+ALTER TABLE [dbo].[Fakturaoppsett] WITH NOCHECK
+    ADD CONSTRAINT [FK_dbo.Client_dbo.Client_Id] FOREIGN KEY ([Id_client]) REFERENCES [dbo].[Client] ([Id]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Checking existing data against newly created constraints';
+
+
+GO
+USE [$(DatabaseName)];
+
+
+GO
+ALTER TABLE [dbo].[Fakturaoppsett] WITH CHECK CHECK CONSTRAINT [FK_dbo.Client_dbo.Client_Id];
 
 
 GO

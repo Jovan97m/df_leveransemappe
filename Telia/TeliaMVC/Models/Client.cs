@@ -14,6 +14,12 @@ namespace TeliaMVC.Models
     
     public partial class Client
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Client()
+        {
+            this.Fakturaoppsetts = new HashSet<Fakturaoppsett>();
+        }
+    
         public int Id { get; set; }
         public string Orgnummer { get; set; }
         public string Password { get; set; }
@@ -30,6 +36,8 @@ namespace TeliaMVC.Models
         public string TekniskKontaktNavn { get; set; }
         public string TekniskKontaktEpost { get; set; }
         public string TekniskKontaktTlfnr { get; set; }
-        public string LoginErrorMsg { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Fakturaoppsett> Fakturaoppsetts { get; set; }
     }
 }

@@ -13,6 +13,7 @@
     <EntitySetMapping Name="Fakturaoppsetts">
       <EntityTypeMapping TypeName="TeliaModel.Fakturaoppsett">
         <MappingFragment StoreEntitySet="Fakturaoppsett">
+          <ScalarProperty Name="Id_client" ColumnName="Id_client" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="Orgnummer" ColumnName="Orgnummer" />
           <ScalarProperty Name="NavnPaKostnadssted" ColumnName="NavnPaKostnadssted" />

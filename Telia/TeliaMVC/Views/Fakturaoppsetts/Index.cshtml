@@ -103,10 +103,10 @@
                     <legend>
                         Legger til nytt fakturaoppset
                     </legend>
-                    <button class="shadow-lg ButtonAdd " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href='@Url.Action("Create", "Fakturaoppsetts")'">
+                    <button class="shadow-lg ButtonAdd " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href='@Url.Action("Create", "Fakturaoppsetts",new { id = ViewBag.id_sesije})'">
                         <span class="glyphicon glyphicon-plus"></span>   Skape
                     </button>
-                    <button class=" ButtonAdd " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts")'">
+                    <button class=" ButtonAdd " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts",new { id = ViewBag.id_sesije})'">
                         <span class="glyphicon glyphicon-repeat"></span>   Refresh
                     </button>
                 </fieldset>
@@ -229,7 +229,7 @@
             <br />
             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
             @Html.PagedListPager(Model, page => Url.Action("Index",
-         new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+         new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter,id=ViewBag.id_sesije }))
 
 
         </div>

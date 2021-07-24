@@ -11,5 +11,8 @@
     [Kostnadssted] NVARCHAR(50) NOT NULL,
     [Orgnummer] NVARCHAR (50),
     [Date] DATE,
-    PRIMARY KEY CLUSTERED ([Kostnadssted])
+    [Id_client] int ,
+    PRIMARY KEY CLUSTERED ([Kostnadssted]),
+    CONSTRAINT [FK_dbo.Client_dbo.Client_Id] FOREIGN KEY ([Id_client])
+        REFERENCES [dbo].[Client] ([Id]) ON DELETE CASCADE
 )

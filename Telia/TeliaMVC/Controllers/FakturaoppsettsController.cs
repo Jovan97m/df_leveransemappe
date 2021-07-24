@@ -16,10 +16,10 @@ namespace TeliaMVC.Controllers
         private TeliaEntities db = new TeliaEntities();
 
         // GET: Fakturaoppsetts
-
         //SearchParameter -je atribut koji se prosledjuje iz selektovanog radio-button-a
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page,string SearchParameter)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page,string SearchParameter,int? id)
         {
+            ViewBag.id_sesije = id;
             ViewBag.CurrentSort = sortOrder; 
             //Viewbags- za sortiranja svake kolone;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -40,11 +40,11 @@ namespace TeliaMVC.Controllers
                 searchString = currentFilter;
             }
             ViewBag.CurrentFilter = searchString;
-
-
-
             var faktures = from s in db.Fakturaoppsetts
                            select s;
+
+            faktures = faktures.Where(s => s.Id_client == id);
+
             //pretrazivanje pre rasporedjivanja:
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -61,11 +61,6 @@ namespace TeliaMVC.Controllers
                         break;
                 }
             }
-
-            
-
-            
-
             switch (sortOrder)
             {
                 //prva kolona
@@ -147,8 +142,6 @@ namespace TeliaMVC.Controllers
             }
             base.Dispose(disposing);
         }
-
-        //
         #region CRUD operacije
         public ActionResult Create()
         {
@@ -242,6 +235,5 @@ namespace TeliaMVC.Controllers
             return View(fakturaoppsett);
         }
         #endregion
-       
     }
 }

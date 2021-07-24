@@ -25,6 +25,8 @@
     <NavigationProperty Name="Nummers" Relationship="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" FromRole="Fakturaoppsett" ToRole="Nummer" />
     <Property Name="Orgnummer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Id_client" Type="Int32" />
+    <NavigationProperty Name="Client" Relationship="TeliaModel.FK_dbo_Client_dbo_Client_Id" FromRole="Fakturaoppsett" ToRole="Client" />
   </EntityType>
   <EntityType Name="Nummer">
     <Key>
@@ -107,6 +109,10 @@
       <End Role="Nummer" EntitySet="Nummers" />
     </AssociationSet>
     <EntitySet Name="Clients" EntityType="TeliaModel.Client" />
+    <AssociationSet Name="FK_dbo_Client_dbo_Client_Id" Association="TeliaModel.FK_dbo_Client_dbo_Client_Id">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="Fakturaoppsett" EntitySet="Fakturaoppsetts" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Client">
     <Key>
@@ -128,5 +134,20 @@
     <Property Name="TekniskKontaktNavn" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="TekniskKontaktEpost" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
     <Property Name="TekniskKontaktTlfnr" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Fakturaoppsetts" Relationship="TeliaModel.FK_dbo_Client_dbo_Client_Id" FromRole="Client" ToRole="Fakturaoppsett" />
   </EntityType>
+  <Association Name="FK_dbo_Client_dbo_Client_Id">
+    <End Type="TeliaModel.Client" Role="Client" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TeliaModel.Fakturaoppsett" Role="Fakturaoppsett" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Fakturaoppsett">
+        <PropertyRef Name="Id_client" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>
