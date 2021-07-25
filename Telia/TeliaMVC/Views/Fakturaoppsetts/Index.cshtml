@@ -1,6 +1,5 @@
 ﻿@model PagedList.IPagedList<TeliaMVC.Models.Fakturaoppsett>
 @using PagedList.Mvc;
-
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
@@ -71,32 +70,35 @@
 <div class="row">
     <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
 
-            <div class="col-sm-5">
-                @using (Html.BeginForm("Index", "Fakturaoppsetts", FormMethod.Get))
-                {
-                    <fieldset>
-                        <legend>Søkealternativer</legend>
-                        <label class="radio-inline">
-                            @Html.RadioButton("SearchParameter", "Kostnadsted", htmlAttributes: new { @class = "inputRadio" })<label>Kostnadsted</label>
-                        </label>
-                        <br />
-                        <label class="radio-inline">
-                            @Html.RadioButton("SearchParameter", "FakturaFormat", htmlAttributes: new { @class = "inputRadio" })<label>FakturaFormat</label>
-                        </label>
-                        <br />
-                        <label class="radio-inline">
-                            @Html.RadioButton("SearchParameter", "Husnr", htmlAttributes: new { @class = "inputRadio" })<label>Husnr</label>
-                        </label>
-                        <br />
-                    </fieldset>
-                    <p style="font-size: medium;font-weight:bold;color:black;margin-left:15px;">
-                        Søk etter @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-                        <input type="submit" value="Search" class="btn btn-info shadow-lg" style="color: black;
+        <div class="col-sm-5">
+            @using (Html.BeginForm("Index", "Fakturaoppsetts", FormMethod.Get,  new { id = ViewBag.id_sesije }))
+            {
+                <fieldset>
+                    <legend>Søkealternativer</legend>
+                    <label class="radio-inline">
+                        @Html.RadioButton("SearchParameter", "Kostnadsted", htmlAttributes: new { @class = "inputRadio" })<label>Kostnadsted</label>
+                    </label>
+                    <br />
+                    <label class="radio-inline">
+                        @Html.RadioButton("SearchParameter", "FakturaFormat", htmlAttributes: new { @class = "inputRadio" })<label>FakturaFormat</label>
+                    </label>
+                    <br />
+                    <label class="radio-inline">
+                        @Html.RadioButton("SearchParameter", "Husnr", htmlAttributes: new { @class = "inputRadio" })<label>Husnr</label>
+                    </label>
+                    <br />
+                </fieldset>
+                <div style="display:none;">
+                    @Html.TextBox("id_sesije", ViewBag.id_sesije as string);
+                </div>
+                <p style="font-size: medium;font-weight:bold;color:black;margin-left:15px;">
+                    Søk etter @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                    <input type="submit" value="Search" class="btn btn-info shadow-lg" style="color: black;
                      font-size: medium;
                         border-radius: 14px;" />
-                    </p>
-                }
-            </div>
+                </p>
+            }
+        </div>
 
             <div class="col-sm-4">
                 <fieldset>
@@ -121,43 +123,43 @@
                     <tr>
                         <th scope="row" class="col-sm-2">
                             Kostnadssted
-                            <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter , id = ViewBag.id_sesije })'">
                                 <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                             </button>
                         </th>
 
                         <th class="col-sm-2">
-                            Tileggsinfo<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.TilegsSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            Tileggsinfo<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.TilegsSortParm, currentFilter = ViewBag.CurrentFilter, id = ViewBag.id_sesije })'">
                                 <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                             </button>
                         </th>
                         <th class="col-sm-2">
-                            Fakturaformat<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.FakturaFormatSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            Fakturaformat<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.FakturaFormatSortParm, currentFilter = ViewBag.CurrentFilter , id = ViewBag.id_sesije})'">
                                 <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                             </button>
                         </th>
                         <th class="col-sm-2">
-                            Fakturaadresse<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.FakturaAdresseSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            Fakturaadresse<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.FakturaAdresseSortParm, currentFilter = ViewBag.CurrentFilter, id = ViewBag.id_sesije })'">
                                 <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                             </button>
                         </th>
                         <th class="col-sm-2">
-                            Husnr<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.HusnrSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            Husnr<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.HusnrSortParm, currentFilter = ViewBag.CurrentFilter, id = ViewBag.id_sesije })'">
                                 <span class="glyphicon glyphicon-sort"></span>
                             </button>
                         </th>
                         <th class="col-sm-2">
-                            Bokstav<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.BokstavSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            Bokstav<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.BokstavSortParm, currentFilter = ViewBag.CurrentFilter, id = ViewBag.id_sesije })'">
                                 <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                             </button>
                         </th>
                         <th class="col-sm-2">
-                            Postnummer<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.PostnummerSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            Postnummer<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.PostnummerSortParm, currentFilter = ViewBag.CurrentFilter, id = ViewBag.id_sesije })'">
                                 <span class="glyphicon glyphicon-sort"></span>
                             </button>
                         </th>
                         <th class="col-sm-2">
-                            Sted<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.StedSortParm, currentFilter = ViewBag.CurrentFilter })'">
+                            Sted<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.StedSortParm, currentFilter = ViewBag.CurrentFilter, id = ViewBag.id_sesije })'">
                                 <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                             </button>
                         </th>
