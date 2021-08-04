@@ -19,3 +19,6 @@ https://dotnettutorials.net/lesson/dropdownlist-html-helper-mvc/#:~:text=DropDow
 
 7. Prosledjivanje parametara?
 https://stackoverflow.com/questions/14152575/pass-parameter-to-controller-from-html-actionlink-mvc-4
+
+8. Export table 
+https://www.youtube.com/watch?v=tPvgc-a1ek8
