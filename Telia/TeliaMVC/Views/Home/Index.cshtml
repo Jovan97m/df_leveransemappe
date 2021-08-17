@@ -11,14 +11,32 @@
     }
 }
 <style>
+
     .buttonLink {
-        color: black;
-        font-weight: bold;
+        background-color: darkslategrey;
         font-size: medium;
-        font-family: 'Times New Roman';
-        border-radius: 14px;
-        box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
+        font-weight: bold;
+        color: white;
+        padding: 6px 9px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
     }
+
+        .buttonLink:hover {
+            color: white;
+            background-color: darkslateblue;
+            box-shadow: 0 13px 18px 0 green, 0 16px 45px 0 rgba(0,0,0,0.19);
+        }
+
+        .buttonLink:active {
+            transform: translateY(+2px);
+            background-color: darkslategray;
+        }
+
+
+
     .buttonAdd {
         font-size: medium;
         font-size: smaller;
@@ -78,14 +96,11 @@
         </p>
 
         <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
-            <table class="table table-bordered">
-                <thead>
+            <table class="table-responsive table-bordered table-striped" style="font-size: 18px;">
+                <thead style="text-shadow: 0.2px 0.2px white; background-color: silver;">
                     <tr>
-                        <th class="col-sm-0">
-                            ID
-                        </th>
-                        <th scope="row" class="col-sm-2">
-                            OrgNummer
+                        <th scope="row" class="col-sm-1">
+                            Orgnummer
                         </th>
                     </tr>
                 </thead>
@@ -93,9 +108,6 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td class="col-sm-1">
-                                @Html.DisplayFor(modelItem => item.Id)
-                            </td>
                             <td class="col-sm-1">
                                 @Html.DisplayFor(modelItem => item.Orgnummer)
                             </td>
@@ -110,7 +122,4 @@
 
 
         </div>
-
-
-    </div>
         </div>

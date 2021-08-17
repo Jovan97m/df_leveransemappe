@@ -477,141 +477,143 @@
             <tbody style=" color: black; font-size: 13px;">
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Telefonnummer)
-                        </td>
+                <tr>
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.Telefonnummer)
+                    </td>
 
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Fornavn)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Etternavn)
-                        </td>
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.Fornavn)
+                    </td>
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.Etternavn)
+                    </td>
 
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Hus_nummer)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Hus_bokstav)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Postnummer)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.Katalogoppforing)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Fakturaoppsett.NavnPaKostnadssted)
-                        </td>
-                        <td class="col-sm-1 ">
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.Hus_nummer)
+                    </td>
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.Hus_bokstav)
+                    </td>
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.Postnummer)
+                    </td>
+                    <td class="col-sm-1 NotNeeded">
+                        @Html.DisplayFor(modelItem => item.Katalogoppforing)
+                    </td>
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.Fakturaoppsett.NavnPaKostnadssted)
+                    </td>
+                    <td class="col-sm-1 ">
 
-                            @Html.DisplayFor(modelItem => item.Porteringsdatoog_tid)
-                        </td>
-                        <!-- Ovde treba jos ona 2 da se dodaju , Navarende-->
-                        <!-- pa posle ide ovo:-->
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Abonnementstype)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.Binding)
-                        </td>
+                        @Html.DisplayFor(modelItem => item.Porteringsdatoog_tid)
+                    </td>
+                    <!-- Ovde treba jos ona 2 da se dodaju , Navarende-->
+                    <!-- pa posle ide ovo:-->
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.Abonnementstype)
+                    </td>
+                    <td class="col-sm-1 NotNeeded">
+                        @Html.DisplayFor(modelItem => item.Binding)
+                    </td>
 
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.Antall_TrillingSIM)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.allDataSIM)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.Manuell_Top_up)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.Sperre_Top_up)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.Norden)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.Tale_og_SMS_til_EU)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.TBN)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.HovedSIM)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.TrillingSIM1)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.TrillingSIM2)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DataSIM1)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DataSIM2)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DataSIM3)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DataSIM4)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DataSIM5)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryMethodCode)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryStreetName)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryStreetNumber)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryStreetSuffix)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryCity)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryZIP)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryCountryCode)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryContractEmail)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryContractCountryCode)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryContractLocalNumber)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryIndividualFirstName)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryIndividualLastName)
-                        </td>
-                        <td style="background-color: azure; font-style: italic; font-size: 15px;" class="col-sm-2">
-                            <div style="display:flex; align-items:stretch;">
-                                <button class="btn-primary btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
-                                        onclick="location.href = '@Url.Action("Edit", "NummersAdmin", new {id = item.ID,selected = ViewBag.CurrentSelected})'">
-                                    <span class="glyphicon glyphicon-pencil"></span>
+                    <td class="col-sm-1 NotNeeded">
+                        @Html.DisplayFor(modelItem => item.Antall_TrillingSIM)
+                    </td>
+                    <td class="col-sm-1 NotNeeded">
+                        @Html.DisplayFor(modelItem => item.allDataSIM)
+                    </td>
+                    <td class="col-sm-1 NotNeeded">
+                        @Html.DisplayFor(modelItem => item.Manuell_Top_up)
+                    </td>
+                    <td class="col-sm-1 NotNeeded">
+                        @Html.DisplayFor(modelItem => item.Sperre_Top_up)
+                    </td>
+                    <td class="col-sm-1 NotNeeded">
+                        @Html.DisplayFor(modelItem => item.Norden)
+                    </td>
+                    <td class="col-sm-1 NotNeeded">
+                        @Html.DisplayFor(modelItem => item.Tale_og_SMS_til_EU)
+                    </td>
+                    <td class="col-sm-1 NotNeeded">
+                        @Html.DisplayFor(modelItem => item.TBN)
+                    </td>
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.HovedSIM)
+                    </td>
+                    <td class="col-sm-1 NotNeeded">
+                        @Html.DisplayFor(modelItem => item.TrillingSIM1)
+                    </td>
+                    <td class="col-sm-1 NotNeeded">
+                        @Html.DisplayFor(modelItem => item.TrillingSIM2)
+                    </td>
+                    <td class="col-sm-1 NotNeeded">
+                        @Html.DisplayFor(modelItem => item.DataSIM1)
+                    </td>
+                    <td class="col-sm-1 NotNeeded">
+                        @Html.DisplayFor(modelItem => item.DataSIM2)
+                    </td>
+                    <td class="col-sm-1 NotNeeded">
+                        @Html.DisplayFor(modelItem => item.DataSIM3)
+                    </td>
+                    <td class="col-sm-1 NotNeeded">
+                        @Html.DisplayFor(modelItem => item.DataSIM4)
+                    </td>
+                    <td class="col-sm-1 NotNeeded">
+                        @Html.DisplayFor(modelItem => item.DataSIM5)
+                    </td>
+                    <!--
+    <td class="col-sm-1 NotNeeded">
+        @Html.DisplayFor(modelItem => item.DeliveryMethodCode)
+    </td>
+    <td class="col-sm-1 NotNeeded">
+        @Html.DisplayFor(modelItem => item.DeliveryStreetName)
+    </td>
+    <td class="col-sm-1 NotNeeded">
+        @Html.DisplayFor(modelItem => item.DeliveryStreetNumber)
+    </td>
+    <td class="col-sm-1 NotNeeded">
+        @Html.DisplayFor(modelItem => item.DeliveryStreetSuffix)
+    </td>
+    <td class="col-sm-1 NotNeeded">
+        @Html.DisplayFor(modelItem => item.DeliveryCity)
+    </td>
+    <td class="col-sm-1 NotNeeded">
+        @Html.DisplayFor(modelItem => item.DeliveryZIP)
+    </td>
+    <td class="col-sm-1 NotNeeded">
+        @Html.DisplayFor(modelItem => item.DeliveryCountryCode)
+    </td>
+    <td class="col-sm-1 NotNeeded">
+        @Html.DisplayFor(modelItem => item.DeliveryContractEmail)
+    </td>
+    <td class="col-sm-1 NotNeeded">
+        @Html.DisplayFor(modelItem => item.DeliveryContractCountryCode)
+    </td>
+    <td class="col-sm-1 NotNeeded">
+        @Html.DisplayFor(modelItem => item.DeliveryContractLocalNumber)
+    </td>
+    <td class="col-sm-1 NotNeeded">
+        @Html.DisplayFor(modelItem => item.DeliveryIndividualFirstName)
+    </td>
+    <td class="col-sm-1 NotNeeded">
+        @Html.DisplayFor(modelItem => item.DeliveryIndividualLastName)
+    </td>
+        -->
+                    <td style="background-color: azure; font-style: italic; font-size: 15px;" class="col-sm-2">
+                        <div style="display:flex; align-items:stretch;">
+                            <button class="btn-primary btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
+                                    onclick="location.href = '@Url.Action("Edit", "NummersAdmin", new {id = item.ID,selected = ViewBag.CurrentSelected})'">
+                                <span class="glyphicon glyphicon-pencil"></span>
 
-                                </button>
-                                <button class="btn-danger btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du slette valgt rad"
-                                        onclick="location.href = '@Url.Action("Delete", "NummersAdmin", new {id = item.ID})'">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                            </button>
+                            <button class="btn-danger btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du slette valgt rad"
+                                    onclick="location.href = '@Url.Action("Delete", "NummersAdmin", new {id = item.ID})'">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

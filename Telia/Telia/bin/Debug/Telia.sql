@@ -40,36 +40,6 @@ USE [$(DatabaseName)];
 
 
 GO
-PRINT N'Altering [dbo].[Fakturaoppsett]...';
-
-
-GO
-ALTER TABLE [dbo].[Fakturaoppsett]
-    ADD [Id_client] INT NULL;
-
-
-GO
-PRINT N'Creating [dbo].[FK_dbo.Client_dbo.Client_Id]...';
-
-
-GO
-ALTER TABLE [dbo].[Fakturaoppsett] WITH NOCHECK
-    ADD CONSTRAINT [FK_dbo.Client_dbo.Client_Id] FOREIGN KEY ([Id_client]) REFERENCES [dbo].[Client] ([Id]) ON DELETE CASCADE;
-
-
-GO
-PRINT N'Checking existing data against newly created constraints';
-
-
-GO
-USE [$(DatabaseName)];
-
-
-GO
-ALTER TABLE [dbo].[Fakturaoppsett] WITH CHECK CHECK CONSTRAINT [FK_dbo.Client_dbo.Client_Id];
-
-
-GO
 PRINT N'Update complete.';
 
 

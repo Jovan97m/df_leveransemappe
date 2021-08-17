@@ -26,30 +26,28 @@
             transform: translateY(+2px);
         }
 
-    .ButtonAdd {
-        background-color: #ac23f6;
+    .ButtonCreate {
+        background-color: #990AE4;
         font-size: larger;
         font-weight: bold;
         color: white;
+        padding: 10px 15px;
+        border: solid 1px black;
+        border-radius: 16px;
+        border-color: transparent;
         text-shadow: 1px 1px black;
-        outline-offset: 4px;
-        display: block;
-        padding: 12px 42px;
-        border-radius: 12px;
-        font-size: 1.25rem;
-        border: none;
-        margin-bottom: 15px;
-        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+        box-shadow: 1px 8px 15px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
     }
 
-        .ButtonAdd:hover {
+        .ButtonCreate:hover {
             color: white;
-            background-color: #990ae2;
-            box-shadow: 0 12px 18px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+            background-color: purple;
+            box-shadow: 0 13px 18px 0 #990AE4, 0 16px 45px 0 rgba(0,0,0,0.21);
         }
 
-        .ButtonAdd:active {
+        .ButtonCreate:active {
             transform: translateY(+2px);
+            background-color: darkblue;
         }
 
     .inputRadio {
@@ -109,10 +107,10 @@
                 <legend>
                     Legger til nytt fakturaoppset
                 </legend>
-                <button class="shadow-lg ButtonAdd " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href='@Url.Action("Create", "FakturaoppsettsAdmin")'">
+                <button class="ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href='@Url.Action("Create", "FakturaoppsettsAdmin")'">
                     <span class="glyphicon glyphicon-plus"></span>   Skape
                 </button>
-                <button class=" ButtonAdd " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href = '@Url.Action("Index", "FakturaoppsettsAdmin")'">
+                <button class=" ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href = '@Url.Action("Index", "FakturaoppsettsAdmin")'">
                     <span class="glyphicon glyphicon-repeat"></span>   Refresh
                 </button>
             </fieldset>
