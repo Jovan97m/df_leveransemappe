@@ -209,6 +209,7 @@ namespace TeliaMVC.Controllers
             }
 
            ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted", nummer.Kostnadsted);
+            ViewBag.ORG = nummer.Orgnummer;
             return View(nummer);
         }
 

@@ -33,7 +33,7 @@ namespace TeliaMVC.Models
         }
         private bool Check(int number)
         {
-            if (number <= 5)
+            if (number <= 5 && number >= 0)
             {
                 return true;
             }

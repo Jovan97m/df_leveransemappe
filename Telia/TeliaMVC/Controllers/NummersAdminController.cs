@@ -16,9 +16,23 @@ namespace TeliaMVC.Controllers
         private TeliaEntities db = new TeliaEntities();
 
         // GET: NummersAdmin
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString,string SearchParameter,string selected, int? page)
+        public ActionResult Index(string sortOrder, string currentFilter, string currentSelected, string searchString,string SearchParameter,string selected,string CopyColumn, int? page)
         {
+            var nummers = from s in db.Nummers
+                          select s;
+            //SelectBox
+            ViewBag.nummers = FillSelectBoxClients();
+
+            //Ovde izmeni brojeve koji treba da se prikazu na osnovu selektovanog  
+            if (selected != null)
+            {
+                if (selected != "All")
+                {
+                    nummers = nummers.Where(s => s.Orgnummer.Contains(selected));
+                }
+            }
             ViewBag.CurrentSort = sortOrder;
+            ViewBag.CopyColumn = CopyColumn; // naziv kolone koja se kopira
             ViewBag.Telefonnummer = String.IsNullOrEmpty(sortOrder) ? "telefonnummer_desc" : "";
             ViewBag.Abonnementstype = sortOrder == "Abonnementstype" ? "abonnementstype_desc" : "Abonnementstype"; // mislim da ne bi trebalo da ima ova
             ViewBag.EtternavnSortParm = sortOrder == "Etternavn" ? "etternavn_desc" : "Etternavn";
@@ -42,34 +56,7 @@ namespace TeliaMVC.Controllers
                 searchString = currentFilter;
             }
             ViewBag.CurrentFilter = searchString;
-
-
-
-            var nummers = from s in db.Nummers
-                          select s;
-
-            //Deo za selectBox,da se ucita uvek u dropdown menu.
-            List<Client> clients = db.Clients.ToList();
-            List<String> orgNummers = new List<String>();
-
-            orgNummers.Add("All");
-            foreach (var item in clients)
-            {
-                //kad se doda u bazu
-                //string final = item.Orgnummer + "-" + item.FirmaNavn;
-                orgNummers.Add(item.Orgnummer);
-            }
-            ViewBag.nummers = orgNummers;
-
-            //Ovde izmeni brojeve koji treba da se prikazu na osnovu selektovanog  
-            if (selected != null)
-            {
-                if (selected != "All")
-                {
-                    nummers = nummers.Where(s => s.Orgnummer.Contains(selected));
-                }
-            }
-
+            ViewBag.CurrentSelected = selected;
 
             //pretrazivanje pre rasporedjivanja:
             if (!String.IsNullOrEmpty(searchString))
@@ -89,112 +76,10 @@ namespace TeliaMVC.Controllers
                         break;
                 }
             }
-            switch (sortOrder)
-            {
-                //prva kolona
-                case "telefonnummer_desc":
-                    nummers = nummers.OrderByDescending(s => s.Telefonnummer);
-                    break;
-                //druga kolona:
-                case "Abonnementstype":
-                    nummers = nummers.OrderBy(s => s.Abonnementstype);
-                    break;
-                case "abonnementstype_desc":
-                    nummers = nummers.OrderByDescending(s => s.Abonnementstype);
-                    break;
+            //OrderBy
+            nummers = SortList(nummers, sortOrder);
 
-                //treca kolona,fakture
-                case "Etternavn":
-                    nummers = nummers.OrderBy(s => s.Etternavn);
-                    break;
-                case "etternavn_desc":
-                    nummers = nummers.OrderByDescending(s => s.Etternavn);
-                    break;
-                case "Fornavn":
-                    nummers = nummers.OrderBy(s => s.Fornavn);
-                    break;
-                case "fornavn_desc":
-                    nummers = nummers.OrderByDescending(s => s.Fornavn);
-                    break;
-                case "Bedrift_som_skal_faktureres":
-                    nummers = nummers.OrderBy(s => s.Bedrift_som_skal_faktureres);
-                    break;
-                case "bedrift_som_skal_faktureres_desc":
-                    nummers = nummers.OrderByDescending(s => s.Bedrift_som_skal_faktureres);
-                    break;
-
-
-                //cetvrta kolona,adrese za fakture
-                case "c_o_adresse_for_SIM_levering":
-                    nummers = nummers.OrderBy(s => s.c_o_adresse_for_SIM_levering);
-                    break;
-                case "c_o_adresse_for_SIM_levering_desc":
-                    nummers = nummers.OrderByDescending(s => s.c_o_adresse_for_SIM_levering);
-                    break;
-
-                //Peta kolona, Husnr
-                case "Gateadresse_SIM_Skal_sendes_til":
-                    nummers = nummers.OrderBy(s => s.Gateadresse_SIM_Skal_sendes_til);
-                    break;
-
-                case "gateadresse_SIM_Skal_sendes_til_desc":
-                    nummers = nummers.OrderByDescending(s => s.Gateadresse_SIM_Skal_sendes_til);
-                    break;
-
-
-                case "husnr_desc":
-                    nummers = nummers.OrderByDescending(s => s.Gateadresse_SIM_Skal_sendes_til);
-                    break;
-
-                //sesta kolona, Bokstav , mozda i ne mora
-                case "Hus_nummer":
-                    nummers = nummers.OrderBy(s => s.Hus_nummer);
-                    break;
-                case "hus_nummer_desc":
-                    nummers = nummers.OrderByDescending(s => s.Hus_nummer);
-                    break;
-
-                //sedma kolona PostNummer
-                case "Hus_bokstav":
-                    nummers = nummers.OrderBy(s => s.Hus_bokstav);
-                    break;
-                case "hus_bokstav_desc":
-                    nummers = nummers.OrderByDescending(s => s.Hus_bokstav);
-                    break;
-
-                case "post_nr_":
-                    nummers = nummers.OrderBy(s => s.post_nr_);
-                    break;
-                case "post_nr_desc":
-                    nummers = nummers.OrderByDescending(s => s.post_nr_);
-                    break;
-
-                case "Post_sted":
-                    nummers = nummers.OrderBy(s => s.Post_sted);
-                    break;
-                case "post_sted_desc":
-                    nummers = nummers.OrderByDescending(s => s.Post_sted);
-                    break;
-
-                case "Ekstra_datasim_":
-                    nummers = nummers.OrderBy(s => s.Ekstra_datasim);
-                    break;
-                case "ekstra_datasim_desc":
-                    nummers = nummers.OrderByDescending(s => s.Ekstra_datasim);
-                    break;
-                case "Ekstra_talesim_":
-                    nummers = nummers.OrderBy(s => s.Ekstra_talesim_);
-                    break;
-                case "ekstra_talesim_desc":
-                    nummers = nummers.OrderByDescending(s => s.Ekstra_talesim_);
-                    break;
-
-                default:
-                    nummers = nummers.OrderBy(s => s.Telefonnummer);
-                    break;
-            }
-
-            int pageSize = 5;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
             return View(nummers.ToPagedList(pageNumber, pageSize));
         }
@@ -258,11 +143,21 @@ namespace TeliaMVC.Controllers
         }
 
         // GET: NummersAdmin/Edit/5
-        public ActionResult Edit()
+        public ActionResult Edit(int? id,string selected)
         {
             ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted");
-            
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Nummer nummer = db.Nummers.Find(id);
+            if (nummer == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ID = nummer.Orgnummer;
+            ViewBag.CurrentSelected = selected;
+            return View(nummer);
         }
 
         // POST: NummersAdmin/Edit/5
@@ -270,17 +165,66 @@ namespace TeliaMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,ID")] Nummer nummer)
+        public ActionResult Edit([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,ID,HovedSIM,Orgnummer,DeliveryCountryCode")] Nummer nummer)
         {
+            ViewBag.ID = nummer.Orgnummer;
+            nummer.Pending = true;
+            nummer.Date = null;
+            string selected = nummer.DeliveryCountryCode;
+            nummer.DeliveryCountryCode = "47";
             if (ModelState.IsValid)
             {
                 db.Entry(nummer).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","NummersAdmin",new { currentSelected = selected});
             }
             ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted", nummer.Kostnadsted);
             return View(nummer);
         }
+
+
+        public ActionResult UpdateColumn(string sortOrder,string currentFilter,string CopyColumn,string currentSelected,int? a)
+        {
+
+            Nummer n = new Nummer(); n.Abonnementstype = sortOrder;
+            n.Bedrift_som_skal_faktureres = currentFilter;
+            n.c_o_adresse_for_SIM_levering = CopyColumn;
+            n.DeliveryCity = currentSelected;
+            n.Hus_bokstav = CopyColumn;
+            return View(n);
+        }
+
+
+        
+        //funkcija za upate coplumn
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateColumn([Bind(Include = "Abonnementstype,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Hus_bokstav,DeliveryCity")] Nummer nummer)
+        {
+            var nummers = from s in db.Nummers
+                          select s;
+            if (nummer.DeliveryCity != null)
+            {
+                if (nummer.DeliveryCity != "All")
+                {
+                    nummers = nummers.Where(s => s.Orgnummer.Contains(nummer.DeliveryCity));
+                }
+            }
+
+            nummers = SortList(nummers, nummer.Abonnementstype);
+
+            foreach (var item in db.Nummers)
+            {
+                item.Hus_bokstav = nummers.FirstOrDefault().Hus_bokstav;
+                db.Entry(item).State = EntityState.Modified;
+                //db.SaveChanges();    
+            }
+            db.SaveChanges();
+            //kada sve update,vrati na index
+            return RedirectToAction("Index", new { sortOrder = nummer.Abonnementstype,currentFilter = nummer.Bedrift_som_skal_faktureres , currentSelected = nummer.DeliveryCity });
+        }
+
+
 
         // GET: NummersAdmin/Delete/5
         public ActionResult Delete(int? id)
@@ -344,8 +288,124 @@ namespace TeliaMVC.Controllers
 
 
 
+        #region pomocne funkcije
+        //Funkcija za sortiranje liste po zadatoj koloni
+        public System.Linq.IQueryable<TeliaMVC.Models.Nummer> SortList(System.Linq.IQueryable<TeliaMVC.Models.Nummer> list, string sortOrder)
+        {
+            var nummers = list;
+            switch (sortOrder)
+            {
+                case "telefonnummer_desc":
+                    nummers = nummers.OrderByDescending(s => s.Telefonnummer);
+                    break;
+                case "Abonnementstype":
+                    nummers = nummers.OrderBy(s => s.Abonnementstype);
+                    break;
+                case "abonnementstype_desc":
+                    nummers = nummers.OrderByDescending(s => s.Abonnementstype);
+                    break;
+                case "Etternavn":
+                    nummers = nummers.OrderBy(s => s.Etternavn);
+                    break;
+                case "etternavn_desc":
+                    nummers = nummers.OrderByDescending(s => s.Etternavn);
+                    break;
+                case "Fornavn":
+                    nummers = nummers.OrderBy(s => s.Fornavn);
+                    break;
+                case "fornavn_desc":
+                    nummers = nummers.OrderByDescending(s => s.Fornavn);
+                    break;
+                case "Bedrift_som_skal_faktureres":
+                    nummers = nummers.OrderBy(s => s.Bedrift_som_skal_faktureres);
+                    break;
+                case "bedrift_som_skal_faktureres_desc":
+                    nummers = nummers.OrderByDescending(s => s.Bedrift_som_skal_faktureres);
+                    break;
+                case "c_o_adresse_for_SIM_levering":
+                    nummers = nummers.OrderBy(s => s.c_o_adresse_for_SIM_levering);
+                    break;
+                case "c_o_adresse_for_SIM_levering_desc":
+                    nummers = nummers.OrderByDescending(s => s.c_o_adresse_for_SIM_levering);
+                    break;
+                case "Gateadresse_SIM_Skal_sendes_til":
+                    nummers = nummers.OrderBy(s => s.Gateadresse_SIM_Skal_sendes_til);
+                    break;
+                case "gateadresse_SIM_Skal_sendes_til_desc":
+                    nummers = nummers.OrderByDescending(s => s.Gateadresse_SIM_Skal_sendes_til);
+                    break;
+                case "husnr_desc":
+                    nummers = nummers.OrderByDescending(s => s.Gateadresse_SIM_Skal_sendes_til);
+                    break;
+                case "Hus_nummer":
+                    nummers = nummers.OrderBy(s => s.Hus_nummer);
+                    break;
+                case "hus_nummer_desc":
+                    nummers = nummers.OrderByDescending(s => s.Hus_nummer);
+                    break;
+                case "Hus_bokstav":
+                    nummers = nummers.OrderBy(s => s.Hus_bokstav);
+                    break;
+                case "hus_bokstav_desc":
+                    nummers = nummers.OrderByDescending(s => s.Hus_bokstav);
+                    break;
+                case "post_nr_":
+                    nummers = nummers.OrderBy(s => s.post_nr_);
+                    break;
+                case "post_nr_desc":
+                    nummers = nummers.OrderByDescending(s => s.post_nr_);
+                    break;
+                case "Post_sted":
+                    nummers = nummers.OrderBy(s => s.Post_sted);
+                    break;
+                case "post_sted_desc":
+                    nummers = nummers.OrderByDescending(s => s.Post_sted);
+                    break;
+                case "Ekstra_datasim_":
+                    nummers = nummers.OrderBy(s => s.Ekstra_datasim);
+                    break;
+                case "ekstra_datasim_desc":
+                    nummers = nummers.OrderByDescending(s => s.Ekstra_datasim);
+                    break;
+                case "Ekstra_talesim_":
+                    nummers = nummers.OrderBy(s => s.Ekstra_talesim_);
+                    break;
+                case "ekstra_talesim_desc":
+                    nummers = nummers.OrderByDescending(s => s.Ekstra_talesim_);
+                    break;
+                default:
+                    nummers = nummers.OrderBy(s => s.Telefonnummer);
+                    break;
+            }
+            return nummers;
+        }
+
+        //funkcija za popunjavanje selectBox-a sa svim klijentima
+        public List<String> FillSelectBoxClients()
+        {
+            List<String> orgNummers = new List<String>();
+            orgNummers.Add("All");
+            foreach (var item in db.Clients.ToList())
+            {
+                //kad se doda u bazu
+                //string final = item.Orgnummer + "-" + item.FirmaNavn;
+                orgNummers.Add(item.Orgnummer);
+            }
+            return orgNummers;
+        }
 
 
+        public string GetId(string orgNummer)
+        {
+            var c = db.Clients.Where(s => s.Orgnummer.Contains(orgNummer));
+            if (c == null)
+            {
+                return "";
+            }
+            else
+                return c.FirstOrDefault().Id.ToString();
+        }
+        #endregion
 
 
     }

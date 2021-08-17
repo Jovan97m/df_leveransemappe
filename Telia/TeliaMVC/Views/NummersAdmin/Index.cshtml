@@ -19,6 +19,11 @@
 </head>
 <body>
     <style>
+
+        .Table {
+            box-shadow: 2px 2px 1px 3px lightgray;
+            border-radius: 14px;
+        }
         .button {
             font-size: smaller;
             color: white;
@@ -32,32 +37,7 @@
             background-color: #F9B3A7;
         }
 
-        .ButtonAdd {
-            background-color: #ac23f6;
-            font-size: larger;
-            font-weight: bold;
-            color: white;
-            text-shadow: 1px 1px black;
-            outline-offset: 4px;
-            display: block;
-            padding: 12px 42px;
-            border-radius: 12px;
-            font-size: 1.25rem;
-            border: none;
-            margin-bottom: 15px;
-            box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
-        }
-
-            .ButtonAdd:hover {
-                color: white;
-                background-color: #990ae2;
-                box-shadow: 0 12px 18px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-            }
-
-            .ButtonAdd:active {
-                transform: translateY(+2px);
-            }
-
+        
         .inputRadio {
             border-radius: 10px;
             box-shadow: inset 0 1px 1px hsla(0,0%,100%,.8), 0 0 0 1px hsla(0,0%,0%,.6), 0 2px 3px hsla(0,0%,0%,.6), 0 4px 3px hsla(0,0%,0%,.4), 0 6px 6px hsla(0,0%,0%,.2), 0 10px 6px hsla(0,0%,0%,.2);
@@ -95,6 +75,50 @@
             color: white;
             text-shadow: 1px 2px black;
         }
+
+        .ButtonCreate {
+            background-color: #990AE4;
+            font-size: larger;
+            font-weight: bold;
+            color: white;
+            padding: 10px 15px;
+            border: solid 1px black;
+            border-radius: 16px;
+            border-color: transparent;
+            text-shadow: 1px 1px black;
+            box-shadow: 1px 8px 15px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+        }
+
+            .ButtonCreate:hover {
+                color: white;
+                background-color: purple;
+                box-shadow: 0 13px 18px 0 #990AE4, 0 16px 45px 0 rgba(0,0,0,0.21);
+            }
+
+            .ButtonCreate:active {
+                transform: translateY(+2px);
+                background-color: darkblue;
+            }
+        .ButtonSearch {
+            background-color: dodgerblue;
+            font-size: medium;
+            font-weight: bold;
+            color: black;
+            padding: 7px 12px;
+            border: solid 1px black;
+            border-radius: 16px;
+            border-color: transparent;
+            box-shadow: 1px 8px 15px 0 rgba(0,0,0,0.24), 0 13px 24px 0 rgba(0,0,0,0.19);
+        }
+            .ButtonSearch:hover {
+                color: white;
+                background-color: blue;
+                box-shadow: 0 13px 18px 0 dodgerblue, 0 16px 45px 0 rgba(0,0,0,0.21);
+            }
+            .ButtonSearch:active {
+                transform: translateY(+2px);
+                background-color: dodgerblue;
+            }
     </style>
     <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
         <div class="col-sm-5">
@@ -118,7 +142,7 @@
                 </fieldset>
                 <p style="font-size: medium;font-weight:bold;color:black;margin-left:15px;">
                     Søk etter @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-                    <input type="submit" value="Search" class="btn btn-info shadow-lg" style="color: black;font-size: medium;border-radius: 14px;" />
+                    <input type="submit" value="Search" class="ButtonSearch"/> 
                 </p>
                 <fieldset>
                     <legend>
@@ -126,7 +150,7 @@
                     </legend>
                     <p>
                         @Html.DropDownList("selected", new SelectList(ViewBag.nummers), "Choose Orgnummer", new { @class = "form-control SelectBox" });
-                        <input type="submit" value="Load" class="ButtonAdd shadow-lg" />
+                        <input type="submit" value="Load" class="ButtonCreate shadow-lg" />
                     </p>
                 </fieldset>
             }
@@ -137,18 +161,18 @@
                 <legend>
                     Legger til nytt fakturaoppset
                 </legend>
-                <button class="shadow-lg ButtonAdd " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om bruker lista" onclick="location.href = '@Url.Action("Create", "NummersAdmin")'">
+                <button class="shadow-lg ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om bruker lista" onclick="location.href = '@Url.Action("Create", "NummersAdmin")'">
                     <span class="glyphicon glyphicon-plus"></span>   Skape
                 </button>
-                <button class=" ButtonAdd " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om bruker lsit" onclick="location.href = '@Url.Action("Index", "NummersAdmin")'">
+                <button class=" ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om bruker lsit" onclick="location.href = '@Url.Action("Index", "NummersAdmin")'">
                     <span class="glyphicon glyphicon-repeat"></span>   Refresh
                 </button>
             </fieldset>
         </div>
     </div>
 
-    <div style="overflow-x: auto; margin-left: 15px; margin-right: 15px;" class="shadow">
-        <table class="table-bordered table-sm table-hover table-striped " style="font-size: 16px;font-weight:bold;table-layout:fixed;">
+    <div style="overflow-x: auto; margin-left: 11px; margin-right: 12px;border-radius:12px;" class=".scrollbar-lady-lips">
+        <table class="table-hover table-striped Table" style="font-size: 13px;font-weight:bold;table-layout:fixed;">
             <thead class="HeaderTable">
                 <tr>
                     <th class="col-sm-2">
@@ -171,35 +195,39 @@
                         </button>
                     </th>
                     <!--
-                    <th class="col-sm-2">
-                        Bedrift_som_skal_faktureres
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin", new { sortOrder = ViewBag.Bedrift_som_skal_faktureresSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        c_o_adresse_for_SIM_levering
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href='@Url.Action("Index", "NummersAdmin", new { sortOrder = ViewBag.c_o_adresse_for_SIM_leveringSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Gateadresse_SIM_Skal_sendes_til
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin", new { sortOrder = ViewBag.Gateadresse_SIM_Skal_sendes_tilSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                        -->
+    <th class="col-sm-2">
+        Bedrift_som_skal_faktureres
+        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin", new { sortOrder = ViewBag.Bedrift_som_skal_faktureresSortParm, currentFilter = ViewBag.CurrentFilter })'">
+            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+        </button>
+    </th>
+    <th class="col-sm-2">
+        c_o_adresse_for_SIM_levering
+        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href='@Url.Action("Index", "NummersAdmin", new { sortOrder = ViewBag.c_o_adresse_for_SIM_leveringSortParm, currentFilter = ViewBag.CurrentFilter })'">
+            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+        </button>
+    </th>
+    <th class="col-sm-2">
+        Gateadresse_SIM_Skal_sendes_til
+        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin", new { sortOrder = ViewBag.Gateadresse_SIM_Skal_sendes_tilSortParm, currentFilter = ViewBag.CurrentFilter })'">
+            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+        </button>
+    </th>
+        -->
                     <th class="col-sm-2">
                         Hus_nummer
                         <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.Hus_nummerSortParm, currentFilter = ViewBag.CurrentFilter })'">
                             <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                         </button>
+
                     </th>
                     <th class="col-sm-2">
                         Hus_bokstav
                         <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.Hus_bokstavSortParm, currentFilter = ViewBag.CurrentFilter })'">
                             <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("UpdateColumn", "NummersAdmin",new { sortOrder = ViewBag.Hus_nummerSortParm, currentFilter = ViewBag.CurrentFilter , CopyColumn="Hus_bokstav" , currentSelected =ViewBag.CurrentSelected })'">
+                            <span class="glyphicon glyphicon-arrow-down"></span>
                         </button>
                     </th>
                     <th class="col-sm-2">
@@ -329,7 +357,7 @@
                             <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                         </button>
                     </th>
-                    <!-- SAD ONI DELIVERY-->
+                    <!--
                     <th class="col-sm-2">
                         DeliveryMethodCode
                         <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.DeliveryMethodCodeSortParm, currentFilter = ViewBag.CurrentFilter })'">
@@ -411,38 +439,38 @@
                             <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                         </button>
                     </th>
-
+                    -->
 
                     <!--Ova cuda ne bi trebalo dase prikazu:-->
                     <!--
-                    <th class="col-sm-2">
-                        Post_sted
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.Post_stedSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Epost_for_sporings_informasjon
-                    </th>
-                    <th class="col-sm-2">
-                        Epost
-                    </th>
-                    <th class="col-sm-2">
-                        Tilleggsinfo_ansatt_ID
-                    </th>
-                    <th class="col-sm-2">
-                        Ekstra_talesim_
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.Ekstra_talesimSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Ekstra_datasim
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.Ekstra_datasimSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                        -->
+    <th class="col-sm-2">
+        Post_sted
+        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.Post_stedSortParm, currentFilter = ViewBag.CurrentFilter })'">
+            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+        </button>
+    </th>
+    <th class="col-sm-2">
+        Epost_for_sporings_informasjon
+    </th>
+    <th class="col-sm-2">
+        Epost
+    </th>
+    <th class="col-sm-2">
+        Tilleggsinfo_ansatt_ID
+    </th>
+    <th class="col-sm-2">
+        Ekstra_talesim_
+        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.Ekstra_talesimSortParm, currentFilter = ViewBag.CurrentFilter })'">
+            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+        </button>
+    </th>
+    <th class="col-sm-2">
+        Ekstra_datasim
+        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.Ekstra_datasimSortParm, currentFilter = ViewBag.CurrentFilter })'">
+            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+        </button>
+    </th>
+        -->
                     <th style="width:35px;"></th>
                 </tr>
             </thead>
@@ -573,7 +601,7 @@
                         <td style="background-color: azure; font-style: italic; font-size: 15px;" class="col-sm-2">
                             <div style="display:flex; align-items:stretch;">
                                 <button class="btn-primary btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
-                                        onclick="location.href = '@Url.Action("Edit", "NummersAdmin", new {id = item.ID})'">
+                                        onclick="location.href = '@Url.Action("Edit", "NummersAdmin", new {id = item.ID,selected = ViewBag.CurrentSelected})'">
                                     <span class="glyphicon glyphicon-pencil"></span>
 
                                 </button>
@@ -590,7 +618,7 @@
         <br />
         @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
         @Html.PagedListPager(Model, page => Url.Action("Index",
-            new { page, currentFilter = ViewBag.CurrentFilter }))
+            new { page, currentFilter = ViewBag.CurrentFilter, currentSelected = ViewBag.CurrentSelected }))
 
     </div>
     

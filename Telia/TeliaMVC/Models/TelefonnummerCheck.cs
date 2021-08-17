@@ -16,18 +16,18 @@ namespace TeliaMVC.Models
                 int valueInteger;
                 if (int.TryParse(value.ToString(), out valueInteger))
                 {
-                    if (Check(valueInteger)) // funkcija koja treba da proveri sledece: 
+                    if (value.ToString().Length== 8) // funkcija koja treba da proveri sledece: 
                     {
                         return ValidationResult.Success;
                     }
                     else
                     {
-                        return new ValidationResult(string.Concat(validationContext.DisplayName, " Its not a valid "));
+                        return new ValidationResult(string.Concat(validationContext.DisplayName, " Its not valid! "));
                     }
                 }
                 else
                 {
-                    return new ValidationResult(string.Concat(validationContext.DisplayName, " must be an integer"));
+                    return new ValidationResult(string.Concat(validationContext.DisplayName, " must be number not letter!"));
                 }
             }
             return ValidationResult.Success;

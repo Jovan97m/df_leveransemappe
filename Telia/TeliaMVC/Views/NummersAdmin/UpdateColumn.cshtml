@@ -1,0 +1,40 @@
+﻿@model TeliaMVC.Models.Nummer
+
+@{
+    ViewBag.Title = "UpdateColumn";
+}
+
+<h1 style="color: red;">Are you sure you want to copy  to all members? </h1>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div>
+    <div class="form-group" style="display:none;">
+        <div class="col-md-0">
+            @Html.EditorFor(model => model.Abonnementstype, new { style = "display:none;", htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <div class="form-group" style="display:none;">
+        <div class="col-md-0">
+            @Html.EditorFor(model => model.Bedrift_som_skal_faktureres, new { style = "display:none;", htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <div class="form-group" style="display:none;">
+        <div class="col-md-0">
+            @Html.EditorFor(model => model.DeliveryCity, new { style = "display:none;", htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <div class="form-group" style="display:none;">
+        <div class="col-md-0">
+            @Html.EditorFor(model => model.Hus_bokstav, new { style = "display:none;", htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+</div>
+    <input type="submit" value="Yes" class="btn-success btn-lg" />
+}
+<p>
+
+    @Html.ActionLink("Back to List", "Index")
+</p>
