@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0">
+  <Operation Name="Rename Refactor" Key="3612fca1-4f17-4b39-b934-d88c654b39d1" ChangeDateTime="07/10/2021 14:38:33" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+    <Property Name="ElementName" Value="[dbo].[Nummer].[11. Katalogoppforing]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Nummer]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Katalogoppforing" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c2f7a30c-baad-407f-8bd7-7b012d77f648" ChangeDateTime="07/10/2021 14:44:47" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+    <Property Name="ElementName" Value="[dbo].[Nummer].[13. Porteringsdatoog tid]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Nummer]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Porteringsdatoog tid" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b197c2cd-7dba-4677-b31a-6305baa47e1e" ChangeDateTime="07/10/2021 15:07:49" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+    <Property Name="ElementName" Value="[dbo].[Nummer].[DeliveryContract]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Nummer]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DeliveryContractCountryCode" />
+  </Operation>
+</Operations>

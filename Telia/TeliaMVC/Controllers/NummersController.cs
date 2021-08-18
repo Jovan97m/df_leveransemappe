@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using TeliaMVC.Models;
 using PagedList;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Runtime.InteropServices;
 
 namespace TeliaMVC.Controllers
 {
@@ -306,6 +308,74 @@ namespace TeliaMVC.Controllers
             }
             else
                 return c.FirstOrDefault().Id.ToString() ;
+        }
+
+        public ActionResult Export()
+        {
+            try
+            {
+                Excel.Application application = new Excel.Application();
+                Excel.Workbook workbook = application.Workbooks.Add(System.Reflection.Missing.Value);
+                Excel.Worksheet worksheet = workbook.ActiveSheet;
+
+
+                worksheet.Cells[1, 1] = "Telefonnummer";
+                worksheet.Cells[1, 2] = "Fornavn";
+                worksheet.Cells[1, 3] = "Etternavn";
+                worksheet.Cells[1, 4] = "E-postadresse";
+                worksheet.Cells[1, 5] = "Tilleggsinfo, bruker";
+                worksheet.Cells[1, 6] = "Gatenavn";
+                worksheet.Cells[1, 7] = "Husnummer";
+                worksheet.Cells[1, 8] = "Husbokstav";
+                worksheet.Cells[1, 9] = "Postnummer";
+                worksheet.Cells[1, 10] = "Katalogoppføring";
+                worksheet.Cells[1, 11] = "Kostnadssted (BAN)";
+                worksheet.Cells[1, 12] = "Porteringsdato og tid";
+                worksheet.Cells[1, 13] = "Nåværende eier, Navn";
+                worksheet.Cells[1, 14] = "Nåværende Eier ID (Org.nr/f.dato)";
+                worksheet.Cells[1, 15] = "Abonnementstype";
+                worksheet.Cells[1, 16] = "Binding";
+                worksheet.Cells[1, 17] = "Antall TrillingSIM (maks 2)";
+                worksheet.Cells[1, 18] = "Antall DataSIM (maks 5)";
+                worksheet.Cells[1, 19] = "Manuell Top-up";
+                worksheet.Cells[1, 20] = "Sperre Top-up";
+                worksheet.Cells[1, 21] = "Norden";
+                worksheet.Cells[1, 22] = "Tale og SMS til EU";
+                worksheet.Cells[1, 23] = "TBN";
+                worksheet.Cells[1, 24] = "HovedSIM";
+                worksheet.Cells[1, 25] = "TrillingSIM1";
+                worksheet.Cells[1, 26] = "TrillingSIM2";
+                worksheet.Cells[1, 27] = "DataSIM1";
+                worksheet.Cells[1, 28] = "DataSIM2";
+                worksheet.Cells[1, 29] = "DataSIM3";
+                worksheet.Cells[1, 30] = "DataSIM4";
+                worksheet.Cells[1, 31] = "DataSIM5";
+                worksheet.Cells[1, 32] = "DeliveryMethodCode";
+                worksheet.Cells[1, 33] = "DeliveryStreetName";
+                worksheet.Cells[1, 34] = "DeliveryStreetNumber";
+                worksheet.Cells[1, 35] = "DeliveryStreetSuffix";
+                worksheet.Cells[1, 36] = "DeliveryCity";
+                worksheet.Cells[1, 37] = "DeliveryZip";
+                worksheet.Cells[1, 38] = "DeliveryCountryCode";
+                worksheet.Cells[1, 39] = "DeliveryContactEmail";
+                worksheet.Cells[1, 40] = "DeliveryContactCountryCode";
+                worksheet.Cells[1, 41] = "DeliveryContactLocalNumber";
+                worksheet.Cells[1, 42] = "DeliveryIndividualFirstName";
+                worksheet.Cells[1, 43] = "DeliveryIndividualLastName";
+                worksheet.get_Range("A1,AS1").EntireColumn.AutoFit();
+                workbook.SaveAs("d:\\MyDemo.xlsx");
+                workbook.Close();
+                Marshal.ReleaseComObject(workbook);
+
+                application.Quit();
+                Marshal.FinalReleaseComObject(application);
+                ViewBag.Result = "Done";
+            }
+            catch(Exception ex)
+            {
+                ViewBag.Result = ex.Message;
+            }
+            return View();
         }
     }
 }

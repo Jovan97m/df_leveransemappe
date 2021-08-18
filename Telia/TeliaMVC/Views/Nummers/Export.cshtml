@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Export";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<h2>Export</h2>
+
+<div>
+    @ViewBag.Result
+</div>
+
