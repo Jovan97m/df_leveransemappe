@@ -328,7 +328,6 @@
     <Content Include="Views\Fakturaoppsetts\Details.cshtml" />
     <Content Include="Views\Fakturaoppsetts\Edit.cshtml" />
     <Content Include="Views\Fakturaoppsetts\Index.cshtml" />
-    <Content Include="Views\Nummers\Create.cshtml" />
     <Content Include="Views\Nummers\Delete.cshtml" />
     <Content Include="Views\Nummers\Details.cshtml" />
     <Content Include="Views\Nummers\Edit.cshtml" />
@@ -355,6 +354,7 @@
     <Content Include="Views\Abonementypes\Edit.cshtml" />
     <Content Include="Views\Abonementypes\Index.cshtml" />
     <Content Include="Views\Abonementypes\AddType.cshtml" />
+    <Content Include="Views\Nummers\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

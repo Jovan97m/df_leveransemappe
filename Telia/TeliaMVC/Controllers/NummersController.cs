@@ -397,8 +397,15 @@ namespace TeliaMVC.Controllers
                 worksheet.Cells[1, 41] = "DeliveryContactLocalNumber";
                 worksheet.Cells[1, 42] = "DeliveryIndividualFirstName";
                 worksheet.Cells[1, 43] = "DeliveryIndividualLastName";
-                worksheet.get_Range("A1,AS1").EntireColumn.AutoFit();
-                workbook.SaveAs("e:\\MyDemo.xlsx");
+
+                worksheet.get_Range("A1", "AQ1").EntireColumn.AutoFit();
+                var range_heading = worksheet.get_Range("A1", "AQ1");
+                
+                range_heading.Font.Bold = true;
+                range_heading.Interior.Color = System.Drawing.ColorTranslator.FromHtml("#c3f7bc");
+                worksheet.get_Range("E1,J1,M1,N1,P1,Q1,R1,S1,T1,U1,V1,W1,Y1,Z1,AA1,AB1,AC1,AD1,AE1,AF1,AG1,AH1,AI1,AJ1,AK1,AL1,AM1,AN1," +
+                    "AO1,AP1,AQ1").Interior.Color = System.Drawing.ColorTranslator.FromHtml("#f9b3a7");
+                workbook.SaveAs("c:\\Users\\Public\\Downloads\\ExcelFile.xlsx");
                 workbook.Close();
                 Marshal.ReleaseComObject(workbook);
 
