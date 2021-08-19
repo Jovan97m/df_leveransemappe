@@ -40,6 +40,260 @@ USE [$(DatabaseName)];
 
 
 GO
+PRINT N'Dropping <unnamed>...';
+
+
+GO
+ALTER TABLE [dbo].[Client] DROP CONSTRAINT [FK__Client__Id_abone__41EDCAC5];
+
+
+GO
+PRINT N'Dropping <unnamed>...';
+
+
+GO
+ALTER TABLE [dbo].[ConnectionType] DROP CONSTRAINT [FK__Connectio__Id_ab__40058253];
+
+
+GO
+PRINT N'Dropping <unnamed>...';
+
+
+GO
+ALTER TABLE [dbo].[ConnectionType] DROP CONSTRAINT [FK__Connectio__Id_ty__40F9A68C];
+
+
+GO
+PRINT N'Starting rebuilding table [dbo].[Abonementype]...';
+
+
+GO
+BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+CREATE TABLE [dbo].[tmp_ms_xx_Abonementype] (
+    [Id]   INT           IDENTITY (1, 1) NOT NULL,
+    [Name] NVARCHAR (25) NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[Abonementype])
+    BEGIN
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_Abonementype] ON;
+        INSERT INTO [dbo].[tmp_ms_xx_Abonementype] ([Id], [Name])
+        SELECT   [Id],
+                 [Name]
+        FROM     [dbo].[Abonementype]
+        ORDER BY [Id] ASC;
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_Abonementype] OFF;
+    END
+
+DROP TABLE [dbo].[Abonementype];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_Abonementype]', N'Abonementype';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+
+GO
+PRINT N'Starting rebuilding table [dbo].[ConnectionType]...';
+
+
+GO
+BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+CREATE TABLE [dbo].[tmp_ms_xx_ConnectionType] (
+    [Id]      INT IDENTITY (1, 1) NOT NULL,
+    [Id_abom] INT NOT NULL,
+    [Id_type] INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[ConnectionType])
+    BEGIN
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_ConnectionType] ON;
+        INSERT INTO [dbo].[tmp_ms_xx_ConnectionType] ([Id], [Id_abom], [Id_type])
+        SELECT   [Id],
+                 [Id_abom],
+                 [Id_type]
+        FROM     [dbo].[ConnectionType]
+        ORDER BY [Id] ASC;
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_ConnectionType] OFF;
+    END
+
+DROP TABLE [dbo].[ConnectionType];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_ConnectionType]', N'ConnectionType';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+
+GO
+PRINT N'Starting rebuilding table [dbo].[Type]...';
+
+
+GO
+BEGIN TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+
+SET XACT_ABORT ON;
+
+CREATE TABLE [dbo].[tmp_ms_xx_Type] (
+    [Id]   INT           IDENTITY (1, 1) NOT NULL,
+    [Name] NVARCHAR (35) NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+IF EXISTS (SELECT TOP 1 1 
+           FROM   [dbo].[Type])
+    BEGIN
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_Type] ON;
+        INSERT INTO [dbo].[tmp_ms_xx_Type] ([Id], [Name])
+        SELECT   [Id],
+                 [Name]
+        FROM     [dbo].[Type]
+        ORDER BY [Id] ASC;
+        SET IDENTITY_INSERT [dbo].[tmp_ms_xx_Type] OFF;
+    END
+
+DROP TABLE [dbo].[Type];
+
+EXECUTE sp_rename N'[dbo].[tmp_ms_xx_Type]', N'Type';
+
+COMMIT TRANSACTION;
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Client]...';
+
+
+GO
+ALTER TABLE [dbo].[Client] WITH NOCHECK
+    ADD FOREIGN KEY ([Id_abonementype]) REFERENCES [dbo].[Abonementype] ([Id]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[ConnectionType]...';
+
+
+GO
+ALTER TABLE [dbo].[ConnectionType] WITH NOCHECK
+    ADD FOREIGN KEY ([Id_abom]) REFERENCES [dbo].[Abonementype] ([Id]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[ConnectionType]...';
+
+
+GO
+ALTER TABLE [dbo].[ConnectionType] WITH NOCHECK
+    ADD FOREIGN KEY ([Id_type]) REFERENCES [dbo].[Type] ([Id]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Checking existing data against newly created constraints';
+
+
+GO
+USE [$(DatabaseName)];
+
+
+GO
+CREATE TABLE [#__checkStatus] (
+    id           INT            IDENTITY (1, 1) PRIMARY KEY CLUSTERED,
+    [Schema]     NVARCHAR (256),
+    [Table]      NVARCHAR (256),
+    [Constraint] NVARCHAR (256)
+);
+
+SET NOCOUNT ON;
+
+DECLARE tableconstraintnames CURSOR LOCAL FORWARD_ONLY
+    FOR SELECT SCHEMA_NAME([schema_id]),
+               OBJECT_NAME([parent_object_id]),
+               [name],
+               0
+        FROM   [sys].[objects]
+        WHERE  [parent_object_id] IN (OBJECT_ID(N'dbo.Client'), OBJECT_ID(N'dbo.ConnectionType'))
+               AND [type] IN (N'F', N'C')
+                   AND [object_id] IN (SELECT [object_id]
+                                       FROM   [sys].[check_constraints]
+                                       WHERE  [is_not_trusted] <> 0
+                                              AND [is_disabled] = 0
+                                       UNION
+                                       SELECT [object_id]
+                                       FROM   [sys].[foreign_keys]
+                                       WHERE  [is_not_trusted] <> 0
+                                              AND [is_disabled] = 0);
+
+DECLARE @schemaname AS NVARCHAR (256);
+
+DECLARE @tablename AS NVARCHAR (256);
+
+DECLARE @checkname AS NVARCHAR (256);
+
+DECLARE @is_not_trusted AS INT;
+
+DECLARE @statement AS NVARCHAR (1024);
+
+BEGIN TRY
+    OPEN tableconstraintnames;
+    FETCH tableconstraintnames INTO @schemaname, @tablename, @checkname, @is_not_trusted;
+    WHILE @@fetch_status = 0
+        BEGIN
+            PRINT N'Checking constraint: ' + @checkname + N' [' + @schemaname + N'].[' + @tablename + N']';
+            SET @statement = N'ALTER TABLE [' + @schemaname + N'].[' + @tablename + N'] WITH ' + CASE @is_not_trusted WHEN 0 THEN N'CHECK' ELSE N'NOCHECK' END + N' CHECK CONSTRAINT [' + @checkname + N']';
+            BEGIN TRY
+                EXECUTE [sp_executesql] @statement;
+            END TRY
+            BEGIN CATCH
+                INSERT  [#__checkStatus] ([Schema], [Table], [Constraint])
+                VALUES                  (@schemaname, @tablename, @checkname);
+            END CATCH
+            FETCH tableconstraintnames INTO @schemaname, @tablename, @checkname, @is_not_trusted;
+        END
+END TRY
+BEGIN CATCH
+    PRINT ERROR_MESSAGE();
+END CATCH
+
+IF CURSOR_STATUS(N'LOCAL', N'tableconstraintnames') >= 0
+    CLOSE tableconstraintnames;
+
+IF CURSOR_STATUS(N'LOCAL', N'tableconstraintnames') = -1
+    DEALLOCATE tableconstraintnames;
+
+SELECT N'Constraint verification failed:' + [Schema] + N'.' + [Table] + N',' + [Constraint]
+FROM   [#__checkStatus];
+
+IF @@ROWCOUNT > 0
+    BEGIN
+        DROP TABLE [#__checkStatus];
+        RAISERROR (N'An error occurred while verifying constraints', 16, 127);
+    END
+
+SET NOCOUNT OFF;
+
+DROP TABLE [#__checkStatus];
+
+
+GO
 PRINT N'Update complete.';
 
 
