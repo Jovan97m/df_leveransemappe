@@ -90,6 +90,8 @@
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -207,6 +209,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AbonementypesController.cs" />
     <Compile Include="Controllers\FakturaoppsettsAdminController.cs" />
     <Compile Include="Controllers\FakturaoppsettsController.cs" />
     <Compile Include="Controllers\HomeClientController.cs" />
@@ -217,10 +220,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Abonementype.cs">
+      <DependentUpon>Data_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Admin.cs">
       <DependentUpon>Data_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Client.cs">
+      <DependentUpon>Data_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ConnectionType.cs">
       <DependentUpon>Data_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DataSIM2.cs" />
@@ -249,6 +258,9 @@
     </Compile>
     <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\TelefonnummerCheck.cs" />
+    <Compile Include="Models\Type.cs">
+      <DependentUpon>Data_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -296,6 +308,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\Home\telia.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -336,6 +349,12 @@
     <Content Include="Views\FakturaoppsettsAdmin\Delete.cshtml" />
     <Content Include="Views\NummersAdmin\UpdateColumn.cshtml" />
     <Content Include="Views\Nummers\Export.cshtml" />
+    <Content Include="Views\Abonementypes\Create.cshtml" />
+    <Content Include="Views\Abonementypes\Delete.cshtml" />
+    <Content Include="Views\Abonementypes\Details.cshtml" />
+    <Content Include="Views\Abonementypes\Edit.cshtml" />
+    <Content Include="Views\Abonementypes\Index.cshtml" />
+    <Content Include="Views\Abonementypes\AddType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

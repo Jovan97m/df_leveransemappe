@@ -16,5 +16,7 @@
     [TekniskKontaktNavn] NVARCHAR(20),
     [TekniskKontaktEpost] NVARCHAR(30),
     [TekniskKontaktTlfnr] NVARCHAR(30),
+    [Id_abonementype] int not null,
     PRIMARY KEY CLUSTERED ([Id] ASC),
+    FOREIGN KEY ([Id_abonementype]) REFERENCES [dbo].[Abonementype](Id) ON DELETE CASCADE,
 )

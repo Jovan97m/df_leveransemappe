@@ -90,6 +90,7 @@
     <EntitySetMapping Name="Clients">
       <EntityTypeMapping TypeName="TeliaModel.Client">
         <MappingFragment StoreEntitySet="Client">
+          <ScalarProperty Name="Id_abonementype" ColumnName="Id_abonementype" />
           <ScalarProperty Name="TekniskKontaktTlfnr" ColumnName="TekniskKontaktTlfnr" />
           <ScalarProperty Name="TekniskKontaktEpost" ColumnName="TekniskKontaktEpost" />
           <ScalarProperty Name="TekniskKontaktNavn" ColumnName="TekniskKontaktNavn" />
@@ -105,6 +106,31 @@
           <ScalarProperty Name="FirmaNavn" ColumnName="FirmaNavn" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Orgnummer" ColumnName="Orgnummer" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Abonementypes">
+      <EntityTypeMapping TypeName="TeliaModel.Abonementype">
+        <MappingFragment StoreEntitySet="Abonementype">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ConnectionTypes">
+      <EntityTypeMapping TypeName="TeliaModel.ConnectionType">
+        <MappingFragment StoreEntitySet="ConnectionType">
+          <ScalarProperty Name="Id_type" ColumnName="Id_type" />
+          <ScalarProperty Name="Id_abom" ColumnName="Id_abom" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Types">
+      <EntityTypeMapping TypeName="TeliaModel.Type">
+        <MappingFragment StoreEntitySet="Type">
+          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

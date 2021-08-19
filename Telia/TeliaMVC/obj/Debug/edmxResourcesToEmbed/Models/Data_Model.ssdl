@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="TeliaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Abonementype">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="25" />
+  </EntityType>
   <EntityType Name="Admin">
     <Key>
       <PropertyRef Name="Id" />
@@ -28,6 +35,15 @@
     <Property Name="TekniskKontaktNavn" Type="nvarchar" MaxLength="20" />
     <Property Name="TekniskKontaktEpost" Type="nvarchar" MaxLength="30" />
     <Property Name="TekniskKontaktTlfnr" Type="nvarchar" MaxLength="30" />
+    <Property Name="Id_abonementype" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ConnectionType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_abom" Type="int" Nullable="false" />
+    <Property Name="Id_type" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Fakturaoppsett">
     <Key>
@@ -104,6 +120,55 @@
     <Property Name="DeliveryIndividualFirstName" Type="nvarchar" MaxLength="15" />
     <Property Name="DeliveryIndividualLastName" Type="nvarchar" MaxLength="20" />
   </EntityType>
+  <EntityType Name="Type">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="35" />
+  </EntityType>
+  <Association Name="FK__Client__Id_abone__489AC854">
+    <End Role="Abonementype" Type="Self.Abonementype" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Client" Type="Self.Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Abonementype">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="Id_abonementype" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Connectio__Id_ab__498EEC8D">
+    <End Role="Abonementype" Type="Self.Abonementype" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ConnectionType" Type="Self.ConnectionType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Abonementype">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ConnectionType">
+        <PropertyRef Name="Id_abom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Connectio__Id_ty__4A8310C6">
+    <End Role="Type" Type="Self.Type" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ConnectionType" Type="Self.ConnectionType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ConnectionType">
+        <PropertyRef Name="Id_type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_dbo_Client_dbo_Client_Id">
     <End Role="Client" Type="Self.Client" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -133,10 +198,25 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="TeliaModelStoreContainer">
+    <EntitySet Name="Abonementype" EntityType="Self.Abonementype" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ConnectionType" EntityType="Self.ConnectionType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Fakturaoppsett" EntityType="Self.Fakturaoppsett" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Nummer" EntityType="Self.Nummer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Type" EntityType="Self.Type" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Client__Id_abone__489AC854" Association="Self.FK__Client__Id_abone__489AC854">
+      <End Role="Abonementype" EntitySet="Abonementype" />
+      <End Role="Client" EntitySet="Client" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Connectio__Id_ab__498EEC8D" Association="Self.FK__Connectio__Id_ab__498EEC8D">
+      <End Role="Abonementype" EntitySet="Abonementype" />
+      <End Role="ConnectionType" EntitySet="ConnectionType" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Connectio__Id_ty__4A8310C6" Association="Self.FK__Connectio__Id_ty__4A8310C6">
+      <End Role="Type" EntitySet="Type" />
+      <End Role="ConnectionType" EntitySet="ConnectionType" />
+    </AssociationSet>
     <AssociationSet Name="FK_dbo_Client_dbo_Client_Id" Association="Self.FK_dbo_Client_dbo_Client_Id">
       <End Role="Client" EntitySet="Client" />
       <End Role="Fakturaoppsett" EntitySet="Fakturaoppsett" />

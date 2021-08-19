@@ -36,8 +36,10 @@ namespace TeliaMVC.Models
         public string TekniskKontaktNavn { get; set; }
         public string TekniskKontaktEpost { get; set; }
         public string TekniskKontaktTlfnr { get; set; }
+        public int Id_abonementype { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Fakturaoppsett> Fakturaoppsetts { get; set; }
+        public virtual Abonementype Abonementype { get; set; }
     }
 }

@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using TeliaMVC.Models;
 using PagedList;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace TeliaMVC.Controllers
 {
@@ -188,7 +187,9 @@ namespace TeliaMVC.Controllers
         public ActionResult Create(int? sesija)
         {
             ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted");
+            
             Client client = db.Clients.Find(sesija);
+            ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype); // selectbox za abonementype
             ViewBag.ORG  = client.Orgnummer;
             return View();
         }
@@ -198,9 +199,9 @@ namespace TeliaMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,Orgnummer,HovedSIM")] Nummer nummer)
+        public ActionResult Create([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,Orgnummer,HovedSIM")] Nummer nummer,string selected)
         {
-            nummer.Abonnementstype = nummer.Abonnementstype + "GB";
+            nummer.Abonnementstype = selected; // ucitaj selektovani
             nummer.Pending = true;
              if (ModelState.IsValid)
              {
@@ -294,10 +295,6 @@ namespace TeliaMVC.Controllers
             base.Dispose(disposing);
         }
 
-
-
-
-
         //da na osnovu orgNUmmer vrati ID klijenta
         public string GetId(string orgNummer)
         {
@@ -309,6 +306,44 @@ namespace TeliaMVC.Controllers
             else
                 return c.FirstOrDefault().Id.ToString() ;
         }
+        public List<String> FillAbonementtypeSelectBox(int id) // selectbox za abonementypes
+        {
+            List<String> types = new List<String>();
+            List<int> ids = new List<int>();
+
+             var veza=   db.ConnectionTypes.Where(s => s.Id_abom.Equals(id));
+            foreach (var item in veza)
+            {
+                types.Add(db.Types.Where(s => s.Id.Equals(item.Id_type)).First().Name.ToString());
+            }
+
+            veza = db.ConnectionTypes;
+            List<int> id_types = new List<int>();
+            foreach (var item in veza)
+            {
+                id_types.Add(item.Id_type);
+            }
+
+            List<int> id_return = new List<int>();
+            foreach (var item in db.Types)
+            {
+                if (!id_types.Contains(item.Id))
+                {
+                    id_return.Add(item.Id);
+                }
+            }
+
+            foreach (var item in db.Types)
+            {
+                    if (id_return.Contains(item.Id))
+                    {
+                        types.Add(item.Name);
+                    }
+            }
+
+            return types;
+        }
+
 
         public ActionResult Export()
         {
@@ -363,7 +398,7 @@ namespace TeliaMVC.Controllers
                 worksheet.Cells[1, 42] = "DeliveryIndividualFirstName";
                 worksheet.Cells[1, 43] = "DeliveryIndividualLastName";
                 worksheet.get_Range("A1,AS1").EntireColumn.AutoFit();
-                workbook.SaveAs("d:\\MyDemo.xlsx");
+                workbook.SaveAs("e:\\MyDemo.xlsx");
                 workbook.Close();
                 Marshal.ReleaseComObject(workbook);
 

@@ -42,20 +42,29 @@ namespace TeliaMVC.Controllers
         //DODAVANJE NOVOG KLIJENTA:
         public ActionResult Create()
         {
+            ViewBag.Abonementypes = FillSelectBoxClients();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Orgnummer ,Password,Id_admin")] Client client)
+        public ActionResult Create([Bind(Include = "Orgnummer ,Password,Id_admin,Id_abonementype")] Client client,string selected)
         {
-            if (ModelState.IsValid)
+            int id = GetAbonementypeId(selected);
+            if (id == 0)
             {
-                db.Clients.Add(client);
-                db.SaveChanges();
-                return RedirectToAction("Index"); // refresh stranicu opet
+                return View(client);
             }
-
+            else
+            {
+                client.Id_abonementype = id;
+                if (ModelState.IsValid)
+                {
+                    db.Clients.Add(client);
+                    db.SaveChanges();
+                    return RedirectToAction("Index"); // refresh stranicu opet
+                }
+            }
             return View(client);
         }
 
@@ -68,5 +77,27 @@ namespace TeliaMVC.Controllers
             }
             base.Dispose(disposing);
         }
+        #region pomocne
+        public List<String> FillSelectBoxClients() // selectbox za abonementypes
+        {
+            List<String> names = new List<String>();
+            foreach (var item in db.Abonementypes.ToList())
+            {
+                names.Add(item.Name);
+            }
+            return names;
+        }
+
+        public int GetAbonementypeId(string name)
+        {
+            var c = db.Abonementypes.Where(s => s.Name.Contains(name));
+            if (c == null)
+            {
+                return 0;
+            }
+            else
+                return c.FirstOrDefault().Id;
+        }
+        #endregion
     }
 }

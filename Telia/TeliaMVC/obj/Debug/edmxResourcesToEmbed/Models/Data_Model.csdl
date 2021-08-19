@@ -113,6 +113,21 @@
       <End Role="Client" EntitySet="Clients" />
       <End Role="Fakturaoppsett" EntitySet="Fakturaoppsetts" />
     </AssociationSet>
+    <EntitySet Name="Abonementypes" EntityType="TeliaModel.Abonementype" />
+    <EntitySet Name="ConnectionTypes" EntityType="TeliaModel.ConnectionType" />
+    <EntitySet Name="Types" EntityType="TeliaModel.Type" />
+    <AssociationSet Name="FK__Client__Id_abone__41EDCAC5" Association="TeliaModel.FK__Client__Id_abone__41EDCAC5">
+      <End Role="Abonementype" EntitySet="Abonementypes" />
+      <End Role="Client" EntitySet="Clients" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Connectio__Id_ab__40058253" Association="TeliaModel.FK__Connectio__Id_ab__40058253">
+      <End Role="Abonementype" EntitySet="Abonementypes" />
+      <End Role="ConnectionType" EntitySet="ConnectionTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Connectio__Id_ty__40F9A68C" Association="TeliaModel.FK__Connectio__Id_ty__40F9A68C">
+      <End Role="Type" EntitySet="Types" />
+      <End Role="ConnectionType" EntitySet="ConnectionTypes" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Client">
     <Key>
@@ -135,6 +150,8 @@
     <Property Name="TekniskKontaktEpost" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
     <Property Name="TekniskKontaktTlfnr" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Fakturaoppsetts" Relationship="TeliaModel.FK_dbo_Client_dbo_Client_Id" FromRole="Client" ToRole="Fakturaoppsett" />
+    <Property Name="Id_abonementype" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Abonementype" Relationship="TeliaModel.FK__Client__Id_abone__41EDCAC5" FromRole="Client" ToRole="Abonementype" />
   </EntityType>
   <Association Name="FK_dbo_Client_dbo_Client_Id">
     <End Type="TeliaModel.Client" Role="Client" Multiplicity="0..1">
@@ -147,6 +164,75 @@
       </Principal>
       <Dependent Role="Fakturaoppsett">
         <PropertyRef Name="Id_client" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Abonementype">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Clients" Relationship="TeliaModel.FK__Client__Id_abone__41EDCAC5" FromRole="Abonementype" ToRole="Client" />
+    <NavigationProperty Name="ConnectionTypes" Relationship="TeliaModel.FK__Connectio__Id_ab__40058253" FromRole="Abonementype" ToRole="ConnectionType" />
+  </EntityType>
+  <EntityType Name="ConnectionType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Id_abom" Type="Int32" Nullable="false" />
+    <Property Name="Id_type" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Abonementype" Relationship="TeliaModel.FK__Connectio__Id_ab__40058253" FromRole="ConnectionType" ToRole="Abonementype" />
+    <NavigationProperty Name="Type" Relationship="TeliaModel.FK__Connectio__Id_ty__40F9A68C" FromRole="ConnectionType" ToRole="Type" />
+  </EntityType>
+  <EntityType Name="Type">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ConnectionTypes" Relationship="TeliaModel.FK__Connectio__Id_ty__40F9A68C" FromRole="Type" ToRole="ConnectionType" />
+  </EntityType>
+  <Association Name="FK__Client__Id_abone__41EDCAC5">
+    <End Type="TeliaModel.Abonementype" Role="Abonementype" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TeliaModel.Client" Role="Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Abonementype">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="Id_abonementype" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Connectio__Id_ab__40058253">
+    <End Type="TeliaModel.Abonementype" Role="Abonementype" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TeliaModel.ConnectionType" Role="ConnectionType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Abonementype">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ConnectionType">
+        <PropertyRef Name="Id_abom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Connectio__Id_ty__40F9A68C">
+    <End Type="TeliaModel.Type" Role="Type" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TeliaModel.ConnectionType" Role="ConnectionType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ConnectionType">
+        <PropertyRef Name="Id_type" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
