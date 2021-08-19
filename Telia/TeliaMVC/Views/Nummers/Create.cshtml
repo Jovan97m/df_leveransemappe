@@ -29,7 +29,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Abonnementstype, htmlAttributes: new { @class = "control-label Label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("selected", new SelectList(ViewBag.Types), new { @class = "form-control SelectBox" });
+                @Html.DropDownList("selected", new SelectList(ViewBag.Types), new { @class = "form-control SelectBox" })
                 @Html.ValidationMessageFor(model => model.Abonnementstype, "", new { @class = "text-danger" })
             </div>
         </div>
