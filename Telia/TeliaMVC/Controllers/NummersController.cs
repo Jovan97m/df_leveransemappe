@@ -24,7 +24,7 @@ namespace TeliaMVC.Controllers
                           select s;
             Client client = db.Clients.Find(Convert.ToInt32(id_sesije));
             //formiraj listu za odredjenog klijenta
-            nummers = nummers.Where(s => s.Orgnummer.Contains(client.Orgnummer));
+            nummers = nummers.Where(s => s.Orgnummer.Contains(client.Id.ToString()));
 
 
             ViewBag.ID = Convert.ToInt32(id_sesije);
@@ -190,7 +190,7 @@ namespace TeliaMVC.Controllers
             
             Client client = db.Clients.Find(sesija);
             ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype); // selectbox za abonementype
-            ViewBag.ORG  = client.Orgnummer;
+            ViewBag.ORG = client.Id.ToString();
             return View();
         }
 
@@ -203,16 +203,24 @@ namespace TeliaMVC.Controllers
         {
             nummer.Abonnementstype = selected; // ucitaj selektovani
             nummer.Pending = true;
-             if (ModelState.IsValid)
+            var idc = db.Clients.Find(Convert.ToInt32(nummer.Orgnummer));
+            if (ModelState.IsValid)
              {
-                int  id = db.Clients.Where(s => s.Orgnummer.Contains(nummer.Orgnummer)).FirstOrDefault().Id;
+               
                 db.Nummers.Add(nummer);
                 db.SaveChanges();
-                return RedirectToAction("Index","Nummers", new {id_sesije = id });
+                return RedirectToAction("Index","Nummers", new {id_sesije = idc.Id });
             }
-
-           ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted", nummer.Kostnadsted);
-            ViewBag.ORG = nummer.Orgnummer;
+            var modelErrors = new List<string>();
+            foreach (var modelState in ModelState.Values)
+            {
+                foreach (var modelError in modelState.Errors)
+                {
+                    modelErrors.Add(modelError.ErrorMessage);
+                }
+            }
+                ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted", nummer.Kostnadsted);
+            ViewBag.ORG =idc.Id.ToString();
             return View(nummer);
         }
 
@@ -228,8 +236,13 @@ namespace TeliaMVC.Controllers
             {
                 return HttpNotFound();
             }
+
+
+            var c = db.Clients.Find(Convert.ToInt32(GetId(nummer.Orgnummer)));
             ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted", nummer.Kostnadsted);
+            ViewBag.Types = FillAbonementtypeSelectBox(c.Id_abonementype); // selectbox za abonementype
             ViewBag.ID = GetId(nummer.Orgnummer);
+            ViewBag.Orgnummer = nummer.Orgnummer;
             return View(nummer);
         }
 
@@ -238,11 +251,12 @@ namespace TeliaMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,Orgnummer,HovedSIM")] Nummer nummer)
+        public ActionResult Edit([Bind(Include = "ID,Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,Orgnummer,HovedSIM")] Nummer nummer, string selected)
         {
             Client c = db.Clients.Find(Convert.ToInt32(nummer.Orgnummer));
-          //  nummer.Orgnummer = c.Orgnummer;
-            ViewBag.ID = nummer.Orgnummer;
+
+            ViewBag.ID = nummer.Orgnummer ;
+            nummer.Abonnementstype = selected;
             nummer.Pending = true;
             nummer.Date = null;
             if (ModelState.IsValid)
@@ -298,13 +312,13 @@ namespace TeliaMVC.Controllers
         //da na osnovu orgNUmmer vrati ID klijenta
         public string GetId(string orgNummer)
         {
-            var c = db.Clients.Where(s => s.Orgnummer.Contains(orgNummer));
+            var c = db.Clients.Find(Convert.ToInt32(orgNummer));
             if (c == null)
             {
                 return "";
             }
             else
-                return c.FirstOrDefault().Id.ToString() ;
+                return c.Id.ToString();
         }
         public List<String> FillAbonementtypeSelectBox(int id) // selectbox za abonementypes
         {

@@ -15,9 +15,10 @@
         font-size: smaller;
         color: white;
         text-shadow: 1px 1px black;
-        margin-right: 2px;
-        margin-top: 2px;
-        margin-bottom: 2px;
+        margin-right: 4px;
+        margin-top: 4px;
+        margin-bottom: 4px;
+        margin-left: 4px;
         border-radius: 12px;
     }
     .button:active {
@@ -84,7 +85,7 @@
                     </label>
                     <br />
                     <label class="radio-inline">
-                        @Html.RadioButton("SearchParameter", "Husnr", htmlAttributes: new { @class = "inputRadio" })<label>Husnr</label>
+                        @Html.RadioButton("SearchParameter", "Fakturaadresse", htmlAttributes: new { @class = "inputRadio" })<label>Fakturaadresse</label>
                     </label>
                     <br />
                 </fieldset>
@@ -116,7 +117,7 @@
         </div>
         <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
             <!--podeseno da se pojavi klizac kad se umanjuje slika-->
-            <table class="table-bordered table-sm table-hover table-striped " style="font-size: 15px;table-layout:fixed;">
+            <table class="table-bordered table-sm table-hover table-striped " style="font-size: 14px;table-layout:fixed;">
                 <thead style="background-color: #990AE4;
                     color: white;
                     text-shadow: 1px 2px black;">
@@ -143,12 +144,14 @@
                                 <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                             </button>
                         </th>
-                        <th class="col-sm-2">
-                            Husnr<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.HusnrSortParm, currentFilter = ViewBag.CurrentFilter, id = ViewBag.id_sesije })'">
-                                <span class="glyphicon glyphicon-sort"></span>
-                            </button>
-                        </th>
-                        <th class="col-sm-2">
+                        <!--
+    <th class="col-sm-2">
+        Husnr<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.HusnrSortParm, currentFilter = ViewBag.CurrentFilter, id = ViewBag.id_sesije })'">
+            <span class="glyphicon glyphicon-sort"></span>
+        </button>
+    </th>
+        -->
+                        <th class="col-sm-1">
                             Bokstav<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.BokstavSortParm, currentFilter = ViewBag.CurrentFilter, id = ViewBag.id_sesije })'">
                                 <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                             </button>
@@ -169,7 +172,7 @@
                         <th style="width:35px;"></th>
                     </tr>
                 </thead>
-                <tbody style="color:black; font-size: 13px;">
+                <tbody style="color:black; font-size: 14px;font-weight:bold;">
                     @if (Model.Count() == 0)
                     {
                         <tr >
@@ -182,48 +185,50 @@
                     { 
                     foreach (var item in Model)
                     {
-                        <tr>
-                            <td class="col-sm-1">
-                                @Html.DisplayFor(modelItem => item.NavnPaKostnadssted)
-                            </td>
-                            <td class="col-sm-1">
-                                @Html.DisplayFor(modelItem => item.Tileggsinfo_kostnadssted)
-                            </td>
-                            <td class="col-sm-1">
-                                @Html.DisplayFor(modelItem => item.Fakturaformat)
-                            </td>
-                            <td class="col-sm-1">
-                                @Html.DisplayFor(modelItem => item.Fakturaadresse)
-                            </td>
-                            <td class="col-sm-1">
-                                @Html.DisplayFor(modelItem => item.Husnr)
-                            </td>
-                            <td class="col-sm-1">
-                                @Html.DisplayFor(modelItem => item.Bokstav)
-                            </td>
-                            <td class="col-sm-1">
-                                @Html.DisplayFor(modelItem => item.Postnummer)
-                            </td>
-                            <td class="col-sm-1">
-                                @Html.DisplayFor(modelItem => item.Sted)
-                            </td>
-                            <td style="color:darkblue; font-style:italic;font-weight: bold;">
-                                @Html.DisplayFor(modelItem => item.Epost)
-                            </td>
-                            <td style="background-color:azure;">
-                                <div style="display:flex; align-items:stretch;">
+                <tr>
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.NavnPaKostnadssted)
+                    </td>
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.Tileggsinfo_kostnadssted)
+                    </td>
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.Fakturaformat)
+                    </td>
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.Fakturaadresse)
+                    </td>
+                    <!--
+    <td class="col-sm-1">
+        @Html.DisplayFor(modelItem => item.Husnr)
+    </td>
+        -->
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.Bokstav)
+                    </td>
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.Postnummer)
+                    </td>
+                    <td class="col-sm-1">
+                        @Html.DisplayFor(modelItem => item.Sted)
+                    </td>
+                    <td style="color:darkblue; font-style:italic;font-weight: bold;">
+                        @Html.DisplayFor(modelItem => item.Epost)
+                    </td>
+                    <td style="background-color:azure;">
+                        <div style="display:flex; align-items:stretch;">
 
-                                    <button class="btn-primary btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
-                                            onclick="location.href='@Url.Action("Edit", "Fakturaoppsetts", new { id = item.Kostnadssted })'">
-                                        <span class="glyphicon glyphicon-pencil"></span>
-                                    </button>
-                                    <button class="btn-danger btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du slette valgt rad"
-                                            onclick="location.href='@Url.Action("Delete", "Fakturaoppsetts", new { id = item.Kostnadssted })'">
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                            <button class="btn-primary btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
+                                    onclick="location.href='@Url.Action("Edit", "Fakturaoppsetts", new { id = item.Kostnadssted })'">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button class="btn-danger btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du slette valgt rad"
+                                    onclick="location.href='@Url.Action("Delete", "Fakturaoppsetts", new { id = item.Kostnadssted })'">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
                     }
                     }
                 </tbody>

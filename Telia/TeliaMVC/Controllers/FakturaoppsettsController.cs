@@ -22,7 +22,7 @@ namespace TeliaMVC.Controllers
             ViewBag.id_sesije = id;
             var faktures = from s in db.Fakturaoppsetts
                            select s;
-                faktures = faktures.Where(s => s.Id_client == id);
+            faktures = faktures.Where(s => s.Id_client == id);
             ViewBag.CurrentSort = sortOrder; 
             //Viewbags- za sortiranja svake kolone;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -53,8 +53,8 @@ namespace TeliaMVC.Controllers
                     case "Kostnadsted":
                         faktures = faktures.Where(s => s.NavnPaKostnadssted.Contains(searchString));
                         break;
-                    case "Husnr":
-                        faktures = faktures.Where(s => s.Husnr.ToString().Contains(searchString));
+                    case "Fakturaadresse":
+                        faktures = faktures.Where(s => s.Fakturaadresse.Contains(searchString));
                         break;
                     case "FakturaFormat":
                         faktures = faktures.Where(s => s.Fakturaformat.Contains(searchString));
@@ -154,8 +154,10 @@ namespace TeliaMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "NavnPaKostnadssted,Tileggsinfo_kostnadssted,Fakturaformat,Fakturaadresse,Husnr,Bokstav,Postnummer,Sted,Epost,Kostnadssted,Id_client")] Fakturaoppsett fakturaoppset)
+        public ActionResult Create([Bind(Include = "NavnPaKostnadssted,Tileggsinfo_kostnadssted,Fakturaformat,Fakturaadresse,Husnr,Bokstav,Postnummer,Sted,Epost,Kostnadssted,Id_client")] Fakturaoppsett fakturaoppset,string selected)
         {
+            fakturaoppset.Kostnadssted = fakturaoppset.NavnPaKostnadssted;
+            fakturaoppset.Fakturaformat = selected;
             if (ModelState.IsValid)
             {
                 db.Fakturaoppsetts.Add(fakturaoppset);
@@ -187,14 +189,17 @@ namespace TeliaMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "NavnPaKostnadssted,Tileggsinfo_kostnadssted,Fakturaformat,Fakturaadresse,Husnr,Bokstav,Postnummer,Sted,Epost,Kostnadssted,Id_client")] Fakturaoppsett fakturaoppsett)
+        public ActionResult Edit([Bind(Include = "NavnPaKostnadssted,Tileggsinfo_kostnadssted,Fakturaformat,Fakturaadresse,Husnr,Bokstav,Postnummer,Sted,Epost,Kostnadssted,Id_client")] Fakturaoppsett fakturaoppsett,string selected)
         {
+            fakturaoppsett.Fakturaformat = selected;
+            fakturaoppsett.Kostnadssted = fakturaoppsett.NavnPaKostnadssted;
             if (ModelState.IsValid)
             {
                 db.Entry(fakturaoppsett).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index", "Fakturaoppsetts", new { id = fakturaoppsett.Id_client});
             }
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
             return View(fakturaoppsett);
         }
 
