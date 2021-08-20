@@ -8,34 +8,133 @@
     }
 }
 
-<h2>Index</h2>
+<style>
+    hr {
+        border: 0;
+        height: 4px;
+        background-image: linear-gradient(to right, azure,pink, purple, pink,azure);
+        box-shadow: 0 10px 10px -10px purple inset;
+    }
+    .Table{
+        font-weight:bold;
+        font-size: 15px;
+        font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+        color:black;
+        text-shadow: 1px 0.1px white;
+        margin-left: 10px;
+        border: 1px solid black;
+    }
+    .HeaderTable{
+        font-size: 19px;
+        font-style: italic;
+        background-color: blanchedalmond;
+        text-align: center;
+    }
+    .btn {
+        font-size: medium;
+        font-weight: bold;
+        margin: 4px;
+        padding-left: 6px;
+        padding-right: 6px;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.29), 0 15px 30px 0 rgba(0,0,0,0.19);
+    }
+    .ButtonAdd {
+        background-color: darkgreen;
+        font-size: medium;
+        font-weight: bold;
+        cursor: pointer;
+        color: white;
+        padding: 6px 20px;
+        border-radius: 15px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+        .ButtonAdd:hover {
+            color: white;
+            background-color: forestgreen;
+            box-shadow: 0 13px 18px 0 darkgreen, 0 16px 45px 0 rgba(0,0,0,0.19);
+        }
 
+        .ButtonAdd:active {
+            transform: translateY(+2px);
+            background-color: darkgreen;
+        }
+    .ButtonBack {
+        background-color: darkred;
+        font-size: medium;
+        font-weight: bold;
+        cursor: pointer;
+        color: white;
+        margin-top:10px;
+        padding: 9px 20px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+    .ButtonBack:hover {
+            color: white;
+            background-color: red;
+            box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
+        }
+
+        .ButtonBack:active {
+            transform: translateY(+2px);
+            background-color: darkred;
+        }
+
+</style>
+
+<h2>Abonementypes</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    Seksjon for å legge til og redigere abonementyper for klienter
 </p>
-<table class="table">
+<hr/>
+<div class=" row">
+    <div class="col-sm-3" style="margin-left:10px;">
+        <button class=" ButtonAdd" data-toggle="tooltip" data-placement="bottom" title="Opprett ny abonementype"
+                onclick="location.href = '@Url.Action("Create", "Abonementypes")'">
+            <span class="glyphicon glyphicon-duplicate"></span> Create
+        </button>
+        <button class="ButtonAdd" data-toggle="tooltip" data-placement="bottom" title="Legg til ny standardtype som vil være tilgjengelig for hver klient"
+                onclick="location.href = '@Url.Action("AddType", "Abonementypes",new { id = 0})'">
+            <span class="glyphicon glyphicon-paperclip"></span>  Standard type
+        </button>
+    </div>
+</div>
+
+<table class="table-bordered table-hover table-striped Table" style="margin-top:15px;">
     <tr>
-        <th>
+        <th class="col-md-8 HeaderTable">
             @Html.DisplayNameFor(model => model.Name)
         </th>
-        <th></th>
+        <th class="col-sm-0 HeaderTable"></th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
-            <td>
+            <td class="col-md-1">
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                | @Html.ActionLink("AddType", "AddType", new { id = item.Id })
+            <td class="col-sm-0">
+                <button class="btn-primary btn-group-sm shadow-lg btn" data-toggle="tooltip" data-placement="bottom" title="Endre navnet på typen"
+                        onclick="location.href = '@Url.Action("Edit", "Abonementypes", new {id = item.Id})'">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                <button class="btn-danger btn-group-sm shadow-lg btn" data-toggle="tooltip" data-placement="bottom" title="Slett valgt abonementype"
+                        onclick="location.href = '@Url.Action("Delete", "Abonementypes", new {id = item.Id})'">
+                    <span class="glyphicon glyphicon-erase"></span>
+                </button>
+                <button class="btn-primary btn-group-sm shadow-lg btn" data-toggle="tooltip" data-placement="bottom" title="Legg til ny type for valgt abonementype"
+                        onclick="location.href = '@Url.Action("AddType", "Abonementypes", new {id = item.Id})'">
+                    <span class="glyphicon glyphicon-duplicate"></span>
+                </button>
             </td>
         </tr>
     }
 
 </table>
-@Html.ActionLink("Add Default type", "AddType",new { id = 0})
-<p><a class="btn btn-danger buttonLink" onclick="location.href = '@Url.Action("Index", "Home")'">Return &raquo;</a></p>
+
+<p style="margin-left:10px;margin-top:12px;"><a class="ButtonBack" onclick="location.href = '@Url.Action("Index", "Home")'">Return &raquo;</a></p>
