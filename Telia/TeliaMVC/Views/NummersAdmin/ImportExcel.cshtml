@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Import";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<h2>Import</h2>
+
+<table cellpadding="2" cellspacing="2" border="1">
+    <tr>
+        <td>Telefonumer</td>
+        <td>Abonnementstype</td>
+        <td>Fornavn</td>
+        <td>Etternavn</td>
+        <td>Bedrift_som_skal_faktureres</td>
+        <td>c_o_adresse_for_SIM_levering</td>
+        <td>Gateadresse_SIM_Skal_sendes_til</td>
+        <td>Hus_nummer</td>
+        <td>Hus_bokstav</td>
+        <td>post_nr_</td>
+        <td>Post_sted</td>
+        <td>Epost_for_sporings_informasjon</td>
+        <td>Epost</td>
+        <td>Kostnadsted</td>
+        <td>Tilleggsinfo_ansatt_ID</td>
+        <td>Ekstra_talesim_</td>
+    </tr>
+    @foreach (var p in ViewBag.ListProducts)
+    {
+        <tr>
+            <td>@p.Telefonnummer</td>
+            <td>@p.Abonnementstype</td>
+            <td>@p.Kostnadsted</td>
+            <td>@p.Fornavn</td>
+            <td>@p.Etternavn</td>
+            <td>@p.Bedrift_som_skal_faktureres</td>
+            <td>@p.c_o_adresse_for_SIM_levering</td>
+            <td>@p.Gateadresse_SIM_Skal_sendes_til</td>
+            <td>@p.Hus_nummer</td>
+            <td>@p.Hus_bokstav</td>
+            <td>@p.post_nr_</td>
+            <td>@p.Post_sted</td>
+            <td>@p.Epost_for_sporings_informasjon</td>
+            <td>@p.Epost</td>
+            <td>@p.Kostnadsted</td>
+            <td>@p.Tilleggsinfo_ansatt_ID</td>
+            <td>@p.Ekstra_talesim_</td>
+        </tr>
+    }
+</table>

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using TeliaMVC.Models;
 using PagedList;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace TeliaMVC.Controllers
 {
@@ -285,7 +286,94 @@ namespace TeliaMVC.Controllers
             return View(nummers.ToPagedList(pageNumber, pageSize));
         }
 
+        #region excel
 
+        [HttpPost]
+        public ActionResult ImportExcel(HttpPostedFileBase excelfile)
+        {
+            if (excelfile.ContentLength == 0)
+            {
+                ViewBag.Error = "ijfhguihriughwie";
+                return View();
+
+            }
+            else
+            {
+
+                string fileExtension = System.IO.Path.GetExtension(excelfile.FileName);
+                if (fileExtension.EndsWith(".xls") || fileExtension.EndsWith(".xlsx"))
+                {
+                    string fileLocation = Server.MapPath("~/Content/" + excelfile.FileName);
+                    if (System.IO.File.Exists(fileLocation))
+                        System.IO.File.Delete(fileLocation);
+                    excelfile.SaveAs(fileLocation);
+
+                    Excel.Application application = new Excel.Application();
+                    Excel.Workbook workbook = application.Workbooks.Open(fileLocation);
+                    Excel.Worksheet worksheet = workbook.ActiveSheet;
+                    //Excel.Range range = worksheet.UsedRange;
+                    List<Nummer> n = new List<Nummer>();
+
+                    Excel.Range range1 = worksheet.UsedRange;
+                    for (int i = 2; i <= range1.Rows.Count; i++)
+                    {
+                        Nummer nummer = new Nummer();
+                        for (int j = 1; j <= range1.Columns.Count; j++)
+                        {
+                            Microsoft.Office.Interop.Excel.Range range = null;
+
+                            switch (j)
+                            {
+                                case 1:
+                                    nummer.Telefonnummer = (string)vratiRange(worksheet, j, i, range);
+                                    break;
+                                case 2: nummer.Abonnementstype = (string)vratiRange(worksheet, j, i, range); break;
+                                case 3: nummer.Fornavn = (string)vratiRange(worksheet, j, i, range); break;
+                                case 4: nummer.Etternavn = (string)vratiRange(worksheet, j, i, range); break;
+                                case 5: nummer.Bedrift_som_skal_faktureres = (string)vratiRange(worksheet, j, i, range); break;
+                                case 6: nummer.c_o_adresse_for_SIM_levering = (string)vratiRange(worksheet, j, i, range); break;
+                                case 7: nummer.Gateadresse_SIM_Skal_sendes_til = (string)vratiRange(worksheet, j, i, range); break;
+                                case 8: nummer.Hus_nummer = Convert.ToInt32((string)vratiRange(worksheet, j, i, range)); break;
+                                case 9: nummer.Hus_bokstav = (string)vratiRange(worksheet, j, i, range); break;
+                                case 10: nummer.post_nr_ = Convert.ToInt32((string)vratiRange(worksheet, j, i, range)); break;
+                                case 11: nummer.Post_sted = (string)vratiRange(worksheet, j, i, range); break;
+                                case 12: nummer.Epost_for_sporings_informasjon = (string)vratiRange(worksheet, j, i, range); break;
+                                case 13: nummer.Epost = (string)vratiRange(worksheet, j, i, range); break;
+                                case 14: nummer.Kostnadsted = (string)vratiRange(worksheet, j, i, range); break;
+                                case 15: nummer.Tilleggsinfo_ansatt_ID = Convert.ToInt32((string)vratiRange(worksheet, j, i, range)); break;
+                                case 16: nummer.Ekstra_talesim_ = Convert.ToInt32((string)vratiRange(worksheet, j, i, range)); break;
+                                //case 17:nummer.Porteringsdatoog_tid= Convert.ToDateTime((string)vratiRange(worksheet, j, i, range)); break;
+
+                                default:
+                                    break;
+                            }
+                        }
+                        //brojac za greske koliko se pojavile 
+                        n.Add(nummer);
+
+                    }
+                    ViewBag.ListProducts = n;
+                    workbook.Close();
+                    return View();
+                }
+                else
+                {
+                    ViewBag.Error = "oafejg";
+                    return View();
+                }
+
+
+            }
+
+
+        }
+        public Object vratiRange(Excel.Worksheet worksheet, int i, int j, Excel.Range range)
+        {
+            range = (Microsoft.Office.Interop.Excel.Range)worksheet.Cells[j, i];
+            return range.Value.ToString();
+        }
+
+        #endregion
 
 
         #region pomocne funkcije
