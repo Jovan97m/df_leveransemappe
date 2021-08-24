@@ -160,11 +160,16 @@
             </div>
             <div class="col-md-6 " style="margin-bottom: 5px;">
                 <p>Last inn dataene fra Excel-filen</p>
-                <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom" 
-                        title="Last inn dataene fra Excel-filen"
-                        onclick="location.href = '@Url.Action("Export", "Nummers")'">
-                    <span class="glyphicon glyphicon-upload"></span> Import Excell
-                </button>
+                @using (Html.BeginForm("ImportExcel", "Nummers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.Raw(ViewBag.Error)
+                    <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
+                    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                            title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                            onclick="location.href = '@Url.Action("ImportExcel", "NummersAdmin")'">
+                        <span class="glyphicon glyphicon-download"></span>Import Excel
+                    </button>
+                }
             </div>
         </fieldset>
     </div>

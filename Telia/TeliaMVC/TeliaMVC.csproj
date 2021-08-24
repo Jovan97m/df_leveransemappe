@@ -356,6 +356,7 @@
     <Content Include="Views\Abonementypes\AddType.cshtml" />
     <Content Include="Views\Nummers\Create.cshtml" />
     <Content Include="Views\NummersAdmin\ImportExcel.cshtml" />
+    <Content Include="Views\Nummers\ImportExcel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

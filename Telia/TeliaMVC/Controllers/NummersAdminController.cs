@@ -324,9 +324,7 @@ namespace TeliaMVC.Controllers
 
                             switch (j)
                             {
-                                case 1:
-                                    nummer.Telefonnummer = (string)vratiRange(worksheet, j, i, range);
-                                    break;
+                                case 1:nummer.Telefonnummer = (string)vratiRange(worksheet, j, i, range);break;
                                 case 2: nummer.Abonnementstype = (string)vratiRange(worksheet, j, i, range); break;
                                 case 3: nummer.Fornavn = (string)vratiRange(worksheet, j, i, range); break;
                                 case 4: nummer.Etternavn = (string)vratiRange(worksheet, j, i, range); break;
@@ -339,10 +337,10 @@ namespace TeliaMVC.Controllers
                                 case 11: nummer.Post_sted = (string)vratiRange(worksheet, j, i, range); break;
                                 case 12: nummer.Epost_for_sporings_informasjon = (string)vratiRange(worksheet, j, i, range); break;
                                 case 13: nummer.Epost = (string)vratiRange(worksheet, j, i, range); break;
-                                case 14: nummer.Kostnadsted = (string)vratiRange(worksheet, j, i, range); break;
-                                case 15: nummer.Tilleggsinfo_ansatt_ID = Convert.ToInt32((string)vratiRange(worksheet, j, i, range)); break;
-                                case 16: nummer.Ekstra_talesim_ = Convert.ToInt32((string)vratiRange(worksheet, j, i, range)); break;
-                                //case 17:nummer.Porteringsdatoog_tid= Convert.ToDateTime((string)vratiRange(worksheet, j, i, range)); break;
+                                case 14: nummer.Tilleggsinfo_ansatt_ID = Convert.ToInt32((string)vratiRange(worksheet, j, i, range)); break;
+                                case 15: nummer.Ekstra_talesim_ = Convert.ToInt32((string)vratiRange(worksheet, j, i, range)); break;
+                                case 16:nummer.Ekstra_datasim = Convert.ToInt32((string)vratiRange(worksheet, j, i,range));break;
+                                case 17:nummer.Kostnadsted=(string)vratiRange(worksheet, j, i, range);break;
 
                                 default:
                                     break;
