@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Web;
 
+
 namespace TeliaMVC.Controllers
 {
     public class NummersController : Controller
@@ -185,6 +186,7 @@ namespace TeliaMVC.Controllers
         }
 
         // GET: Nummers/Create
+      
         public ActionResult Create(int? sesija)
         {
             ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted");
@@ -311,6 +313,7 @@ namespace TeliaMVC.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        
         }
 
         //da na osnovu orgNUmmer vrati ID klijenta
@@ -367,11 +370,11 @@ namespace TeliaMVC.Controllers
         #region excel
 
         [HttpPost]
-        public ActionResult ImportExcel(HttpPostedFileBase excelfile)
+        public ActionResult ImportExcel(HttpPostedFileBase excelfile, string id_sesije)
         {
             if (excelfile.ContentLength == 0)
             {
-                ViewBag.Error = "ijfhguihriughwie";
+                ViewBag.Error = "Du har ikke valgt noen filer";
                 return View();
 
             }
@@ -390,23 +393,22 @@ namespace TeliaMVC.Controllers
                     Excel.Workbook workbook = application.Workbooks.Open(fileLocation);
                     Excel.Worksheet worksheet = workbook.ActiveSheet;
                     //Excel.Range range = worksheet.UsedRange;
-                    List<Nummer> nIpspravno= new List<Nummer>();
+                    List<Nummer> nIspravno = new List<Nummer>();
                     List<Nummer> nGreske = new List<Nummer>();
 
                     Excel.Range range1 = worksheet.UsedRange;
                     for (int i = 2; i <= range1.Rows.Count; i++)
                     {
                         Nummer nummer = new Nummer();
-                        int greske = 0;
-                        bool flag = false;
+                      
                         for (int j = 1; j <= range1.Columns.Count; j++)
                         {
                             Microsoft.Office.Interop.Excel.Range range = null;
                            
                             switch (j)
                             {
-                                case 1: nummer.Telefonnummer = ProveriBroj((string)vratiRange(worksheet, j, i, range), ref flag); break;
-                                case 2: nummer.Abonnementstype =(string) vratiRange(worksheet, j, i, range); break;
+                                case 1: nummer.Telefonnummer = (string)vratiRange(worksheet, j, i, range); break;
+                                case 2: nummer.Abonnementstype =(string)vratiRange(worksheet, j, i, range); break;
                                 case 3: nummer.Fornavn = (string)vratiRange(worksheet, j, i, range); break;
                                 case 4: nummer.Etternavn = (string)vratiRange(worksheet, j, i, range); break;
                                 case 5: nummer.Bedrift_som_skal_faktureres = (string)vratiRange(worksheet, j, i, range); break;
@@ -419,8 +421,8 @@ namespace TeliaMVC.Controllers
                                 case 12: nummer.Epost_for_sporings_informasjon = (string)vratiRange(worksheet, j, i, range); break;
                                 case 13: nummer.Epost = (string)vratiRange(worksheet, j, i, range); break;
                                 case 14: nummer.Tilleggsinfo_ansatt_ID = Convert.ToInt32((string)vratiRange(worksheet, j, i, range)); break;
-                                case 15: nummer.Ekstra_talesim_ = Proveri_Ekstra_talesim_(Convert.ToInt32((string)vratiRange(worksheet, j, i, range)), ref flag); break;
-                                case 16: nummer.Ekstra_datasim = Proveri_Data_sim(Convert.ToInt32((string)vratiRange(worksheet, j, i, range)),ref flag); break;
+                                case 15: nummer.Ekstra_talesim_ =(Convert.ToInt32((string)vratiRange(worksheet, j, i, range))); break;
+                                case 16: nummer.Ekstra_datasim = Convert.ToInt32((string)vratiRange(worksheet, j, i, range)); break;
                                 case 17: nummer.Kostnadsted = (string)vratiRange(worksheet, j, i, range); break;
 
                                 default:
@@ -428,31 +430,19 @@ namespace TeliaMVC.Controllers
                             }
                         }
                         //brojac za greske koliko se pojavile 
-                        if (flag)
-                        {
-                            nGreske.Add(nummer);
-                        }
-                        else
-                        {
-                            nIpspravno.Add(nummer);
-                        }
+                        ProveriNummer(nummer,ref nIspravno, ref nGreske);
 
                     }
-                    ViewData["Ispravno"] = nIpspravno;
-                    ViewData["Neispravno"] = nGreske;
+                    
                     workbook.Close();
                     return View();
                 }
                 else
                 {
-                    ViewBag.Error = "oafejg";
+                    ViewBag.Error = "Du har valgt feil fil";
                     return View();
                 }
-
-
             }
-
-
         }
         public Object vratiRange(Excel.Worksheet worksheet, int i, int j, Excel.Range range)
         {
@@ -519,38 +509,90 @@ namespace TeliaMVC.Controllers
 
         #region provera
 
-        public string ProveriBroj(string broj,ref bool f)
+        public ActionResult Proveri(List<Nummer> n)
         {
-            string i= broj.Substring(0, 1);
-            if (broj.Length == 8 && i == "4" || i == "9")
-                return broj;
+            return RedirectToAction("ImportExcel");
+        }
+        public void ProveriNummer(Nummer n,ref List<Nummer> nIspravno,ref List<Nummer> nGreske)
+        {
+            
+            bool f = false;
+            ProveriBroj(n.Telefonnummer, ref f);
+            ProveriFakture(n.Bedrift_som_skal_faktureres, ref f);
+            Proveri_Data_sim(Convert.ToInt32(n.Ekstra_datasim), ref f);
+            Proveri_Ekstra_talesim_(Convert.ToInt32(n.Ekstra_talesim_), ref f);
+            Proveri_Abonnementstype(n.Abonnementstype, ref f);
+
+            if(f)
+            {
+                nGreske.Add(n);
+            }
+            else
+            {
+                nIspravno.Add(n);
+            }
+            ViewData["Ispravno"] = nIspravno;
+            ViewData["Neispravno"] = nGreske;
+        }
+
+        public void ProveriFakture(string broj, ref bool f)
+        {
+            if (broj == "EHF" || broj == "Epost" || broj == "Papirgebyr kommer");
             else
             {
                 f = true;
-                return broj;
+            }
+        }
+
+        public void Proveri_Abonnementstype(string broj, ref bool f)
+        {
+
+         /*   var t = db.Types.Where(s=> s.Name.Contains(broj));
+            
+            List<int> lista = new List<int>();
+            foreach (var item in t)
+            {
+                var c = db.ConnectionTypes.Where(s => s.Id_type == item.Id);
+                foreach (var i in c)
+                {
+                    var a = db.Abonementypes.Where(s => s.Id == i.Id_abom);
+                    var cl = db.Clients.Where(s => s.Id == 4003);
+                    if (Convert.ToInt32(a) == Convert.ToInt32(cl))
+                    {
+                        return broj;
+                    }
+                }
+                
+            }
+            f = false;*/
+        }
+
+        public void ProveriBroj(string broj,ref bool f)
+        {
+            string i= broj.Substring(0, 1);
+            if (broj.Length == 8 && i == "4" || i == "9");
+            else
+            {
+                f = true;
             }
             
         }
 
-        public int Proveri_Ekstra_talesim_(int talesim,ref bool f)
+        public void Proveri_Ekstra_talesim_(int talesim,ref bool f)
         {
-            if (talesim>=0 && talesim<=2)
-                return talesim;
+            if (talesim>=0 && talesim<=2);
             else
             {
                 f = true;
-                return talesim;
             }
         }
 
-        public int Proveri_Data_sim(int broj, ref bool f)
+        public void Proveri_Data_sim(int broj, ref bool f)
         {
-            if (broj>=0&&broj<=5)
-                return broj;
+            if (broj >= 0 && broj <= 5) ;
             else
             {
                 f = true;
-                return broj;
             }
         }
 

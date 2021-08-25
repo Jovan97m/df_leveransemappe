@@ -1,4 +1,7 @@
 ﻿@using TeliaMVC.Models;
+@model PagedList.IPagedList<TeliaMVC.Models.Nummer>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Import";
     if (Session["Id"] == null)
@@ -66,9 +69,10 @@
         text-shadow: 1px 2px black;
     }
 
-    #Cell{
-        background-color:red;
+    #Cell {
+        background-color: red;
     }
+
     .ButtonCreate {
         background-color: #990AE4;
         font-size: larger;
@@ -118,7 +122,7 @@
 </style>
 <h2>Ispravni podaci</h2>
 <div style="overflow-x: auto; margin-left: 11px; margin-right: 12px;border-radius:12px;" class=".scrollbar-lady-lips">
-    <table class="table-hover table-striped Table" style="font-size: 13px;font-weight:bold;table-layout:fixed;">
+    <table class="table-hover table-striped Table "id="ispravno" style="font-size: 13px;font-weight:bold;table-layout:fixed;" >
         <thead class="HeaderTable">
             <tr>
                 <th class="col-sm-2">Telefonumer</th>
@@ -144,7 +148,7 @@
             @foreach (var p in (List<Nummer>)ViewData["Ispravno"])
             {
                 <tr>
-                    <td>@p.Telefonnummer</td>
+                    <td readonly="readonly">@p.Telefonnummer</td>
                     <td>@p.Abonnementstype</td>
                     <td>@p.Fornavn</td>
                     <td>@p.Etternavn</td>
@@ -173,12 +177,12 @@
         Save
     </button>
 </div>
-<br/>
-<br/>
+<br />
+<br />
 <h2>Neispravni podaci</h2>
 
 <div id="grid" style="overflow-x: auto; margin-left: 11px; margin-right: 12px;border-radius:12px;" class=".scrollbar-lady-lips">
-    <table class="table-hover table-striped Table" style="font-size: 13px;font-weight:bold;table-layout:fixed;">
+    <table class="table-hover table-striped Table neispravno" style="font-size: 13px;font-weight:bold;table-layout:fixed;">
         <thead class="HeaderTable">
             <tr>
                 <th class="col-sm-2">Telefonumer</th>
@@ -203,30 +207,46 @@
         <tbody>
             @foreach (var p1 in (List<Nummer>)ViewData["Neispravno"])
             {
-                <tr>
-                    <td class="col-sm-2" id="Cell">@p1.Telefonnummer</td>
-                    <td class="col-sm-2"id="Cell">@p1.Abonnementstype</td>
-                    <td class="col-sm-2"id="Cell">@p1.Fornavn</td>
-                    <td class="col-sm-2"id="Cell">@p1.Etternavn</td>
-                    <td class="col-sm-2"id="Cell">@p1.Bedrift_som_skal_faktureres</td>
-                    <td class="col-sm-2"id="Cell">@p1.c_o_adresse_for_SIM_levering</td>
-                    <td class="col-sm-2"id="Cell">@p1.Gateadresse_SIM_Skal_sendes_til</td>
-                    <td class="col-sm-2"id="Cell">@p1.Hus_nummer</td>
-                    <td class="col-sm-2"id="Cell">@p1.Hus_bokstav</td>
-                    <td class="col-sm-2"id="Cell">@p1.post_nr_</td>
-                    <td class="col-sm-2"id="Cell">@p1.Post_sted</td>
-                    <td class="col-sm-2"id="Cell">@p1.Epost_for_sporings_informasjon</td>
-                    <td class="col-sm-2"id="Cell">@p1.Epost</td>
-                    <td class="col-sm-2"id="Cell">@p1.Tilleggsinfo_ansatt_ID</td>
-                    <td class="col-sm-2"id="Cell">@p1.Ekstra_talesim_</td>
-                    <td class="col-sm-2"id="Cell">@p1.Ekstra_datasim</td>
-                    <td class="col-sm-2"id="Cell">@p1.Kostnadsted</td>
+                <tr readonly="readonly">
+                    <td class="col-sm-2" >@p1.Telefonnummer</td>
+                    <td class="col-sm-2" >@p1.Abonnementstype</td>
+                    <td class="col-sm-2" >@p1.Fornavn</td>
+                    <td class="col-sm-2" >@p1.Etternavn</td>
+                    <td class="col-sm-2" >@p1.Bedrift_som_skal_faktureres</td>
+                    <td class="col-sm-2" >@p1.c_o_adresse_for_SIM_levering</td>
+                    <td class="col-sm-2" >@p1.Gateadresse_SIM_Skal_sendes_til</td>
+                    <td class="col-sm-2" >@p1.Hus_nummer</td>
+                    <td class="col-sm-2" >@p1.Hus_bokstav</td>
+                    <td class="col-sm-2" >@p1.post_nr_</td>
+                    <td class="col-sm-2" >@p1.Post_sted</td>
+                    <td class="col-sm-2" >@p1.Epost_for_sporings_informasjon</td>
+                    <td class="col-sm-2" >@p1.Epost</td>
+                    <td class="col-sm-2" >@p1.Tilleggsinfo_ansatt_ID</td>
+                    <td class="col-sm-2" >@p1.Ekstra_talesim_</td>
+                    <td class="col-sm-2" >@p1.Ekstra_datasim</td>
+                    <td class="col-sm-2" >@p1.Kostnadsted</td>
                 </tr>
             }
         </tbody>
     </table>
     <br />
-    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom" >
+    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom" onclick="location.href = '@Url.Action("Proveri", "Nummers",new { sesija = ViewBag.ID, n=ViewData["Neispravno"] })'">
         Proveri opet
     </button>
 </div>
+<script>
+    document.querySelectorAll(".neispravno tr td").forEach(function (node) {
+        node.ondblclick = function () {
+            var val = this.innerHTML;
+            var input = document.createElement("input");
+            input.value = val;
+            input.onblur = function () {
+                var val = this.value;
+                this.parentNode.innerHTML = val;
+            }
+            this.innerHTML = "";
+            this.appendChild(input);
+            input.focus();
+        }
+    });
+</script>
