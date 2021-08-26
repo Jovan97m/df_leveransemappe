@@ -31,6 +31,7 @@
   <EntityType Name="Nummer">
     <Key>
       <PropertyRef Name="ID" />
+      <PropertyRef Name="Id" />
     </Key>
     <Property Name="Telefonnummer" Type="String" annotation:StoreGeneratedPattern="None" MaxLength="20" Unicode="true" FixedLength="false" />
     <Property Name="Abonnementstype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -85,6 +86,7 @@
     <Property Name="DeliveryContractLocalNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="DeliveryIndividualFirstName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
     <Property Name="DeliveryIndividualLastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
   </EntityType>
   <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
     <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">
@@ -129,6 +131,7 @@
       <End Role="ConnectionType" EntitySet="ConnectionTypes" />
     </AssociationSet>
     <EntitySet Name="Postnummers" EntityType="TeliaModel.Postnummer" />
+    <EntitySet Name="C__RefactorLog" EntityType="TeliaModel.C__RefactorLog" />
   </EntityContainer>
   <EntityType Name="Client">
     <Key>
@@ -249,5 +252,11 @@
     <Property Name="Kommunenavn" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="Kategory" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
     <Property Name="Land" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="C__RefactorLog">
+    <Key>
+      <PropertyRef Name="OperationKey" />
+    </Key>
+    <Property Name="OperationKey" Type="Guid" Nullable="false" />
   </EntityType>
 </Schema>

@@ -5,6 +5,12 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="TeliaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
         <EntityType Name="Abonementype">
           <Key>
             <PropertyRef Name="Id" />
@@ -71,9 +77,9 @@
         </EntityType>
         <EntityType Name="Nummer">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Telefonnummer" Type="nvarchar" MaxLength="20" />
           <Property Name="Abonnementstype" Type="nvarchar" MaxLength="50" />
           <Property Name="Fornavn" Type="nvarchar" MaxLength="50" />
@@ -126,18 +132,6 @@
           <Property Name="DeliveryIndividualFirstName" Type="nvarchar" MaxLength="15" />
           <Property Name="DeliveryIndividualLastName" Type="nvarchar" MaxLength="20" />
         </EntityType>
-        <EntityType Name="Postnummer">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PostNr" Type="nvarchar" MaxLength="10" />
-          <Property Name="Poststed" Type="nvarchar" MaxLength="10" />
-          <Property Name="Kommunenummer" Type="nvarchar" MaxLength="10" />
-          <Property Name="Kommunenavn" Type="nvarchar" MaxLength="10" />
-          <Property Name="Kategory" Type="char" MaxLength="1" />
-          <Property Name="Land" Type="nvarchar" MaxLength="10" />
-        </EntityType>
         <EntityType Name="Type">
           <Key>
             <PropertyRef Name="Id" />
@@ -145,7 +139,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="35" />
         </EntityType>
-        <Association Name="FK__Client__Id_abone__489AC854">
+        <Association Name="FK__Client__Id_abone__41EDCAC5">
           <End Role="Abonementype" Type="Self.Abonementype" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -159,7 +153,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Connectio__Id_ab__498EEC8D">
+        <Association Name="FK__Connectio__Id_ab__40058253">
           <End Role="Abonementype" Type="Self.Abonementype" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -173,7 +167,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Connectio__Id_ty__4A8310C6">
+        <Association Name="FK__Connectio__Id_ty__40F9A68C">
           <End Role="Type" Type="Self.Type" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -216,23 +210,23 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="TeliaModelStoreContainer">
+          <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Abonementype" EntityType="Self.Abonementype" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ConnectionType" EntityType="Self.ConnectionType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fakturaoppsett" EntityType="Self.Fakturaoppsett" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nummer" EntityType="Self.Nummer" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Postnummer" EntityType="Self.Postnummer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Type" EntityType="Self.Type" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Client__Id_abone__489AC854" Association="Self.FK__Client__Id_abone__489AC854">
+          <AssociationSet Name="FK__Client__Id_abone__41EDCAC5" Association="Self.FK__Client__Id_abone__41EDCAC5">
             <End Role="Abonementype" EntitySet="Abonementype" />
             <End Role="Client" EntitySet="Client" />
           </AssociationSet>
-          <AssociationSet Name="FK__Connectio__Id_ab__498EEC8D" Association="Self.FK__Connectio__Id_ab__498EEC8D">
+          <AssociationSet Name="FK__Connectio__Id_ab__40058253" Association="Self.FK__Connectio__Id_ab__40058253">
             <End Role="Abonementype" EntitySet="Abonementype" />
             <End Role="ConnectionType" EntitySet="ConnectionType" />
           </AssociationSet>
-          <AssociationSet Name="FK__Connectio__Id_ty__4A8310C6" Association="Self.FK__Connectio__Id_ty__4A8310C6">
+          <AssociationSet Name="FK__Connectio__Id_ty__40F9A68C" Association="Self.FK__Connectio__Id_ty__40F9A68C">
             <End Role="Type" EntitySet="Type" />
             <End Role="ConnectionType" EntitySet="ConnectionType" />
           </AssociationSet>
@@ -280,6 +274,7 @@
         <EntityType Name="Nummer">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="Telefonnummer" Type="String" annotation:StoreGeneratedPattern="None" MaxLength="20" Unicode="true" FixedLength="false" />
           <Property Name="Abonnementstype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -334,6 +329,7 @@
           <Property Name="DeliveryContractLocalNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="DeliveryIndividualFirstName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="DeliveryIndividualLastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
           <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">
@@ -378,6 +374,7 @@
             <End Role="ConnectionType" EntitySet="ConnectionTypes" />
           </AssociationSet>
           <EntitySet Name="Postnummers" EntityType="TeliaModel.Postnummer" />
+          <EntitySet Name="C__RefactorLog" EntityType="TeliaModel.C__RefactorLog" />
         </EntityContainer>
         <EntityType Name="Client">
           <Key>
@@ -499,6 +496,12 @@
           <Property Name="Kategory" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="Land" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="C__RefactorLog">
+          <Key>
+            <PropertyRef Name="OperationKey" />
+          </Key>
+          <Property Name="OperationKey" Type="Guid" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -536,6 +539,7 @@
           <EntitySetMapping Name="Nummers">
             <EntityTypeMapping TypeName="TeliaModel.Nummer">
               <MappingFragment StoreEntitySet="Nummer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Manuell_Top_up" ColumnName="Manuell Top-up" />
                 <ScalarProperty Name="DeliveryIndividualLastName" ColumnName="DeliveryIndividualLastName" />
                 <ScalarProperty Name="DeliveryIndividualFirstName" ColumnName="DeliveryIndividualFirstName" />
@@ -570,7 +574,6 @@
                 <ScalarProperty Name="Pending" ColumnName="Pending" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Orgnummer" ColumnName="Orgnummer" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Telefonnummer" ColumnName="Telefonnummer" />
                 <ScalarProperty Name="Abonnementstype" ColumnName="Abonnementstype" />
                 <ScalarProperty Name="Fornavn" ColumnName="Fornavn" />
@@ -640,16 +643,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Postnummers">
-            <EntityTypeMapping TypeName="TeliaModel.Postnummer">
-              <MappingFragment StoreEntitySet="Postnummer">
-                <ScalarProperty Name="Land" ColumnName="Land" />
-                <ScalarProperty Name="Kategory" ColumnName="Kategory" />
-                <ScalarProperty Name="Kommunenavn" ColumnName="Kommunenavn" />
-                <ScalarProperty Name="Kommunenummer" ColumnName="Kommunenummer" />
-                <ScalarProperty Name="Poststed" ColumnName="Poststed" />
-                <ScalarProperty Name="PostNr" ColumnName="PostNr" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+          <EntitySetMapping Name="C__RefactorLog">
+            <EntityTypeMapping TypeName="TeliaModel.C__RefactorLog">
+              <MappingFragment StoreEntitySet="__RefactorLog">
+                <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

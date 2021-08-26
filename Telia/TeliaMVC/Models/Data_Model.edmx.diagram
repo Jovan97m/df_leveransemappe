@@ -18,6 +18,7 @@
         <AssociationConnector Association="TeliaModel.FK__Connectio__Id_ab__40058253" />
         <AssociationConnector Association="TeliaModel.FK__Connectio__Id_ty__40F9A68C" />
         <EntityTypeShape EntityType="TeliaModel.Postnummer" Width="1.5" PointX="7.625" PointY="4" />
+        <EntityTypeShape EntityType="TeliaModel.C__RefactorLog" Width="1.5" PointX="4.375" PointY="7.375" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

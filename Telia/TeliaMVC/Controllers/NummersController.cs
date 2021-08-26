@@ -372,6 +372,7 @@ namespace TeliaMVC.Controllers
         [HttpPost]
         public ActionResult ImportExcel(HttpPostedFileBase excelfile, string id_sesije)
         {
+            int sesija = Convert.ToInt32(id_sesije);
             if (excelfile.ContentLength == 0)
             {
                 ViewBag.Error = "Du har ikke valgt noen filer";
@@ -380,7 +381,6 @@ namespace TeliaMVC.Controllers
             }
             else
             {
-
                 string fileExtension = System.IO.Path.GetExtension(excelfile.FileName);
                 if (fileExtension.EndsWith(".xls") || fileExtension.EndsWith(".xlsx"))
                 {
@@ -430,11 +430,13 @@ namespace TeliaMVC.Controllers
                             }
                         }
                         //brojac za greske koliko se pojavile 
-                        ProveriNummer(nummer,ref nIspravno, ref nGreske);
+                        ProveriNummer(nummer,ref nIspravno, ref nGreske,sesija);
 
                     }
                     
                     workbook.Close();
+                    Save(nIspravno, sesija);
+                    ViewBag.ID = id_sesije;
                     return View();
                 }
                 else
@@ -504,24 +506,51 @@ namespace TeliaMVC.Controllers
             }
             return View();
         }
-
         #endregion
 
         #region provera
-
-        public ActionResult Proveri(List<Nummer> n)
+        [HttpPost]
+        public ActionResult Save(List<Nummer> nummers,int sesija)
         {
-            return RedirectToAction("ImportExcel");
+            try
+            {
+                
+                foreach (var item in nummers)
+                {
+                    item.Orgnummer = sesija.ToString();
+                    item.HovedSIM = 0;
+                    db.Nummers.Add(item);
+                    db.SaveChanges();
+                }
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation(
+                              "Class: {0}, Property: {1}, Error: {2}",
+                              validationErrors.Entry.Entity.GetType().FullName,
+                              validationError.PropertyName,
+                              validationError.ErrorMessage);
+                    }
+                }
+            }
+            return View();
         }
-        public void ProveriNummer(Nummer n,ref List<Nummer> nIspravno,ref List<Nummer> nGreske)
+
+        public void ProveriNummer(Nummer n,ref List<Nummer> nIspravno,ref List<Nummer> nGreske,int sesija)
         {
             
             bool f = false;
-            ProveriBroj(n.Telefonnummer, ref f);
+            ProveriBroj(n.Telefonnummer, ref f,sesija.ToString());
             ProveriFakture(n.Bedrift_som_skal_faktureres, ref f);
             Proveri_Data_sim(Convert.ToInt32(n.Ekstra_datasim), ref f);
             Proveri_Ekstra_talesim_(Convert.ToInt32(n.Ekstra_talesim_), ref f);
-            Proveri_Abonnementstype(n.Abonnementstype, ref f);
+            Proveri_Abonnementstype(n.Abonnementstype, ref f,sesija);
+            ProveriKosnasted(n, ref f, sesija);
 
             if(f)
             {
@@ -535,6 +564,22 @@ namespace TeliaMVC.Controllers
             ViewData["Neispravno"] = nGreske;
         }
 
+        public void ProveriKosnasted(Nummer broj, ref bool f, int sesija)
+        {
+            var n = db.Fakturaoppsetts.Where(s => s.Id_client==sesija);
+            foreach (var item in n)
+            {
+                if (item.NavnPaKostnadssted == broj.Kostnadsted)
+                {
+                    broj.Kostnadsted = item.Kostnadssted;
+                }
+                else
+                {
+                    f = true;
+                }
+            }
+        }
+
         public void ProveriFakture(string broj, ref bool f)
         {
             if (broj == "EHF" || broj == "Epost" || broj == "Papirgebyr kommer");
@@ -544,38 +589,42 @@ namespace TeliaMVC.Controllers
             }
         }
 
-        public void Proveri_Abonnementstype(string broj, ref bool f)
+        public void Proveri_Abonnementstype(string broj, ref bool f,int sesija)
         {
-
-         /*   var t = db.Types.Where(s=> s.Name.Contains(broj));
-            
-            List<int> lista = new List<int>();
-            foreach (var item in t)
+            var client = db.Clients.Where(s => s.Id == sesija).First();
+            var connect = db.ConnectionTypes.Where(s => s.Id_abom == client.Id_abonementype);
+            List<string> povrat = new List<string>();
+            foreach (var item in connect)
             {
-                var c = db.ConnectionTypes.Where(s => s.Id_type == item.Id);
-                foreach (var i in c)
-                {
-                    var a = db.Abonementypes.Where(s => s.Id == i.Id_abom);
-                    var cl = db.Clients.Where(s => s.Id == 4003);
-                    if (Convert.ToInt32(a) == Convert.ToInt32(cl))
-                    {
-                        return broj;
-                    }
-                }
-                
+                povrat.Add(db.Types.Where(s => s.Id == item.Id_type).First().Name);
             }
-            f = false;*/
-        }
-
-        public void ProveriBroj(string broj,ref bool f)
-        {
-            string i= broj.Substring(0, 1);
-            if (broj.Length == 8 && i == "4" || i == "9");
+            if (povrat.Contains(broj)) ;
             else
             {
                 f = true;
             }
-            
+        }
+
+        public void ProveriBroj(string broj,ref bool f,string sesija)
+        {
+            string i= broj.Substring(0, 1);
+            var n = db.Nummers.Where(s => s.Orgnummer.Contains(sesija));
+            foreach (var item in n)
+            {
+                if (item.Telefonnummer.Contains(broj))
+                {
+                    f = true;
+                }
+                else
+                {
+                    if (broj.Length == 8 && i == "4" || i == "9");
+                    else
+                    {
+                        f = true;
+                    }
+                }
+            }
+           
         }
 
         public void Proveri_Ekstra_talesim_(int talesim,ref bool f)

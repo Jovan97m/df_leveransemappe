@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "Telia"
 :setvar DefaultFilePrefix "Telia"
-:setvar DefaultDataPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
-:setvar DefaultLogPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
+:setvar DefaultDataPath "C:\Users\jovan\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
+:setvar DefaultLogPath "C:\Users\jovan\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
 
 GO
 :on error exit
@@ -37,14 +37,6 @@ IF N'$(__IsSqlCmdEnabled)' NOT LIKE N'True'
 
 GO
 USE [$(DatabaseName)];
-
-
-GO
-PRINT N'Altering [dbo].[Nummer]...';
-
-
-GO
-ALTER TABLE [dbo].[Nummer] ALTER COLUMN [Abonnementstype] NVARCHAR (50) NULL;
 
 
 GO
