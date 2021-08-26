@@ -4,19 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5804e40a81e34cc5b379a8bab1cc8f54" Name="Diagram1" ZoomLevel="90">
-        <EntityTypeShape EntityType="TeliaModel.Admin" Width="1.5" PointX="5.875" PointY="0.5" IsExpanded="true" />
+      <Diagram DiagramId="5804e40a81e34cc5b379a8bab1cc8f54" Name="Diagram1" ZoomLevel="78">
+        <EntityTypeShape EntityType="TeliaModel.Admin" Width="1.5" PointX="7.625" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="TeliaModel.Fakturaoppsett" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TeliaModel.Nummer" Width="1.5" PointX="2.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TeliaModel.Nummer" Width="1.5" PointX="2.25" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="TeliaModel.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="TeliaModel.Client" Width="1.5" PointX="4.25" PointY="0.5" />
+        <EntityTypeShape EntityType="TeliaModel.Client" Width="1.5" PointX="4" PointY="0.5" />
         <AssociationConnector Association="TeliaModel.FK_dbo_Client_dbo_Client_Id" />
-        <EntityTypeShape EntityType="TeliaModel.Abonementype" Width="1.5" PointX="6.25" PointY="2.75" />
-        <EntityTypeShape EntityType="TeliaModel.ConnectionType" Width="1.5" PointX="7.5" PointY="0.5" />
-        <EntityTypeShape EntityType="TeliaModel.Type" Width="1.5" PointX="9.5" PointY="0.625" />
+        <EntityTypeShape EntityType="TeliaModel.Abonementype" Width="1.5" PointX="5.75" PointY="2.875" />
+        <EntityTypeShape EntityType="TeliaModel.ConnectionType" Width="1.5" PointX="5.75" PointY="0.5" />
+        <EntityTypeShape EntityType="TeliaModel.Type" Width="1.5" PointX="7.625" PointY="0.5" />
         <AssociationConnector Association="TeliaModel.FK__Client__Id_abone__41EDCAC5" />
         <AssociationConnector Association="TeliaModel.FK__Connectio__Id_ab__40058253" />
         <AssociationConnector Association="TeliaModel.FK__Connectio__Id_ty__40F9A68C" />
+        <EntityTypeShape EntityType="TeliaModel.Postnummer" Width="1.5" PointX="7.625" PointY="4" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

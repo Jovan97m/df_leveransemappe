@@ -11,6 +11,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="25" />
+          <Property Name="Reference_code" Type="nvarchar" MaxLength="15" />
         </EntityType>
         <EntityType Name="Admin">
           <Key>
@@ -74,7 +75,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Telefonnummer" Type="nvarchar" MaxLength="20" />
-          <Property Name="Abonnementstype" Type="nvarchar" MaxLength="20" />
+          <Property Name="Abonnementstype" Type="nvarchar" MaxLength="50" />
           <Property Name="Fornavn" Type="nvarchar" MaxLength="50" />
           <Property Name="Etternavn" Type="nvarchar" MaxLength="50" />
           <Property Name="Bedrift som skal faktureres" Type="nvarchar" MaxLength="50" />
@@ -95,13 +96,13 @@
           <Property Name="Pending" Type="bit" />
           <Property Name="Katalogoppforing" Type="nvarchar" MaxLength="20" />
           <Property Name="Porteringsdatoog tid" Type="datetime" />
-          <Property Name="Binding" Type="nvarchar" MaxLength="20" />
+          <Property Name="Binding" Type="bit" />
           <Property Name="Postnummer" Type="int" />
           <Property Name="Antall TrillingSIM" Type="int" />
           <Property Name="allDataSIM" Type="int" />
-          <Property Name="Manuell Top-up" Type="nvarchar" MaxLength="15" />
-          <Property Name="Sperre Top-up" Type="nvarchar" MaxLength="15" />
-          <Property Name="Norden" Type="nvarchar" MaxLength="20" />
+          <Property Name="Manuell Top-up" Type="bit" />
+          <Property Name="Sperre Top-up" Type="bit" />
+          <Property Name="Norden" Type="bit" />
           <Property Name="Tale og SMS til EU" Type="bit" />
           <Property Name="TBN" Type="nchar" MaxLength="15" />
           <Property Name="HovedSIM" Type="int" />
@@ -124,6 +125,18 @@
           <Property Name="DeliveryContractLocalNumber" Type="nvarchar" MaxLength="20" />
           <Property Name="DeliveryIndividualFirstName" Type="nvarchar" MaxLength="15" />
           <Property Name="DeliveryIndividualLastName" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Postnummer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostNr" Type="nvarchar" MaxLength="10" />
+          <Property Name="Poststed" Type="nvarchar" MaxLength="10" />
+          <Property Name="Kommunenummer" Type="nvarchar" MaxLength="10" />
+          <Property Name="Kommunenavn" Type="nvarchar" MaxLength="10" />
+          <Property Name="Kategory" Type="char" MaxLength="1" />
+          <Property Name="Land" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Type">
           <Key>
@@ -209,6 +222,7 @@
           <EntitySet Name="ConnectionType" EntityType="Self.ConnectionType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fakturaoppsett" EntityType="Self.Fakturaoppsett" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Nummer" EntityType="Self.Nummer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Postnummer" EntityType="Self.Postnummer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Type" EntityType="Self.Type" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Client__Id_abone__489AC854" Association="Self.FK__Client__Id_abone__489AC854">
             <End Role="Abonementype" EntitySet="Abonementype" />
@@ -268,7 +282,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="Telefonnummer" Type="String" annotation:StoreGeneratedPattern="None" MaxLength="20" Unicode="true" FixedLength="false" />
-          <Property Name="Abonnementstype" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Abonnementstype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Fornavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Etternavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Bedrift_som_skal_faktureres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -291,13 +305,13 @@
           <Property Name="Pending" Type="Boolean" />
           <Property Name="Katalogoppforing" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Porteringsdatoog_tid" Type="DateTime" Precision="3" />
-          <Property Name="Binding" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Binding" Type="Boolean" />
           <Property Name="Postnummer" Type="Int32" />
           <Property Name="Antall_TrillingSIM" Type="Int32" />
           <Property Name="allDataSIM" Type="Int32" />
-          <Property Name="Manuell_Top_up" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="Sperre_Top_up" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="Norden" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Manuell_Top_up" Type="Boolean" />
+          <Property Name="Sperre_Top_up" Type="Boolean" />
+          <Property Name="Norden" Type="Boolean" />
           <Property Name="Tale_og_SMS_til_EU" Type="Boolean" />
           <Property Name="TBN" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
           <Property Name="HovedSIM" Type="Int32" />
@@ -363,6 +377,7 @@
             <End Role="Type" EntitySet="Types" />
             <End Role="ConnectionType" EntitySet="ConnectionTypes" />
           </AssociationSet>
+          <EntitySet Name="Postnummers" EntityType="TeliaModel.Postnummer" />
         </EntityContainer>
         <EntityType Name="Client">
           <Key>
@@ -410,6 +425,7 @@
           <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Clients" Relationship="TeliaModel.FK__Client__Id_abone__41EDCAC5" FromRole="Abonementype" ToRole="Client" />
           <NavigationProperty Name="ConnectionTypes" Relationship="TeliaModel.FK__Connectio__Id_ab__40058253" FromRole="Abonementype" ToRole="ConnectionType" />
+          <Property Name="Reference_code" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ConnectionType">
           <Key>
@@ -471,6 +487,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Postnummer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PostNr" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Poststed" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Kommunenummer" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Kommunenavn" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Kategory" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Land" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -508,6 +536,7 @@
           <EntitySetMapping Name="Nummers">
             <EntityTypeMapping TypeName="TeliaModel.Nummer">
               <MappingFragment StoreEntitySet="Nummer">
+                <ScalarProperty Name="Manuell_Top_up" ColumnName="Manuell Top-up" />
                 <ScalarProperty Name="DeliveryIndividualLastName" ColumnName="DeliveryIndividualLastName" />
                 <ScalarProperty Name="DeliveryIndividualFirstName" ColumnName="DeliveryIndividualFirstName" />
                 <ScalarProperty Name="DeliveryContractLocalNumber" ColumnName="DeliveryContractLocalNumber" />
@@ -532,7 +561,6 @@
                 <ScalarProperty Name="Tale_og_SMS_til_EU" ColumnName="Tale og SMS til EU" />
                 <ScalarProperty Name="Norden" ColumnName="Norden" />
                 <ScalarProperty Name="Sperre_Top_up" ColumnName="Sperre Top-up" />
-                <ScalarProperty Name="Manuell_Top_up" ColumnName="Manuell Top-up" />
                 <ScalarProperty Name="allDataSIM" ColumnName="allDataSIM" />
                 <ScalarProperty Name="Antall_TrillingSIM" ColumnName="Antall TrillingSIM" />
                 <ScalarProperty Name="Postnummer" ColumnName="Postnummer" />
@@ -589,6 +617,7 @@
           <EntitySetMapping Name="Abonementypes">
             <EntityTypeMapping TypeName="TeliaModel.Abonementype">
               <MappingFragment StoreEntitySet="Abonementype">
+                <ScalarProperty Name="Reference_code" ColumnName="Reference_code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -607,6 +636,19 @@
             <EntityTypeMapping TypeName="TeliaModel.Type">
               <MappingFragment StoreEntitySet="Type">
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Postnummers">
+            <EntityTypeMapping TypeName="TeliaModel.Postnummer">
+              <MappingFragment StoreEntitySet="Postnummer">
+                <ScalarProperty Name="Land" ColumnName="Land" />
+                <ScalarProperty Name="Kategory" ColumnName="Kategory" />
+                <ScalarProperty Name="Kommunenavn" ColumnName="Kommunenavn" />
+                <ScalarProperty Name="Kommunenummer" ColumnName="Kommunenummer" />
+                <ScalarProperty Name="Poststed" ColumnName="Poststed" />
+                <ScalarProperty Name="PostNr" ColumnName="PostNr" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -67,11 +67,11 @@ namespace TeliaMVC.Controllers
                     case "Telefonnummer":
                         nummers = nummers.Where(s => s.Telefonnummer.Contains(searchString));
                         break;
-                    case "Binding":
-                        nummers = nummers.Where(s=> s.Binding.Contains(searchString));
-                        break;
                     case "Fornavn":
                         nummers = nummers.Where(s=> s.Fornavn.Contains(searchString));
+                        break;
+                    case "Etternavn":
+                        nummers = nummers.Where(s => s.Etternavn.Contains(searchString));
                         break;
                     default:
                         break;
@@ -128,7 +128,6 @@ namespace TeliaMVC.Controllers
                 nummer.Pending = false; // oznaci da je admin obradio ovu informaciju
                 nummer.DeliveryMethodCode = "LETTER";
                 nummer.DeliveryCountryCode = "47";
-
 
                 db.Nummers.Add(nummer);
                 db.SaveChanges();

@@ -33,7 +33,7 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="Telefonnummer" Type="String" annotation:StoreGeneratedPattern="None" MaxLength="20" Unicode="true" FixedLength="false" />
-    <Property Name="Abonnementstype" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Abonnementstype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Fornavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Etternavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Bedrift_som_skal_faktureres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -56,13 +56,13 @@
     <Property Name="Pending" Type="Boolean" />
     <Property Name="Katalogoppforing" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="Porteringsdatoog_tid" Type="DateTime" Precision="3" />
-    <Property Name="Binding" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Binding" Type="Boolean" />
     <Property Name="Postnummer" Type="Int32" />
     <Property Name="Antall_TrillingSIM" Type="Int32" />
     <Property Name="allDataSIM" Type="Int32" />
-    <Property Name="Manuell_Top_up" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-    <Property Name="Sperre_Top_up" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-    <Property Name="Norden" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Manuell_Top_up" Type="Boolean" />
+    <Property Name="Sperre_Top_up" Type="Boolean" />
+    <Property Name="Norden" Type="Boolean" />
     <Property Name="Tale_og_SMS_til_EU" Type="Boolean" />
     <Property Name="TBN" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
     <Property Name="HovedSIM" Type="Int32" />
@@ -128,6 +128,7 @@
       <End Role="Type" EntitySet="Types" />
       <End Role="ConnectionType" EntitySet="ConnectionTypes" />
     </AssociationSet>
+    <EntitySet Name="Postnummers" EntityType="TeliaModel.Postnummer" />
   </EntityContainer>
   <EntityType Name="Client">
     <Key>
@@ -175,6 +176,7 @@
     <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Clients" Relationship="TeliaModel.FK__Client__Id_abone__41EDCAC5" FromRole="Abonementype" ToRole="Client" />
     <NavigationProperty Name="ConnectionTypes" Relationship="TeliaModel.FK__Connectio__Id_ab__40058253" FromRole="Abonementype" ToRole="ConnectionType" />
+    <Property Name="Reference_code" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="ConnectionType">
     <Key>
@@ -236,4 +238,16 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Postnummer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="PostNr" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Poststed" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Kommunenummer" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Kommunenavn" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Kategory" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Land" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

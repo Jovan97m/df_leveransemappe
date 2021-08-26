@@ -32,5 +32,6 @@ namespace TeliaMVC.Models
         public virtual DbSet<Abonementype> Abonementypes { get; set; }
         public virtual DbSet<ConnectionType> ConnectionTypes { get; set; }
         public virtual DbSet<Type> Types { get; set; }
+        public virtual DbSet<Postnummer> Postnummers { get; set; }
     }
 }

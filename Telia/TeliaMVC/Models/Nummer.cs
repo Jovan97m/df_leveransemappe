@@ -37,13 +37,13 @@ namespace TeliaMVC.Models
         public Nullable<bool> Pending { get; set; }
         public string Katalogoppforing { get; set; }
         public Nullable<System.DateTime> Porteringsdatoog_tid { get; set; }
-        public string Binding { get; set; }
+        public Nullable<bool> Binding { get; set; }
         public Nullable<int> Postnummer { get; set; }
         public Nullable<int> Antall_TrillingSIM { get; set; }
         public Nullable<int> allDataSIM { get; set; }
-        public string Manuell_Top_up { get; set; }
-        public string Sperre_Top_up { get; set; }
-        public string Norden { get; set; }
+        public Nullable<bool> Manuell_Top_up { get; set; }
+        public Nullable<bool> Sperre_Top_up { get; set; }
+        public Nullable<bool> Norden { get; set; }
         public Nullable<bool> Tale_og_SMS_til_EU { get; set; }
         public string TBN { get; set; }
         public Nullable<int> HovedSIM { get; set; }

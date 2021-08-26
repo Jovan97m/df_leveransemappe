@@ -257,6 +257,9 @@
       <DependentUpon>Data_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PartialClasses.cs" />
+    <Compile Include="Models\Postnummer.cs">
+      <DependentUpon>Data_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TelefonnummerCheck.cs" />
     <Compile Include="Models\Type.cs">
       <DependentUpon>Data_Model.tt</DependentUpon>

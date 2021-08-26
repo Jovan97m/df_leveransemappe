@@ -10,7 +10,8 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Web;
-
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace TeliaMVC.Controllers
 {
@@ -189,9 +190,10 @@ namespace TeliaMVC.Controllers
       
         public ActionResult Create(int? sesija)
         {
-            ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted");
-            
+            //ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted");
+
             Client client = db.Clients.Find(sesija);
+            ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
             ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype); // selectbox za abonementype
             ViewBag.ORG = client.Id.ToString();
             return View();
@@ -202,30 +204,43 @@ namespace TeliaMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,Orgnummer,HovedSIM")] Nummer nummer,string selected)
+        public ActionResult Create([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,Orgnummer,HovedSIM")] Nummer nummer,string selected,string kostnadsted)
         {
             nummer.Abonnementstype = selected; // ucitaj selektovani
             nummer.Pending = true;
+            Fakturaoppsett fakturaoppsett = db.Fakturaoppsetts.Where(s => s.NavnPaKostnadssted.Contains(kostnadsted)).FirstOrDefault();
+            nummer.Kostnadsted = fakturaoppsett.Kostnadssted; 
+
+
             var idc = db.Clients.Find(Convert.ToInt32(nummer.Orgnummer));
             if (ModelState.IsValid)
              {
-               
+                var errors2 = ModelState.Values.SelectMany(v => v.Errors);
                 db.Nummers.Add(nummer);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            Trace.TraceInformation(
+                                  "Class: {0}, Property: {1}, Error: {2}",
+                                  validationErrors.Entry.Entity.GetType().FullName,
+                                  validationError.PropertyName,
+                                  validationError.ErrorMessage);
+                        }
+                    }
+                }
                 return RedirectToAction("Index","Nummers", new {id_sesije = idc.Id });
             }
-            var modelErrors = new List<string>();
-            foreach (var modelState in ModelState.Values)
-            {
-                foreach (var modelError in modelState.Errors)
-                {
-                    modelErrors.Add(modelError.ErrorMessage);
-                }
-            }
-                
-            ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted", nummer.Kostnadsted);
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
             Client client = db.Clients.Find(idc.Id);
             ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype);
+            ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
             ViewBag.ORG =idc.Id.ToString();
             return View(nummer);
         }
@@ -327,6 +342,16 @@ namespace TeliaMVC.Controllers
             else
                 return c.Id.ToString();
         }
+        public List<String> FillKostnadstedSelectBox(int id)
+        {
+            List<String> povratna = new List<String>();
+            var test = db.Fakturaoppsetts.Where(s => s.Id_client == id) ;
+            foreach (var item in test)
+            {
+                povratna.Add(item.NavnPaKostnadssted);
+            }
+            return povratna;
+        }
         public List<String> FillAbonementtypeSelectBox(int id) // selectbox za abonementypes
         {
             List<String> types = new List<String>();
@@ -337,31 +362,6 @@ namespace TeliaMVC.Controllers
             {
                 types.Add(db.Types.Where(s => s.Id.Equals(item.Id_type)).First().Name.ToString());
             }
-
-            veza = db.ConnectionTypes;
-            List<int> id_types = new List<int>();
-            foreach (var item in veza)
-            {
-                id_types.Add(item.Id_type);
-            }
-
-            List<int> id_return = new List<int>();
-            foreach (var item in db.Types)
-            {
-                if (!id_types.Contains(item.Id))
-                {
-                    id_return.Add(item.Id);
-                }
-            }
-
-            foreach (var item in db.Types)
-            {
-                    if (id_return.Contains(item.Id))
-                    {
-                        types.Add(item.Name);
-                    }
-            }
-
             return types;
         }
 
