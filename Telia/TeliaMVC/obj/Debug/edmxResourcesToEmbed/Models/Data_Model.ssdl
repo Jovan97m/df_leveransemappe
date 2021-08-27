@@ -1,11 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="TeliaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="__RefactorLog">
-    <Key>
-      <PropertyRef Name="OperationKey" />
-    </Key>
-    <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
-  </EntityType>
   <EntityType Name="Abonementype">
     <Key>
       <PropertyRef Name="Id" />
@@ -72,9 +66,9 @@
   </EntityType>
   <EntityType Name="Nummer">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="ID" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Telefonnummer" Type="nvarchar" MaxLength="20" />
     <Property Name="Abonnementstype" Type="nvarchar" MaxLength="50" />
     <Property Name="Fornavn" Type="nvarchar" MaxLength="50" />
@@ -127,6 +121,18 @@
     <Property Name="DeliveryIndividualFirstName" Type="nvarchar" MaxLength="15" />
     <Property Name="DeliveryIndividualLastName" Type="nvarchar" MaxLength="20" />
   </EntityType>
+  <EntityType Name="Postnummer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PostNr" Type="nvarchar" MaxLength="10" />
+    <Property Name="Poststed" Type="nvarchar" MaxLength="10" />
+    <Property Name="Kommunenummer" Type="nvarchar" MaxLength="10" />
+    <Property Name="Kommunenavn" Type="nvarchar" MaxLength="10" />
+    <Property Name="Kategory" Type="char" MaxLength="1" />
+    <Property Name="Land" Type="nvarchar" MaxLength="10" />
+  </EntityType>
   <EntityType Name="Type">
     <Key>
       <PropertyRef Name="Id" />
@@ -134,7 +140,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="35" />
   </EntityType>
-  <Association Name="FK__Client__Id_abone__41EDCAC5">
+  <Association Name="FK__Client__Id_abone__489AC854">
     <End Role="Abonementype" Type="Self.Abonementype" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -148,7 +154,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Connectio__Id_ab__40058253">
+  <Association Name="FK__Connectio__Id_ab__498EEC8D">
     <End Role="Abonementype" Type="Self.Abonementype" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -162,7 +168,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Connectio__Id_ty__40F9A68C">
+  <Association Name="FK__Connectio__Id_ty__4A8310C6">
     <End Role="Type" Type="Self.Type" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -205,23 +211,23 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="TeliaModelStoreContainer">
-    <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Abonementype" EntityType="Self.Abonementype" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ConnectionType" EntityType="Self.ConnectionType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Fakturaoppsett" EntityType="Self.Fakturaoppsett" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Nummer" EntityType="Self.Nummer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Postnummer" EntityType="Self.Postnummer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Type" EntityType="Self.Type" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__Client__Id_abone__41EDCAC5" Association="Self.FK__Client__Id_abone__41EDCAC5">
+    <AssociationSet Name="FK__Client__Id_abone__489AC854" Association="Self.FK__Client__Id_abone__489AC854">
       <End Role="Abonementype" EntitySet="Abonementype" />
       <End Role="Client" EntitySet="Client" />
     </AssociationSet>
-    <AssociationSet Name="FK__Connectio__Id_ab__40058253" Association="Self.FK__Connectio__Id_ab__40058253">
+    <AssociationSet Name="FK__Connectio__Id_ab__498EEC8D" Association="Self.FK__Connectio__Id_ab__498EEC8D">
       <End Role="Abonementype" EntitySet="Abonementype" />
       <End Role="ConnectionType" EntitySet="ConnectionType" />
     </AssociationSet>
-    <AssociationSet Name="FK__Connectio__Id_ty__40F9A68C" Association="Self.FK__Connectio__Id_ty__40F9A68C">
+    <AssociationSet Name="FK__Connectio__Id_ty__4A8310C6" Association="Self.FK__Connectio__Id_ty__4A8310C6">
       <End Role="Type" EntitySet="Type" />
       <End Role="ConnectionType" EntitySet="ConnectionType" />
     </AssociationSet>

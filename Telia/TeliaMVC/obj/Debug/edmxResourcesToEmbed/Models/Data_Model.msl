@@ -32,7 +32,6 @@
     <EntitySetMapping Name="Nummers">
       <EntityTypeMapping TypeName="TeliaModel.Nummer">
         <MappingFragment StoreEntitySet="Nummer">
-          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Manuell_Top_up" ColumnName="Manuell Top-up" />
           <ScalarProperty Name="DeliveryIndividualLastName" ColumnName="DeliveryIndividualLastName" />
           <ScalarProperty Name="DeliveryIndividualFirstName" ColumnName="DeliveryIndividualFirstName" />
@@ -67,6 +66,7 @@
           <ScalarProperty Name="Pending" ColumnName="Pending" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="Orgnummer" ColumnName="Orgnummer" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Telefonnummer" ColumnName="Telefonnummer" />
           <ScalarProperty Name="Abonnementstype" ColumnName="Abonnementstype" />
           <ScalarProperty Name="Fornavn" ColumnName="Fornavn" />
@@ -136,10 +136,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="C__RefactorLog">
-      <EntityTypeMapping TypeName="TeliaModel.C__RefactorLog">
-        <MappingFragment StoreEntitySet="__RefactorLog">
-          <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
+    <EntitySetMapping Name="Postnummers">
+      <EntityTypeMapping TypeName="TeliaModel.Postnummer">
+        <MappingFragment StoreEntitySet="Postnummer">
+          <ScalarProperty Name="Land" ColumnName="Land" />
+          <ScalarProperty Name="Kategory" ColumnName="Kategory" />
+          <ScalarProperty Name="Kommunenavn" ColumnName="Kommunenavn" />
+          <ScalarProperty Name="Kommunenummer" ColumnName="Kommunenummer" />
+          <ScalarProperty Name="Poststed" ColumnName="Poststed" />
+          <ScalarProperty Name="PostNr" ColumnName="PostNr" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

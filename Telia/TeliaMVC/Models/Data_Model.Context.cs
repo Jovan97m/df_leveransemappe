@@ -33,6 +33,5 @@ namespace TeliaMVC.Models
         public virtual DbSet<ConnectionType> ConnectionTypes { get; set; }
         public virtual DbSet<Type> Types { get; set; }
         public virtual DbSet<Postnummer> Postnummers { get; set; }
-        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
     }
 }

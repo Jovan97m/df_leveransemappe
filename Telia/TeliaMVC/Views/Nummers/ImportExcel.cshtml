@@ -23,7 +23,6 @@
         margin-right: 2px;
         margin-bottom: 2px;
         border-radius: 12px;
-        float: left;
     }
 
     .NotNeeded {
@@ -63,29 +62,6 @@
         cursor: pointer;
         box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
     }
-
-    .ButtonBack {
-        background-color: darkred;
-        font-size: larger;
-        font-weight: bold;
-        color: white;
-        padding: 10px 15px;
-        border-radius: 16px;
-        border-color: transparent;
-        text-shadow: 1px 1px black;
-        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
-    }
-
-        .ButtonBack:hover {
-            color: white;
-            background-color: red;
-            box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
-        }
-
-        .ButtonBack:active {
-            transform: translateY(+2px);
-            background-color: darkred;
-        }
 
     .HeaderTable {
         background-color: #990AE4;
@@ -144,16 +120,9 @@
             background-color: dodgerblue;
         }
 </style>
-<h2>Riktig oppgitte data</h2>
-
-@using (Html.BeginForm())
-{
-    
+<h2>Ispravni podaci</h2>
 <div style="overflow-x: auto; margin-left: 11px; margin-right: 12px;border-radius:12px;" class=".scrollbar-lady-lips">
-  
-
-
-    <table class="table-hover table-striped Table " id="ispravno" style="font-size: 13px;font-weight:bold;table-layout:fixed;">
+    <table class="table-hover table-striped Table "id="ispravno" style="font-size: 13px;font-weight:bold;table-layout:fixed;" >
         <thead class="HeaderTable">
             <tr>
                 <th class="col-sm-2">Telefonumer</th>
@@ -175,10 +144,9 @@
                 <th class="col-sm-2">Kostnadsted</th>
             </tr>
         </thead>
-
-        @foreach (var p in (List<Nummer>)ViewData["Ispravno"])
-        {
-            <tbody>
+        <tbody>
+            @foreach (var p in (List<Nummer>)ViewData["Ispravno"])
+            {
                 <tr>
                     <td readonly="readonly">@p.Telefonnummer</td>
                     <td>@p.Abonnementstype</td>
@@ -198,113 +166,87 @@
                     <td>@p.Ekstra_datasim</td>
                     <td>@p.Kostnadsted</td>
                 </tr>
-            </tbody>
-
-        }
+            }
+        </tbody>
     </table>
 
     <br />
-
+    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+            title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett"
+            onclick="location.href = '@Url.Action("Create", "Nummers",new { sesija = ViewBag.ID })'">
+        Save
+    </button>
 </div>
-}
-    <br />
-    <br />
-    <h2>Feil data </h2>
-  
-        <div id="grid" style="overflow-x: auto; margin-left: 11px; margin-right: 12px;border-radius:12px;" class=".scrollbar-lady-lips">
-            
-                <table class="table-hover table-striped Table neispravno" style="font-size: 13px;font-weight:bold;table-layout:fixed;">
-                    <thead class="HeaderTable">
-                        <tr>
-                            <th class="col-sm-2">Telefonumer</th>
-                            <th class="col-sm-2">Abonnementstype</th>
-                            <th class="col-sm-2">Fornavn</th>
-                            <th class="col-sm-2">Etternavn</th>
-                            <th class="col-sm-2">Bedrift_som_skal_faktureres</th>
-                            <th class="col-sm-2">c_o_adresse_for_SIM_levering</th>
-                            <th class="col-sm-2">Gateadresse_SIM_Skal_sendes_til</th>
-                            <th class="col-sm-2">Hus_nummer</th>
-                            <th class="col-sm-2">Hus_bokstav</th>
-                            <th class="col-sm-2">post_nr_</th>
-                            <th class="col-sm-2">Post_sted</th>
-                            <th class="col-sm-2">Epost_for_sporings_informasjon</th>
-                            <th class="col-sm-2">Epost</th>
-                            <th class="col-sm-2">Tilleggsinfo_ansatt_ID</th>
-                            <th class="col-sm-2">Ekstra_talesim_</th>
-                            <th class="col-sm-2">Ekstra_datasim</th>
-                            <th class="col-sm-2">Kostnadsted</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var p1 in (List<Nummer>)ViewData["Neispravno"])
-                        {
+<br />
+<br />
+<h2>Neispravni podaci</h2>
 
-                            <tr readonly="readonly">
-                                <td class="col-sm-2">@p1.Telefonnummer</td>
-                                <td class="col-sm-2">@p1.Abonnementstype</td>
-                                <td class="col-sm-2">@p1.Fornavn</td>
-                                <td class="col-sm-2">@p1.Etternavn</td>
-                                <td class="col-sm-2">@p1.Bedrift_som_skal_faktureres</td>
-                                <td class="col-sm-2">@p1.c_o_adresse_for_SIM_levering</td>
-                                <td class="col-sm-2">@p1.Gateadresse_SIM_Skal_sendes_til</td>
-                                <td class="col-sm-2">@p1.Hus_nummer</td>
-                                <td class="col-sm-2">@p1.Hus_bokstav</td>
-                                <td class="col-sm-2">@p1.post_nr_</td>
-                                <td class="col-sm-2">@p1.Post_sted</td>
-                                <td class="col-sm-2">@p1.Epost_for_sporings_informasjon</td>
-                                <td class="col-sm-2">@p1.Epost</td>
-                                <td class="col-sm-2">@p1.Tilleggsinfo_ansatt_ID</td>
-                                <td class="col-sm-2">@p1.Ekstra_talesim_</td>
-                                <td class="col-sm-2">@p1.Ekstra_datasim</td>
-                                <td class="col-sm-2">@p1.Kostnadsted</td>
-                            </tr>
-                        }
-
-
-                    </tbody>
-
-
-                </table>
-           
-        </div>
-
-        <div class="col-md-6 " style="margin-bottom: 5px;">
-            <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                    title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                    onclick="location.href = '@Url.Action("ExportError", "Nummers")'">
-                <span class="glyphicon glyphicon-download"></span> Last ned ugyldige data
-            </button>
-        </div>
-    
-    <br />
-    @{
-        List<Nummer> nummer = new List<Nummer>();
-        foreach (var item in (List<Nummer>)ViewData["Ispravno"])
-        {
-            nummer.Add(item);
-        }
-        ViewBag.n = nummer;
-    }
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-8">
-            <button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "Nummers", new { id_sesije = ViewBag.ID })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Back to list</button>
-        </div>
-    </div>
-    <script>
-        document.querySelectorAll(".neispravno tr td").forEach(function (node) {
-            node.ondblclick = function () {
-                var val = this.innerHTML;
-                var input = document.createElement("input");
-                input.value = val;
-                input.onblur = function () {
-                    var val = this.value;
-                    this.parentNode.innerHTML = val;
-                }
-                this.innerHTML = "";
-                this.appendChild(input);
-                input.focus();
+<div id="grid" style="overflow-x: auto; margin-left: 11px; margin-right: 12px;border-radius:12px;" class=".scrollbar-lady-lips">
+    <table class="table-hover table-striped Table neispravno" style="font-size: 13px;font-weight:bold;table-layout:fixed;">
+        <thead class="HeaderTable">
+            <tr>
+                <th class="col-sm-2">Telefonumer</th>
+                <th class="col-sm-2">Abonnementstype</th>
+                <th class="col-sm-2">Fornavn</th>
+                <th class="col-sm-2">Etternavn</th>
+                <th class="col-sm-2">Bedrift_som_skal_faktureres</th>
+                <th class="col-sm-2">c_o_adresse_for_SIM_levering</th>
+                <th class="col-sm-2">Gateadresse_SIM_Skal_sendes_til</th>
+                <th class="col-sm-2">Hus_nummer</th>
+                <th class="col-sm-2">Hus_bokstav</th>
+                <th class="col-sm-2">post_nr_</th>
+                <th class="col-sm-2">Post_sted</th>
+                <th class="col-sm-2">Epost_for_sporings_informasjon</th>
+                <th class="col-sm-2">Epost</th>
+                <th class="col-sm-2">Tilleggsinfo_ansatt_ID</th>
+                <th class="col-sm-2">Ekstra_talesim_</th>
+                <th class="col-sm-2">Ekstra_datasim</th>
+                <th class="col-sm-2">Kostnadsted</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p1 in (List<Nummer>)ViewData["Neispravno"])
+            {
+                <tr readonly="readonly">
+                    <td class="col-sm-2" >@p1.Telefonnummer</td>
+                    <td class="col-sm-2" >@p1.Abonnementstype</td>
+                    <td class="col-sm-2" >@p1.Fornavn</td>
+                    <td class="col-sm-2" >@p1.Etternavn</td>
+                    <td class="col-sm-2" >@p1.Bedrift_som_skal_faktureres</td>
+                    <td class="col-sm-2" >@p1.c_o_adresse_for_SIM_levering</td>
+                    <td class="col-sm-2" >@p1.Gateadresse_SIM_Skal_sendes_til</td>
+                    <td class="col-sm-2" >@p1.Hus_nummer</td>
+                    <td class="col-sm-2" >@p1.Hus_bokstav</td>
+                    <td class="col-sm-2" >@p1.post_nr_</td>
+                    <td class="col-sm-2" >@p1.Post_sted</td>
+                    <td class="col-sm-2" >@p1.Epost_for_sporings_informasjon</td>
+                    <td class="col-sm-2" >@p1.Epost</td>
+                    <td class="col-sm-2" >@p1.Tilleggsinfo_ansatt_ID</td>
+                    <td class="col-sm-2" >@p1.Ekstra_talesim_</td>
+                    <td class="col-sm-2" >@p1.Ekstra_datasim</td>
+                    <td class="col-sm-2" >@p1.Kostnadsted</td>
+                </tr>
             }
-        });
-    </script>
+        </tbody>
+    </table>
+    <br />
+    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom" onclick="location.href = '@Url.Action("Proveri", "Nummers",new { sesija = ViewBag.ID, n=ViewData["Neispravno"] })'">
+        Proveri opet
+    </button>
+</div>
+<script>
+    document.querySelectorAll(".neispravno tr td").forEach(function (node) {
+        node.ondblclick = function () {
+            var val = this.innerHTML;
+            var input = document.createElement("input");
+            input.value = val;
+            input.onblur = function () {
+                var val = this.value;
+                this.parentNode.innerHTML = val;
+            }
+            this.innerHTML = "";
+            this.appendChild(input);
+            input.focus();
+        }
+    });
+</script>

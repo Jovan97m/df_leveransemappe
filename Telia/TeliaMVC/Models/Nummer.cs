@@ -66,7 +66,6 @@ namespace TeliaMVC.Models
         public string DeliveryContractLocalNumber { get; set; }
         public string DeliveryIndividualFirstName { get; set; }
         public string DeliveryIndividualLastName { get; set; }
-        public int Id { get; set; }
     
         public virtual Fakturaoppsett Fakturaoppsett { get; set; }
     }
