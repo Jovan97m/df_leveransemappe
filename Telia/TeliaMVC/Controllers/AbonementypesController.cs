@@ -46,12 +46,20 @@ namespace TeliaMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Abonementype abonementype)
+        public ActionResult Create([Bind(Include = "Id,Name,Reference_code")] Abonementype abonementype)
         {
             if (ModelState.IsValid)
             {
                 db.Abonementypes.Add(abonementype);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
                 return RedirectToAction("Index");
             }
 
@@ -90,8 +98,15 @@ namespace TeliaMVC.Controllers
                     t.Id_abom = Convert.ToInt32(prenos);
                     t.Id_type = type.Id;
                     db.ConnectionTypes.Add(t);
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (Exception)
+                    {
 
-                    db.SaveChanges();
+                        throw;
+                    }
                     return RedirectToAction("Index");
                 }
                 else
@@ -103,7 +118,15 @@ namespace TeliaMVC.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Types.Add(type);
-                    db.SaveChanges();
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
                     return RedirectToAction("Index");
                 }
                 else
@@ -130,12 +153,20 @@ namespace TeliaMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Abonementype abonementype)
+        public ActionResult Edit([Bind(Include = "Id,Name,Reference_code")] Abonementype abonementype)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(abonementype).State = EntityState.Modified;
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
                 return RedirectToAction("Index");
             }
             return View(abonementype);
@@ -163,7 +194,15 @@ namespace TeliaMVC.Controllers
         {
             Abonementype abonementype = db.Abonementypes.Find(id);
             db.Abonementypes.Remove(abonementype);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return RedirectToAction("Index");
         }
 

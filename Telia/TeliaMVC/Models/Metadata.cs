@@ -10,21 +10,22 @@ namespace TeliaMVC.Models
     {
         public int Id { get; set; }
         [Display(Name = "UserName")]
-        [Required(ErrorMessage = "This field is Required")]
+        [Required(ErrorMessage = "Dette feltet er obligatorisk!")]
         public string UserName { get; set; }
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "This field is Required")]
+        [Required(ErrorMessage = "Dette feltet er obligatorisk!")]
         public string Password { get; set; }
         public string LoginErrorMsg { get; set; }
     }
     public class MetadataClient
     {
         public int Id { get; set; }
-        [Display(Name = "OrgNummer")]
-        [Required(ErrorMessage = "This field is Required")]
+        [Display(Name = "Orgnummer")]
+        [Required(ErrorMessage = "Dette feltet er obligatorisk!")]
+        [Orgnummer]
         public string Orgnummer { get; set; }
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "This field is Required")]
+        [Required(ErrorMessage = "Dette feltet er obligatorisk!")]
         public string Password { get; set; }
         public string FirmaNavn { get; set; }
         public string GateNavn { get; set; }
@@ -32,6 +33,7 @@ namespace TeliaMVC.Models
         public string HusBokStav { get; set; }
         public Nullable<int> PostNummer { get; set; }
         public string Sted { get; set; }
+        [EmailAddress(ErrorMessage = "Ugyldig e-postadresse")]
         public string Epost { get; set; }
         public string KontaktNavn { get; set; }
         public string KontaktEpost { get; set; }
@@ -47,10 +49,10 @@ namespace TeliaMVC.Models
         public string NavnPaKostnadssted { get; set; }
         [StringLength(200)]
         public string Tileggsinfo_kostnadssted { get; set; }
-        [Required(ErrorMessage = "Fakturaformat is needed")]
+        [Required(ErrorMessage = "Dette feltet er obligatorisk!")]
         [StringLength(30)]
         public string Fakturaformat { get; set; } // mora da postoji
-        [Required(ErrorMessage = "Fakturaadresse is needed")]
+        [Required(ErrorMessage = "Dette feltet er obligatorisk!")]
         [StringLength(30)]
         public string Fakturaadresse { get; set; }
         public Nullable<int> Husnr { get; set; }
@@ -58,9 +60,9 @@ namespace TeliaMVC.Models
         public Nullable<int> Postnummer { get; set; }
         public string Sted { get; set; }
 
-        [Display(Name = "Email address")]
-        [Required(ErrorMessage = "The email address is required")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [Display(Name = "Epost")]
+        [Required(ErrorMessage = " E-postadresse er nødvendig")]
+        [EmailAddress(ErrorMessage = "Ugyldig e-postadresse")]
         public string Epost { get; set; }
         //Primary Key
         [Required(ErrorMessage = "Kostnadssted is needed")]
@@ -73,6 +75,7 @@ namespace TeliaMVC.Models
         [TelefonnummerCheck]
         public string Telefonnummer { get; set; }
         [Required]
+        [Display(Name = "Avtale")]
         public string Abonnementstype { get; set; }
         [Required]
         [StringLength(25)]
@@ -88,14 +91,15 @@ namespace TeliaMVC.Models
         [StringLength(20)]
         public string Hus_bokstav { get; set; }
         public Nullable<int> post_nr_ { get; set; }
+        [Display(Name = "Post-sted")]
         public string Post_sted { get; set; }
         [Display(Name = "Epost - Sporings_informasjon")]
-        [Required(ErrorMessage = "This email address is required!")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [Required(ErrorMessage = "E-postadresse er nødvendig!")]
+        [EmailAddress(ErrorMessage = "Ugyldig e-postadresse")]
         public string Epost_for_sporings_informasjon { get; set; }
         [Display(Name = "Epost")]
-        [Required(ErrorMessage = "This email address is required!")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [Required(ErrorMessage = "E-postadresse er nødvendig!")]
+        [EmailAddress(ErrorMessage = "Ugyldig e-postadresse")]
         public string Epost { get; set; }
         [Required]
         [StringLength(30)]
@@ -138,7 +142,7 @@ namespace TeliaMVC.Models
         public string DeliveryZIP { get; set; }
         public string DeliveryCountryCode { get; set; }
 
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [EmailAddress(ErrorMessage = "Ugyldig e-postadresse")]
         public string DeliveryContractEmail { get; set; }
         public string DeliveryContractCountryCode { get; set; }
         public string DeliveryContractLocalNumber { get; set; }

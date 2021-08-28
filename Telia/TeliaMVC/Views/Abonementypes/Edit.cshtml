@@ -84,29 +84,38 @@
             background-color: darkgreen;
         }
 </style>
-<h2>Endre eksisterende abonementype</h2>
+<h2>Endre eksisterende avtale</h2>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-5 Labela" })
-            <div class="col-md-5">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control TextBox" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-5 col-md-10">
-                <input type="submit" value="Save" class="ButtonAdd" />
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-5 Labela" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control TextBox" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Reference_code, htmlAttributes: new { @class = "control-label col-md-5 Labela" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Reference_code, new { htmlAttributes = new { @class = "form-control TextBox" } })
+            @Html.ValidationMessageFor(model => model.Reference_code, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-5 col-md-10">
+            <input type="submit" value="Save" class="ButtonAdd" />
+        </div>
+    </div>
+</div>
 }
 <p style="margin-left:10px;margin-top:12px;"><a class="ButtonBack" onclick="location.href = '@Url.Action("Index", "Abonementypes")'">Return &raquo;</a></p>

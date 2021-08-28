@@ -61,10 +61,19 @@ namespace TeliaMVC.Controllers
                 if (ModelState.IsValid)
                 {
                     db.Clients.Add(client);
-                    db.SaveChanges();
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
                     return RedirectToAction("Index"); // refresh stranicu opet
                 }
             }
+            ViewBag.Abonementypes = FillSelectBoxClients();
             return View(client);
         }
 

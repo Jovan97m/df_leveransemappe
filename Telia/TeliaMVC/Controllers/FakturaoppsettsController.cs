@@ -161,7 +161,8 @@ namespace TeliaMVC.Controllers
             if (ModelState.IsValid)
             {
                 db.Fakturaoppsetts.Add(fakturaoppset);
-                db.SaveChanges();
+                try { db.SaveChanges(); }
+                catch (Exception) { throw; }
                 return RedirectToAction("Index",new { id = fakturaoppset.Id_client});
             }
 
@@ -196,7 +197,8 @@ namespace TeliaMVC.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(fakturaoppsett).State = EntityState.Modified;
-                db.SaveChanges();
+                try { db.SaveChanges(); }
+                catch (Exception) { throw; }
                 return RedirectToAction("Index", "Fakturaoppsetts", new { id = fakturaoppsett.Id_client});
             }
             var errors = ModelState.Values.SelectMany(v => v.Errors);
@@ -227,8 +229,8 @@ namespace TeliaMVC.Controllers
             Fakturaoppsett fakturaoppsett = db.Fakturaoppsetts.Find(id);
 
             db.Fakturaoppsetts.Remove(fakturaoppsett);
-
-            db.SaveChanges();
+            try { db.SaveChanges(); }
+            catch (Exception) { throw; }
             return RedirectToAction("Index", "Fakturaoppsetts",new { id = fakturaoppsett.Id_client });
         }
         public ActionResult Details(string id)

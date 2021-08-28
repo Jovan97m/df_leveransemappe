@@ -86,20 +86,20 @@
 
 </style>
 
-<h2>Abonementypes</h2>
+<h2>Avtales</h2>
 <p>
-    Seksjon for å legge til og redigere abonementyper for klienter
+    Seksjon for å legge til og redigere avtale for klienter
 </p>
 <hr/>
 <div class=" row">
     <div class="col-sm-3" style="margin-left:10px;">
         <button class=" ButtonAdd" data-toggle="tooltip" data-placement="bottom" title="Opprett ny abonementype"
                 onclick="location.href = '@Url.Action("Create", "Abonementypes")'">
-            <span class="glyphicon glyphicon-duplicate"></span> Create
+            <span class="glyphicon glyphicon-duplicate"></span> Legg til ny Avtale
         </button>
         <button class="ButtonAdd" data-toggle="tooltip" data-placement="bottom" title="Legg til ny standardtype som vil være tilgjengelig for hver klient"
                 onclick="location.href = '@Url.Action("AddType", "Abonementypes",new { id = 0})'">
-            <span class="glyphicon glyphicon-paperclip"></span>  Standard type
+            <span class="glyphicon glyphicon-paperclip"></span>  Abonementype
         </button>
     </div>
 </div>

@@ -130,7 +130,8 @@ namespace TeliaMVC.Controllers
                 nummer.DeliveryCountryCode = "47";
 
                 db.Nummers.Add(nummer);
-                db.SaveChanges();
+                try { db.SaveChanges(); }
+                catch (Exception) { throw; }
                 return RedirectToAction("Index");
             }
 
@@ -175,7 +176,8 @@ namespace TeliaMVC.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(nummer).State = EntityState.Modified;
-                db.SaveChanges();
+                try { db.SaveChanges(); }
+                catch (Exception) { throw; }
                 return RedirectToAction("Index","NummersAdmin",new { currentSelected = selected});
             }
             ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted", nummer.Kostnadsted);
@@ -219,7 +221,8 @@ namespace TeliaMVC.Controllers
                 db.Entry(item).State = EntityState.Modified;
                 //db.SaveChanges();    
             }
-            db.SaveChanges();
+            try { db.SaveChanges(); }
+            catch (Exception) { throw; }
             //kada sve update,vrati na index
             return RedirectToAction("Index", new { sortOrder = nummer.Abonnementstype,currentFilter = nummer.Bedrift_som_skal_faktureres , currentSelected = nummer.DeliveryCity });
         }
@@ -248,7 +251,8 @@ namespace TeliaMVC.Controllers
         {
             Nummer nummer = db.Nummers.Find(id);
             db.Nummers.Remove(nummer);
-            db.SaveChanges();
+            try { db.SaveChanges(); }
+            catch (Exception) { throw; }
             return RedirectToAction("Index");
         }
 

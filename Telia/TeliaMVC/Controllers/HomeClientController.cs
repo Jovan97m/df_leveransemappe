@@ -52,6 +52,7 @@ namespace TeliaMVC.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Id_abonemetype = client.Id_abonementype;
             return View(client);
         }
         // POST: Clients/Edit/5
@@ -59,12 +60,13 @@ namespace TeliaMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Orgnummer,Password,FirmaNavn,GateNavn,HusNummer,HusBokStav,PostNummer,Sted,Epost,KontaktNavn,KontaktEpost,KontaktTlfnr,TekniskKontaktNavn,TekniskKontaktEpost,TekniskKontaktTlfnr")] Client client)
+        public ActionResult Edit([Bind(Include = "Id,Orgnummer,Password,FirmaNavn,GateNavn,HusNummer,HusBokStav,PostNummer,Sted,Epost,KontaktNavn,KontaktEpost,KontaktTlfnr,TekniskKontaktNavn,TekniskKontaktEpost,TekniskKontaktTlfnr,Id_abonementype")] Client client)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(client).State = EntityState.Modified;
-                db.SaveChanges();
+                try { db.SaveChanges(); }
+                catch (Exception) { throw; }
                 return RedirectToAction("Details",new { id = client.Id});
             }
             return View(client);
