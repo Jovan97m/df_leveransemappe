@@ -113,7 +113,7 @@
     <EntitySetMapping Name="Abonementypes">
       <EntityTypeMapping TypeName="TeliaModel.Abonementype">
         <MappingFragment StoreEntitySet="Abonementype">
-          <ScalarProperty Name="Reference_code" ColumnName="Reference_code" />
+          <ScalarProperty Name="Num_type" ColumnName="Num_type" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
@@ -131,6 +131,7 @@
     <EntitySetMapping Name="Types">
       <EntityTypeMapping TypeName="TeliaModel.Type">
         <MappingFragment StoreEntitySet="Type">
+          <ScalarProperty Name="Reference_code" ColumnName="Reference_code" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>

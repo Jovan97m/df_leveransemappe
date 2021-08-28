@@ -11,7 +11,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="25" />
-          <Property Name="Reference_code" Type="nvarchar" MaxLength="15" />
+          <Property Name="Num_type" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="Admin">
           <Key>
@@ -144,6 +144,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="35" />
+          <Property Name="Reference_code" Type="nvarchar" MaxLength="15" />
         </EntityType>
         <Association Name="FK__Client__Id_abone__489AC854">
           <End Role="Abonementype" Type="Self.Abonementype" Multiplicity="1">
@@ -425,7 +426,7 @@
           <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Clients" Relationship="TeliaModel.FK__Client__Id_abone__41EDCAC5" FromRole="Abonementype" ToRole="Client" />
           <NavigationProperty Name="ConnectionTypes" Relationship="TeliaModel.FK__Connectio__Id_ab__40058253" FromRole="Abonementype" ToRole="ConnectionType" />
-          <Property Name="Reference_code" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Num_type" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="ConnectionType">
           <Key>
@@ -444,6 +445,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ConnectionTypes" Relationship="TeliaModel.FK__Connectio__Id_ty__40F9A68C" FromRole="Type" ToRole="ConnectionType" />
+          <Property Name="Reference_code" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK__Client__Id_abone__41EDCAC5">
           <End Type="TeliaModel.Abonementype" Role="Abonementype" Multiplicity="1">
@@ -617,7 +619,7 @@
           <EntitySetMapping Name="Abonementypes">
             <EntityTypeMapping TypeName="TeliaModel.Abonementype">
               <MappingFragment StoreEntitySet="Abonementype">
-                <ScalarProperty Name="Reference_code" ColumnName="Reference_code" />
+                <ScalarProperty Name="Num_type" ColumnName="Num_type" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -635,6 +637,7 @@
           <EntitySetMapping Name="Types">
             <EntityTypeMapping TypeName="TeliaModel.Type">
               <MappingFragment StoreEntitySet="Type">
+                <ScalarProperty Name="Reference_code" ColumnName="Reference_code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

@@ -176,7 +176,7 @@
     <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Clients" Relationship="TeliaModel.FK__Client__Id_abone__41EDCAC5" FromRole="Abonementype" ToRole="Client" />
     <NavigationProperty Name="ConnectionTypes" Relationship="TeliaModel.FK__Connectio__Id_ab__40058253" FromRole="Abonementype" ToRole="ConnectionType" />
-    <Property Name="Reference_code" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Num_type" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
   </EntityType>
   <EntityType Name="ConnectionType">
     <Key>
@@ -195,6 +195,7 @@
     <Property Name="Id" Type="Int32" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="ConnectionTypes" Relationship="TeliaModel.FK__Connectio__Id_ty__40F9A68C" FromRole="Type" ToRole="ConnectionType" />
+    <Property Name="Reference_code" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK__Client__Id_abone__41EDCAC5">
     <End Type="TeliaModel.Abonementype" Role="Abonementype" Multiplicity="1">

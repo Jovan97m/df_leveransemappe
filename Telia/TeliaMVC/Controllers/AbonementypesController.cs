@@ -32,6 +32,8 @@ namespace TeliaMVC.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.id = id;
+            ViewData["Tipovi"] = VratiTipove(abonementype.Id);
             return View(abonementype);
         }
 
@@ -46,8 +48,9 @@ namespace TeliaMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Reference_code")] Abonementype abonementype)
+        public ActionResult Create([Bind(Include = "Id,Name,Num_type")] Abonementype abonementype,string NumType)
         {
+            abonementype.Num_type = NumType;
             if (ModelState.IsValid)
             {
                 db.Abonementypes.Add(abonementype);
@@ -86,7 +89,7 @@ namespace TeliaMVC.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddType([Bind(Include = "Id,Name")] TeliaMVC.Models.Type type,string selected)
+        public ActionResult AddType([Bind(Include = "Id,Name,Reference_code")] TeliaMVC.Models.Type type,string selected)
         {
             string prenos= selected;
             if (prenos!="")
@@ -134,6 +137,8 @@ namespace TeliaMVC.Controllers
             }
         }
         // GET: Abonementypes/Edit/5
+
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -145,7 +150,43 @@ namespace TeliaMVC.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(abonementype);
+        }
+        public ActionResult EditType(int? id, int? id_abom)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TeliaMVC.Models.Type type = db.Types.Find(id);
+            if (type == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.id = id_abom;
+            return View(type);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditType([Bind(Include = "Id,Name,Reference_code")] TeliaMVC.Models.Type tip,int? test)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(tip).State = EntityState.Modified;
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                return RedirectToAction("Details",new { id=test });
+            }
+            return View(tip);
         }
 
         // POST: Abonementypes/Edit/5
@@ -153,8 +194,9 @@ namespace TeliaMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Reference_code")] Abonementype abonementype)
+        public ActionResult Edit([Bind(Include = "Id,Name,Num_type")] Abonementype abonementype,string NumType)
         {
+            abonementype.Num_type = NumType;
             if (ModelState.IsValid)
             {
                 db.Entry(abonementype).State = EntityState.Modified;
@@ -186,6 +228,20 @@ namespace TeliaMVC.Controllers
             }
             return View(abonementype);
         }
+        public ActionResult DeleteType(int? id, int? id_abom)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TeliaMVC.Models.Type type = db.Types.Find(id);
+            if (type == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.id = id_abom;
+            return View(type);
+        }
 
         // POST: Abonementypes/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -205,6 +261,24 @@ namespace TeliaMVC.Controllers
             }
             return RedirectToAction("Index");
         }
+        // POST: Abonementypes/Delete/5
+        [HttpPost, ActionName("DeleteType")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteTypeConfirmed(int id,int? test)
+        {
+            TeliaMVC.Models.Type type = db.Types.Find(id);
+            db.Types.Remove(type);
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return RedirectToAction("Details",new { id=test});
+        }
 
         protected override void Dispose(bool disposing)
         {
@@ -213,6 +287,20 @@ namespace TeliaMVC.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        //pomocna:
+        public List<TeliaMVC.Models.Type> VratiTipove(int id) // selectbox za abonementypes
+        {
+            List<TeliaMVC.Models.Type> types = new List<TeliaMVC.Models.Type>();
+            List<int> ids = new List<int>();
+
+            var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(id));
+            foreach (var item in veza)
+            {
+              types.Add(db.Types.Find(item.Id_type));
+            }
+            return types;
         }
     }
 }

@@ -2,4 +2,5 @@
 (
 	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[Name] NVARCHAR(35),
+	[Reference_code] NVARCHAR(15) NULL,
 )

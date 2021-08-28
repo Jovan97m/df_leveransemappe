@@ -83,7 +83,7 @@
             background-color: darkgreen;
         }
 </style>
-<h2>Legg til ny standardtype</h2>
+<h2>Legg til ny <span style="font-weight:bold;">Abonemetype</span> i valgt avtale</h2>
 
 
 @using (Html.BeginForm()) 
@@ -98,6 +98,13 @@
         <div class="col-md-5">
             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control TextBox" } })
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Reference_code, htmlAttributes: new { @class = "control-label Labela col-md-5" })
+        <div class="col-md-5">
+            @Html.EditorFor(model => model.Reference_code, new { htmlAttributes = new { @class = "form-control TextBox" } })
+            @Html.ValidationMessageFor(model => model.Reference_code, "", new { @class = "text-danger" })
         </div>
     </div>
 

@@ -40,11 +40,28 @@ USE [$(DatabaseName)];
 
 
 GO
-PRINT N'Altering [dbo].[Nummer]...';
+/*
+The column [dbo].[Abonementype].[Reference_code] is being dropped, data loss could occur.
+*/
+
+IF EXISTS (select top 1 1 from [dbo].[Abonementype])
+    RAISERROR (N'Rows were detected. The schema update is terminating because data loss might occur.', 16, 127) WITH NOWAIT
+
+GO
+PRINT N'Altering [dbo].[Abonementype]...';
 
 
 GO
-ALTER TABLE [dbo].[Nummer] ALTER COLUMN [Abonnementstype] NVARCHAR (50) NULL;
+ALTER TABLE [dbo].[Abonementype] DROP COLUMN [Reference_code];
+
+
+GO
+PRINT N'Altering [dbo].[Type]...';
+
+
+GO
+ALTER TABLE [dbo].[Type]
+    ADD [Reference_code] NVARCHAR (15) NULL;
 
 
 GO

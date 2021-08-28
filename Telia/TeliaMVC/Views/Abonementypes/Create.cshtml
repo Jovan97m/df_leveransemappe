@@ -15,6 +15,16 @@
         background-image: linear-gradient(to right, azure,pink, purple, pink,azure);
         box-shadow: 0 10px 10px -10px purple inset;
     }
+    .SelectBox {
+        border: 1px solid Purple;
+        font-weight: bold;
+        color: black;
+        box-shadow: 0 8px 8px -9px black inset;
+    }
+
+        .SelectBox:scope, .SelectBox:active, .SelectBox::after, .SelectBox + span {
+            box-shadow: 0 5px 5px -7px purple inset;
+        }
     .TextBox {
         border: 1px solid Purple;
         font-weight: bold;
@@ -98,15 +108,17 @@
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
-        @Html.LabelFor(model => model.Reference_code, htmlAttributes: new { @class = "control-label col-md-5 Labela" })
-        <div class="col-md-5">
-            @Html.EditorFor(model => model.Reference_code, new { htmlAttributes = new { @class = "form-control TextBox" } })
-            @Html.ValidationMessageFor(model => model.Reference_code, "", new { @class = "text-danger" })
+        @Html.LabelFor(model => model.Num_type, htmlAttributes: new { @class = "control-label col-md-5 Labela" })
+        <div class="col-md-6">
+            @Html.DropDownList("NumType", new List<SelectListItem>
+                             { new SelectListItem { Text = "Mobile", Value = "M", Selected=true},
+                               new SelectListItem { Text = "Fixed", Value = "F"},
+                               new SelectListItem { Text = "Internet", Value = "I"} }, htmlAttributes: new { @class = "form-control SelectBox" })
+
+            @Html.ValidationMessageFor(model => model.Num_type, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         <div class="col-md-offset-5 col-md-10">
             <input type="submit" value="Create" class="ButtonAdd" />

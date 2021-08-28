@@ -6,7 +6,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="25" />
-    <Property Name="Reference_code" Type="nvarchar" MaxLength="15" />
+    <Property Name="Num_type" Type="char" MaxLength="1" />
   </EntityType>
   <EntityType Name="Admin">
     <Key>
@@ -139,6 +139,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="35" />
+    <Property Name="Reference_code" Type="nvarchar" MaxLength="15" />
   </EntityType>
   <Association Name="FK__Client__Id_abone__489AC854">
     <End Role="Abonementype" Type="Self.Abonementype" Multiplicity="1">
