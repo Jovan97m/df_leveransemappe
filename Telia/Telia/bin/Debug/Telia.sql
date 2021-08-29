@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "Telia"
 :setvar DefaultFilePrefix "Telia"
-:setvar DefaultDataPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
-:setvar DefaultLogPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
+:setvar DefaultDataPath "C:\Users\jovan\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
+:setvar DefaultLogPath "C:\Users\jovan\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
 
 GO
 :on error exit
@@ -37,31 +37,6 @@ IF N'$(__IsSqlCmdEnabled)' NOT LIKE N'True'
 
 GO
 USE [$(DatabaseName)];
-
-
-GO
-/*
-The column [dbo].[Abonementype].[Reference_code] is being dropped, data loss could occur.
-*/
-
-IF EXISTS (select top 1 1 from [dbo].[Abonementype])
-    RAISERROR (N'Rows were detected. The schema update is terminating because data loss might occur.', 16, 127) WITH NOWAIT
-
-GO
-PRINT N'Altering [dbo].[Abonementype]...';
-
-
-GO
-ALTER TABLE [dbo].[Abonementype] DROP COLUMN [Reference_code];
-
-
-GO
-PRINT N'Altering [dbo].[Type]...';
-
-
-GO
-ALTER TABLE [dbo].[Type]
-    ADD [Reference_code] NVARCHAR (15) NULL;
 
 
 GO

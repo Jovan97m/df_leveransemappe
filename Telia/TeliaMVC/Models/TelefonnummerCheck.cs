@@ -16,7 +16,7 @@ namespace TeliaMVC.Models
                 int valueInteger;
                 if (int.TryParse(value.ToString(), out valueInteger))
                 {
-                    if (value.ToString().Length== 8) // funkcija koja treba da proveri sledece: 
+                    if (value.ToString().Length<= 13) // funkcija koja treba da proveri sledece: 
                     {
                         return ValidationResult.Success;
                     }
@@ -32,7 +32,7 @@ namespace TeliaMVC.Models
             }
             return ValidationResult.Success;
         }
-        private bool Check(int number)
+        /*private bool Check(int number)
         {
             int firstDigit = (int)(number / Math.Pow(10, (int)Math.Floor(Math.Log10(number))));
             if (firstDigit == 4)
@@ -44,6 +44,6 @@ namespace TeliaMVC.Models
                 return true;
             }
             else { return false; }
-        }
+        }*/
     }
 }

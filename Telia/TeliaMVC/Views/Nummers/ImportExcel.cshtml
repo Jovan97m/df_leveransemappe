@@ -29,7 +29,28 @@
         background-color: #F9B3A7;
     }
 
+    .ButtonBack {
+        background-color: darkred;
+        font-size: larger;
+        font-weight: bold;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
 
+        .ButtonBack:hover {
+            color: white;
+            background-color: red;
+            box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
+        }
+
+        .ButtonBack:active {
+            transform: translateY(+2px);
+            background-color: darkred;
+        }
     .inputRadio {
         border-radius: 10px;
         box-shadow: inset 0 1px 1px hsla(0,0%,100%,.8), 0 0 0 1px hsla(0,0%,0%,.6), 0 2px 3px hsla(0,0%,0%,.6), 0 4px 3px hsla(0,0%,0%,.4), 0 6px 6px hsla(0,0%,0%,.2), 0 10px 6px hsla(0,0%,0%,.2);
@@ -171,11 +192,7 @@
     </table>
 
     <br />
-    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-            title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett"
-            onclick="location.href = '@Url.Action("Create", "Nummers",new { sesija = ViewBag.ID })'">
-        Save
-    </button>
+   
 </div>
 <br />
 <br />
@@ -230,9 +247,12 @@
         </tbody>
     </table>
     <br />
-    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom" onclick="location.href = '@Url.Action("Proveri", "Nummers",new { sesija = ViewBag.ID, n=ViewData["Neispravno"] })'">
-        Proveri opet
-    </button>
+    
+</div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <button class="ButtonBack" onclick="location.href='@Url.Action("Index", "Nummers")'">Back</button>
+    </div>
 </div>
 <script>
     document.querySelectorAll(".neispravno tr td").forEach(function (node) {
