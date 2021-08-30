@@ -1,0 +1,221 @@
+﻿@using TeliaMVC.Models;
+@model PagedList.IPagedList<TeliaMVC.Models.Nummer>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Excel";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+<style>
+    label {
+        margin-right: 3px;
+    }
+    .inputtext{
+        width:40%;
+    }
+    .Table {
+        box-shadow: 2px 2px 1px 3px lightgray;
+        border-radius: 14px;
+    }
+
+    .button {
+        font-size: smaller;
+        color: white;
+        text-shadow: 1px 1px black;
+        margin-right: 2px;
+        margin-bottom: 2px;
+        border-radius: 12px;
+    }
+
+    .NotNeeded {
+        background-color: #F9B3A7;
+    }
+
+    .ButtonBack {
+        background-color: darkred;
+        font-size: larger;
+        font-weight: bold;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+
+        .ButtonBack:hover {
+            color: white;
+            background-color: red;
+            box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
+        }
+
+        .ButtonBack:active {
+            transform: translateY(+2px);
+            background-color: darkred;
+        }
+
+    .inputRadio {
+        border-radius: 10px;
+        box-shadow: inset 0 1px 1px hsla(0,0%,100%,.8), 0 0 0 1px hsla(0,0%,0%,.6), 0 2px 3px hsla(0,0%,0%,.6), 0 4px 3px hsla(0,0%,0%,.4), 0 6px 6px hsla(0,0%,0%,.2), 0 10px 6px hsla(0,0%,0%,.2);
+        cursor: pointer;
+        display: inline-block;
+        height: 15px;
+        margin-right: 16px;
+        position: relative;
+        width: 15px;
+        -webkit-appearance: none;
+    }
+
+        .inputRadio:hover {
+            background-color: #c86cf9;
+        }
+
+        .inputRadio:checked {
+            background-color: #990ae4;
+        }
+
+    .SelectBox {
+        color: black;
+        font-size: medium;
+        font-weight: bold;
+        margin-right: 2px;
+        margin-bottom: 2px;
+        border-radius: 16px;
+        outline-offset: 4px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+
+    .HeaderTable {
+        color: white;
+        text-shadow: 1px 2px black;
+    }
+
+    #Cell {
+        background-color: red;
+    }
+
+    .ButtonCreate {
+        background-color: #990AE4;
+        font-size: larger;
+        font-weight: bold;
+        color: white;
+        padding: 10px 15px;
+        border: solid 1px black;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 1px 8px 15px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+
+        .ButtonCreate:hover {
+            color: white;
+            background-color: purple;
+            box-shadow: 0 13px 18px 0 #990AE4, 0 16px 45px 0 rgba(0,0,0,0.21);
+        }
+
+        .ButtonCreate:active {
+            transform: translateY(+2px);
+            background-color: darkblue;
+        }
+
+    .ButtonSearch {
+        background-color: dodgerblue;
+        font-size: medium;
+        font-weight: bold;
+        color: black;
+        padding: 7px 12px;
+        border: solid 1px black;
+        border-radius: 16px;
+        border-color: transparent;
+        box-shadow: 1px 8px 15px 0 rgba(0,0,0,0.24), 0 13px 24px 0 rgba(0,0,0,0.19);
+    }
+
+        .ButtonSearch:hover {
+            color: white;
+            background-color: blue;
+            box-shadow: 0 13px 18px 0 dodgerblue, 0 16px 45px 0 rgba(0,0,0,0.21);
+        }
+
+        .ButtonSearch:active {
+            transform: translateY(+2px);
+            background-color: dodgerblue;
+        }
+</style>
+<div class="col-sm-12">
+    <fieldset>
+        <legend>
+            Legg til en excel-fil med all nummerinformasjon
+        </legend>
+        <div class="col-md-6 " style="margin-bottom: 5px;">
+            <p>Opprett fil som data skal lastes inn i</p>
+            <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                    title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                    onclick="location.href = '@Url.Action("Export", "Nummers")'">
+                <span class="glyphicon glyphicon-download"></span> Lag en excel-fil
+            </button>
+        </div>
+        <div class="col-md-6 " style="margin-bottom: 5px;">
+            <p>Last inn dataene fra Excel-filen</p>
+            @using (Html.BeginForm("ImportExcel", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
+            {
+                <div style="display:none;">
+                    @Html.TextBox("id_sesije", ViewBag.ID as string);
+                </div>
+                @Html.Raw(ViewBag.Error)
+                <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
+                <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                        onclick="location.href = '@Url.Action("ImportExcel", "Nummers",new { id_sesija = ViewBag.ID })'">
+                    <span class="glyphicon glyphicon-import"></span>Importer excel-fil
+                </button>
+            }
+        </div>
+    </fieldset>
+</div>
+<div class="col-sm-12">
+    <fieldset>
+        <legend>
+            Legg til en excel-fil med utvalgte talldata
+        </legend>
+        <p>
+            Kontrollerte data er påkrevd, bør de tilsvarende kolonnene for denne verdien legges inn i inndatafeltene.
+        </p>
+        @using (Html.BeginForm("Action", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
+        {
+            <!-- Example of a Checked Checkbox -->
+    <div class="col-sm-3"> @Html.CheckBox("Telefonnummer", true)<label>Telefonnummer  </label>@Html.TextBox("Telefonnummer1", null, new { @class = "inputtext" })</div>
+    <div class="col-sm-3">@Html.CheckBox("Abonnementstype")<label>Abonnementstype  </label>@Html.TextBox("Abonnementstype1", null, new { @class = "inputtext" })</div>
+    <div class="col-sm-3">@Html.CheckBox("Fornavn")<label>Fornavn  </label>@Html.TextBox("Fornavn1", null, new { @class = "inputtext" })</div>
+    <div class="col-sm-3">@Html.CheckBox("Etternavn")<label>Etternavn  </label>@Html.TextBox("Etternavn1", null, new { @class = "inputtext" })</div>
+    <div class="col-sm-3">@Html.CheckBox("Bedrift som skal faktu")<label>Bedrift som skal faktu  </label>@Html.TextBox("Bedrift som skal faktu1", null, new { @class = "inputtext" })</div>
+    <div class="col-sm-3">@Html.CheckBox("c/o adresse for SIM leve")<label>c/o adresse for SIM leve  </label>@Html.TextBox("c/o adresse for SIM leve1", null, new { @class = "inputtext" })</div>
+    <div class="col-sm-3">@Html.CheckBox("Gateadresse SIM Skal")<label>Gateadresse SIM Skal  </label>@Html.TextBox("Gateadresse SIM Skal1", null, new { @class = "inputtext" })</div>
+    <div class="col-sm-3">@Html.CheckBox("Hus nummer")<label>Hus nummer  </label>@Html.TextBox("Hus nummer1", null, new { @class = "inputtext" })</div>
+    <div class="col-sm-3">@Html.CheckBox("Hus bokstav")<label>Hus bokstav  </label>@Html.TextBox("Hus bokstav1", null, new { @class = "inputtext" })</div>
+    <div class="col-sm-3">@Html.CheckBox("post nr")<label>post nr   </label>@Html.TextBox("post nr1", null, new { @class = "inputtext" })</div>
+    <div class="col-sm-3">@Html.CheckBox("Post sted")<label>Post sted  </label>@Html.TextBox("Post sted1", null, new { @class = "inputtext" })</div>
+    <div class="col-sm-3">@Html.CheckBox("Epost for sporings info")<label>Epost for sporings info  </label>@Html.TextBox("Epost for sporings info1", null, new { @class = "inputtext" })</div>
+    <div class="col-sm-3">@Html.CheckBox("Epost")<label>Epost  </label>@Html.TextBox("Epost1", null, new { @class = "inputtext" })</div>
+    <div class="col-sm-3">@Html.CheckBox("Tilleggsinfo ansatt ID")<label>Tilleggsinfo ansatt ID  </label>@Html.TextBox("Tilleggsinfo ansatt ID1", null, new { @class = "inputtext" })</div>
+    <div class="col-sm-3">@Html.CheckBox("Ekstra talesim")<label>Ekstra talesim  </label>@Html.TextBox("Ekstra talesim1", null, new { @class = "inputtext" })</div>
+    <div class="col-sm-3">@Html.CheckBox("Ekstra datasim")<label>Ekstra datasim  </label>@Html.TextBox("Ekstra datasim1", null, new { @class = "inputtext" })</div>
+    <div class="col-sm-3">@Html.CheckBox("Kostnadsted")<label>Kostnadsted  </label>@Html.TextBox("Kostnadsted1", null, new { @class = "inputtext" })</div>
+    <div class="row">
+        <div style="display:none;">
+            @Html.TextBox("id_sesije", ViewBag.ID as string);
+        </div>
+        @Html.Raw(ViewBag.Error)
+        <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
+        <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                onclick="location.href = '@Url.Action("Action", "Nummers",new { id_sesije = ViewBag.ID })'">
+            <span class="glyphicon glyphicon-import"></span>Importer excel-fil
+        </button>
+    </div>
+            
+        }
+    </fieldset>
+
+        </div>

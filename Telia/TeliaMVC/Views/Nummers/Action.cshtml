@@ -29,6 +29,7 @@
         #myBtn:hover {
             background-color: #555; /* Add a dark-grey background on hover */
         }
+
     .Table {
         box-shadow: 2px 2px 1px 3px lightgray;
         border-radius: 14px;
@@ -69,6 +70,7 @@
             transform: translateY(+2px);
             background-color: darkred;
         }
+
     .inputRadio {
         border-radius: 10px;
         box-shadow: inset 0 1px 1px hsla(0,0%,100%,.8), 0 0 0 1px hsla(0,0%,0%,.6), 0 2px 3px hsla(0,0%,0%,.6), 0 4px 3px hsla(0,0%,0%,.4), 0 6px 6px hsla(0,0%,0%,.2), 0 10px 6px hsla(0,0%,0%,.2);
@@ -276,7 +278,7 @@
 </div>
 <div class="form-group">
     <div class="col-md-offset-2 col-md-8">
-            <button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "Nummers", new { id_sesije = ViewBag.ID })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Back to list</button>
+        <button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "Nummers", new { id_sesije = ViewBag.ID })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Back to list</button>
     </div>
 </div>
 <script>

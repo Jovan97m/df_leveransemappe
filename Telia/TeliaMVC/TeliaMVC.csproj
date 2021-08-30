@@ -363,6 +363,8 @@
     <Content Include="Views\Nummers\ImportExcel.cshtml" />
     <Content Include="Views\Abonementypes\EditType.cshtml" />
     <Content Include="Views\Abonementypes\DeleteType.cshtml" />
+    <Content Include="Views\Nummers\Excel.cshtml" />
+    <Content Include="Views\Nummers\Action.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -151,26 +151,17 @@
                 Instruksjoner for bruk av Excell-filer
             </legend>
             <div class="col-md-6 " style="margin-bottom: 5px;">
-                <p>Opprett fil som data skal lastes inn i</p>
-                <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                        title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                        onclick="location.href = '@Url.Action("Export", "Nummers")'">
-                    <span class="glyphicon glyphicon-download"></span> Create Excell
-                </button>
-            </div>
-            <div class="col-md-6 " style="margin-bottom: 5px;">
                 <p>Last inn dataene fra Excel-filen</p>
-                @using (Html.BeginForm("ImportExcel", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("Excel", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
                 {
                     <div style="display:none;">
                         @Html.TextBox("id_sesije", ViewBag.ID as string);
                     </div>
                     @Html.Raw(ViewBag.Error)
-                    <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
-        <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                onclick="location.href = '@Url.Action("ImportExcel", "Nummers",new { id_sesija = ViewBag.ID })'">
-            <span class="glyphicon glyphicon-download"></span>Import Excel
-        </button>
+                    <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                            onclick="location.href = '@Url.Action("Excel", "Nummers",new { id_sesija = ViewBag.ID })'">
+                        <span class="glyphicon glyphicon-import"></span>Importer excel-fil
+                    </button>
                 }
             </div>
         </fieldset>
