@@ -582,10 +582,15 @@ namespace TeliaMVC.Controllers
 
         public void ProveriFakture(string broj, ref bool f)
         {
-            if (broj == "EHF" || broj == "Epost" || broj == "Papirgebyr kommer");
+            if (broj != null)
+                if (broj == "EHF" || broj == "Epost" || broj == "Papirgebyr kommer") ;
+                else
+                {
+                    f = true;
+                }
             else
             {
-                f = true;
+                broj = "";
             }
         }
 
@@ -845,6 +850,7 @@ namespace TeliaMVC.Controllers
                             ProveriNummer(nummer, ref nIspravno, ref nGreske, id_sesije);
 
                         }
+                        
                         ViewData["Ispravno"] = nIspravno;
                         ViewData["Neispravno"] = nGreske;
 
