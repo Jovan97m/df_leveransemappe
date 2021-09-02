@@ -12,26 +12,22 @@ namespace TeliaMVC.Models
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value != null)
-            {
-                int valueInteger;
-                if (int.TryParse(value.ToString(), out valueInteger))
+                if (value.ToString().Length <= 13) // funkcija koja treba da proveri sledece: 
                 {
-                    if (value.ToString().Length<= 13) // funkcija koja treba da proveri sledece: 
-                    {
-                        return ValidationResult.Success;
-                    }
-                    else
-                    {
-                        return new ValidationResult(string.Concat(validationContext.DisplayName, " Its not valid! "));
-                    }
+                    return ValidationResult.Success;
                 }
                 else
                 {
-                    return new ValidationResult(string.Concat(validationContext.DisplayName, " must be number not letter!"));
+                    return new ValidationResult(string.Concat(validationContext.DisplayName, " Its not valid! "));
                 }
+            else
+            {
+                return ValidationResult.Success;
             }
-            return ValidationResult.Success;
+
         }
+    }
+    }
         /*private bool Check(int number)
         {
             int firstDigit = (int)(number / Math.Pow(10, (int)Math.Floor(Math.Log10(number))));
@@ -45,5 +41,3 @@ namespace TeliaMVC.Models
             }
             else { return false; }
         }*/
-    }
-}

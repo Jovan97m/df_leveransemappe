@@ -126,26 +126,46 @@
                 Søk etter:  @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
                 <input type="submit" value="Search" class="btn btn-info shadow-lg" style="color: black;font-size: medium;border-radius: 14px;" />
             </p>
-        }
-    </div>
-    <div class="col-sm-3">
-        <fieldset>
-            <legend>
-                Legger til nytt fakturaoppset
-            </legend>
-            <div class="col-md-6" style="margin-bottom: 5px;">
-                <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                        title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett"
-                        onclick="location.href = '@Url.Action("Create", "Nummers",new { sesija = ViewBag.ID })'">
-                    <span class="glyphicon glyphicon-plus"></span> Skape
-                </button>
-            </div>
             <button class=" ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om bruker lsit" onclick="location.href = '@Url.Action("Index", "Nummers",new { id_sesije = ViewBag.ID })'">
                 <span class="glyphicon glyphicon-repeat"></span>   Refresh
             </button>
+            <br/>
+        }
+    </div>
+    <div class="col-sm-4">
+        <fieldset>
+            <legend>
+                Angi bestemt type tall
+            </legend>
+            <div class="row">
+                <div class="col-md-6" style="margin-bottom: 5px;">
+                    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                            title="Skriv inn mobilnummeret ditt "
+                            onclick="location.href = '@Url.Action("Create", "Nummers",new { sesija = ViewBag.ID })'">
+                        <span class="glyphicon glyphicon-phone"></span> Telefonnummer
+                    </button>
+                </div>
+
+                <div class="col-md-8" style="margin-bottom: 5px;">
+                    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                            title="Angi et fasttelefonnummer. Dette nummeret er tillatt for alle klienter å angi."
+                            onclick="location.href = '@Url.Action("CreateFixed", "Nummers",new { sesija = ViewBag.ID })'">
+                        <span class="glyphicon glyphicon-phone-alt"></span> Fixed
+                    </button>
+                </div>
+
+                <div class="col-md-6" style="margin-bottom: 5px;">
+                    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                            title="Skriv inn internettnummeret , som har en regel som starter på 58 og har 12 sifre"
+                            onclick="location.href = '@Url.Action("CreateInternet", "Nummers",new { sesija = ViewBag.ID })'">
+                        <span class="glyphicon glyphicon-globe"></span> InternetNummer
+                    </button>
+                </div>
+            </div>
         </fieldset>
     </div>
     <div class="col-sm-4">
+
         <fieldset>
             <legend>
                 Instruksjoner for bruk av Excell-filer
