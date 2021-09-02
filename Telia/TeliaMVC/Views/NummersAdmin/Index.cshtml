@@ -122,7 +122,7 @@
     </style>
    
 <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
-    <div class="col-sm-5">
+    <div class="col-sm-4" style="border-right: solid 1px azure;">
         @using (Html.BeginForm("Index", "NummersAdmin", FormMethod.Get))
         {
 
@@ -150,25 +150,42 @@
                     Velg firmaet du vil vise data for
                 </legend>
                 <p>
-                    @Html.DropDownList("selected", new SelectList(ViewBag.nummers), "Choose Orgnummer", new { @class = "form-control SelectBox" })
+                    @Html.DropDownList("selected", new SelectList(ViewBag.nummers), new { @class = "form-control SelectBox" })
                     <input type="submit" value="Load" class="ButtonCreate shadow-lg" />
                 </p>
             </fieldset>
         }
     </div>
-
-    <div class="col-sm-4" style="margin-bottom: 20px;">
-        <fieldset>
-            <legend>
-                Legger til nytt fakturaoppset
-            </legend>
-            <button class="shadow-lg ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om bruker lista" onclick="location.href = '@Url.Action("Create", "NummersAdmin")'">
-                <span class="glyphicon glyphicon-plus"></span>   Skape
-            </button>
+    <div class="col-sm-8" style="margin-bottom: 20px;">
+        @using (Html.BeginForm("Creating", "NummersAdmin", FormMethod.Get))
+        { 
+            <fieldset>
+                <legend>
+                    Del der du slår nummeret på klienten du vil tilordne den valgte typen nummer til
+                </legend>
+                <p>
+                    @Html.DropDownList("selected", new SelectList(ViewBag.nummerAdd), new { @class = "form-control SelectBox" })
+                </p>
+                <label class="radio-inline">
+                    @Html.RadioButton("Type", "M", htmlAttributes: new { @class = "inputRadio" })<label>Telefonnummer</label>
+                </label>
+                <br />
+                <label class="radio-inline">
+                    @Html.RadioButton("Type", "F", htmlAttributes: new { @class = "inputRadio" })<label>Fixed</label>
+                </label>
+                <br />
+                <label class="radio-inline">
+                    @Html.RadioButton("Type", "I", htmlAttributes: new { @class = "inputRadio" })<label>Internet</label>
+                </label>
+                <br />
+                <input type="submit" value="Skriv inn et tall" class="ButtonCreate" />
+                <!--
             <button class=" ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om bruker lsit" onclick="location.href = '@Url.Action("Index", "NummersAdmin")'">
                 <span class="glyphicon glyphicon-repeat"></span>   Refresh
             </button>
-        </fieldset>
+                -->
+            </fieldset>
+        }
     </div>
     <div class="col-sm-4">
         <fieldset>

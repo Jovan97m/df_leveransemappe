@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using TeliaMVC.Models;
 using PagedList;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace TeliaMVC.Controllers
 {
@@ -23,6 +25,7 @@ namespace TeliaMVC.Controllers
                           select s;
             //SelectBox
             ViewBag.nummers = FillSelectBoxClients();
+            ViewBag.nummerAdd = FillSelectBoxClientsBezAll();
 
             //Ovde izmeni brojeve koji treba da se prikazu na osnovu selektovanog  
             if (selected != null)
@@ -100,25 +103,65 @@ namespace TeliaMVC.Controllers
             return View(nummer);
         }
 
-        // GET: NummersAdmin/Create
-        public ActionResult Create()
+        #region CREATE
+        //Glavni
+        [HttpGet]
+        public ActionResult Creating(string selected,string Type)
         {
-            ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted");
-            //sa 4 opcija
-            List<SelectListItem> items = new List<SelectListItem>();
+            if (selected == "Choose OrgNummer" || selected == "All" || Type == null)
+            {
+                ViewBag.nummers = FillSelectBoxClientsBezAll();
+                try
+                {
+                    return RedirectToAction("Index", "NummersAdmin");
+                }
+                catch (Exception)
+                {
 
-            items.Add(new SelectListItem { Text = "Opcija 1", Value = "0", Selected = true });
-            items.Add(new SelectListItem { Text = "Opcija 2", Value = "1" });
-            items.Add(new SelectListItem { Text = "Opcija 3", Value = "2" });
-            items.Add(new SelectListItem { Text = "Opcija 4", Value = "3" });
+                    throw;
+                }
 
-            ViewBag.Katalogoppforing = items;
+            }
+
+            else 
+            {
+                
+                if (Type == "F")
+                {
+                    //selected nije potreban 
+                    Client client = db.Clients.Find(GetId(selected));
+                    ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
+                    ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype, Type); // selectbox za abonementype
+                    ViewBag.ORG = client.Id.ToString();
+                    ViewBag.tip = Type;
+                    //  return RedirectToAction("CreateFixed", "NummersAdmin" , new { sesija = client.Id});
+                    return View("CreateFixed");
+                }
+                else if(Type=="M")
+                {
+                    Client client = db.Clients.Find(GetId(selected));
+                    ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
+                    ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype, Type); // selectbox za abonementype
+                    ViewBag.ORG = client.Id.ToString();
+                    ViewBag.tip = Type;
+                    return View("Create");
+                }
+                else
+                {
+                    Client client = db.Clients.Find(GetId(selected));
+                    ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
+                    ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype, Type); // selectbox za abonementype
+                    ViewBag.ORG = client.Id.ToString();
+                    ViewBag.tip = Type;
+                    return View("CreateInternet");
+                }
+            }
+        }
+        public ActionResult Create(string selected, string Type)
+        {
             return View();
         }
 
-        // POST: NummersAdmin/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,ID,Pending,Katalogoppforing,Porteringsdatoog_tid,Binding,Postnummer,Antall_TrillingSIM,allDataSIM,Manuell_Top_up,Sperre_Top_up,Norden,Tale_og_SMS_til_EU,TBN,HovedSIM,TrillingSIM1,TrillingSIM2,DataSIM1,DataSIM2,DataSIM3,DataSIM4,DataSIM5,DeliveryStreetName,DeliveryStreetNumber,DeliveryStreetSuffix,DeliveryCity,DeliveryZIP,DeliveryContractEmail,DeliveryContractCountyCode,DeliveryContractLocalNumber,DeliveryIndividualFirstName,DeliveryIndividualLastName")] Nummer nummer)
@@ -142,6 +185,59 @@ namespace TeliaMVC.Controllers
 
             return View(nummer);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Creating([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,Orgnummer,HovedSIM")] Nummer nummer, string selected, string kostnadsted,string tip)
+        {
+            nummer.DeliveryMethodCode = "LETTER";
+            nummer.DeliveryCountryCode = "47";
+            nummer.Abonnementstype = selected; // ucitaj selektovani
+            nummer.Pending = true;
+            Fakturaoppsett fakturaoppsett = db.Fakturaoppsetts.Where(s => s.NavnPaKostnadssted.Contains(kostnadsted)).FirstOrDefault();
+            nummer.Kostnadsted = fakturaoppsett.Kostnadssted;
+
+
+            var idc = db.Clients.Find(Convert.ToInt32(nummer.Orgnummer));
+            if (ModelState.IsValid)
+            {
+                var errors2 = ModelState.Values.SelectMany(v => v.Errors);
+                db.Nummers.Add(nummer);
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            Trace.TraceInformation(
+                                  "Class: {0}, Property: {1}, Error: {2}",
+                                  validationErrors.Entry.Entity.GetType().FullName,
+                                  validationError.PropertyName,
+                                  validationError.ErrorMessage);
+                        }
+                    }
+                }
+                return RedirectToAction("Index", "NummersAdmin");
+            }
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            Client client = db.Clients.Find(idc.Id);
+            ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype, tip);
+            ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
+            ViewBag.ORG = idc.Id.ToString();
+            return View(nummer);
+        }
+
+
+
+        #endregion
+
+
+
+
+
 
         // GET: NummersAdmin/Edit/5
         public ActionResult Edit(int? id,string selected)
@@ -288,6 +384,52 @@ namespace TeliaMVC.Controllers
             int pageNumber = (page ?? 1);
             return View(nummers.ToPagedList(pageNumber, pageSize));
         }
+        public List<String> FillAbonementtypeSelectBox(int id, string type) // selectbox za abonementypes
+        {
+            List<String> types = new List<String>();
+            List<int> ids = new List<int>();
+
+            if (type == "M")
+            {
+                var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(id));
+                foreach (var item in veza)
+                {
+                    types.Add(db.Types.Where(s => s.Id.Equals(item.Id_type)).First().Name.ToString());
+                }
+                return types;
+            }
+            else
+                if (type == "F" || type == "I")
+            {
+                var tipovi = db.Abonementypes.Where(s => s.Num_type.Contains(type));
+                foreach (var item in tipovi)
+                {
+                    var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(item.Id));
+                    foreach (var i in veza)
+                    {
+                        types.Add(db.Types.Where(s => s.Id.Equals(i.Id_type)).First().Name.ToString());
+                    }
+                    return types;
+                }
+            }
+            return types;
+            {
+
+            }
+
+        }
+        public List<String> FillKostnadstedSelectBox(int id)
+        {
+            List<String> povratna = new List<String>();
+            var test = db.Fakturaoppsetts.Where(s => s.Id_client == id);
+            foreach (var item in test)
+            {
+                povratna.Add(item.NavnPaKostnadssted);
+            }
+            return povratna;
+        }
+
+
 
         #region excel
 
@@ -482,17 +624,28 @@ namespace TeliaMVC.Controllers
             }
             return orgNummers;
         }
+        public List<String> FillSelectBoxClientsBezAll()
+        {
+            List<String> orgNummers = new List<String>();
+            foreach (var item in db.Clients.ToList())
+            {
+                //kad se doda u bazu
+                //string final = item.Orgnummer + "-" + item.FirmaNavn;
+                orgNummers.Add(item.Orgnummer);
+            }
+            return orgNummers;
+        }
 
 
-        public string GetId(string orgNummer)
+        public int GetId(string orgNummer)
         {
             var c = db.Clients.Where(s => s.Orgnummer.Contains(orgNummer));
             if (c == null)
             {
-                return "";
+                return 0;
             }
             else
-                return c.FirstOrDefault().Id.ToString();
+                return c.FirstOrDefault().Id;
         }
         #endregion
 

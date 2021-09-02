@@ -367,6 +367,8 @@
     <Content Include="Views\Nummers\Action.cshtml" />
     <Content Include="Views\Nummers\CreateFixed.cshtml" />
     <Content Include="Views\Nummers\CreateInternet.cshtml" />
+    <Content Include="Views\NummersAdmin\CreateFixed.cshtml" />
+    <Content Include="Views\NummersAdmin\CreateInternet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
