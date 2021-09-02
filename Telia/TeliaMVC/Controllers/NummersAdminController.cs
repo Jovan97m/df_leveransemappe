@@ -32,7 +32,8 @@ namespace TeliaMVC.Controllers
             {
                 if (selected != "All")
                 {
-                    nummers = nummers.Where(s => s.Orgnummer.Contains(selected));
+                    int id = GetId(selected);
+                    nummers = nummers.Where(s => s.Orgnummer.Contains(id.ToString()));
                 }
             }
             ViewBag.CurrentSort = sortOrder;
@@ -242,41 +243,45 @@ namespace TeliaMVC.Controllers
         // GET: NummersAdmin/Edit/5
         public ActionResult Edit(int? id,string selected)
         {
-            ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Nummer nummer = db.Nummers.Find(id);
+            Nummer nummer = db.Nummers.Find(id); // nadje broj koji se edituje
             if (nummer == null)
             {
                 return HttpNotFound();
             }
             ViewBag.ID = nummer.Orgnummer;
+            ViewBag.Kostnadsted = FillKostnadstedSelectBox(Convert.ToInt32(nummer.Orgnummer));
+            var a = db.Abonementypes.Find(getAbonement(nummer.Abonnementstype, Convert.ToInt32(nummer.Orgnummer)));
+            ViewBag.Types = FillAbonementtypeSelectBox(getAbonement(nummer.Abonnementstype, Convert.ToInt32(nummer.Orgnummer)), a.Num_type);
+            ViewBag.tip = a.Num_type;
             ViewBag.CurrentSelected = selected;
             return View(nummer);
         }
 
-        // POST: NummersAdmin/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,ID,HovedSIM,Orgnummer,DeliveryCountryCode")] Nummer nummer)
+        public ActionResult Edit([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,ID,HovedSIM,Orgnummer,Katalogoppforing,Postnummer,Binding,Porteringsdatoog_tid,Antall_TrillingSIM,allDataSIM,Manuell_Top_up,Sperre_Top_up,Norden,Tale_og_SMS_til_EU,TBN,TrillingSIM1,TrillingSIM2,DataSIM1,DataSIM2,DataSIM3,DataSIM4,DataSIM5,DeliveryMethodCode,DeliveryStreetName,DeliveryStreetSuffix,DeliveryCity,DeliveryZIP,DeliveryCountryCode,DeliveryContractEmail,DeliveryContractCountryCode,DeliveryContractLocalNumber,DeliveryIndividualFirstName,DeliveryIndividualLastName")] Nummer nummer, string selected, string kostnadsted, string tip)
         {
             ViewBag.ID = nummer.Orgnummer;
+            nummer.Abonnementstype = selected;
+            nummer.Kostnadsted = kostnadsted;
             nummer.Pending = true;
             nummer.Date = null;
-            string selected = nummer.DeliveryCountryCode;
+            string selected2 = nummer.DeliveryCountryCode;
             nummer.DeliveryCountryCode = "47";
             if (ModelState.IsValid)
             {
                 db.Entry(nummer).State = EntityState.Modified;
                 try { db.SaveChanges(); }
                 catch (Exception) { throw; }
-                return RedirectToAction("Index","NummersAdmin",new { currentSelected = selected});
+                return RedirectToAction("Index","NummersAdmin",new { currentSelected = selected2});
             }
-            ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted", nummer.Kostnadsted);
+            ViewBag.Kostnadsted = FillKostnadstedSelectBox(Convert.ToInt32(nummer.Orgnummer));
+            var a = db.Abonementypes.Find(getAbonement(nummer.Abonnementstype, Convert.ToInt32(nummer.Orgnummer)));
+            ViewBag.Types = FillAbonementtypeSelectBox(getAbonement(nummer.Abonnementstype, Convert.ToInt32(nummer.Orgnummer)), a.Num_type);
             return View(nummer);
         }
 
@@ -291,10 +296,6 @@ namespace TeliaMVC.Controllers
             n.Hus_bokstav = CopyColumn;
             return View(n);
         }
-
-
-        
-        //funkcija za upate coplumn
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult UpdateColumn([Bind(Include = "Abonnementstype,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Hus_bokstav,DeliveryCity")] Nummer nummer)
@@ -323,9 +324,6 @@ namespace TeliaMVC.Controllers
             return RedirectToAction("Index", new { sortOrder = nummer.Abonnementstype,currentFilter = nummer.Bedrift_som_skal_faktureres , currentSelected = nummer.DeliveryCity });
         }
 
-
-
-        // GET: NummersAdmin/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -340,7 +338,6 @@ namespace TeliaMVC.Controllers
             return View(nummer);
         }
 
-        // POST: NummersAdmin/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -384,50 +381,7 @@ namespace TeliaMVC.Controllers
             int pageNumber = (page ?? 1);
             return View(nummers.ToPagedList(pageNumber, pageSize));
         }
-        public List<String> FillAbonementtypeSelectBox(int id, string type) // selectbox za abonementypes
-        {
-            List<String> types = new List<String>();
-            List<int> ids = new List<int>();
 
-            if (type == "M")
-            {
-                var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(id));
-                foreach (var item in veza)
-                {
-                    types.Add(db.Types.Where(s => s.Id.Equals(item.Id_type)).First().Name.ToString());
-                }
-                return types;
-            }
-            else
-                if (type == "F" || type == "I")
-            {
-                var tipovi = db.Abonementypes.Where(s => s.Num_type.Contains(type));
-                foreach (var item in tipovi)
-                {
-                    var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(item.Id));
-                    foreach (var i in veza)
-                    {
-                        types.Add(db.Types.Where(s => s.Id.Equals(i.Id_type)).First().Name.ToString());
-                    }
-                    return types;
-                }
-            }
-            return types;
-            {
-
-            }
-
-        }
-        public List<String> FillKostnadstedSelectBox(int id)
-        {
-            List<String> povratna = new List<String>();
-            var test = db.Fakturaoppsetts.Where(s => s.Id_client == id);
-            foreach (var item in test)
-            {
-                povratna.Add(item.NavnPaKostnadssted);
-            }
-            return povratna;
-        }
 
 
 
@@ -520,7 +474,65 @@ namespace TeliaMVC.Controllers
 
 
         #region pomocne funkcije
-        //Funkcija za sortiranje liste po zadatoj koloni
+        public int getAbonement(string abonement,int idClient)
+        {
+            int id = getIdType(abonement);
+            return (int)db.ConnectionTypes.Where(s => s.Id_type == id).FirstOrDefault().Id_abom;
+        }
+        public int getIdType(string test)
+        {
+            var c = db.Types.Where(s => s.Name.Contains(test));
+            if (c == null)
+            {
+                return 0;
+            }
+            else
+                return c.FirstOrDefault().Id;
+        }
+        public List<String> FillAbonementtypeSelectBox(int id, string type) // selectbox za abonementypes
+        {
+            List<String> types = new List<String>();
+            List<int> ids = new List<int>();
+
+            if (type == "M")
+            {
+                var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(id));
+                foreach (var item in veza)
+                {
+                    types.Add(db.Types.Where(s => s.Id.Equals(item.Id_type)).First().Name.ToString());
+                }
+                return types;
+            }
+            else
+                if (type == "F" || type == "I")
+            {
+                var tipovi = db.Abonementypes.Where(s => s.Num_type.Contains(type));
+                foreach (var item in tipovi)
+                {
+                    var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(item.Id));
+                    foreach (var i in veza)
+                    {
+                        types.Add(db.Types.Where(s => s.Id.Equals(i.Id_type)).First().Name.ToString());
+                    }
+                    return types;
+                }
+            }
+            return types;
+            {
+
+            }
+
+        }
+        public List<String> FillKostnadstedSelectBox(int id)
+        {
+            List<String> povratna = new List<String>();
+            var test = db.Fakturaoppsetts.Where(s => s.Id_client == id);
+            foreach (var item in test)
+            {
+                povratna.Add(item.NavnPaKostnadssted);
+            }
+            return povratna;
+        }
         public System.Linq.IQueryable<TeliaMVC.Models.Nummer> SortList(System.Linq.IQueryable<TeliaMVC.Models.Nummer> list, string sortOrder)
         {
             var nummers = list;
@@ -635,7 +647,6 @@ namespace TeliaMVC.Controllers
             }
             return orgNummers;
         }
-
 
         public int GetId(string orgNummer)
         {
