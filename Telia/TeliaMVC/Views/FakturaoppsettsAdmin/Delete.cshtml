@@ -7,8 +7,60 @@
         Response.Redirect("~/Login/Index");
     }
 }
+<style>
+    .ButtonBack {
+        background-color: darkred;
+        font-size: larger;
+        font-weight: bold;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
 
-<h1 style="color:red;font-weight:bold;font-size:large;">Are you sure you want to delete selected item?</h1>
+        .ButtonBack:hover {
+            color: white;
+            background-color: red;
+            box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
+        }
+
+        .ButtonBack:active {
+            transform: translateY(+2px);
+            background-color: darkred;
+        }
+    hr {
+        border: 0;
+        height: 4px;
+        background-image: linear-gradient(to right, azure,pink, purple, pink,azure);
+        box-shadow: 0 10px 10px -10px purple inset;
+    }
+
+    .ButtonEdit {
+        background-color: darkblue;
+        font-size: larger;
+        font-weight: bold;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+
+        .ButtonEdit:hover {
+            color: white;
+            background-color: blue;
+            box-shadow: 0 13px 18px 0 rgb(30, 20, 210), 0 16px 45px 0 rgba(0,0,0,0.21);
+        }
+
+        .ButtonEdit:active {
+            transform: translateY(+2px);
+            background-color: darkblue;
+        }
+</style>
+<h1 style="color:red;font-weight:bold;font-size:large;">Er du sikker på at du vil slette merket element?</h1>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -92,28 +144,11 @@
 
         <div class="form-actions no-color">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Delete" class="btn-success btn-lg shadow-lg" style="
-                font-size: medium;
-                font-weight: bold;
-                color: white;
-                text-shadow: 1px 1px black;
-                border-radius: 12px;" />
+                <input type="submit" value="Slette" class="ButtonEdit" />
             </div>
-
             <div class="col-md-offset-2 col-md-10">
-                <!-- ovaj poziv Url.Action("Funkcija","kontroler koji poziva");
-                        Ovo sledece sto pise ";return false;"  se koristi da bi se izbegao POST metod.posto je u form control delu
-                -->
-                <button class="btn-danger btn-lg shadow-lg" onclick="location.href ='@Url.Action("Index", "FakturaoppsettsAdmin")';return false;" style="
-                    font-size: medium;
-                    font-weight: bold;
-                    color: white;
-                    text-shadow: 1px 1px black;
-                    border-radius: 12px;
-                    margin-top:5px;
-                    ">
-                    <span class="glyphicon glyphicon-fast-backward"></span>
-                    Back
+                <button class="ButtonBack" onclick="location.href ='@Url.Action("Index", "FakturaoppsettsAdmin")';return false;">
+                    <span class="glyphicon glyphicon-arrow-left"></span> Tilbake
                 </button>
             </div>
         </div>

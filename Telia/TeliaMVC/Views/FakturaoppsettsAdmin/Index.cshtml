@@ -12,6 +12,18 @@
 }
 
 <style>
+    .SelectBox {
+        color: black;
+        font-size: medium;
+        font-weight: bold;
+        margin-right: 3px;
+        margin-bottom: 3px;
+        border-radius: 16px;
+        outline-offset: 4px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
     .button {
         font-size: smaller;
         color: white;
@@ -73,7 +85,7 @@
 <br />
 
 <div class="row">
-    <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
+    <div style="overflow-x:auto; margin-left:15px; margin-right:15px;">
 
         <div class="col-sm-5">
             @using (Html.BeginForm("Index", "FakturaoppsettsAdmin", FormMethod.Get))
@@ -99,26 +111,37 @@
                      font-size: medium;
                         border-radius: 14px;" />
                 </p>
+                <fieldset>
+                    <legend>
+                        Velg firmaet du vil vise data for
+                    </legend>
+                    <p>
+                        @Html.DropDownList("selected", new SelectList(ViewBag.nummers), new { @class = "form-control SelectBox" })
+                        <input type="submit" value="Belastning" class="ButtonCreate" style="margin-top:5px;"/>
+                    </p>
+                </fieldset>
             }
         </div>
 
         <div class="col-sm-4">
-            <fieldset>
-                <legend>
-                    Legger til nytt fakturaoppset
-                </legend>
-                <button class="ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href='@Url.Action("Create", "FakturaoppsettsAdmin")'">
-                    <span class="glyphicon glyphicon-plus"></span>   Skape
-                </button>
-                <button class=" ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href = '@Url.Action("Index", "FakturaoppsettsAdmin")'">
-                    <span class="glyphicon glyphicon-repeat"></span>   Refresh
-                </button>
-            </fieldset>
+            @using (Html.BeginForm("Create", "FakturaoppsettsAdmin", FormMethod.Get))
+            {
+                <fieldset>
+                    <legend>
+                        Legg til fakture for valgt klient
+                    </legend>
+                    <p>
+                        @Html.DropDownList("selected", new SelectList(ViewBag.nummerAdd), new { @class = "form-control SelectBox" })
+                    </p>
+                    <br />
+                    <input type="submit" value="Legg til ny" class="ButtonCreate" />
+                </fieldset>
+            }
         </div>
     </div>
-    <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
+    <div style="overflow-x:auto; margin-left:15px; margin-right:15px;">
         <!--podeseno da se pojavi klizac kad se umanjuje slika-->
-        <table class="table-bordered table-sm table-hover table-striped " style="font-size: 15px;table-layout:fixed;">
+        <table class="table-bordered table-sm table-hover table-striped " style="table-layout:fixed;">
             <thead style="background-color: #990AE4;
                     color: white;
                     text-shadow: 1px 2px black;">
@@ -175,8 +198,8 @@
                 @if (Model.Count() == 0)
                 {
                     <tr>
-                        <td coldspan="10" style="font-size:18px;color:red;margin-left:5px;">
-                            No document found
+                        <td coldspan="10" style="font-size:18px;color:red;margin-left:6px;">
+                             No document found
                         </td>
                     </tr>
                 }
@@ -221,7 +244,7 @@
                                     </button>
                                     <button class="btn-danger btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du slette valgt rad"
                                             onclick="location.href='@Url.Action("Delete", "FakturaoppsettsAdmin", new { id = item.Kostnadssted })'">
-                                        <span class="glyphicon glyphicon-remove"></span>
+                                        <span class="glyphicon glyphicon-trash"></span>
                                     </button>
                                 </div>
                             </td>

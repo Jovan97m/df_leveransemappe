@@ -19,6 +19,8 @@ namespace TeliaMVC.Controllers
         //SearchParameter -je atribut koji se prosledjuje iz selektovanog radio-button-a
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page,string selected,int? Orgnummer, string SearchParameter)
         {
+            ViewBag.nummers = FillSelectBoxClients();
+            ViewBag.nummerAdd = FillSelectBoxClientsBezAll();
             ViewBag.CurrentSort = sortOrder;
             //Viewbags- za sortiranja svake kolone;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -40,14 +42,20 @@ namespace TeliaMVC.Controllers
             }
             ViewBag.CurrentFilter = searchString;
 
-
-
             var faktures = from s in db.Fakturaoppsetts
                            select s;
+            //Ovde izmeni brojeve koji treba da se prikazu na osnovu selektovanog  
+            if (selected != null)
+            {
+                if (selected != "All")
+                {
+                    int id = GetId(selected);
+                    faktures = faktures.Where(s => s.Id_client==id);
+                }
+            }
 
-            
 
-            
+
 
             //pretrazivanje pre rasporedjivanja:
             if (!String.IsNullOrEmpty(searchString))
@@ -154,8 +162,9 @@ namespace TeliaMVC.Controllers
 
         //
         #region CRUD operacije
-        public ActionResult Create()
+        public ActionResult Create(string selected)
         {
+            ViewBag.ORG = GetId(selected).ToString();
             return View();
         }
 
@@ -164,8 +173,11 @@ namespace TeliaMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "NavnPaKostnadssted,Tileggsinfo_kostnadssted,Fakturaformat,Fakturaadresse,Husnr,Bokstav,Postnummer,Sted,Epost,Kostnadssted")] Fakturaoppsett fakturaoppset)
+        public ActionResult Create([Bind(Include = "NavnPaKostnadssted,Tileggsinfo_kostnadssted,Fakturaformat,Fakturaadresse,Husnr,Bokstav,Postnummer,Sted,Epost,Kostnadssted")] Fakturaoppsett fakturaoppset,string client,string selected)
         {
+            fakturaoppset.Id_client =Convert.ToInt32(client);
+            fakturaoppset.Fakturaformat = selected;
+            fakturaoppset.Kostnadssted = fakturaoppset.NavnPaKostnadssted;
             if (ModelState.IsValid)
             {
                 db.Fakturaoppsetts.Add(fakturaoppset);
@@ -189,16 +201,16 @@ namespace TeliaMVC.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Id_client = fakturaoppsett.Id_client;
             return View(fakturaoppsett);
         }
 
-        // POST: Fakturaoppsetts/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "NavnPaKostnadssted,Tileggsinfo_kostnadssted,Fakturaformat,Fakturaadresse,Husnr,Bokstav,Postnummer,Sted,Epost,Kostnadssted")] Fakturaoppsett fakturaoppsett)
+        public ActionResult Edit([Bind(Include = "NavnPaKostnadssted,Tileggsinfo_kostnadssted,Fakturaformat,Fakturaadresse,Husnr,Bokstav,Postnummer,Sted,Epost,Kostnadssted,Id_client")] Fakturaoppsett fakturaoppsett,string selected)
         {
+            fakturaoppsett.Fakturaformat = selected;
+
             if (ModelState.IsValid)
             {
                 db.Entry(fakturaoppsett).State = EntityState.Modified;
@@ -273,5 +285,54 @@ namespace TeliaMVC.Controllers
         }
         #endregion
 
+
+
+        #region pomocne funkcije
+        public List<String> FillSelectBoxClients()
+        {
+            List<String> orgNummers = new List<String>();
+            orgNummers.Add("All");
+            foreach (var item in db.Clients.ToList())
+            {
+                //kad se doda u bazu
+                //string final = item.Orgnummer + "-" + item.FirmaNavn;
+                orgNummers.Add(item.Orgnummer);
+            }
+            return orgNummers;
+        }
+        public List<String> FillSelectBoxClientsBezAll()
+        {
+            List<String> orgNummers = new List<String>();
+            foreach (var item in db.Clients.ToList())
+            {
+                //kad se doda u bazu
+                //string final = item.Orgnummer + "-" + item.FirmaNavn;
+                orgNummers.Add(item.Orgnummer);
+            }
+            return orgNummers;
+        }
+
+        public int GetId(string orgNummer)
+        {
+            var c = db.Clients.Where(s => s.Orgnummer.Contains(orgNummer));
+            if (c == null)
+            {
+                return 0;
+            }
+            else
+                return c.FirstOrDefault().Id;
+        }
+
+        public List<String> FillKostnadstedSelectBox(int id)
+        {
+            List<String> povratna = new List<String>();
+            var test = db.Fakturaoppsetts.Where(s => s.Id_client == id);
+            foreach (var item in test)
+            {
+                povratna.Add(item.NavnPaKostnadssted);
+            }
+            return povratna;
+        }
+        #endregion
     }
 }

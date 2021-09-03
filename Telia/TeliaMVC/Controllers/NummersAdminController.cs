@@ -17,8 +17,6 @@ namespace TeliaMVC.Controllers
     public class NummersAdminController : Controller
     {
         private TeliaEntities db = new TeliaEntities();
-
-        // GET: NummersAdmin
         public ActionResult Index(string sortOrder, string currentFilter, string currentSelected, string searchString,string SearchParameter,string selected,string CopyColumn, int? page)
         {
             var nummers = from s in db.Nummers
@@ -26,7 +24,10 @@ namespace TeliaMVC.Controllers
             //SelectBox
             ViewBag.nummers = FillSelectBoxClients();
             ViewBag.nummerAdd = FillSelectBoxClientsBezAll();
-
+            if (currentSelected!= null  && selected==null)
+            {
+                selected = currentSelected;
+            }
             //Ovde izmeni brojeve koji treba da se prikazu na osnovu selektovanog  
             if (selected != null)
             {
@@ -89,20 +90,7 @@ namespace TeliaMVC.Controllers
             return View(nummers.ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: NummersAdmin/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Nummer nummer = db.Nummers.Find(id);
-            if (nummer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nummer);
-        }
+
 
         #region CREATE
         //Glavni
@@ -235,12 +223,7 @@ namespace TeliaMVC.Controllers
 
         #endregion
 
-
-
-
-
-
-        // GET: NummersAdmin/Edit/5
+        #region EDIT
         public ActionResult Edit(int? id,string selected)
         {
             if (id == null)
@@ -260,7 +243,6 @@ namespace TeliaMVC.Controllers
             ViewBag.CurrentSelected = selected;
             return View(nummer);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,ID,HovedSIM,Orgnummer,Katalogoppforing,Postnummer,Binding,Porteringsdatoog_tid,Antall_TrillingSIM,allDataSIM,Manuell_Top_up,Sperre_Top_up,Norden,Tale_og_SMS_til_EU,TBN,TrillingSIM1,TrillingSIM2,DataSIM1,DataSIM2,DataSIM3,DataSIM4,DataSIM5,DeliveryMethodCode,DeliveryStreetName,DeliveryStreetSuffix,DeliveryCity,DeliveryZIP,DeliveryCountryCode,DeliveryContractEmail,DeliveryContractCountryCode,DeliveryContractLocalNumber,DeliveryIndividualFirstName,DeliveryIndividualLastName")] Nummer nummer, string selected, string kostnadsted, string tip)
@@ -288,42 +270,95 @@ namespace TeliaMVC.Controllers
 
         public ActionResult UpdateColumn(string sortOrder,string currentFilter,string CopyColumn,string currentSelected,int? a)
         {
+            var nummers = from s in db.Nummers
+                          select s;
+            if (currentSelected != "" && currentSelected != null)
+            {
+                if (currentSelected != "All")
+                {
+                    int id = GetId(currentSelected);
+                    nummers = nummers.Where(s => s.Orgnummer.Contains(id.ToString()));
+                }
+            }
+            //sortiraj
+            nummers = SortList(nummers, sortOrder);
 
-            Nummer n = new Nummer(); n.Abonnementstype = sortOrder;
-            n.Bedrift_som_skal_faktureres = currentFilter;
-            n.c_o_adresse_for_SIM_levering = CopyColumn;
-            n.DeliveryCity = currentSelected;
-            n.Hus_bokstav = CopyColumn;
-            return View(n);
+            switch (CopyColumn)
+            {
+                case "Hus_bokstav": ViewBag.Value = nummers.FirstOrDefault().Hus_bokstav; break;
+                case "post_nr_": ViewBag.Value = nummers.FirstOrDefault().Postnummer; break;
+                case "Hus_nummer": ViewBag.Value = nummers.FirstOrDefault().Hus_nummer; break;
+                default:
+                    break;
+            }
+            ViewBag.sort = sortOrder;
+            ViewBag.filter = currentFilter;
+            ViewBag.Copy = CopyColumn;
+            ViewBag.selected = currentSelected;
+            return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateColumn([Bind(Include = "Abonnementstype,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Hus_bokstav,DeliveryCity")] Nummer nummer)
+        public ActionResult UpdateColumn(string sortOrder, string currentFilter, string CopyColumn, string currentSelected)
         {
             var nummers = from s in db.Nummers
                           select s;
-            if (nummer.DeliveryCity != null)
+            if (currentSelected != "" || currentSelected!= null)
             {
-                if (nummer.DeliveryCity != "All")
+                if (currentSelected != "All")
                 {
-                    nummers = nummers.Where(s => s.Orgnummer.Contains(nummer.DeliveryCity));
+                    int id = GetId(currentSelected);
+                    nummers = nummers.Where(s => s.Orgnummer.Contains(id.ToString()));
+                }
+            }
+            //sortiraj
+            nummers = SortList(nummers, sortOrder);
+            foreach (var item in nummers)
+            {
+                switch (CopyColumn)
+                {
+                    case "Hus_bokstav": item.Hus_bokstav = nummers.FirstOrDefault().Hus_bokstav;break;
+                    case "post_nr_": item.Postnummer = nummers.FirstOrDefault().Postnummer; break;
+                    case "Hus_nummer": item.Hus_nummer = nummers.FirstOrDefault().Hus_nummer; break;
+                    default:
+                        break;
+                }
+                db.Entry(item).State = EntityState.Modified;   
+            }
+            try { db.SaveChanges(); }
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation(
+                              "Class: {0}, Property: {1}, Error: {2}",
+                              validationErrors.Entry.Entity.GetType().FullName,
+                              validationError.PropertyName,
+                              validationError.ErrorMessage);
+                    }
                 }
             }
 
-            nummers = SortList(nummers, nummer.Abonnementstype);
-
-            foreach (var item in db.Nummers)
-            {
-                item.Hus_bokstav = nummers.FirstOrDefault().Hus_bokstav;
-                db.Entry(item).State = EntityState.Modified;
-                //db.SaveChanges();    
-            }
-            try { db.SaveChanges(); }
-            catch (Exception) { throw; }
-            //kada sve update,vrati na index
-            return RedirectToAction("Index", new { sortOrder = nummer.Abonnementstype,currentFilter = nummer.Bedrift_som_skal_faktureres , currentSelected = nummer.DeliveryCity });
+            return RedirectToAction("Index","NummersAdmin", new { sortOrder = sortOrder,currentFilter = currentFilter , currentSelected = currentSelected });
         }
+        #endregion
 
+        #region DELETE + Details
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Nummer nummer = db.Nummers.Find(id);
+            if (nummer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(nummer);
+        }
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -358,32 +393,7 @@ namespace TeliaMVC.Controllers
             base.Dispose(disposing);
         }
 
-
-        public ActionResult Load(int? page)
-        {
-            //load sve podatke
-            var nummers = from s in db.Nummers
-                          select s;
-            //load u selectList
-            List<Client> clients = db.Clients.ToList();
-            List<String> orgNummers = new List<String>();
-            foreach (var item in clients)
-            {
-                //kad se doda u bazu
-                //string final = item.Orgnummer + "-" + item.FirmaNavn;
-                orgNummers.Add(item.Orgnummer);
-            }
-            ViewBag.nummers = orgNummers;
-
-            //orderby da bi radio Paging
-            nummers = nummers.OrderBy(s => s.Telefonnummer);
-            int pageSize = 5;
-            int pageNumber = (page ?? 1);
-            return View(nummers.ToPagedList(pageNumber, pageSize));
-        }
-
-
-
+        #endregion
 
         #region excel
 
@@ -471,7 +481,6 @@ namespace TeliaMVC.Controllers
         }
 
         #endregion
-
 
         #region pomocne funkcije
         public int getAbonement(string abonement,int idClient)
@@ -659,7 +668,5 @@ namespace TeliaMVC.Controllers
                 return c.FirstOrDefault().Id;
         }
         #endregion
-
-
     }
 }
