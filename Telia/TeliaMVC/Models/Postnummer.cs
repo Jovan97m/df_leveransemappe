@@ -20,6 +20,5 @@ namespace TeliaMVC.Models
         public string Kommunenummer { get; set; }
         public string Kommunenavn { get; set; }
         public string Kategory { get; set; }
-        public string Land { get; set; }
     }
 }
