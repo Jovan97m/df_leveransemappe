@@ -243,11 +243,12 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id" Type="Int32" Nullable="false" />
     <Property Name="PostNr" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="Poststed" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="Kommunenummer" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="Kommunenavn" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="Kategory" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Land" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

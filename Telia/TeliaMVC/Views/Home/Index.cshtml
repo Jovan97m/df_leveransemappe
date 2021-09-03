@@ -45,26 +45,23 @@
         margin-right: 2px;
         margin-top: 2px;
     }
-
-    .buttonLink:hover {
-        box-shadow: 0 5px 11px 1px rgba(0, 0, 0, 0.21), 0 9px 20px 0 rgba(0, 0, 0, 0.19);
+        .buttonLink:hover {
+            box-shadow: 0 5px 11px 1px rgba(0, 0, 0, 0.21), 0 9px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+    .text{
+        margin-left:35%;
     }
-
-    .text {
-        margin-left: 35%;
-    }
-
     .jumbo {
-        margin-top: 10px;
-        padding: 10px;
-        color: black;
+        margin-top:10px;
+        padding:10px;
+        color:black;
         font-size: 18px;
         box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.19), 0 4px 15px 0 rgba(0, 0, 0, 0.17);
     }
 </style>
 <div class=" jumbo" style="background-color: #ffaa80; ">
     <h3 class="text">Hjelp</h3>
-    <p class=" text">
+    <p class=" text" >
         <span style="font-weight: bold;">Produkter:</span>  Trykk på de produktene du ønsker for å åpne respektive faner. Hver fane må så fylles ut.
     </p>
     <p class=" text">
@@ -85,19 +82,18 @@
         <p><button class="btn btn-default buttonLink" data-toggle="tooltip" data-placement="bottom" title="Arbeide med faktures" onclick="location.href = '@Url.Action("Index", "FakturaoppsettsAdmin")'">FakturaOppsett &raquo;</button></p>
         <p><a class="btn btn-default buttonLink" onclick="location.href = '@Url.Action("Index", "NummersAdmin")'">Brukerliste &raquo;</a></p>
         <p><a class="btn btn-default buttonLink" onclick="location.href = '@Url.Action("Index", "Abonementypes")'">Abonementypes &raquo;</a></p>
-        <p><a class="btn btn-default buttonLink" onclick="location.href = '@Url.Action("Index", "NummerPost")'"> Post nummer &raquo;</a></p>
+
     </div>
 
     <div class="col-md-4">
-        <h4>
-            Oversikt over kunder
-        </h4>
+                <h4>
+                    Oversikt over kunder
+                </h4>
         <p>
-            Legg til ny klient:
-            <button class="btn-info  shadow-lg buttonLink" data-toggle="tooltip" data-placement="bottom" title="Legg til ny klient"
-                    onclick="location.href='@Url.Action("Create", "Home")'">
-                <span class="glyphicon glyphicon-plus"></span>    Legg til en klient
-            </button>
+                Legg til ny klient:  
+                 <button class="btn-info  shadow-lg buttonLink" data-toggle="tooltip" data-placement="bottom" title="Legg til ny klient"
+                                 onclick="location.href='@Url.Action("Create", "Home")'">
+                <span class="glyphicon glyphicon-plus"></span>    Legg til en klient</button>
         </p>
 
         <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
@@ -122,20 +118,9 @@
                 </tbody>
             </table>
             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+         new { page }))
 
 
         </div>
-    </div>
-</div>
-
-@using (Html.BeginForm("Import", "NummerPost", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div class="row">
-        <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
-        <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                onclick="location.href = '@Url.Action("Import", "NummerPost",new { enctype = "multipart/form-data" })'">
-            <span class="glyphicon glyphicon-import"></span>Importer excel-fil
-        </button>
-    </div>
-}
+        </div>
