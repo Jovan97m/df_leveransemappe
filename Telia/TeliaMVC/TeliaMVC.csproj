@@ -215,6 +215,7 @@
     <Compile Include="Controllers\HomeClientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\NummerPostController.cs" />
     <Compile Include="Controllers\NummersAdminController.cs" />
     <Compile Include="Controllers\NummersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -367,8 +368,13 @@
     <Content Include="Views\Nummers\Action.cshtml" />
     <Content Include="Views\Nummers\CreateFixed.cshtml" />
     <Content Include="Views\Nummers\CreateInternet.cshtml" />
+<<<<<<< Updated upstream
     <Content Include="Views\NummersAdmin\CreateFixed.cshtml" />
     <Content Include="Views\NummersAdmin\CreateInternet.cshtml" />
+=======
+    <Content Include="Views\NummerPost\Index.cshtml" />
+    <Content Include="Views\NummerPost\Import.cshtml" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
