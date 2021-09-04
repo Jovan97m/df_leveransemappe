@@ -1,6 +1,4 @@
-﻿@using TeliaMVC.Models;
-@model PagedList.IPagedList<TeliaMVC.Models.Nummer>
-@using PagedList.Mvc;
+﻿@model List<List<string>>
 @{
     ViewBag.Title = "Excel";
     if (Session["Id"] == null)
@@ -78,15 +76,14 @@
 
     .SelectBox {
         color: black;
-        font-size: medium;
+        font-size: small;
         font-weight: bold;
-        margin-right: 2px;
-        margin-bottom: 2px;
+        
         border-radius: 16px;
-        outline-offset: 4px;
+        
         border: 1px solid transparent;
         cursor: pointer;
-        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 20px 0 rgba(0,0,0,0.19);
     }
 
     .HeaderTable {
@@ -145,77 +142,61 @@
             background-color: dodgerblue;
         }
 </style>
-<div class="col-sm-12">
-    <fieldset>
-        <legend>
-            Legg til en excel-fil med all nummerinformasjon
-        </legend>
-        <div class="col-md-6 " style="margin-bottom: 5px;">
-            <p>Opprett fil som data skal lastes inn i</p>
-            <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                    title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                    onclick="location.href = '@Url.Action("Export", "Nummers")'">
-                <span class="glyphicon glyphicon-download"></span> Lag en excel-fil
-            </button>
-        </div>
-        <div class="col-md-6 " style="margin-bottom: 5px;">
-            <p>Last inn dataene fra Excel-filen</p>
-            @using (Html.BeginForm("ImportExcel", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
-            {
-                <div style="display:none;">
-                    @Html.TextBox("id_sesije", ViewBag.ID as string);
-                </div>
-                @Html.Raw(ViewBag.Error)
-                <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
-                <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                        onclick="location.href = '@Url.Action("ImportExcel", "Nummers",new { id_sesija = ViewBag.ID })'">
-                    <span class="glyphicon glyphicon-import"></span>Importer excel-fil
-                </button>
-            }
-        </div>
-    </fieldset>
-</div>
-<div class="col-sm-12">
-    <fieldset>
-        <legend>
-            Legg til en excel-fil med utvalgte talldata
-        </legend>
-        <p>
-            Kontrollerte data er påkrevd, bør de tilsvarende kolonnene for denne verdien legges inn i inndatafeltene.
-        </p>
-        @using (Html.BeginForm("Action", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
-        {
-            <!-- Example of a Checked Checkbox -->
-    <div class="col-sm-3"> @Html.CheckBox("Telefonnummer", true)<label>Telefonnummer  </label>@Html.TextBox("Telefonnummer1", null, new { @class = "inputtext" })</div>
-    <div class="col-sm-3">@Html.CheckBox("Abonnementstype")<label>Abonnementstype  </label>@Html.TextBox("Abonnementstype1", null, new { @class = "inputtext" })</div>
-    <div class="col-sm-3">@Html.CheckBox("Fornavn")<label>Fornavn  </label>@Html.TextBox("Fornavn1", null, new { @class = "inputtext" })</div>
-    <div class="col-sm-3">@Html.CheckBox("Etternavn")<label>Etternavn  </label>@Html.TextBox("Etternavn1", null, new { @class = "inputtext" })</div>
-    <div class="col-sm-3">@Html.CheckBox("Bedrift som skal faktu")<label>Bedrift som skal faktu  </label>@Html.TextBox("Bedrift som skal faktu1", null, new { @class = "inputtext" })</div>
-    <div class="col-sm-3">@Html.CheckBox("c/o adresse for SIM leve")<label>c/o adresse for SIM leve  </label>@Html.TextBox("c/o adresse for SIM leve1", null, new { @class = "inputtext" })</div>
-    <div class="col-sm-3">@Html.CheckBox("Gateadresse SIM Skal")<label>Gateadresse SIM Skal  </label>@Html.TextBox("Gateadresse SIM Skal1", null, new { @class = "inputtext" })</div>
-    <div class="col-sm-3">@Html.CheckBox("Hus nummer")<label>Hus nummer  </label>@Html.TextBox("Hus nummer1", null, new { @class = "inputtext" })</div>
-    <div class="col-sm-3">@Html.CheckBox("Hus bokstav")<label>Hus bokstav  </label>@Html.TextBox("Hus bokstav1", null, new { @class = "inputtext" })</div>
-    <div class="col-sm-3">@Html.CheckBox("post nr")<label>post nr   </label>@Html.TextBox("post nr1", null, new { @class = "inputtext" })</div>
-    <div class="col-sm-3">@Html.CheckBox("Post sted")<label>Post sted  </label>@Html.TextBox("Post sted1", null, new { @class = "inputtext" })</div>
-    <div class="col-sm-3">@Html.CheckBox("Epost for sporings info")<label>Epost for sporings info  </label>@Html.TextBox("Epost for sporings info1", null, new { @class = "inputtext" })</div>
-    <div class="col-sm-3">@Html.CheckBox("Epost")<label>Epost  </label>@Html.TextBox("Epost1", null, new { @class = "inputtext" })</div>
-    <div class="col-sm-3">@Html.CheckBox("Tilleggsinfo ansatt ID")<label>Tilleggsinfo ansatt ID  </label>@Html.TextBox("Tilleggsinfo ansatt ID1", null, new { @class = "inputtext" })</div>
-    <div class="col-sm-3">@Html.CheckBox("Ekstra talesim")<label>Ekstra talesim  </label>@Html.TextBox("Ekstra talesim1", null, new { @class = "inputtext" })</div>
-    <div class="col-sm-3">@Html.CheckBox("Ekstra datasim")<label>Ekstra datasim  </label>@Html.TextBox("Ekstra datasim1", null, new { @class = "inputtext" })</div>
-    <div class="col-sm-3">@Html.CheckBox("Kostnadsted")<label>Kostnadsted  </label>@Html.TextBox("Kostnadsted1", null, new { @class = "inputtext" })</div>
-    <div class="row">
+<div class="row">
+    @using (Html.BeginForm("Action", "Nummers", FormMethod.Post, new { name = ViewBag.Name, id_sesije = ViewBag.ID }))
+    {
         <div style="display:none;">
             @Html.TextBox("id_sesije", ViewBag.ID as string);
         </div>
-        @Html.Raw(ViewBag.Error)
-        <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
-        <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                onclick="location.href = '@Url.Action("Action", "Nummers",new { id_sesije = ViewBag.ID })'">
-            <span class="glyphicon glyphicon-import"></span>Importer excel-fil
-        </button>
-    </div>
-            
-        }
-    </fieldset>
-
+        <div style="display:none;">
+            @Html.TextBox("name", ViewBag.Name as string);
         </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c1", false)<label>Telefonnummer</label>@Html.DropDownList("1", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c2", false)<label>Abonnementstype</label>@Html.DropDownList("2", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+
+            @Html.CheckBox("c3", false)<label>Fornavn</label>@Html.DropDownList("3", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c4", false)<label>Etternavn</label>@Html.DropDownList("4", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c5", false)<label>Bedrift_som_skal_faktureres</label>@Html.DropDownList("5", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c6", false)<label>c_o_adresse_for_SIM_levering</label>@Html.DropDownList("6", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c7", false)
+            <label>Gateadresse_SIM_Skal_sendes_til</label>@Html.DropDownList("7", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c8", false)
+            <label>Hus_nummer</label>@Html.DropDownList("8", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c9", false)
+            <label>Hus_bokstav</label>@Html.DropDownList("9", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">@Html.CheckBox("c10", false)<label>post_nr_</label>@Html.DropDownList("10", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })</div>
+        <div class="col-sm-3">@Html.CheckBox("c11", false)<label>Post_sted</label>@Html.DropDownList("11", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })</div>
+        <div class="col-sm-3">@Html.CheckBox("c12", false)<label>Epost_for_sporings_informasjon</label>@Html.DropDownList("12", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })</div>
+        <div class="col-sm-3">@Html.CheckBox("c13", false)<label>Epost</label>@Html.DropDownList("13", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })</div>
+        <div class="col-sm-3">@Html.CheckBox("c14", false)<label>Tilleggsinfo_ansatt_ID</label>@Html.DropDownList("14", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })</div>
+        <div class="col-sm-3">@Html.CheckBox("c15", false)<label>Ekstra_talesim_</label>@Html.DropDownList("15", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })</div>
+        <div class="col-sm-3">@Html.CheckBox("c16", false)<label>Ekstra_datasim</label>@Html.DropDownList("16", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })</div>
+        <div class="col-sm-3">@Html.CheckBox("c17", false)<label>Kostnadsted</label>@Html.DropDownList("17", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })</div>
+        <div class="col-sm-3">@Html.CheckBox("c18", false)<label>Uncheck</label></div><div class="col-sm-3"></div>
+        <div class="col-sm-3" style="margin-top:10px;float:right;flex-direction:column-reverse">
+            <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                    title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                    onclick="location.href = '@Url.Action("Action", "Nummers")'">
+                Upload
+            </button>
+        </div>
+    }
+</div>

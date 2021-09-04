@@ -40,6 +40,20 @@ USE [$(DatabaseName)];
 
 
 GO
+PRINT N'Altering Table [dbo].[Postnummer]...';
+
+
+GO
+ALTER TABLE [dbo].[Postnummer] ALTER COLUMN [Kommunenavn] NVARCHAR (MAX) NULL;
+
+ALTER TABLE [dbo].[Postnummer] ALTER COLUMN [Kommunenummer] NVARCHAR (MAX) NULL;
+
+ALTER TABLE [dbo].[Postnummer] ALTER COLUMN [PostNr] NVARCHAR (MAX) NULL;
+
+ALTER TABLE [dbo].[Postnummer] ALTER COLUMN [Poststed] NVARCHAR (MAX) NULL;
+
+
+GO
 PRINT N'Update complete.';
 
 

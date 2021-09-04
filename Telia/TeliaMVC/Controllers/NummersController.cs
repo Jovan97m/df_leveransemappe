@@ -514,9 +514,59 @@ namespace TeliaMVC.Controllers
       
         #region excel
 
-        public ActionResult Excel(string id_sesije)
+        public ActionResult Excel(HttpPostedFileBase excelfile,string id_sesije)
         {
-            return View();
+            List<List<string>> list = new List<List<string>>();
+            
+            if (excelfile.ContentLength == 0)
+            {
+                ViewBag.Error = "Du har ikke valgt noen filer";
+                return View();
+
+            }
+            else
+            {
+                string fileExtension = System.IO.Path.GetExtension(excelfile.FileName);
+                if (fileExtension.EndsWith(".xls") || fileExtension.EndsWith(".xlsx"))
+                {
+                    string fileLocation = Server.MapPath("~/Content/" + excelfile.FileName);
+                   // if (System.IO.File.Exists(fileLocation)) 
+                      //  System.IO.File.Delete(fileLocation);
+                        
+                    excelfile.SaveAs(fileLocation);
+                    ViewBag.Name = excelfile.FileName;
+                    string m = (string)ViewBag.Name;
+                    Excel.Application application = new Excel.Application();
+                    Excel.Workbook workbook = application.Workbooks.Open(fileLocation);
+                    Excel.Worksheet worksheet = workbook.ActiveSheet;
+                    Excel.Range range1 = worksheet.UsedRange;
+                    Microsoft.Office.Interop.Excel.Range range = null;
+
+                    for (int i = 1; i <= range1.Rows.Count; i++)
+                    {
+                        List<string> NN = new List<string>();
+                        for (int j = 1; j <=range1.Columns.Count; j++)
+                        {
+                            range = (Microsoft.Office.Interop.Excel.Range)worksheet.Cells[i, j];
+                            if (range == null)
+                                NN.Add("");
+                            else
+                                NN.Add((string)range.Value.ToString());
+                        }
+                        if (i == 1)
+                        {
+                            ViewData["Kolone"] = NN;
+                        }else
+                        {
+                            list.Add(NN);
+                        }
+                    }
+                    workbook.Close();
+                    application.Quit();
+                    ViewData["Podaci"] = list;
+                }
+            }
+            return View(list);
         }
 
         [HttpPost]
@@ -530,7 +580,6 @@ namespace TeliaMVC.Controllers
             }
             else
             {
-
                 string fileExtension = System.IO.Path.GetExtension(excelfile.FileName);
                 if (fileExtension.EndsWith(".xls") || fileExtension.EndsWith(".xlsx"))
                 {
@@ -549,12 +598,10 @@ namespace TeliaMVC.Controllers
                     Excel.Range range1 = worksheet.UsedRange;
                     for (int i = 2; i <= range1.Rows.Count; i++)
                     {
-                        Nummer nummer = new Nummer();
-                      
+                        Nummer nummer = new Nummer();         
                         for (int j = 1; j <= range1.Columns.Count; j++)
                         {
                             Microsoft.Office.Interop.Excel.Range range = null;
-                           
                             switch (j)
                             {
                                 case 1: nummer.Telefonnummer = (string)vratiRange(worksheet, j, i, range); break;
@@ -574,19 +621,15 @@ namespace TeliaMVC.Controllers
                                 case 15: nummer.Ekstra_talesim_ =(konvertujUBroj((string)vratiRange(worksheet, j, i, range))); break;
                                 case 16: nummer.Ekstra_datasim = konvertujUBroj((string)vratiRange(worksheet, j, i, range)); break;
                                 case 17: nummer.Kostnadsted = (string)vratiRange(worksheet, j, i, range); break;
-
                                 default:
                                     break;
                             }
                         }
                         //brojac za greske koliko se pojavile 
-
                         ProveriNummer(nummer, ref nIspravno, ref nGreske, id_sesije);
-                        
                     }
                     ViewData["Ispravno"] = nIspravno;
                     ViewData["Neispravno"] = nGreske;
-                    
                     workbook.Close();
                     return View();
                 }
@@ -620,7 +663,6 @@ namespace TeliaMVC.Controllers
                 return range.Value.ToString();
             }
         }
-
         public ActionResult Export()
         {
             try
@@ -628,7 +670,6 @@ namespace TeliaMVC.Controllers
                 Excel.Application application = new Excel.Application();
                 Excel.Workbook workbook = application.Workbooks.Add(System.Reflection.Missing.Value);
                 Excel.Worksheet worksheet = workbook.ActiveSheet;
-
 
                 worksheet.Cells[1, 1] = "Telefonnummer";
                 worksheet.Cells[1, 2] = "Abonnementstype";
@@ -647,7 +688,6 @@ namespace TeliaMVC.Controllers
                 worksheet.Cells[1, 15] = "Ekstra_talesim_";
                 worksheet.Cells[1, 16] = "Ekstra_datasim";
                 worksheet.Cells[1, 17] = "Kostnadsted";
-
                 worksheet.get_Range("A1", "Q1").EntireColumn.AutoFit();
                 var range_heading = worksheet.get_Range("A1", "Q1");
 
@@ -672,7 +712,22 @@ namespace TeliaMVC.Controllers
         #endregion
 
         #region provera
-
+        public void proveri(Nummer n)
+        {
+            string tip = null;
+            bool f = false;
+            tip = ProveriBroj(n.Telefonnummer, ref f);
+            ProveriFakture(n.Bedrift_som_skal_faktureres, ref f);
+            Proveri_Data_sim(Convert.ToInt32(n.Ekstra_datasim), ref f);
+            Proveri_Ekstra_talesim_(Convert.ToInt32(n.Ekstra_talesim_), ref f);
+            Proveri_Abonnementstype(n.Abonnementstype, ref f, "10002", tip);
+            ProveriKonstasned(n.Kostnadsted, ref f, "10002");
+           
+            
+                AddNummer(n, "10002");
+                
+            
+        }
         public void ProveriNummer(Nummer n,ref List<Nummer> nIspravno,ref List<Nummer> nGreske,string id_sesije)
         {
             string tip = null;
@@ -810,112 +865,102 @@ namespace TeliaMVC.Controllers
         }
         #endregion
         [HttpPost]
-        public ActionResult Action(HttpPostedFileBase excelfile,string id_sesije)
+        public ActionResult Action(string name,string id_sesije)
         {
             List<string> kolone = new List<string>();
-            //Example will store the value of your CheckBox (true or false)
-            string Telefonnummer = Request.Form["Telefonnummer"];
-            string Telefonnummer1 = Request.Form["Telefonnummer1"];
+
+            string Telefonnummer = Request.Form["c1"];
+            string Telefonnummer1 = Request.Form["1"];
             if (Telefonnummer == "true,false") kolone.Add(Telefonnummer1);
             else kolone.Add("");
 
-            string Abonnementstype = Request.Form["Abonnementstype"];
-            string Abonnementstype1 = Request.Form["Abonnementstype1"];
+            string Abonnementstype = Request.Form["c2"];
+            string Abonnementstype1 = Request.Form["2"];
             if (Abonnementstype == "true,false") kolone.Add(Abonnementstype1);
             else kolone.Add("");
 
-            string Fornavn = Request.Form["Fornavn"];
-            string Fornavn1 = Request.Form["Fornavn1"];
+            string Fornavn = Request.Form["c3"];
+            string Fornavn1 = Request.Form["3"];
             if (Fornavn == "true,false") kolone.Add(Fornavn1);
             else kolone.Add("");
 
-            string Etternavn = Request.Form["Etternavn"];
-            string Etternavn1 = Request.Form["Etternavn1"];
+            string Etternavn = Request.Form["c4"];
+            string Etternavn1 = Request.Form["4"];
             if (Etternavn == "true,false") kolone.Add(Etternavn1);
             else kolone.Add("");
 
-            string Bedrift_som_skal_faktu = Request.Form["Bedrift som skal faktu"];
-            string Bedrift_som_skal_faktu1 = Request.Form["Bedrift som skal faktu1"];
+            string Bedrift_som_skal_faktu = Request.Form["c5"];
+            string Bedrift_som_skal_faktu1 = Request.Form["5"];
             if (Bedrift_som_skal_faktu == "true,false") kolone.Add(Bedrift_som_skal_faktu1);
             else kolone.Add("");
 
-            string c_o_adresse_for_SIM_leve = Request.Form["c/o adresse for SIM leve"];
-            string c_o_adresse_for_SIM_leve1 = Request.Form["c/o adresse for SIM leve1"];
+            string c_o_adresse_for_SIM_leve = Request.Form["c6"];
+            string c_o_adresse_for_SIM_leve1 = Request.Form["6"];
             if (c_o_adresse_for_SIM_leve == "true,false") kolone.Add(c_o_adresse_for_SIM_leve1);
             else kolone.Add("");
 
-            string Gateadresse_SIM_Skal = Request.Form["Gateadresse SIM Skal"];
-            string Gateadresse_SIM_Skal1 = Request.Form["Gateadresse SIM Skal1"];
+            string Gateadresse_SIM_Skal = Request.Form["c7"];
+            string Gateadresse_SIM_Skal1 = Request.Form["7"];
             if (Gateadresse_SIM_Skal == "true,false") kolone.Add(Gateadresse_SIM_Skal1);
             else kolone.Add("");
 
-            string Hus_nummer = Request.Form["Hus nummer"];
-            string Hus_nummer1 = Request.Form["Hus nummer1"];
+            string Hus_nummer = Request.Form["c8"];
+            string Hus_nummer1 = Request.Form["8"];
             if (Hus_nummer == "true,false") kolone.Add(Hus_nummer1);
             else kolone.Add("");
 
-            string Hus_bokstav = Request.Form["Hus bokstav"];
-            string Hus_bokstav1 = Request.Form["Hus bokstav1"];
+            string Hus_bokstav = Request.Form["c9"];
+            string Hus_bokstav1 = Request.Form["9"];
             if (Hus_bokstav == "true,false") kolone.Add(Hus_bokstav1);
             else kolone.Add("");
 
-            string postnr = Request.Form["post nr"];
-            string postnr1 = Request.Form["post nr1"];
+            string postnr = Request.Form["c10"];
+            string postnr1 = Request.Form["10"];
             if (postnr == "true,false") kolone.Add(postnr1);
             else kolone.Add("");
 
-            string Poststed = Request.Form["Post sted"];
-            string Poststed1 = Request.Form["Post sted1"];
+            string Poststed = Request.Form["c11"];
+            string Poststed1 = Request.Form["11"];
             if (Poststed == "true,false") kolone.Add(Poststed1);
             else kolone.Add("");
 
-            string Epostforsporingsinfo = Request.Form["Epost for sporings info"];
-            string Epostforsporingsinfo1 = Request.Form["Epost for sporings info1"];
+            string Epostforsporingsinfo = Request.Form["c12"];
+            string Epostforsporingsinfo1 = Request.Form["12"];
             if (Epostforsporingsinfo == "true,false") kolone.Add(Epostforsporingsinfo1);
             else kolone.Add("");
 
-            string Epost = Request.Form["Epost"];
-            string Epost1 = Request.Form["Epost1"];
+            string Epost = Request.Form["c13"];
+            string Epost1 = Request.Form["13"];
             if (Epost == "true,false") kolone.Add(Epost1);
             else kolone.Add("");
 
-            string TilleggsinfoansattID = Request.Form["Tilleggsinfo ansatt ID"];
-            string TilleggsinfoansattID1 = Request.Form["Tilleggsinfo ansatt ID1"];
+            string TilleggsinfoansattID = Request.Form["c14"];
+            string TilleggsinfoansattID1 = Request.Form["14"];
             if (TilleggsinfoansattID == "true,false") kolone.Add(TilleggsinfoansattID1);
             else kolone.Add("");
 
-            string Ekstratalesim = Request.Form["Ekstra talesim"];
-            string Ekstratalesim1 = Request.Form["Ekstra talesim1"];
+            string Ekstratalesim = Request.Form["c15"];
+            string Ekstratalesim1 = Request.Form["15"];
             if (Ekstratalesim == "true,false") kolone.Add(Ekstratalesim1);
             else kolone.Add("");
 
-            string Ekstradatasim = Request.Form["Ekstra datasim"];
-            string Ekstradatasim1 = Request.Form["Ekstra datasim1"];
+            string Ekstradatasim = Request.Form["c16"];
+            string Ekstradatasim1 = Request.Form["16"];
             if (Ekstradatasim == "true,false") kolone.Add(Ekstradatasim1);
             else kolone.Add("");
 
-            string Kostnadsted = Request.Form["Kostnadsted"];
-            string Kostnadsted1 = Request.Form["Kostnadsted1"];
+            string Kostnadsted = Request.Form["c17"];
+            string Kostnadsted1 = Request.Form["17"];
             if (Kostnadsted == "true,false") kolone.Add(Kostnadsted1);
             else kolone.Add("");
             try
             {
-                if (excelfile.ContentLength == 0)
+               
+                
                 {
-                    ViewBag.Error = "Du har ikke valgt noen filer";
-                    return View();
-
-                }
-                else
-                {
-                    string fileExtension = System.IO.Path.GetExtension(excelfile.FileName);
-                    if (fileExtension.EndsWith(".xls") || fileExtension.EndsWith(".xlsx"))
+                    if (name.EndsWith(".xls") || name.EndsWith(".xlsx"))
                     {
-                        string fileLocation = Server.MapPath("~/Content/" + excelfile.FileName);
-                        if (System.IO.File.Exists(fileLocation))
-                            System.IO.File.Delete(fileLocation);
-                        excelfile.SaveAs(fileLocation);
-
+                        string fileLocation = Server.MapPath("~/Content/" + name);                     
                         Excel.Application application = new Excel.Application();
                         Excel.Workbook workbook = application.Workbooks.Open(fileLocation);
                         Excel.Worksheet worksheet = workbook.ActiveSheet;
@@ -927,7 +972,7 @@ namespace TeliaMVC.Controllers
                         Excel.Range range1 = worksheet.UsedRange;
                         Microsoft.Office.Interop.Excel.Range range = null;
                         for (int i = 1; i <= range1.Columns.Count; i++)
-                        {   
+                        {
                             string r = (string)vratiRange(worksheet, i, 1, range);
                             for (int j = 0; j < kolone.Count(); j++)
                             {
@@ -937,8 +982,8 @@ namespace TeliaMVC.Controllers
                                 }
                                 else
                                 {
-                                    indexi.Add(j+1);
-                                } 
+                                    indexi.Add(j + 1);
+                                }
                             }
                         }
                         for (int i = 2; i <= range1.Rows.Count; i++)
@@ -946,12 +991,12 @@ namespace TeliaMVC.Controllers
                             Nummer nummer = new Nummer();
 
                             for (int j = 0; j < range1.Columns.Count; j++)
-                            {                               
+                            {
                                 switch (indexi[j])
                                 {
-                                    case 1: nummer.Telefonnummer = (string)vratiRange(worksheet, j+1, i, range); break;
-                                    case 2: nummer.Abonnementstype = (string)vratiRange(worksheet, j+1, i, range); break;
-                                    case 3: nummer.Fornavn = (string)vratiRange(worksheet, j+1, i, range); break;
+                                    case 1: nummer.Telefonnummer = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                    case 2: nummer.Abonnementstype = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                    case 3: nummer.Fornavn = (string)vratiRange(worksheet, j + 1, i, range); break;
                                     case 4: nummer.Etternavn = (string)vratiRange(worksheet, j + 1, i, range); break;
                                     case 5: nummer.Bedrift_som_skal_faktureres = (string)vratiRange(worksheet, j + 1, i, range); break;
                                     case 6: nummer.c_o_adresse_for_SIM_levering = (string)vratiRange(worksheet, j + 1, i, range); break;
@@ -961,7 +1006,7 @@ namespace TeliaMVC.Controllers
                                     case 10: nummer.post_nr_ = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
                                     case 11: nummer.Post_sted = (string)vratiRange(worksheet, j + 1, i, range); break;
                                     case 12: nummer.Epost_for_sporings_informasjon = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                    case 13: nummer.Epost = (string)vratiRange(worksheet, j+1, i, range); break;
+                                    case 13: nummer.Epost = (string)vratiRange(worksheet, j + 1, i, range); break;
                                     case 14: nummer.Tilleggsinfo_ansatt_ID = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
                                     case 15: nummer.Ekstra_talesim_ = (konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range))); break;
                                     case 16: nummer.Ekstra_datasim = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
@@ -976,11 +1021,13 @@ namespace TeliaMVC.Controllers
                             ProveriNummer(nummer, ref nIspravno, ref nGreske, id_sesije);
 
                         }
-                        
                         ViewData["Ispravno"] = nIspravno;
                         ViewData["Neispravno"] = nGreske;
 
                         workbook.Close();
+                        application.Quit();
+                        if (System.IO.File.Exists(fileLocation))
+                            System.IO.File.Delete(fileLocation);
                         return View();
                     }
                     else
@@ -989,14 +1036,42 @@ namespace TeliaMVC.Controllers
                         return View();
                     }
                 }
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewData["Error"] = ex;
             }
             return View();
-            
+
+        }
+    
+        [HttpPost]
+        public ActionResult InsertNummer(List<string> nummers)
+        {
+            List<Nummer> nGreske = new List<Nummer>();
+            List<Nummer> nIspravno = new List<Nummer>();
+            Nummer nummer = new Nummer();
+            nummer.Telefonnummer = nummers[0];
+            nummer.Abonnementstype = nummers[1];
+            nummer.Fornavn = nummers[2];
+            nummer.Etternavn = nummers[3];
+            nummer.Bedrift_som_skal_faktureres = nummers[4];
+            nummer.c_o_adresse_for_SIM_levering = nummers[5];
+            nummer.Gateadresse_SIM_Skal_sendes_til = nummers[6];
+            nummer.Hus_nummer = Convert.ToInt32(nummers[7]);
+            nummer.Hus_bokstav = nummers[8];
+            nummer.post_nr_ = Convert.ToInt32(nummers[9]);
+            nummer.Post_sted = nummers[10];
+            nummer.Epost_for_sporings_informasjon = nummers[11];
+            nummer.Epost = nummers[12];
+            nummer.Tilleggsinfo_ansatt_ID = Convert.ToInt32(nummers[13]);
+            nummer.Ekstra_talesim_ = Convert.ToInt32(nummers[14]);
+            nummer.Ekstra_datasim = Convert.ToInt32(nummers[15]);
+            nummer.Kostnadsted = nummers[16];
+            string id = nummers[17];
+            ProveriNummer(nummer, ref nIspravno, ref nGreske, id);
+            return RedirectToAction("Import", "Nummers");
         }
     }
 }

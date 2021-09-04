@@ -222,9 +222,8 @@
     Ugyldig data
 </h2>
 
-<div id="grid" style="overflow-x: auto; margin-left: 11px; margin-right: 12px;border-radius:12px;" class=".scrollbar-lady-lips">
-    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-    <table class="table-hover table-striped Table neispravno" style="font-size: 13px; font-weight: bold;  table-layout: fixed;">
+<div  style="overflow-x: auto; margin-left: 11px; margin-right: 12px;border-radius:12px;" class=".scrollbar-lady-lips">
+    <table id="Neispravno" class="table-hover table-striped Table neispravno" style="font-size: 13px; font-weight: bold;  table-layout: fixed;">
         <thead class="HeaderTable" style="background-color: red;">
             <tr>
                 <th class="col-sm-2">Telefonumer</th>
@@ -274,12 +273,44 @@
     <br />
 
 </div>
+<div>
+    
+    <button class="btn ButtonCreate" onclick="Funkcija()">Proveri opet</button>
+</div>
 <div class="form-group">
     <div class="col-md-offset-2 col-md-8">
             <button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "Nummers", new { id_sesije = ViewBag.ID })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Back to list</button>
     </div>
 </div>
 <script>
+    
+   
+    //or
+
+    
+    function Funkcija() {
+
+        var sTableName = document.getElementById("Neispravno");
+         
+        for (var i = 1; i <= sTableName.rows.length; i++) {
+            var nummers = new Array();
+            for (var j = 0; j < sTableName.rows.length; j++) {
+                var col1 = sTableName.rows[i].cells[j].innerText;
+                nummers.push(col1);
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Nummers/InsertNummer",
+                data: JSON.stringify(nummers),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    alert(r + "Radiiiii");
+                }
+            })
+        }
+    }
     document.querySelectorAll(".neispravno tr td").forEach(function (node) {
         node.ondblclick = function () {
             var val = this.innerHTML;
@@ -294,22 +325,5 @@
             input.focus();
         }
     });
-    mybutton = document.getElementById("myBtn");
 
-    // When the user scrolls down 20px from the top of the document, show the button
-    window.onscroll = function () { scrollFunction() };
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            mybutton.style.display = "block";
-        } else {
-            mybutton.style.display = "none";
-        }
-    }
-
-    // When the user clicks on the button, scroll to the top of the document
-    function topFunction() {
-        document.body.scrollTop = 0; // For Safari
-        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-    }
 </script>

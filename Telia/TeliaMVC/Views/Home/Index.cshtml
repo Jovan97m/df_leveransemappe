@@ -128,14 +128,3 @@
         </div>
     </div>
 </div>
-
-@using (Html.BeginForm("Import", "NummerPost", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div class="row">
-        <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
-        <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                onclick="location.href = '@Url.Action("Import", "NummerPost",new { enctype = "multipart/form-data" })'">
-            <span class="glyphicon glyphicon-import"></span>Importer excel-fil
-        </button>
-    </div>
-}
