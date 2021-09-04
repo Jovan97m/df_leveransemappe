@@ -152,44 +152,44 @@
             @Html.TextBox("name", ViewBag.Name as string);
         </div>
         <div class="col-sm-3">
-            @Html.CheckBox("c1", false)<label>Telefonnummer</label>@Html.DropDownList("1", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+            @Html.CheckBox("c1", false)<label>Telefonnummer</label>@Html.DropDownList("1", new SelectList((List<string>)ViewData["Kolone"]),"-Select-", new { @class = "form-control SelectBox" })
         </div>
         <div class="col-sm-3">
-            @Html.CheckBox("c2", false)<label>Abonnementstype</label>@Html.DropDownList("2", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+            @Html.CheckBox("c2", false)<label>Abonnementstype</label>@Html.DropDownList("2", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
         </div>
         <div class="col-sm-3">
 
-            @Html.CheckBox("c3", false)<label>Fornavn</label>@Html.DropDownList("3", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+            @Html.CheckBox("c3", false)<label>Fornavn</label>@Html.DropDownList("3", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
         </div>
         <div class="col-sm-3">
-            @Html.CheckBox("c4", false)<label>Etternavn</label>@Html.DropDownList("4", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+            @Html.CheckBox("c4", false)<label>Etternavn</label>@Html.DropDownList("4", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
         </div>
         <div class="col-sm-3">
-            @Html.CheckBox("c5", false)<label>Bedrift_som_skal_faktureres</label>@Html.DropDownList("5", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+            @Html.CheckBox("c5", false)<label>Bedrift_som_skal_faktureres</label>@Html.DropDownList("5", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
         </div>
         <div class="col-sm-3">
-            @Html.CheckBox("c6", false)<label>c_o_adresse_for_SIM_levering</label>@Html.DropDownList("6", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+            @Html.CheckBox("c6", false)<label>c_o_adresse_for_SIM_levering</label>@Html.DropDownList("6", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
         </div>
         <div class="col-sm-3">
             @Html.CheckBox("c7", false)
-            <label>Gateadresse_SIM_Skal_sendes_til</label>@Html.DropDownList("7", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+            <label>Gateadresse_SIM_Skal_sendes_til</label>@Html.DropDownList("7", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
         </div>
         <div class="col-sm-3">
             @Html.CheckBox("c8", false)
-            <label>Hus_nummer</label>@Html.DropDownList("8", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+            <label>Hus_nummer</label>@Html.DropDownList("8", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
         </div>
         <div class="col-sm-3">
             @Html.CheckBox("c9", false)
-            <label>Hus_bokstav</label>@Html.DropDownList("9", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })
+            <label>Hus_bokstav</label>@Html.DropDownList("9", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
         </div>
-        <div class="col-sm-3">@Html.CheckBox("c10", false)<label>post_nr_</label>@Html.DropDownList("10", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })</div>
-        <div class="col-sm-3">@Html.CheckBox("c11", false)<label>Post_sted</label>@Html.DropDownList("11", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })</div>
-        <div class="col-sm-3">@Html.CheckBox("c12", false)<label>Epost_for_sporings_informasjon</label>@Html.DropDownList("12", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })</div>
-        <div class="col-sm-3">@Html.CheckBox("c13", false)<label>Epost</label>@Html.DropDownList("13", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })</div>
-        <div class="col-sm-3">@Html.CheckBox("c14", false)<label>Tilleggsinfo_ansatt_ID</label>@Html.DropDownList("14", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })</div>
-        <div class="col-sm-3">@Html.CheckBox("c15", false)<label>Ekstra_talesim_</label>@Html.DropDownList("15", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })</div>
-        <div class="col-sm-3">@Html.CheckBox("c16", false)<label>Ekstra_datasim</label>@Html.DropDownList("16", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })</div>
-        <div class="col-sm-3">@Html.CheckBox("c17", false)<label>Kostnadsted</label>@Html.DropDownList("17", new SelectList((List<string>)ViewData["Kolone"]), new { @class = "form-control SelectBox" })</div>
+        <div class="col-sm-3">@Html.CheckBox("c10", false)<label>post_nr_</label>@Html.DropDownList("10", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })</div>
+        <div class="col-sm-3">@Html.CheckBox("c11", false)<label>Post_sted</label>@Html.DropDownList("11", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })</div>
+        <div class="col-sm-3">@Html.CheckBox("c12", false)<label>Epost_for_sporings_informasjon</label>@Html.DropDownList("12", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })</div>
+        <div class="col-sm-3">@Html.CheckBox("c13", false)<label>Epost</label>@Html.DropDownList("13", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })</div>
+        <div class="col-sm-3">@Html.CheckBox("c14", false)<label>Tilleggsinfo_ansatt_ID</label>@Html.DropDownList("14", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })</div>
+        <div class="col-sm-3">@Html.CheckBox("c15", false)<label>Ekstra_talesim_</label>@Html.DropDownList("15", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })</div>
+        <div class="col-sm-3">@Html.CheckBox("c16", false)<label>Ekstra_datasim</label>@Html.DropDownList("16", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })</div>
+        <div class="col-sm-3">@Html.CheckBox("c17", false)<label>Kostnadsted</label>@Html.DropDownList("17", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })</div>
         <div class="col-sm-3">@Html.CheckBox("c18", false)<label>Uncheck</label></div><div class="col-sm-3"></div>
         <div class="col-sm-3" style="margin-top:10px;float:right;flex-direction:column-reverse">
             <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
