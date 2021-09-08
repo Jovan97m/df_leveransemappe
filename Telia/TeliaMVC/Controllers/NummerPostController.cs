@@ -18,23 +18,8 @@ namespace TeliaMVC.Controllers
         // GET: PostNummers
         public ActionResult Index()
         {
-            var numer = from s in db.Postnummers select s;
-            return View(numer.ToList());
-        }
-        [HttpPost,ActionName("DeleteAll")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteAll()
-        {
-            var postnummer = db.Postnummers;
-            foreach (var item in postnummer)
-            {
-                db.Postnummers.Remove(item);
-                
-            }
-            db.SaveChanges();
 
-
-            return RedirectToAction("Index", "NummerPost");
+            return View();
         }
         public ActionResult Import(HttpPostedFileBase excelfile)
         {
@@ -75,11 +60,9 @@ namespace TeliaMVC.Controllers
                                         break;
                                 }
                             }
-                            if (proveri(nummer) != null)
-                            {
-                                db.Postnummers.Add(nummer);
-                                db.SaveChanges();
-                            }
+                            
+                            db.Postnummers.Add(proveri(nummer));
+                            db.SaveChanges();
                         }
                         workbook.Close();
                         application.Quit();
@@ -87,17 +70,12 @@ namespace TeliaMVC.Controllers
                     }
                 }
             }
-            catch (DbEntityValidationException e)
+            catch (Exception ex)
             {
-                foreach (var error in e.EntityValidationErrors)
-                {
-                    foreach (var propertyError in error.ValidationErrors)
-                    {
-                        Console.WriteLine($"{propertyError.PropertyName} had the following issue: {propertyError.ErrorMessage}");
-                    }
-                }
+                ViewBag.Error = ex;
+                return View();
             }
-            return RedirectToAction("Index","NummerPost");
+            return View();
         }
         public Postnummer proveri(Postnummer n)
         {
@@ -119,4 +97,5 @@ namespace TeliaMVC.Controllers
             }
         }
     }
+
 }

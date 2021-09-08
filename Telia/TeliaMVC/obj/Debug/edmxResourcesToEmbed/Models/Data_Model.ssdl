@@ -126,10 +126,10 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="PostNr" Type="nvarchar(max)" />
-    <Property Name="Poststed" Type="nvarchar(max)" />
-    <Property Name="Kommunenummer" Type="nvarchar(max)" />
-    <Property Name="Kommunenavn" Type="nvarchar(max)" />
+    <Property Name="PostNr" Type="nvarchar" MaxLength="10" />
+    <Property Name="Poststed" Type="nvarchar" MaxLength="10" />
+    <Property Name="Kommunenummer" Type="nvarchar" MaxLength="10" />
+    <Property Name="Kommunenavn" Type="nvarchar" MaxLength="10" />
     <Property Name="Kategory" Type="char" MaxLength="1" />
   </EntityType>
   <EntityType Name="Type">

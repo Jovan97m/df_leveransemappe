@@ -131,10 +131,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PostNr" Type="nvarchar(max)" />
-          <Property Name="Poststed" Type="nvarchar(max)" />
-          <Property Name="Kommunenummer" Type="nvarchar(max)" />
-          <Property Name="Kommunenavn" Type="nvarchar(max)" />
+          <Property Name="PostNr" Type="nvarchar" MaxLength="10" />
+          <Property Name="Poststed" Type="nvarchar" MaxLength="10" />
+          <Property Name="Kommunenummer" Type="nvarchar" MaxLength="10" />
+          <Property Name="Kommunenavn" Type="nvarchar" MaxLength="10" />
           <Property Name="Kategory" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="Type">
@@ -493,10 +493,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PostNr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Poststed" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Kommunenummer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Kommunenavn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostNr" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Poststed" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Kommunenummer" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Kommunenavn" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Kategory" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
       </Schema>
