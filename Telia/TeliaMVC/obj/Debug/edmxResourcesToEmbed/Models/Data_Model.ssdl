@@ -89,7 +89,7 @@
     <Property Name="Orgnummer" Type="nvarchar" MaxLength="50" />
     <Property Name="Date" Type="date" />
     <Property Name="Pending" Type="bit" />
-    <Property Name="Katalogoppforing" Type="nvarchar" MaxLength="20" />
+    <Property Name="Katalogoppforing" Type="nvarchar" MaxLength="45" />
     <Property Name="Porteringsdatoog tid" Type="datetime" />
     <Property Name="Binding" Type="bit" />
     <Property Name="Postnummer" Type="int" />
@@ -99,7 +99,7 @@
     <Property Name="Sperre Top-up" Type="bit" />
     <Property Name="Norden" Type="bit" />
     <Property Name="Tale og SMS til EU" Type="bit" />
-    <Property Name="TBN" Type="nchar" MaxLength="15" />
+    <Property Name="TBN" Type="nvarchar" MaxLength="15" />
     <Property Name="HovedSIM" Type="int" />
     <Property Name="TrillingSIM1" Type="int" />
     <Property Name="TrillingSIM2" Type="int" />
@@ -140,7 +140,7 @@
     <Property Name="Name" Type="nvarchar" MaxLength="35" />
     <Property Name="Reference_code" Type="nvarchar" MaxLength="15" />
   </EntityType>
-  <Association Name="FK__Client__Id_abone__41EDCAC5">
+  <Association Name="FK__Client__Id_abone__489AC854">
     <End Role="Abonementype" Type="Self.Abonementype" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -154,7 +154,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Connectio__Id_ab__40058253">
+  <Association Name="FK__Connectio__Id_ab__498EEC8D">
     <End Role="Abonementype" Type="Self.Abonementype" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -168,7 +168,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Connectio__Id_ty__40F9A68C">
+  <Association Name="FK__Connectio__Id_ty__4A8310C6">
     <End Role="Type" Type="Self.Type" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -219,15 +219,15 @@
     <EntitySet Name="Nummer" EntityType="Self.Nummer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Postnummer" EntityType="Self.Postnummer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Type" EntityType="Self.Type" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__Client__Id_abone__41EDCAC5" Association="Self.FK__Client__Id_abone__41EDCAC5">
+    <AssociationSet Name="FK__Client__Id_abone__489AC854" Association="Self.FK__Client__Id_abone__489AC854">
       <End Role="Abonementype" EntitySet="Abonementype" />
       <End Role="Client" EntitySet="Client" />
     </AssociationSet>
-    <AssociationSet Name="FK__Connectio__Id_ab__40058253" Association="Self.FK__Connectio__Id_ab__40058253">
+    <AssociationSet Name="FK__Connectio__Id_ab__498EEC8D" Association="Self.FK__Connectio__Id_ab__498EEC8D">
       <End Role="Abonementype" EntitySet="Abonementype" />
       <End Role="ConnectionType" EntitySet="ConnectionType" />
     </AssociationSet>
-    <AssociationSet Name="FK__Connectio__Id_ty__40F9A68C" Association="Self.FK__Connectio__Id_ty__40F9A68C">
+    <AssociationSet Name="FK__Connectio__Id_ty__4A8310C6" Association="Self.FK__Connectio__Id_ty__4A8310C6">
       <End Role="Type" EntitySet="Type" />
       <End Role="ConnectionType" EntitySet="ConnectionType" />
     </AssociationSet>

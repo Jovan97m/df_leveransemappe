@@ -85,7 +85,7 @@ namespace TeliaMVC.Controllers
             //OrderBy
             nummers = SortList(nummers, sortOrder);
 
-            int pageSize = 10;
+            int pageSize = 25;
             int pageNumber = (page ?? 1);
             return View(nummers.ToPagedList(pageNumber, pageSize));
         }
@@ -155,6 +155,9 @@ namespace TeliaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,ID,Pending,Katalogoppforing,Porteringsdatoog_tid,Binding,Postnummer,Antall_TrillingSIM,allDataSIM,Manuell_Top_up,Sperre_Top_up,Norden,Tale_og_SMS_til_EU,TBN,HovedSIM,TrillingSIM1,TrillingSIM2,DataSIM1,DataSIM2,DataSIM3,DataSIM4,DataSIM5,DeliveryStreetName,DeliveryStreetNumber,DeliveryStreetSuffix,DeliveryCity,DeliveryZIP,DeliveryContractEmail,DeliveryContractCountyCode,DeliveryContractLocalNumber,DeliveryIndividualFirstName,DeliveryIndividualLastName")] Nummer nummer)
         {
+            //ovde da proveri broj
+
+
             if (ModelState.IsValid)
             {
                 nummer.Pending = false; // oznaci da je admin obradio ovu informaciju
@@ -176,7 +179,7 @@ namespace TeliaMVC.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Creating([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,Orgnummer,HovedSIM")] Nummer nummer, string selected, string kostnadsted,string tip)
+        public ActionResult Creating([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,Orgnummer,HovedSIM,Katalogoppforing,Postnummer,Binding,Porteringsdatoog_tid,Antall_TrillingSIM,allDataSIM,Manuell_Top_up,Sperre_Top_up,Norden,Tale_og_SMS_til_EU,TBN,TrillingSIM1,TrillingSIM2,DataSIM1,DataSIM2,DataSIM3,DataSIM4,DataSIM5,DeliveryMethodCode,DeliveryStreetName,DeliveryStreetSuffix,DeliveryCity,DeliveryZIP,DeliveryCountryCode,DeliveryContractEmail,DeliveryContractCountryCode,DeliveryContractLocalNumber,DeliveryIndividualFirstName,DeliveryIndividualLastName")] Nummer nummer, string selected, string kostnadsted,string tip)
         {
             nummer.DeliveryMethodCode = "LETTER";
             nummer.DeliveryCountryCode = "47";
@@ -288,6 +291,10 @@ namespace TeliaMVC.Controllers
                 case "Hus_bokstav": ViewBag.Value = nummers.FirstOrDefault().Hus_bokstav; break;
                 case "post_nr_": ViewBag.Value = nummers.FirstOrDefault().Postnummer; break;
                 case "Hus_nummer": ViewBag.Value = nummers.FirstOrDefault().Hus_nummer; break;
+                case "date": ViewBag.Value = nummers.FirstOrDefault().Porteringsdatoog_tid;break;
+                case "Fornavn": ViewBag.Value = nummers.FirstOrDefault().Fornavn; break;
+                case "Etternavn": ViewBag.Value = nummers.FirstOrDefault().Etternavn; break;
+                case "Katalop": ViewBag.Value = nummers.FirstOrDefault().Katalogoppforing; break;
                 default:
                     break;
             }
@@ -320,6 +327,10 @@ namespace TeliaMVC.Controllers
                     case "Hus_bokstav": item.Hus_bokstav = nummers.FirstOrDefault().Hus_bokstav;break;
                     case "post_nr_": item.Postnummer = nummers.FirstOrDefault().Postnummer; break;
                     case "Hus_nummer": item.Hus_nummer = nummers.FirstOrDefault().Hus_nummer; break;
+                    case "date": item.Porteringsdatoog_tid = nummers.FirstOrDefault().Porteringsdatoog_tid; break;
+                    case "Fornavn": item.Fornavn = nummers.FirstOrDefault().Fornavn; break;
+                    case "Etternavn": item.Etternavn = nummers.FirstOrDefault().Etternavn; break;
+                    case "Katalop": item.Katalogoppforing = nummers.FirstOrDefault().Katalogoppforing; break;
                     default:
                         break;
                 }

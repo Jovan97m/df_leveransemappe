@@ -103,7 +103,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Telefonnummer, htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-6">
-                @Html.EditorFor(model => model.Telefonnummer, new { htmlAttributes = new { @class = "form-control TextBox", @placeholder ="8 sifre" } })
+                @Html.EditorFor(model => model.Telefonnummer, new { htmlAttributes = new { @class = "form-control TextBox", @placeholder ="1,2,3,5,6,7,8 + 4 sifre" } })
                 @Html.ValidationMessageFor(model => model.Telefonnummer, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -123,7 +123,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Fornavn, htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-6">
-                @Html.EditorFor(model => model.Fornavn, new { htmlAttributes = new { @class = "form-control TextBox" } })
+                @Html.EditorFor(model => model.Fornavn, new { htmlAttributes = new { @class = "form-control TextBox",@placeholder= "Navn kreves" } })
                 @Html.ValidationMessageFor(model => model.Fornavn, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -228,7 +228,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Ekstra_talesim_, htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-6">
-                @Html.EditorFor(model => model.Ekstra_talesim_, new { htmlAttributes = new { @class = "form-control TextBox" } })
+                @Html.EditorFor(model => model.Ekstra_talesim_, new { htmlAttributes = new { @class = "form-control TextBox" ,@placeholder= "Ikke nødvendig" } })
                 @Html.ValidationMessageFor(model => model.Ekstra_talesim_, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -236,7 +236,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Ekstra_datasim, htmlAttributes: new { @class = "control-label col-md-3" })
             <div class="col-md-6">
-                @Html.EditorFor(model => model.Ekstra_datasim, new { htmlAttributes = new { @class = "form-control TextBox" } })
+                @Html.EditorFor(model => model.Ekstra_datasim, new { htmlAttributes = new { @class = "form-control TextBox", @placeholder = "Ikke nødvendig" } })
                 @Html.ValidationMessageFor(model => model.Ekstra_datasim, "", new { @class = "text-danger" })
             </div>
         </div>

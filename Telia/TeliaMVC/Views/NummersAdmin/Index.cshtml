@@ -23,6 +23,7 @@
             box-shadow: 2px 2px 1px 3px lightgray;
             border-radius: 14px;
         }
+
         .button {
             font-size: smaller;
             color: white;
@@ -31,9 +32,11 @@
             margin-bottom: 2px;
             border-radius: 12px;
         }
+
         .NotNeeded {
             background-color: #F9B3A7;
         }
+
         .inputRadio {
             border-radius: 10px;
             box-shadow: inset 0 1px 1px hsla(0,0%,100%,.8), 0 0 0 1px hsla(0,0%,0%,.6), 0 2px 3px hsla(0,0%,0%,.6), 0 4px 3px hsla(0,0%,0%,.4), 0 6px 6px hsla(0,0%,0%,.2), 0 10px 6px hsla(0,0%,0%,.2);
@@ -42,7 +45,7 @@
             height: 15px;
             margin-right: 16px;
             position: relative;
-            width: 15px;
+            width: 16px;
             -webkit-appearance: none;
         }
 
@@ -59,7 +62,7 @@
             font-size: medium;
             font-weight: bold;
             margin-right: 2px;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
             border-radius: 16px;
             outline-offset: 4px;
             border: 1px solid transparent;
@@ -75,10 +78,11 @@
 
         .ButtonCreate {
             background-color: #990AE4;
-            font-size: larger;
+            font-size: medium;
+            margin-bottom: 3px;
             font-weight: bold;
             color: white;
-            padding: 10px 15px;
+            padding: 5px 10px;
             border: solid 1px black;
             border-radius: 16px;
             border-color: transparent;
@@ -119,103 +123,126 @@
                 transform: translateY(+2px);
                 background-color: dodgerblue;
             }
-    </style>
-   
-<div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
-    <div class="col-sm-4" style="border-right: solid 1px azure;">
-        @using (Html.BeginForm("Index", "NummersAdmin", FormMethod.Get))
-        {
 
-            <fieldset>
-                <legend>Søkealternativer</legend>
-                <label class="radio-inline">
-                    @Html.RadioButton("SearchParameter", "Telefonnummer", htmlAttributes: new { @class = "inputRadio" })<label>Telefonnummer</label>
-                </label>
-                <br />
-                <label class="radio-inline">
-                    @Html.RadioButton("SearchParameter", "Fornavn", htmlAttributes: new { @class = "inputRadio" })<label>Fornavn</label>
-                </label>
-                <br />
-                <label class="radio-inline">
-                    @Html.RadioButton("SearchParameter", "Binding", htmlAttributes: new { @class = "inputRadio" })<label>Binding</label>
-                </label>
-                <br />
-            </fieldset>
-            <p style="font-size: medium;font-weight:bold;color:black;margin-left:15px;">
-                Søk etter @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-                <input type="submit" value="Search" class="ButtonSearch" />
-            </p>
+        .ButtonBack {
+            background-color: darkred;
+            font-size: medium;
+            font-weight: bold;
+            color: white;
+            padding: 7px 10px;
+            border-radius: 16px;
+            border-color: transparent;
+            text-shadow: 1px 1px black;
+            box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+        }
+
+            .ButtonBack:hover {
+                color: white;
+                background-color: red;
+                box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
+            }
+
+            .ButtonBack:active {
+                transform: translateY(+2px);
+                background-color: darkred;
+            }
+    </style>
+
+    <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
+        <div class="col-sm-4" style="border-right: solid 1px azure;">
+            @using (Html.BeginForm("Index", "NummersAdmin", FormMethod.Get))
+            {
+
+                <fieldset>
+                    <legend>Søkealternativer</legend>
+                    <label class="radio-inline">
+                        @Html.RadioButton("SearchParameter", "Telefonnummer", htmlAttributes: new { @class = "inputRadio" })<label>Telefonnummer</label>
+                    </label>
+                    <br />
+                    <label class="radio-inline">
+                        @Html.RadioButton("SearchParameter", "Fornavn", htmlAttributes: new { @class = "inputRadio" })<label>Fornavn</label>
+                    </label>
+                    <br />
+                    <label class="radio-inline">
+                        @Html.RadioButton("SearchParameter", "Binding", htmlAttributes: new { @class = "inputRadio" })<label>Binding</label>
+                    </label>
+                    <br />
+                </fieldset>
+                <p style="font-size: medium;font-weight:bold;color:black;margin-left:15px;">
+                    Søk etter @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                    <input type="submit" value="Search" class="ButtonSearch" />
+                </p>
+                <fieldset>
+                    <legend>
+                        Velg firmaet du vil vise data for
+                    </legend>
+                    <p>
+                        @Html.DropDownList("selected", new SelectList(ViewBag.nummers), new { @class = "form-control SelectBox" })
+                        <input type="submit" value="Load" class="ButtonCreate shadow-lg" />
+                    </p>
+                </fieldset>
+            }
+        </div>
+        <div class="col-sm-8" style="margin-bottom: 20px;">
+            @using (Html.BeginForm("Creating", "NummersAdmin", FormMethod.Get))
+            {
+                <fieldset>
+                    <legend>
+                        Del der du slår nummeret på klienten du vil tilordne den valgte typen nummer til
+                    </legend>
+                    <p>
+                        @Html.DropDownList("selected", new SelectList(ViewBag.nummerAdd), new { @class = "form-control SelectBox" })
+                    </p>
+                    <label class="radio-inline">
+                        @Html.RadioButton("Type", "M", htmlAttributes: new { @class = "inputRadio" })<label>Telefonnummer</label>
+                    </label>
+                    <br />
+                    <label class="radio-inline">
+                        @Html.RadioButton("Type", "F", htmlAttributes: new { @class = "inputRadio" })<label>Fixed</label>
+                    </label>
+                    <br />
+                    <label class="radio-inline">
+                        @Html.RadioButton("Type", "I", htmlAttributes: new { @class = "inputRadio" })<label>Internet</label>
+                    </label>
+                    <br />
+                    <input type="submit" value="Skriv inn et tall" class="ButtonCreate" />
+                    <!--
+                    <button class=" ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om bruker lsit" onclick="location.href = '@Url.Action("Index", "NummersAdmin")'">
+                        <span class="glyphicon glyphicon-repeat"></span>   Refresh
+                    </button>
+                        -->
+                </fieldset>
+            }
+        </div>
+        <div class="col-sm-8">
             <fieldset>
                 <legend>
-                    Velg firmaet du vil vise data for
+                    Instruksjoner for bruk av Excell-filer
                 </legend>
-                <p>
-                    @Html.DropDownList("selected", new SelectList(ViewBag.nummers), new { @class = "form-control SelectBox" })
-                    <input type="submit" value="Load" class="ButtonCreate shadow-lg" />
-                </p>
-            </fieldset>
-        }
-    </div>
-    <div class="col-sm-8" style="margin-bottom: 20px;">
-        @using (Html.BeginForm("Creating", "NummersAdmin", FormMethod.Get))
-        { 
-            <fieldset>
-                <legend>
-                    Del der du slår nummeret på klienten du vil tilordne den valgte typen nummer til
-                </legend>
-                <p>
-                    @Html.DropDownList("selected", new SelectList(ViewBag.nummerAdd), new { @class = "form-control SelectBox" })
-                </p>
-                <label class="radio-inline">
-                    @Html.RadioButton("Type", "M", htmlAttributes: new { @class = "inputRadio" })<label>Telefonnummer</label>
-                </label>
-                <br />
-                <label class="radio-inline">
-                    @Html.RadioButton("Type", "F", htmlAttributes: new { @class = "inputRadio" })<label>Fixed</label>
-                </label>
-                <br />
-                <label class="radio-inline">
-                    @Html.RadioButton("Type", "I", htmlAttributes: new { @class = "inputRadio" })<label>Internet</label>
-                </label>
-                <br />
-                <input type="submit" value="Skriv inn et tall" class="ButtonCreate" />
-                <!--
-            <button class=" ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om bruker lsit" onclick="location.href = '@Url.Action("Index", "NummersAdmin")'">
-                <span class="glyphicon glyphicon-repeat"></span>   Refresh
-            </button>
-                -->
-            </fieldset>
-        }
-    </div>
-    <div class="col-sm-4">
-        <fieldset>
-            <legend>
-                Instruksjoner for bruk av Excell-filer
-            </legend>
-            <div class="col-md-6 " style="margin-bottom: 5px;">
-                <p>Opprett fil som data skal lastes inn i</p>
-                <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                        title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                        onclick="location.href = '@Url.Action("Export", "Nummers")'">
-                    <span class="glyphicon glyphicon-download"></span> Create Excell
-                </button>
-            </div>
-            <div class="col-md-4 " style="margin-bottom: 5px;">
-                <p>Last inn dataene fra Excel-filen</p>
-                @using (Html.BeginForm("ImportExcel", "NummersAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    @Html.Raw(ViewBag.Error)
-                    <input type="file" name="excelfile" class="ButtonCreate shadow-lg"/>
+                <div class="col-md-6 " style="margin-bottom: 5px;">
+                    <p>Opprett fil som data skal lastes inn i</p>
+                    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                            title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                            onclick="location.href = '@Url.Action("Export", "Nummers")'">
+                        <span class="glyphicon glyphicon-download"></span> Create Excell
+                    </button>
+                </div>
+                <div class="col-md-4 " style="margin-bottom: 4px;">
+                    <p>Last inn dataene fra Excel-filen</p>
+                    @using (Html.BeginForm("ImportExcel", "NummersAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.Raw(ViewBag.Error)
+                        <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
                         <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
                                 title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
                                 onclick="location.href = '@Url.Action("ImportExcel", "NummersAdmin")'">
-                            <span class="glyphicon glyphicon-download"></span>Import Excel
+                            <span class="glyphicon glyphicon-download"></span>Lese en Excel-tabell
                         </button>
-                }
-            </div>
-        </fieldset>
+                    }
+                </div>
+            </fieldset>
+        </div>
     </div>
-</div>
 
     <div style="overflow-x: auto; margin-left: 11px; margin-right: 12px;border-radius:12px;" class=".scrollbar-lady-lips">
         <table class="table-hover table-striped Table" style="font-size: 13px;font-weight:bold;table-layout:fixed;">
@@ -233,11 +260,17 @@
                         <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.FornavnSortParm, currentFilter = ViewBag.CurrentFilter ,currentSelected = ViewBag.CurrentSelected})'">
                             <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                         </button>
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("UpdateColumn", "NummersAdmin",new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter , CopyColumn="Fornavn" , currentSelected =ViewBag.CurrentSelected })'">
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+                        </button>
                     </th>
                     <th class="col-sm-2">
                         Etternavn
                         <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.EtternavnSortParm, currentFilter = ViewBag.CurrentFilter,currentSelected = ViewBag.CurrentSelected })'">
                             <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("UpdateColumn", "NummersAdmin",new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter , CopyColumn="Etternavn" , currentSelected =ViewBag.CurrentSelected })'">
+                            <span class="glyphicon glyphicon-arrow-down"></span>
                         </button>
                     </th>
                     <!--
@@ -260,15 +293,15 @@
                         </button>
                     </th>
                         -->
-                <th class="col-sm-2">
-                    Hus_nummer
-                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.Hus_nummerSortParm, currentFilter = ViewBag.CurrentFilter, currentSelected = ViewBag.CurrentSelected })'">
-                        <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                    </button>
-                    <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("UpdateColumn", "NummersAdmin",new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter , CopyColumn="Hus_nummer" , currentSelected =ViewBag.CurrentSelected })'">
-                        <span class="glyphicon glyphicon-arrow-down"></span>
-                    </button>
-                </th>
+                    <th class="col-sm-2">
+                        Hus_nummer
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.Hus_nummerSortParm, currentFilter = ViewBag.CurrentFilter, currentSelected = ViewBag.CurrentSelected })'">
+                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("UpdateColumn", "NummersAdmin",new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter , CopyColumn="Hus_nummer" , currentSelected =ViewBag.CurrentSelected })'">
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+                        </button>
+                    </th>
                     <th class="col-sm-2">
                         Hus_bokstav
                         <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.Hus_bokstavSortParm, currentFilter = ViewBag.CurrentFilter, currentSelected = ViewBag.CurrentSelected })'">
@@ -292,6 +325,9 @@
                         <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.KatalogoSortParm, currentFilter = ViewBag.CurrentFilter, currentSelected = ViewBag.CurrentSelected })'">
                             <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                         </button>
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("UpdateColumn", "NummersAdmin",new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter , CopyColumn="Katalop" , currentSelected =ViewBag.CurrentSelected })'">
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+                        </button>
                     </th>
 
                     <th class="col-sm-2">
@@ -304,6 +340,9 @@
                         Porteringsdato og tid
                         <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.PorteridSortParm, currentFilter = ViewBag.CurrentFilter, currentSelected = ViewBag.CurrentSelected })'">
                             <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                        </button>
+                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("UpdateColumn", "NummersAdmin",new { sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter , CopyColumn="date" , currentSelected =ViewBag.CurrentSelected })'">
+                            <span class="glyphicon glyphicon-arrow-down"></span>
                         </button>
                     </th>
                     <th scope="row" class="col-sm-2">
@@ -525,145 +564,156 @@
                 </tr>
             </thead>
             <tbody style=" color: black; font-size: 13px;">
-                @foreach (var item in Model)
+                @if (Model.Count() == 0)
                 {
                     <tr>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Telefonnummer)
-                        </td>
-
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Fornavn)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Etternavn)
-                        </td>
-
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Hus_nummer)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Hus_bokstav)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Postnummer)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.Katalogoppforing)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Fakturaoppsett.NavnPaKostnadssted)
-                        </td>
-                        <td class="col-sm-1 ">
-
-                            @Html.DisplayFor(modelItem => item.Porteringsdatoog_tid)
-                        </td>
-                        <!-- Ovde treba jos ona 2 da se dodaju , Navarende-->
-                        <!-- pa posle ide ovo:-->
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Abonnementstype)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.Binding)
-                        </td>
-
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.Antall_TrillingSIM)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.allDataSIM)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.Manuell_Top_up)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.Sperre_Top_up)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.Norden)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.Tale_og_SMS_til_EU)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.TBN)
-                        </td>
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.HovedSIM)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.TrillingSIM1)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.TrillingSIM2)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DataSIM1)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DataSIM2)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DataSIM3)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DataSIM4)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DataSIM5)
-                        </td>
-                        <!--
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryMethodCode)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryStreetName)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryStreetNumber)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryStreetSuffix)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryCity)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryZIP)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryCountryCode)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryContractEmail)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryContractCountryCode)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryContractLocalNumber)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryIndividualFirstName)
-                        </td>
-                        <td class="col-sm-1 NotNeeded">
-                            @Html.DisplayFor(modelItem => item.DeliveryIndividualLastName)
-                        </td>
-                            -->
-                        <td style="background-color: azure; font-style: italic; font-size: 15px;" class="col-sm-2">
-                            <div style="display:flex; align-items:stretch;">
-                                <button class="btn-primary btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
-                                        onclick="location.href = '@Url.Action("Edit", "NummersAdmin", new {id = item.ID,selected = ViewBag.CurrentSelected})'">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-
-                                </button>
-                                <button class="btn-danger btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du slette valgt rad"
-                                        onclick="location.href = '@Url.Action("Delete", "NummersAdmin", new {id = item.ID})'">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </div>
+                        <td coldspan="10" style="font-size:18px;color:red;margin-left:5px;">
+                            No document found
                         </td>
                     </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Telefonnummer)
+                            </td>
+
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Fornavn)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Etternavn)
+                            </td>
+
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Hus_nummer)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Hus_bokstav)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Postnummer)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.Katalogoppforing)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Fakturaoppsett.NavnPaKostnadssted)
+                            </td>
+                            <td class="col-sm-1 ">
+
+                                @Html.DisplayFor(modelItem => item.Porteringsdatoog_tid)
+                            </td>
+                            <!-- Ovde treba jos ona 2 da se dodaju , Navarende-->
+                            <!-- pa posle ide ovo:-->
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Abonnementstype)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.Binding)
+                            </td>
+
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.Antall_TrillingSIM)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.allDataSIM)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.Manuell_Top_up)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.Sperre_Top_up)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.Norden)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.Tale_og_SMS_til_EU)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.TBN)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.HovedSIM)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.TrillingSIM1)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.TrillingSIM2)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DataSIM1)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DataSIM2)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DataSIM3)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DataSIM4)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DataSIM5)
+                            </td>
+                            <!--
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DeliveryMethodCode)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DeliveryStreetName)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DeliveryStreetNumber)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DeliveryStreetSuffix)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DeliveryCity)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DeliveryZIP)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DeliveryCountryCode)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DeliveryContractEmail)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DeliveryContractCountryCode)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DeliveryContractLocalNumber)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DeliveryIndividualFirstName)
+                            </td>
+                            <td class="col-sm-1 NotNeeded">
+                                @Html.DisplayFor(modelItem => item.DeliveryIndividualLastName)
+                            </td>
+                                -->
+                            <td style="background-color: azure; font-style: italic; font-size: 15px;" class="col-sm-2">
+                                <div style="display:flex; align-items:stretch;">
+                                    <button class="btn-primary btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
+                                            onclick="location.href = '@Url.Action("Edit", "NummersAdmin", new { id = item.ID, selected = ViewBag.CurrentSelected })'">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+
+                                    </button>
+                                    <button class="btn-danger btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du slette valgt rad"
+                                            onclick="location.href = '@Url.Action("Delete", "NummersAdmin", new { id = item.ID })'">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
@@ -673,6 +723,8 @@
             new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, currentSelected = ViewBag.CurrentSelected }))
 
     </div>
-
+    <div class="col-sm-2" style="margin-top:5px;">
+        <button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "Home")';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Tilbake</button>
+    </div>
 </body>
 </html>

@@ -54,7 +54,7 @@
     <Property Name="Orgnummer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Date" Type="DateTime" Precision="0" />
     <Property Name="Pending" Type="Boolean" />
-    <Property Name="Katalogoppforing" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Katalogoppforing" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
     <Property Name="Porteringsdatoog_tid" Type="DateTime" Precision="3" />
     <Property Name="Binding" Type="Boolean" />
     <Property Name="Postnummer" Type="Int32" />
@@ -64,7 +64,7 @@
     <Property Name="Sperre_Top_up" Type="Boolean" />
     <Property Name="Norden" Type="Boolean" />
     <Property Name="Tale_og_SMS_til_EU" Type="Boolean" />
-    <Property Name="TBN" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="TBN" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
     <Property Name="HovedSIM" Type="Int32" />
     <Property Name="TrillingSIM1" Type="Int32" />
     <Property Name="TrillingSIM2" Type="Int32" />

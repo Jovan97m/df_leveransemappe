@@ -28,8 +28,6 @@ namespace TeliaMVC.Controllers
             Client client = db.Clients.Find(Convert.ToInt32(id_sesije));
             //formiraj listu za odredjenog klijenta
             nummers = nummers.Where(s => s.Orgnummer.Contains(client.Id.ToString()));
-
-
             ViewBag.ID = Convert.ToInt32(id_sesije);
             ViewBag.CurrentSort = sortOrder; // za paging,da ostane sortirano kad se radi stranicenje
             ViewBag.Telefonnummer = String.IsNullOrEmpty(sortOrder) ? "telefonnummer_desc" : "";
@@ -166,7 +164,7 @@ namespace TeliaMVC.Controllers
                     break;
             }
 
-            int pageSize = 5;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
              return View(nummers.ToPagedList(pageNumber, pageSize));
         }
@@ -481,32 +479,20 @@ namespace TeliaMVC.Controllers
             List<String> types = new List<String>();
             List<int> ids = new List<int>();
 
-            if (type == "M")
+
+            var tipovi = db.Abonementypes.Where(s => s.Num_type.Contains(type));
+            foreach (var item in tipovi)
             {
-                var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(id));
-                foreach (var item in veza)
+                var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(item.Id));
+                foreach (var i in veza)
                 {
-                    types.Add(db.Types.Where(s => s.Id.Equals(item.Id_type)).First().Name.ToString());
+                    types.Add(db.Types.Where(s => s.Id.Equals(i.Id_type)).First().Name.ToString());
                 }
-                return types;
-            }
-            else
-            if (type == "F" || type == "I")
-            {
-                var tipovi = db.Abonementypes.Where(s => s.Num_type.Contains(type));
-                foreach (var item in tipovi)
-                {
-                    var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(item.Id));
-                    foreach (var i in veza)
-                    {
-                        types.Add(db.Types.Where(s => s.Id.Equals(i.Id_type)).First().Name.ToString());
-                    }
-                    
-                }
-                return types;
 
             }
-            return types;            
+            return types;
+
+                      
         }
 
 

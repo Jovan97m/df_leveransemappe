@@ -18,26 +18,31 @@
         background-image: linear-gradient(to right, azure,pink, purple, pink,azure);
         box-shadow: 0 10px 10px -10px purple inset;
     }
+
     .ButtonBack {
         background-color: darkred;
-        font-size: small;
+        font-size: medium;
+        margin-left:10px;
+        margin-top:5px;
         font-weight: bold;
         color: white;
-        padding: 5px 9px;
+        padding: 7px 10px;
         border-radius: 16px;
-        border-color:transparent;
+        border-color: transparent;
         text-shadow: 1px 1px black;
         box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
     }
-    .ButtonBack:hover {
-        color: white;
-        background-color: red;
-        box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
-    }
-    .ButtonBack:active {
-        transform: translateY(+2px);
-        background-color: darkred;
-    }
+
+        .ButtonBack:hover {
+            color: white;
+            background-color: red;
+            box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
+        }
+
+        .ButtonBack:active {
+            transform: translateY(+2px);
+            background-color: darkred;
+        }
 
     .inputRadio {
         border-radius: 10px;
@@ -50,10 +55,12 @@
         width: 15px;
         -webkit-appearance: none;
     }
-    .button{
+
+    .button {
         border-radius: 10px;
         margin: 3px;
     }
+
     .inputRadio:hover {
         background-color: #c86cf9;
     }
@@ -61,6 +68,7 @@
     .inputRadio:checked {
         background-color: #990ae4;
     }
+
     .ButtonCreate {
         background-color: #990AE4;
         font-size: medium;
@@ -74,26 +82,28 @@
         box-shadow: 1px 8px 15px 0 rgba(0,0,0,0.27), 0 14px 30px 0 rgba(0,0,0,0.19);
     }
 
-    .ButtonCreate:hover {
-        color: white;
-        background-color: purple;
-        box-shadow: 0 13px 18px 0 #990AE4, 0 16px 45px 0 rgba(0,0,0,0.21);
-    }
+        .ButtonCreate:hover {
+            color: white;
+            background-color: purple;
+            box-shadow: 0 13px 18px 0 #990AE4, 0 16px 45px 0 rgba(0,0,0,0.21);
+        }
 
-    .ButtonCreate:active {
-        transform: translateY(+2px);
-        background-color: darkblue;
-    }
+        .ButtonCreate:active {
+            transform: translateY(+2px);
+            background-color: darkblue;
+        }
+
     .ContainerGreen {
         box-shadow: 2px 2px 1px 3px #b3ffb3;
         margin-bottom: 5px;
     }
+
     .btnSort {
         background-color: transparent;
         padding-top: 3px;
         padding-bottom: 3px;
-        padding-left:5px;
-        padding-right:5px;
+        padding-left: 5px;
+        padding-right: 5px;
     }
 </style>
 
@@ -129,167 +139,177 @@
             <button class=" ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om bruker lsit" onclick="location.href = '@Url.Action("Index", "Nummers",new { id_sesije = ViewBag.ID })'">
                 <span class="glyphicon glyphicon-repeat"></span>   Refresh
             </button>
-            <br/>
+            <br />
         }
     </div>
-    <div class="col-sm-4">
-        <fieldset>
-            <legend>
-                Angi bestemt type tall
-            </legend>
-            <div class="row">
-                <div class="col-md-6" style="margin-bottom: 5px;">
-                    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                            title="Skriv inn mobilnummeret ditt "
-                            onclick="location.href = '@Url.Action("Create", "Nummers",new { sesija = ViewBag.ID })'">
-                        <span class="glyphicon glyphicon-phone"></span> Telefonnummer
-                    </button>
-                </div>
-
-                <div class="col-md-8" style="margin-bottom: 5px;">
-                    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                            title="Angi et fasttelefonnummer. Dette nummeret er tillatt for alle klienter å angi."
-                            onclick="location.href = '@Url.Action("CreateFixed", "Nummers",new { sesija = ViewBag.ID })'">
-                        <span class="glyphicon glyphicon-phone-alt"></span> Fixed
-                    </button>
-                </div>
-
-                <div class="col-md-6" style="margin-bottom: 5px;">
-                    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                            title="Skriv inn internettnummeret , som har en regel som starter på 58 og har 12 sifre"
-                            onclick="location.href = '@Url.Action("CreateInternet", "Nummers",new { sesija = ViewBag.ID })'">
-                        <span class="glyphicon glyphicon-globe"></span> InternetNummer
-                    </button>
-                </div>
-            </div>
-        </fieldset>
-    </div>
-    <div class="col-sm-4">
-
-        <fieldset>
-            <legend>
-                Instruksjoner for bruk av Excell-filer
-            </legend>
-            <div class="col-md-6 " style="margin-bottom: 5px;">
-                <p>Last inn dataene fra Excel-filen</p>
-                @using (Html.BeginForm("Excel", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
-                {
-                    <div style="display:none;">
-                        @Html.TextBox("id_sesije", ViewBag.ID as string);
+        <div class="col-sm-4">
+            <fieldset>
+                <legend>
+                    Angi bestemt type tall
+                </legend>
+                <div class="row">
+                    <div class="col-md-6" style="margin-bottom: 5px;">
+                        <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                                title="Skriv inn mobilnummeret ditt "
+                                onclick="location.href = '@Url.Action("Create", "Nummers",new { sesija = ViewBag.ID })'">
+                            <span class="glyphicon glyphicon-phone"></span> Telefonnummer
+                        </button>
                     </div>
-                    @Html.Raw(ViewBag.Error)
-                    <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
-                    <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                            onclick="location.href = '@Url.Action("Excel", "Nummers",new { id_sesija = ViewBag.ID })'">
-                        <span class="glyphicon glyphicon-import"></span>Importer excel-fil
-                    </button>
-                }
-            </div>
-        </fieldset>
-    </div>
-    </div>
 
-    <div style="overflow-x: auto; margin-left: 7px; margin-right: 15px;" class="shadow">
-        <table class="table-bordered table-sm table-hover table-striped " style="font-size: 14px;color:black;font-weight:bold;table-layout:fixed;border-radius: 5px;">
-            <thead style="background-color: #990AE4;
+                    <div class="col-md-8" style="margin-bottom: 5px;">
+                        <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                                title="Angi et fasttelefonnummer. Dette nummeret er tillatt for alle klienter å angi."
+                                onclick="location.href = '@Url.Action("CreateFixed", "Nummers",new { sesija = ViewBag.ID })'">
+                            <span class="glyphicon glyphicon-phone-alt"></span> Fixed
+                        </button>
+                    </div>
+
+                    <div class="col-md-6" style="margin-bottom: 5px;">
+                        <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                                title="Skriv inn internettnummeret , som har en regel som starter på 58 og har 12 sifre"
+                                onclick="location.href = '@Url.Action("CreateInternet", "Nummers",new { sesija = ViewBag.ID })'">
+                            <span class="glyphicon glyphicon-globe"></span> InternetNummer
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-sm-4">
+
+            <fieldset>
+                <legend>
+                    Instruksjoner for bruk av Excell-filer
+                </legend>
+                <div class="col-md-6 " style="margin-bottom: 5px;">
+                    <p>Last inn dataene fra Excel-filen</p>
+                    @using (Html.BeginForm("Excel", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
+                    {
+                        <div style="display:none;">
+                            @Html.TextBox("id_sesije", ViewBag.ID as string);
+                        </div>
+                        @Html.Raw(ViewBag.Error)
+                        <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
+                        <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                                onclick="location.href = '@Url.Action("Excel", "Nummers",new { id_sesija = ViewBag.ID })'">
+                            <span class="glyphicon glyphicon-import"></span>Importer excel-fil
+                        </button>
+                    }
+                </div>
+            </fieldset>
+        </div>
+</div>
+
+<div style="overflow-x: auto; margin-left: 7px; margin-right: 15px;" class="shadow">
+    <table class="table-bordered table-sm table-hover table-striped " style="font-size: 14px;color:black;font-weight:bold;table-layout:fixed;border-radius: 5px;">
+        <thead style="background-color: #990AE4;
                       color: white;
                       text-shadow: 1px 1px black;">
+            <tr>
+                <th class="col-sm-2">
+                    Telefonnummer
+                    <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Telefonnummer, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
+                        <span class="glyphicon glyphicon-sort"></span>
+                    </button>
+                </th>
+                <th scope="row" class="col-sm-2">
+                    Abonnementstype
+                    <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Abonnementstype, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
+                        <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                    </button>
+                </th>
+                <th class="col-sm-2">
+                    Fornavn
+                    <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.FornavnSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
+                        <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                    </button>
+                </th>
+                <th class="col-sm-2">
+                    Etternavn
+                    <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.EtternavnSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
+                        <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                    </button>
+                </th>
+                <th class="col-sm-2">
+                    Bedrift_som_skal_faktureres
+                    <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Bedrift_som_skal_faktureresSortParm, currentFilter = ViewBag.CurrentFilter , id_sesije = ViewBag.ID})'">
+                        <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                    </button>
+                </th>
+                <th class="col-sm-2">
+                    c_o_adresse_for_SIM_levering
+                    <button class="btn btn-sm btnSort" style="background-color:transparent; padding:4px;" onclick="location.href='@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.c_o_adresse_for_SIM_leveringSortParm, currentFilter = ViewBag.CurrentFilter , id_sesije = ViewBag.ID})'">
+                        <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                    </button>
+                </th>
+                <th class="col-sm-2">
+                    Gateadresse_SIM_Skal_sendes_til
+                    <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Gateadresse_SIM_Skal_sendes_tilSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
+                        <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                    </button>
+                </th>
+                <th class="col-sm-2">
+                    Hus_nummer
+                    <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Hus_nummerSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
+                        <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                    </button>
+                </th>
+                <th class="col-sm-2">
+                    Hus_bokstav
+                    <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Hus_bokstavSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
+                        <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                    </button>
+                </th>
+                <th class="col-sm-2">
+                    post_nr_
+                    <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.post_nr_SortParm, currentFilter = ViewBag.CurrentFilter , id_sesije = ViewBag.ID})'">
+                        <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                    </button>
+                </th>
+                <th class="col-sm-2">
+                    Post_sted
+                    <button class="btn btn-smbtnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Post_stedSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
+                        <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                    </button>
+                </th>
+                <th class="col-sm-2">
+                    Epost_for_sporings_informasjon
+                </th>
+                <th class="col-sm-2">
+                    Epost
+                </th>
+                <th class="col-sm-2">
+                    Tilleggsinfo_ansatt_ID
+                </th>
+                <th class="col-sm-2">
+                    Ekstra_talesim_
+                    <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Ekstra_talesimSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
+                        <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                    </button>
+                </th>
+                <th class="col-sm-2">
+                    Ekstra_datasim
+                    <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Ekstra_datasimSortParm, currentFilter = ViewBag.CurrentFilter , id_sesije = ViewBag.ID})'">
+                        <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                    </button>
+                </th>
+                <th class="col-sm-2">
+                    NavnPaKostnadssted
+                </th>
+                <th style="width:35px;"></th>
+            </tr>
+        </thead>
+        <tbody style=" color: black; font-size: 12px;">
+            @if (Model.Count() == 0)
+            {
                 <tr>
-                    <th class="col-sm-2">
-                        Telefonnummer
-                        <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Telefonnummer, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
-                            <span class="glyphicon glyphicon-sort"></span>
-                        </button>
-                    </th>
-                    <th scope="row" class="col-sm-2">
-                        Abonnementstype
-                        <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Abonnementstype, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Fornavn
-                        <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.FornavnSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Etternavn
-                        <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.EtternavnSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Bedrift_som_skal_faktureres
-                        <button class="btn btn-sm btnSort"  onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Bedrift_som_skal_faktureresSortParm, currentFilter = ViewBag.CurrentFilter , id_sesije = ViewBag.ID})'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        c_o_adresse_for_SIM_levering
-                        <button class="btn btn-sm btnSort" style="background-color:transparent; padding:4px;" onclick="location.href='@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.c_o_adresse_for_SIM_leveringSortParm, currentFilter = ViewBag.CurrentFilter , id_sesije = ViewBag.ID})'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Gateadresse_SIM_Skal_sendes_til
-                        <button class="btn btn-sm btnSort"  onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Gateadresse_SIM_Skal_sendes_tilSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Hus_nummer
-                        <button class="btn btn-sm btnSort"  onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Hus_nummerSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Hus_bokstav
-                        <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Hus_bokstavSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        post_nr_
-                        <button class="btn btn-sm btnSort"  onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.post_nr_SortParm, currentFilter = ViewBag.CurrentFilter , id_sesije = ViewBag.ID})'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Post_sted
-                        <button class="btn btn-smbtnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Post_stedSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Epost_for_sporings_informasjon
-                    </th>
-                    <th class="col-sm-2">
-                        Epost
-                    </th>
-                    <th class="col-sm-2">
-                        Tilleggsinfo_ansatt_ID
-                    </th>
-                    <th class="col-sm-2">
-                        Ekstra_talesim_
-                        <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Ekstra_talesimSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Ekstra_datasim
-                        <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Ekstra_datasimSortParm, currentFilter = ViewBag.CurrentFilter , id_sesije = ViewBag.ID})'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        NavnPaKostnadssted
-                    </th>
-                    <th style="width:35px;"></th>
+                    <td coldspan="10" style="font-size:18px;color:red;margin-left:5px;">
+                        No document found
+                    </td>
                 </tr>
-            </thead>
-            <tbody style=" color: black; font-size: 12px;">
-                @foreach (var item in Model)
+            }
+            else
+            {
+                foreach (var item in Model)
                 {
                     <tr>
                         <td class="col-sm-1">
@@ -346,26 +366,31 @@
                         <td style="background-color: azure; font-style: italic; font-size: 15px;" class="col-sm-2">
                             <div style="display:flex; align-items:stretch;">
                                 <button class="btn-primary btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
-                                        onclick="location.href = '@Url.Action("Edit", "Nummers", new {id = item.ID})'">
+                                        onclick="location.href = '@Url.Action("Edit", "Nummers", new { id = item.ID })'">
                                     <span class="glyphicon glyphicon-pencil"></span>
 
                                 </button>
                                 <button class="btn-danger btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du slette valgt rad"
-                                        onclick="location.href = '@Url.Action("Delete", "Nummers", new {id = item.ID})'">
+                                        onclick="location.href = '@Url.Action("Delete", "Nummers", new { id = item.ID })'">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button>
                             </div>
                         </td>
                     </tr>
                 }
-            </tbody>
-        </table>
+            }
+        </tbody>
+    </table>
 
-        <br />
-        @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-        @Html.PagedListPager(Model, page => Url.Action("Index",
-            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID }))
+    <br />
+    @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID }))
 
-    </div>
+
+
+</div>
+<button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "HomeClient", new { id=ViewBag.ID })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Tilbake</button>
+
 
 

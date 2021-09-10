@@ -111,11 +111,12 @@ namespace TeliaMVC.Models
         public Nullable<int> Ekstra_datasim { get; set; }
         public int ID { get; set; }
         public string Orgnummer { get; set; }
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}",ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<bool> Pending { get; set; }
         public string Katalogoppforing { get; set; }
         public Nullable<System.DateTime> Porteringsdatoog_tid { get; set; }
-        [StringLength(20)]
         public string Binding { get; set; }
         public Nullable<int> Postnummer { get; set; }
         public Nullable<int> Antall_TrillingSIM { get; set; }
