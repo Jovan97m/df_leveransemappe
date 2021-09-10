@@ -372,6 +372,7 @@
     <Content Include="Views\NummersAdmin\CreateInternet.cshtml" />
     <Content Include="Views\NummerPost\Index.cshtml" />
     <Content Include="Views\NummerPost\Import.cshtml" />
+    <Content Include="Views\Nummers\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

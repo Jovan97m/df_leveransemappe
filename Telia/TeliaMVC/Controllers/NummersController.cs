@@ -489,33 +489,77 @@ namespace TeliaMVC.Controllers
                     types.Add(db.Types.Where(s => s.Id.Equals(item.Id_type)).First().Name.ToString());
                 }
                 return types;
-            } else
-                if (type=="F" || type== "I")
-                {
-                    var tipovi = db.Abonementypes.Where(s => s.Num_type.Contains(type));
-                    foreach (var item in tipovi)
-                    {
-                        var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(item.Id));
-                        foreach (var i in veza)
-                        {
-                         types.Add(db.Types.Where(s => s.Id.Equals(i.Id_type)).First().Name.ToString());
-                        }
-                    return types;
-                }
-                }
-            return types;
+            }
+            else
+            if (type == "F" || type == "I")
             {
+                var tipovi = db.Abonementypes.Where(s => s.Num_type.Contains(type));
+                foreach (var item in tipovi)
+                {
+                    var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(item.Id));
+                    foreach (var i in veza)
+                    {
+                        types.Add(db.Types.Where(s => s.Id.Equals(i.Id_type)).First().Name.ToString());
+                    }
+                    
+                }
+                return types;
 
             }
-            
+            return types;            
         }
 
 
-      
+
         #region excel
 
-        public ActionResult Excel(string id_sesije)
+        public ActionResult Excel(HttpPostedFileBase excelfile, string id_sesije)
         {
+            if (excelfile.ContentLength == 0)
+            {
+                ViewBag.Error = "Du har ikke valgt noen filer";
+                return View();
+
+            }
+            else
+            {
+                string fileExtension = System.IO.Path.GetExtension(excelfile.FileName);
+                if (fileExtension.EndsWith(".xls") || fileExtension.EndsWith(".xlsx"))
+                {
+                    string fileLocation = Server.MapPath("~/Content/" + excelfile.FileName);
+                    // if (System.IO.File.Exists(fileLocation)) 
+                    //  System.IO.File.Delete(fileLocation);
+
+                    excelfile.SaveAs(fileLocation);
+                    ViewBag.Name = excelfile.FileName;
+                    string m = (string)ViewBag.Name;
+                    Excel.Application application = new Excel.Application();
+                    Excel.Workbook workbook = application.Workbooks.Open(fileLocation);
+                    Excel.Worksheet worksheet = workbook.ActiveSheet;
+                    Excel.Range range1 = worksheet.UsedRange;
+                    Microsoft.Office.Interop.Excel.Range range = null;
+
+                    List<string> NN = new List<string>();
+                    for (int j = 1; j <= range1.Columns.Count; j++)
+                    {
+                        range = (Microsoft.Office.Interop.Excel.Range)worksheet.Cells[1, j];
+                        if (range == null)
+                            NN.Add("");
+                        else
+                        {
+                            if (range.Value != null)
+                            {
+                                string r = (string)range.Value.ToString();
+                                NN.Add(r);
+                            }
+                        }
+                            
+                    }
+                    workbook.Close();
+                    application.Quit();
+                    ViewData["Kolone"] = NN;
+                }
+            }
             return View();
         }
 
@@ -620,6 +664,18 @@ namespace TeliaMVC.Controllers
                 return range.Value.ToString();
             }
         }
+        public Nummer vratiBroj(string n)
+        {
+            
+            if (n == null)
+            {
+                return null;
+            }
+            else
+            {
+                return db.Nummers.Where(s => s.Telefonnummer.Contains(n)).First();
+            }
+        }
 
         public ActionResult Export()
         {
@@ -669,30 +725,530 @@ namespace TeliaMVC.Controllers
             return View();
         }
 
-        #endregion
-
-        #region provera
-
-        public void ProveriNummer(Nummer n,ref List<Nummer> nIspravno,ref List<Nummer> nGreske,string id_sesije)
+        [HttpPost]
+        public ActionResult Action(string name, string id_sesije)
         {
-            string tip = null;
-            bool f = false;
-            tip=ProveriBroj(n.Telefonnummer, ref f);
-            ProveriFakture(n.Bedrift_som_skal_faktureres, ref f);
-            Proveri_Data_sim(Convert.ToInt32(n.Ekstra_datasim), ref f);
-            Proveri_Ekstra_talesim_(Convert.ToInt32(n.Ekstra_talesim_), ref f);
-            Proveri_Abonnementstype(n.Abonnementstype, ref f,id_sesije,tip);
-            ProveriKonstasned(n.Kostnadsted, ref f,id_sesije);
-
-            if(f)
+            List<string> kolone = new List<string>();
+            string c = Request.Form["uc18"];
+            if (c == "false")
             {
-                nGreske.Add(n);
+
+                string Telefonnummer = Request.Form["uc1"];
+                string Telefonnummer1 = Request.Form["u1"];
+                if (Telefonnummer == "true,false") kolone.Add(Telefonnummer1);
+                else kolone.Add("");
+
+                string Abonnementstype = Request.Form["uc2"];
+                string Abonnementstype1 = Request.Form["u2"];
+                if (Abonnementstype == "true,false") kolone.Add(Abonnementstype1);
+                else kolone.Add("");
+
+                string Fornavn = Request.Form["uc3"];
+                string Fornavn1 = Request.Form["u3"];
+                if (Fornavn == "true,false") kolone.Add(Fornavn1);
+                else kolone.Add("");
+
+                string Etternavn = Request.Form["uc4"];
+                string Etternavn1 = Request.Form["u4"];
+                if (Etternavn == "true,false") kolone.Add(Etternavn1);
+                else kolone.Add("");
+
+                string Bedrift_som_skal_faktu = Request.Form["uc5"];
+                string Bedrift_som_skal_faktu1 = Request.Form["u5"];
+                if (Bedrift_som_skal_faktu == "true,false") kolone.Add(Bedrift_som_skal_faktu1);
+                else kolone.Add("");
+
+                string c_o_adresse_for_SIM_leve = Request.Form["uc6"];
+                string c_o_adresse_for_SIM_leve1 = Request.Form["u6"];
+                if (c_o_adresse_for_SIM_leve == "true,false") kolone.Add(c_o_adresse_for_SIM_leve1);
+                else kolone.Add("");
+
+                string Gateadresse_SIM_Skal = Request.Form["uc7"];
+                string Gateadresse_SIM_Skal1 = Request.Form["u7"];
+                if (Gateadresse_SIM_Skal == "true,false") kolone.Add(Gateadresse_SIM_Skal1);
+                else kolone.Add("");
+
+                string Hus_nummer = Request.Form["uc8"];
+                string Hus_nummer1 = Request.Form["u8"];
+                if (Hus_nummer == "true,false") kolone.Add(Hus_nummer1);
+                else kolone.Add("");
+
+                string Hus_bokstav = Request.Form["uc9"];
+                string Hus_bokstav1 = Request.Form["u9"];
+                if (Hus_bokstav == "true,false") kolone.Add(Hus_bokstav1);
+                else kolone.Add("");
+
+                string postnr = Request.Form["uc10"];
+                string postnr1 = Request.Form["u10"];
+                if (postnr == "true,false") kolone.Add(postnr1);
+                else kolone.Add("");
+
+                string Poststed = Request.Form["uc11"];
+                string Poststed1 = Request.Form["u11"];
+                if (Poststed == "true,false") kolone.Add(Poststed1);
+                else kolone.Add("");
+
+                string Epostforsporingsinfo = Request.Form["uc12"];
+                string Epostforsporingsinfo1 = Request.Form["u12"];
+                if (Epostforsporingsinfo == "true,false") kolone.Add(Epostforsporingsinfo1);
+                else kolone.Add("");
+
+                string Epost = Request.Form["uc13"];
+                string Epost1 = Request.Form["u13"];
+                if (Epost == "true,false") kolone.Add(Epost1);
+                else kolone.Add("");
+
+                string TilleggsinfoansattID = Request.Form["uc14"];
+                string TilleggsinfoansattID1 = Request.Form["u14"];
+                if (TilleggsinfoansattID == "true,false") kolone.Add(TilleggsinfoansattID1);
+                else kolone.Add("");
+
+                string Ekstratalesim = Request.Form["uc15"];
+                string Ekstratalesim1 = Request.Form["u15"];
+                if (Ekstratalesim == "true,false") kolone.Add(Ekstratalesim1);
+                else kolone.Add("");
+
+                string Ekstradatasim = Request.Form["uc16"];
+                string Ekstradatasim1 = Request.Form["u16"];
+                if (Ekstradatasim == "true,false") kolone.Add(Ekstradatasim1);
+                else kolone.Add("");
+
+                string Kostnadsted = Request.Form["uc17"];
+                string Kostnadsted1 = Request.Form["u17"];
+                if (Kostnadsted == "true,false") kolone.Add(Kostnadsted1);
+                else kolone.Add("");
+
+
+                try
+                {
+
+
+                    if (name.Length == 0)
+                    {
+                        ViewBag.Error = "Du har ikke valgt noen filer";
+                        return View();
+
+                    }
+                    else
+                    {
+
+                        if (name.EndsWith(".xls") || name.EndsWith(".xlsx"))
+                        {
+                            string fileLocation = Server.MapPath("~/Content/" + name);
+                            Excel.Application application = new Excel.Application();
+                            Excel.Workbook workbook = application.Workbooks.Open(fileLocation);
+                            Excel.Worksheet worksheet = workbook.ActiveSheet;
+                            //Excel.Range range = worksheet.UsedRange;
+                            List<Nummer> nIspravno = new List<Nummer>();
+                            List<Nummer> nGreske = new List<Nummer>();
+                            bool tacno = true;
+                            List<int> indexi = new List<int>();
+                            Excel.Range range1 = worksheet.UsedRange;
+                            Microsoft.Office.Interop.Excel.Range range = null;
+                            for (int i = 1; i <= range1.Columns.Count; i++)
+                            {
+                                string r = (string)vratiRange(worksheet, i, 1, range);
+                                for (int j = 0; j < kolone.Count(); j++)
+                                {
+                                    if (kolone[j] == r && r != "")
+                                    {
+                                        indexi.Add(j + 1);
+                                    }
+                                }
+                            }
+
+                            for (int i = 2; i <= range1.Rows.Count; i++)
+                            {
+                                Nummer nummer = new Nummer();
+                                for (int j = 0; j < range1.Columns.Count; j++)
+                                {
+                                    switch (indexi[j])
+                                    {
+
+                                        case 1: nummer.Telefonnummer = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 2: nummer.Abonnementstype = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 3: nummer.Fornavn = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 4: nummer.Etternavn = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 5: nummer.Bedrift_som_skal_faktureres = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 6: nummer.c_o_adresse_for_SIM_levering = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 7: nummer.Gateadresse_SIM_Skal_sendes_til = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 8: nummer.Hus_nummer = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
+                                        case 9: nummer.Hus_bokstav = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 10: nummer.post_nr_ = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
+                                        case 11: nummer.Post_sted = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 12: nummer.Epost_for_sporings_informasjon = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 13: nummer.Epost = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 14: nummer.Tilleggsinfo_ansatt_ID = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
+                                        case 15: nummer.Ekstra_talesim_ = (konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range))); break;
+                                        case 16: nummer.Ekstra_datasim = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
+                                        case 17: nummer.Kostnadsted = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                //brojac za greske koliko se pojavile 
+
+                                ProveriNummer(nummer, ref nIspravno, ref nGreske, id_sesije);
+                            }
+                            ViewData["Ispravno"] = nIspravno;
+                            ViewData["Neispravno"] = nGreske;
+
+                            workbook.Close();
+                            application.Quit();
+                            if (System.IO.File.Exists(fileLocation))
+                                System.IO.File.Delete(fileLocation);
+                            return View();
+                        }
+                        else
+                        {
+                            ViewBag.Error = "Du har valgt feil fil";
+                            return View();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ViewData["Error"] = ex;
+                }
+                return View();
             }
             else
             {
-                AddNummer(n, id_sesije);
-                nIspravno.Add(n);
+                try
+                {
+
+
+                    if (name.Length == 0)
+                    {
+                        ViewBag.Error = "Du har ikke valgt noen filer";
+                        return View();
+
+                    }
+                    else
+                    {
+
+                        if (name.EndsWith(".xls") || name.EndsWith(".xlsx"))
+                        {
+                            string fileLocation = Server.MapPath("~/Content/" + name);
+                            Excel.Application application = new Excel.Application();
+                            Excel.Workbook workbook = application.Workbooks.Open(fileLocation);
+                            Excel.Worksheet worksheet = workbook.ActiveSheet;
+                            //Excel.Range range = worksheet.UsedRange;
+                            List<Nummer> nIspravno = new List<Nummer>();
+                            List<Nummer> nGreske = new List<Nummer>();
+                            bool tacno = true;
+                            List<int> indexi = new List<int>();
+                            Excel.Range range1 = worksheet.UsedRange;
+                            Microsoft.Office.Interop.Excel.Range range = null;
+                            for (int i = 2; i <= range1.Rows.Count; i++)
+                            {
+                                Nummer nummer = new Nummer();
+                                for (int j = 1; j <= range1.Columns.Count; j++)
+                                {
+                                    switch (j)
+                                    {
+
+                                        case 1: nummer.Telefonnummer = (string)vratiRange(worksheet, j , i, range); break;
+                                        case 2: nummer.Abonnementstype = (string)vratiRange(worksheet, j, i, range); break;
+                                        case 3: nummer.Fornavn = (string)vratiRange(worksheet, j, i, range); break;
+                                        case 4: nummer.Etternavn = (string)vratiRange(worksheet, j, i, range); break;
+                                        case 5: nummer.Bedrift_som_skal_faktureres = (string)vratiRange(worksheet, j, i, range); break;
+                                        case 6: nummer.c_o_adresse_for_SIM_levering = (string)vratiRange(worksheet, j, i, range); break;
+                                        case 7: nummer.Gateadresse_SIM_Skal_sendes_til = (string)vratiRange(worksheet, j , i, range); break;
+                                        case 8: nummer.Hus_nummer = konvertujUBroj((string)vratiRange(worksheet, j , i, range)); break;
+                                        case 9: nummer.Hus_bokstav = (string)vratiRange(worksheet, j , i, range); break;
+                                        case 10: nummer.post_nr_ = konvertujUBroj((string)vratiRange(worksheet, j , i, range)); break;
+                                        case 11: nummer.Post_sted = (string)vratiRange(worksheet, j , i, range); break;
+                                        case 12: nummer.Epost_for_sporings_informasjon = (string)vratiRange(worksheet, j , i, range); break;
+                                        case 13: nummer.Epost = (string)vratiRange(worksheet, j , i, range); break;
+                                        case 14: nummer.Tilleggsinfo_ansatt_ID = konvertujUBroj((string)vratiRange(worksheet, j , i, range)); break;
+                                        case 15: nummer.Ekstra_talesim_ = (konvertujUBroj((string)vratiRange(worksheet, j , i, range))); break;
+                                        case 16: nummer.Ekstra_datasim = konvertujUBroj((string)vratiRange(worksheet, j , i, range)); break;
+                                        case 17: nummer.Kostnadsted = (string)vratiRange(worksheet, j , i, range); break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                //brojac za greske koliko se pojavile 
+
+                                ProveriNummer(nummer, ref nIspravno, ref nGreske, id_sesije);
+                            }
+                            ViewData["Ispravno"] = nIspravno;
+                            ViewData["Neispravno"] = nGreske;
+
+                            workbook.Close();
+                            application.Quit();
+                            if (System.IO.File.Exists(fileLocation))
+                                System.IO.File.Delete(fileLocation);
+                            return View();
+                        }
+                        else
+                        {
+                            ViewBag.Error = "Du har valgt feil fil";
+                            return View();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ViewData["Error"] = ex;
+                }
+                return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult Update(string name, string id_sesije)
+        {
+            List<string> kolone = new List<string>();
+            int indbroj=0;
+            string Telefonnummer = Request.Form["c1"];
+            string Telefonnummer1 = Request.Form["1"];
+            if (Telefonnummer == "true,false") kolone.Add(Telefonnummer1);
+            else kolone.Add("");
+
+            string Abonnementstype = Request.Form["c2"];
+            string Abonnementstype1 = Request.Form["2"];
+            if (Abonnementstype == "true,false") kolone.Add(Abonnementstype1);
+            else kolone.Add("");
+
+            string Fornavn = Request.Form["c3"];
+            string Fornavn1 = Request.Form["3"];
+            if (Fornavn == "true,false") kolone.Add(Fornavn1);
+            else kolone.Add("");
+
+            string Etternavn = Request.Form["c4"];
+            string Etternavn1 = Request.Form["4"];
+            if (Etternavn == "true,false") kolone.Add(Etternavn1);
+            else kolone.Add("");
+
+            string Bedrift_som_skal_faktu = Request.Form["c5"];
+            string Bedrift_som_skal_faktu1 = Request.Form["5"];
+            if (Bedrift_som_skal_faktu == "true,false") kolone.Add(Bedrift_som_skal_faktu1);
+            else kolone.Add("");
+
+            string c_o_adresse_for_SIM_leve = Request.Form["c6"];
+            string c_o_adresse_for_SIM_leve1 = Request.Form["6"];
+            if (c_o_adresse_for_SIM_leve == "true,false") kolone.Add(c_o_adresse_for_SIM_leve1);
+            else kolone.Add("");
+
+            string Gateadresse_SIM_Skal = Request.Form["c7"];
+            string Gateadresse_SIM_Skal1 = Request.Form["7"];
+            if (Gateadresse_SIM_Skal == "true,false") kolone.Add(Gateadresse_SIM_Skal1);
+            else kolone.Add("");
+
+            string Hus_nummer = Request.Form["c8"];
+            string Hus_nummer1 = Request.Form["8"];
+            if (Hus_nummer == "true,false") kolone.Add(Hus_nummer1);
+            else kolone.Add("");
+
+            string Hus_bokstav = Request.Form["c9"];
+            string Hus_bokstav1 = Request.Form["9"];
+            if (Hus_bokstav == "true,false") kolone.Add(Hus_bokstav1);
+            else kolone.Add("");
+
+            string postnr = Request.Form["c10"];
+            string postnr1 = Request.Form["10"];
+            if (postnr == "true,false") kolone.Add(postnr1);
+            else kolone.Add("");
+
+            string Poststed = Request.Form["c11"];
+            string Poststed1 = Request.Form["11"];
+            if (Poststed == "true,false") kolone.Add(Poststed1);
+            else kolone.Add("");
+
+            string Epostforsporingsinfo = Request.Form["c12"];
+            string Epostforsporingsinfo1 = Request.Form["12"];
+            if (Epostforsporingsinfo == "true,false") kolone.Add(Epostforsporingsinfo1);
+            else kolone.Add("");
+
+            string Epost = Request.Form["c13"];
+            string Epost1 = Request.Form["13"];
+            if (Epost == "true,false") kolone.Add(Epost1);
+            else kolone.Add("");
+
+            string TilleggsinfoansattID = Request.Form["c14"];
+            string TilleggsinfoansattID1 = Request.Form["14"];
+            if (TilleggsinfoansattID == "true,false") kolone.Add(TilleggsinfoansattID1);
+            else kolone.Add("");
+
+            string Ekstratalesim = Request.Form["c15"];
+            string Ekstratalesim1 = Request.Form["15"];
+            if (Ekstratalesim == "true,false") kolone.Add(Ekstratalesim1);
+            else kolone.Add("");
+
+            string Ekstradatasim = Request.Form["c16"];
+            string Ekstradatasim1 = Request.Form["16"];
+            if (Ekstradatasim == "true,false") kolone.Add(Ekstradatasim1);
+            else kolone.Add("");
+
+            string Kostnadsted = Request.Form["c17"];
+            string Kostnadsted1 = Request.Form["17"];
+            if (Kostnadsted == "true,false") kolone.Add(Kostnadsted1);
+            else kolone.Add("");
+
+            
+            try
+            {
+
+
+                if (name.Length == 0)
+                {
+                    ViewBag.Error = "Du har ikke valgt noen filer";
+                    return View();
+
+                }
+                else
+                {
+
+                    if (name.EndsWith(".xls") || name.EndsWith(".xlsx"))
+                    {
+                        string fileLocation = Server.MapPath("~/Content/" + name);
+                        Excel.Application application = new Excel.Application();
+                        Excel.Workbook workbook = application.Workbooks.Open(fileLocation);
+                        Excel.Worksheet worksheet = workbook.ActiveSheet;
+                        //Excel.Range range = worksheet.UsedRange;
+                        List<Nummer> nIspravno = new List<Nummer>();
+                        List<Nummer> nGreske = new List<Nummer>();
+                        bool tacno = true;
+                        List<int> indexi = new List<int>();
+                        Excel.Range range1 = worksheet.UsedRange;
+                        
+                        Microsoft.Office.Interop.Excel.Range range = null;
+                        string telNummer = (string)vratiRange(worksheet, 1, 1, range);
+                        for (int i = 1; i <= range1.Columns.Count; i++)
+                        {
+                            string r = (string)vratiRange(worksheet, i, 1, range);
+                            for (int j = 0; j < kolone.Count(); j++)
+                            {
+                                if (kolone[j] == telNummer)
+                                {
+                                    indbroj = j + 1;
+                                }
+                                if (kolone[j] == r&&r!="")
+                                {
+                                    indexi.Add(j + 1);
+                                }                                    
+                            }
+                        }
+
+                        for (int i = 2; i <= range1.Rows.Count; i++)
+                        {
+
+                            Nummer nummer = new Nummer();
+                                for (int j = 0; j < range1.Columns.Count; j++)
+                                {
+
+                                    switch (indexi[j])
+                                    {
+                                        case 1:nummer.Telefonnummer = (string)vratiRange(worksheet, j + 1, i, range);break;
+                                        case 2: nummer.Abonnementstype = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 3: nummer.Fornavn = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 4: nummer.Etternavn = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 5: nummer.Bedrift_som_skal_faktureres = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 6: nummer.c_o_adresse_for_SIM_levering = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 7: nummer.Gateadresse_SIM_Skal_sendes_til = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 8: nummer.Hus_nummer = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
+                                        case 9: nummer.Hus_bokstav = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 10: nummer.post_nr_ = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
+                                        case 11: nummer.Post_sted = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 12: nummer.Epost_for_sporings_informasjon = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 13: nummer.Epost = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 14: nummer.Tilleggsinfo_ansatt_ID = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
+                                        case 15: nummer.Ekstra_talesim_ = (konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range))); break;
+                                        case 16: nummer.Ekstra_datasim = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
+                                        case 17: nummer.Kostnadsted = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        default:
+                                            break;
+                                    }
+                                }
+
+                            //brojac za greske koliko se pojavile 
+                            if (indbroj != 0)
+                            {
+
+                                Nummer n = vratiBroj(nummer.Telefonnummer);
+
+                                for (int p = 0; p < range1.Columns.Count; p++)
+                                {
+                                    switch (indexi[p])
+                                    {
+                                        case 1: n.Telefonnummer = nummer.Telefonnummer; break;
+                                        case 2: n.Abonnementstype = nummer.Abonnementstype; break;
+                                        case 3: n.Fornavn = nummer.Fornavn ; break;
+                                        case 4: n.Etternavn = nummer.Etternavn; break;
+                                        case 5: n.Bedrift_som_skal_faktureres = nummer.Bedrift_som_skal_faktureres; break;
+                                        case 6: n.c_o_adresse_for_SIM_levering = nummer.c_o_adresse_for_SIM_levering; break;
+                                        case 7: n.Gateadresse_SIM_Skal_sendes_til = nummer.Gateadresse_SIM_Skal_sendes_til; break;
+                                        case 8: n.Hus_nummer = nummer.Hus_nummer; break;
+                                        case 9: n.Hus_bokstav = nummer.Hus_bokstav; break;
+                                        case 10: n.post_nr_ = nummer.post_nr_; break;
+                                        case 11: n.Post_sted = nummer.Post_sted; break;
+                                        case 12: n.Epost_for_sporings_informasjon = nummer.Epost_for_sporings_informasjon; break;
+                                        case 13: n.Epost = nummer.Epost; break;
+                                        case 14: n.Tilleggsinfo_ansatt_ID = nummer.Tilleggsinfo_ansatt_ID; break;
+                                        case 15: n.Ekstra_talesim_ = nummer.Ekstra_talesim_; break;
+                                        case 16: n.Ekstra_datasim = nummer.Ekstra_datasim; break;
+                                        case 17: n.Kostnadsted = nummer.Kostnadsted; break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                deleteNummer(n);
+                                ProveriNummer(n, ref nIspravno, ref nGreske, id_sesije);
+                            }
+                        }
+                        ViewData["Ispravno"] = nIspravno;
+                        ViewData["Neispravno"] = nGreske;
+
+                        workbook.Close();
+                        application.Quit();
+                        if (System.IO.File.Exists(fileLocation))
+                            System.IO.File.Delete(fileLocation);
+                        return View();
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Du har valgt feil fil";
+                        return View();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewData["Error"] = ex;
+            }
+            return View();
+        }
+        #endregion
+
+        #region provera
+        public void deleteNummer(Nummer n)
+        {
+            Nummer nummer = db.Nummers.Where(s => s.Telefonnummer.Contains(n.Telefonnummer)).First();
+            db.Nummers.Remove(nummer);
+            db.SaveChanges();
+        }
+        public void ProveriNummer(Nummer n,ref List<Nummer> nIspravno,ref List<Nummer> nGreske,string id_sesije)
+        {
+                string tip = null;
+                bool f = false;
+                tip=ProveriBroj(n.Telefonnummer, ref f);
+                ProveriFakture(n.Bedrift_som_skal_faktureres, ref f);
+                Proveri_Data_sim(Convert.ToInt32(n.Ekstra_datasim), ref f);
+                Proveri_Ekstra_talesim_(Convert.ToInt32(n.Ekstra_talesim_), ref f);
+                Proveri_Abonnementstype(n.Abonnementstype, ref f,id_sesije,tip);
+                ProveriKonstasned(n.Kostnadsted, ref f,id_sesije);
+
+                if(f)
+                {
+                    nGreske.Add(n);
+                }
+                else
+                {
+                    AddNummer(n, id_sesije);
+                    nIspravno.Add(n);
+                }
             
         }
 
@@ -809,194 +1365,6 @@ namespace TeliaMVC.Controllers
             if (flag) f = true;
         }
         #endregion
-        [HttpPost]
-        public ActionResult Action(HttpPostedFileBase excelfile,string id_sesije)
-        {
-            List<string> kolone = new List<string>();
-            //Example will store the value of your CheckBox (true or false)
-            string Telefonnummer = Request.Form["Telefonnummer"];
-            string Telefonnummer1 = Request.Form["Telefonnummer1"];
-            if (Telefonnummer == "true,false") kolone.Add(Telefonnummer1);
-            else kolone.Add("");
-
-            string Abonnementstype = Request.Form["Abonnementstype"];
-            string Abonnementstype1 = Request.Form["Abonnementstype1"];
-            if (Abonnementstype == "true,false") kolone.Add(Abonnementstype1);
-            else kolone.Add("");
-
-            string Fornavn = Request.Form["Fornavn"];
-            string Fornavn1 = Request.Form["Fornavn1"];
-            if (Fornavn == "true,false") kolone.Add(Fornavn1);
-            else kolone.Add("");
-
-            string Etternavn = Request.Form["Etternavn"];
-            string Etternavn1 = Request.Form["Etternavn1"];
-            if (Etternavn == "true,false") kolone.Add(Etternavn1);
-            else kolone.Add("");
-
-            string Bedrift_som_skal_faktu = Request.Form["Bedrift som skal faktu"];
-            string Bedrift_som_skal_faktu1 = Request.Form["Bedrift som skal faktu1"];
-            if (Bedrift_som_skal_faktu == "true,false") kolone.Add(Bedrift_som_skal_faktu1);
-            else kolone.Add("");
-
-            string c_o_adresse_for_SIM_leve = Request.Form["c/o adresse for SIM leve"];
-            string c_o_adresse_for_SIM_leve1 = Request.Form["c/o adresse for SIM leve1"];
-            if (c_o_adresse_for_SIM_leve == "true,false") kolone.Add(c_o_adresse_for_SIM_leve1);
-            else kolone.Add("");
-
-            string Gateadresse_SIM_Skal = Request.Form["Gateadresse SIM Skal"];
-            string Gateadresse_SIM_Skal1 = Request.Form["Gateadresse SIM Skal1"];
-            if (Gateadresse_SIM_Skal == "true,false") kolone.Add(Gateadresse_SIM_Skal1);
-            else kolone.Add("");
-
-            string Hus_nummer = Request.Form["Hus nummer"];
-            string Hus_nummer1 = Request.Form["Hus nummer1"];
-            if (Hus_nummer == "true,false") kolone.Add(Hus_nummer1);
-            else kolone.Add("");
-
-            string Hus_bokstav = Request.Form["Hus bokstav"];
-            string Hus_bokstav1 = Request.Form["Hus bokstav1"];
-            if (Hus_bokstav == "true,false") kolone.Add(Hus_bokstav1);
-            else kolone.Add("");
-
-            string postnr = Request.Form["post nr"];
-            string postnr1 = Request.Form["post nr1"];
-            if (postnr == "true,false") kolone.Add(postnr1);
-            else kolone.Add("");
-
-            string Poststed = Request.Form["Post sted"];
-            string Poststed1 = Request.Form["Post sted1"];
-            if (Poststed == "true,false") kolone.Add(Poststed1);
-            else kolone.Add("");
-
-            string Epostforsporingsinfo = Request.Form["Epost for sporings info"];
-            string Epostforsporingsinfo1 = Request.Form["Epost for sporings info1"];
-            if (Epostforsporingsinfo == "true,false") kolone.Add(Epostforsporingsinfo1);
-            else kolone.Add("");
-
-            string Epost = Request.Form["Epost"];
-            string Epost1 = Request.Form["Epost1"];
-            if (Epost == "true,false") kolone.Add(Epost1);
-            else kolone.Add("");
-
-            string TilleggsinfoansattID = Request.Form["Tilleggsinfo ansatt ID"];
-            string TilleggsinfoansattID1 = Request.Form["Tilleggsinfo ansatt ID1"];
-            if (TilleggsinfoansattID == "true,false") kolone.Add(TilleggsinfoansattID1);
-            else kolone.Add("");
-
-            string Ekstratalesim = Request.Form["Ekstra talesim"];
-            string Ekstratalesim1 = Request.Form["Ekstra talesim1"];
-            if (Ekstratalesim == "true,false") kolone.Add(Ekstratalesim1);
-            else kolone.Add("");
-
-            string Ekstradatasim = Request.Form["Ekstra datasim"];
-            string Ekstradatasim1 = Request.Form["Ekstra datasim1"];
-            if (Ekstradatasim == "true,false") kolone.Add(Ekstradatasim1);
-            else kolone.Add("");
-
-            string Kostnadsted = Request.Form["Kostnadsted"];
-            string Kostnadsted1 = Request.Form["Kostnadsted1"];
-            if (Kostnadsted == "true,false") kolone.Add(Kostnadsted1);
-            else kolone.Add("");
-            try
-            {
-                if (excelfile.ContentLength == 0)
-                {
-                    ViewBag.Error = "Du har ikke valgt noen filer";
-                    return View();
-
-                }
-                else
-                {
-                    string fileExtension = System.IO.Path.GetExtension(excelfile.FileName);
-                    if (fileExtension.EndsWith(".xls") || fileExtension.EndsWith(".xlsx"))
-                    {
-                        string fileLocation = Server.MapPath("~/Content/" + excelfile.FileName);
-                        if (System.IO.File.Exists(fileLocation))
-                            System.IO.File.Delete(fileLocation);
-                        excelfile.SaveAs(fileLocation);
-
-                        Excel.Application application = new Excel.Application();
-                        Excel.Workbook workbook = application.Workbooks.Open(fileLocation);
-                        Excel.Worksheet worksheet = workbook.ActiveSheet;
-                        //Excel.Range range = worksheet.UsedRange;
-                        List<Nummer> nIspravno = new List<Nummer>();
-                        List<Nummer> nGreske = new List<Nummer>();
-                        bool tacno = true;
-                        List<int> indexi = new List<int>();
-                        Excel.Range range1 = worksheet.UsedRange;
-                        Microsoft.Office.Interop.Excel.Range range = null;
-                        for (int i = 1; i <= range1.Columns.Count; i++)
-                        {   
-                            string r = (string)vratiRange(worksheet, i, 1, range);
-                            for (int j = 0; j < kolone.Count(); j++)
-                            {
-                                if (kolone[j] != r)
-                                {
-                                    tacno = false;
-                                }
-                                else
-                                {
-                                    indexi.Add(j+1);
-                                } 
-                            }
-                        }
-                        for (int i = 2; i <= range1.Rows.Count; i++)
-                        {
-                            Nummer nummer = new Nummer();
-
-                            for (int j = 0; j < range1.Columns.Count; j++)
-                            {                               
-                                switch (indexi[j])
-                                {
-                                    case 1: nummer.Telefonnummer = (string)vratiRange(worksheet, j+1, i, range); break;
-                                    case 2: nummer.Abonnementstype = (string)vratiRange(worksheet, j+1, i, range); break;
-                                    case 3: nummer.Fornavn = (string)vratiRange(worksheet, j+1, i, range); break;
-                                    case 4: nummer.Etternavn = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                    case 5: nummer.Bedrift_som_skal_faktureres = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                    case 6: nummer.c_o_adresse_for_SIM_levering = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                    case 7: nummer.Gateadresse_SIM_Skal_sendes_til = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                    case 8: nummer.Hus_nummer = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
-                                    case 9: nummer.Hus_bokstav = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                    case 10: nummer.post_nr_ = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
-                                    case 11: nummer.Post_sted = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                    case 12: nummer.Epost_for_sporings_informasjon = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                    case 13: nummer.Epost = (string)vratiRange(worksheet, j+1, i, range); break;
-                                    case 14: nummer.Tilleggsinfo_ansatt_ID = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
-                                    case 15: nummer.Ekstra_talesim_ = (konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range))); break;
-                                    case 16: nummer.Ekstra_datasim = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
-                                    case 17: nummer.Kostnadsted = (string)vratiRange(worksheet, j + 1, i, range); break;
-
-                                    default:
-                                        break;
-                                }
-                            }
-                            //brojac za greske koliko se pojavile 
-
-                            ProveriNummer(nummer, ref nIspravno, ref nGreske, id_sesije);
-
-                        }
-                        
-                        ViewData["Ispravno"] = nIspravno;
-                        ViewData["Neispravno"] = nGreske;
-
-                        workbook.Close();
-                        return View();
-                    }
-                    else
-                    {
-                        ViewBag.Error = "Du har valgt feil fil";
-                        return View();
-                    }
-                }
-                
-            }
-            catch(Exception ex)
-            {
-                ViewData["Error"] = ex;
-            }
-            return View();
-            
-        }
+        
     }
 }

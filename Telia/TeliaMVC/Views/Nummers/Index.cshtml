@@ -178,6 +178,7 @@
                         @Html.TextBox("id_sesije", ViewBag.ID as string);
                     </div>
                     @Html.Raw(ViewBag.Error)
+                    <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
                     <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
                             onclick="location.href = '@Url.Action("Excel", "Nummers",new { id_sesija = ViewBag.ID })'">
                         <span class="glyphicon glyphicon-import"></span>Importer excel-fil
