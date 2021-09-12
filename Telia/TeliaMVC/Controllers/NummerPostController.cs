@@ -1,4 +1,5 @@
-﻿﻿using System;
+﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,10 +17,22 @@ namespace TeliaMVC.Controllers
     {
         private TeliaEntities db = new TeliaEntities();
         // GET: PostNummers
+        // GET: NummerPost
         public ActionResult Index()
         {
-
-            return View();
+            var post = db.Postnummers;
+            
+            return View(post);
+        }
+        public ActionResult DeleteAll()
+        {
+            var postnummer = db.Postnummers;
+            foreach (var item in postnummer)
+            {
+                db.Postnummers.Remove(item);
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index", "NummerPost");
         }
         public ActionResult Import(HttpPostedFileBase excelfile)
         {
@@ -60,7 +73,7 @@ namespace TeliaMVC.Controllers
                                         break;
                                 }
                             }
-                            
+
                             db.Postnummers.Add(proveri(nummer));
                             db.SaveChanges();
                         }
@@ -75,12 +88,12 @@ namespace TeliaMVC.Controllers
                 ViewBag.Error = ex;
                 return View();
             }
-            return View();
+            return RedirectToAction("Index", "NummerPost");
         }
         public Postnummer proveri(Postnummer n)
         {
             var b = db.Postnummers.Where(s => s.PostNr == n.PostNr);
-            if (b.Count() ==0)
+            if (b.Count() == 0)
                 return n;
             else return null;
         }
