@@ -94,11 +94,9 @@ namespace TeliaMVC.Models
         [Display(Name = "Post-sted")]
         public string Post_sted { get; set; }
         [Display(Name = "Epost - Sporings_informasjon")]
-        [Required(ErrorMessage = "E-postadresse er nødvendig!")]
         [EmailAddress(ErrorMessage = "Ugyldig e-postadresse")]
         public string Epost_for_sporings_informasjon { get; set; }
         [Display(Name = "Epost")]
-        [Required(ErrorMessage = "E-postadresse er nødvendig!")]
         [EmailAddress(ErrorMessage = "Ugyldig e-postadresse")]
         public string Epost { get; set; }
         [Required]

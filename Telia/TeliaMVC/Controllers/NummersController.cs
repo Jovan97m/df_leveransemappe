@@ -224,9 +224,9 @@ namespace TeliaMVC.Controllers
             nummer.Abonnementstype = selected; // ucitaj selektovani
             nummer.Pending = true;
             Fakturaoppsett fakturaoppsett = db.Fakturaoppsetts.Where(s => s.NavnPaKostnadssted.Contains(kostnadsted)).FirstOrDefault();
-            nummer.Kostnadsted = fakturaoppsett.Kostnadssted; 
-
-
+            nummer.Kostnadsted = fakturaoppsett.Kostnadssted;
+            nummer.Post_sted = VratiPostSted(nummer.post_nr_);
+            nummer.Bedrift_som_skal_faktureres = fakturaoppsett.Fakturaformat;
             var idc = db.Clients.Find(Convert.ToInt32(nummer.Orgnummer));
             if (ModelState.IsValid)
              {
@@ -267,8 +267,8 @@ namespace TeliaMVC.Controllers
             nummer.Pending = true;
             Fakturaoppsett fakturaoppsett = db.Fakturaoppsetts.Where(s => s.NavnPaKostnadssted.Contains(kostnadsted)).FirstOrDefault();
             nummer.Kostnadsted = fakturaoppsett.Kostnadssted;
-
-
+            nummer.Post_sted = VratiPostSted(nummer.post_nr_);
+            nummer.Bedrift_som_skal_faktureres = fakturaoppsett.Fakturaformat;
             var idc = db.Clients.Find(Convert.ToInt32(nummer.Orgnummer));
             if (ModelState.IsValid)
             {
@@ -309,8 +309,8 @@ namespace TeliaMVC.Controllers
             nummer.Pending = true;
             Fakturaoppsett fakturaoppsett = db.Fakturaoppsetts.Where(s => s.NavnPaKostnadssted.Contains(kostnadsted)).FirstOrDefault();
             nummer.Kostnadsted = fakturaoppsett.Kostnadssted;
-            
-
+            nummer.Post_sted = VratiPostSted(nummer.post_nr_);
+            nummer.Bedrift_som_skal_faktureres = fakturaoppsett.Fakturaformat;
             var idc = db.Clients.Find(Convert.ToInt32(nummer.Orgnummer));
             if (ModelState.IsValid)
             {
@@ -383,6 +383,8 @@ namespace TeliaMVC.Controllers
             nummer.Pending = true;
             nummer.Date = null;
             nummer.Kostnadsted = kostnadsted;
+            nummer.Bedrift_som_skal_faktureres= db.Fakturaoppsetts.Where(s => s.NavnPaKostnadssted.Contains(kostnadsted)).First().Fakturaformat;
+            nummer.Post_sted = VratiPostSted(nummer.post_nr_);
             if (ModelState.IsValid)
             {
                 db.Entry(nummer).State = EntityState.Modified;
@@ -495,7 +497,25 @@ namespace TeliaMVC.Controllers
                       
         }
 
-
+        public string VratiPostSted(int? numm)
+        {
+            try
+            {
+                if (numm == null)
+                {
+                    return "";
+                }
+                else
+                {
+                    return db.Postnummers.Where(s => s.PostNr.Contains(numm.ToString())).First().Poststed;
+                    
+                }
+            }
+            catch
+            {
+                return "";
+            }
+        }
 
         #region excel
 
@@ -597,7 +617,7 @@ namespace TeliaMVC.Controllers
                                 case 8: nummer.Hus_nummer = konvertujUBroj((string)vratiRange(worksheet, j, i, range)); break;
                                 case 9: nummer.Hus_bokstav = (string)vratiRange(worksheet, j, i, range); break;
                                 case 10: nummer.post_nr_ = konvertujUBroj((string)vratiRange(worksheet, j, i, range)); break;
-                                case 11: nummer.Post_sted = (string)vratiRange(worksheet, j, i, range); break;
+                                case 11: nummer.Post_sted =(string) VratiPostSted(nummer.post_nr_); break;
                                 case 12: nummer.Epost_for_sporings_informasjon = (string)vratiRange(worksheet, j, i, range); break;
                                 case 13: nummer.Epost = (string)vratiRange(worksheet, j, i, range); break;
                                 case 14: nummer.Tilleggsinfo_ansatt_ID = konvertujUBroj((string)vratiRange(worksheet, j, i, range)); break;
@@ -855,13 +875,13 @@ namespace TeliaMVC.Controllers
                                         case 2: nummer.Abonnementstype = (string)vratiRange(worksheet, j + 1, i, range); break;
                                         case 3: nummer.Fornavn = (string)vratiRange(worksheet, j + 1, i, range); break;
                                         case 4: nummer.Etternavn = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                        case 5: nummer.Bedrift_som_skal_faktureres = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 5:break;
                                         case 6: nummer.c_o_adresse_for_SIM_levering = (string)vratiRange(worksheet, j + 1, i, range); break;
                                         case 7: nummer.Gateadresse_SIM_Skal_sendes_til = (string)vratiRange(worksheet, j + 1, i, range); break;
                                         case 8: nummer.Hus_nummer = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
                                         case 9: nummer.Hus_bokstav = (string)vratiRange(worksheet, j + 1, i, range); break;
                                         case 10: nummer.post_nr_ = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
-                                        case 11: nummer.Post_sted = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 11:break;
                                         case 12: nummer.Epost_for_sporings_informasjon = (string)vratiRange(worksheet, j + 1, i, range); break;
                                         case 13: nummer.Epost = (string)vratiRange(worksheet, j + 1, i, range); break;
                                         case 14: nummer.Tilleggsinfo_ansatt_ID = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
@@ -871,9 +891,11 @@ namespace TeliaMVC.Controllers
                                         default:
                                             break;
                                     }
+                                    
                                 }
                                 //brojac za greske koliko se pojavile 
-
+                                nummer.Post_sted = (string)VratiPostSted(nummer.post_nr_);
+                                nummer.Bedrift_som_skal_faktureres = db.Fakturaoppsetts.Where(s => s.NavnPaKostnadssted.Contains(nummer.Kostnadsted)).First().Fakturaformat;
                                 ProveriNummer(nummer, ref nIspravno, ref nGreske, id_sesije);
                             }
                             ViewData["Ispravno"] = nIspravno;
@@ -938,13 +960,13 @@ namespace TeliaMVC.Controllers
                                         case 2: nummer.Abonnementstype = (string)vratiRange(worksheet, j, i, range); break;
                                         case 3: nummer.Fornavn = (string)vratiRange(worksheet, j, i, range); break;
                                         case 4: nummer.Etternavn = (string)vratiRange(worksheet, j, i, range); break;
-                                        case 5: nummer.Bedrift_som_skal_faktureres = (string)vratiRange(worksheet, j, i, range); break;
+                                        case 5: break;
                                         case 6: nummer.c_o_adresse_for_SIM_levering = (string)vratiRange(worksheet, j, i, range); break;
                                         case 7: nummer.Gateadresse_SIM_Skal_sendes_til = (string)vratiRange(worksheet, j , i, range); break;
                                         case 8: nummer.Hus_nummer = konvertujUBroj((string)vratiRange(worksheet, j , i, range)); break;
                                         case 9: nummer.Hus_bokstav = (string)vratiRange(worksheet, j , i, range); break;
                                         case 10: nummer.post_nr_ = konvertujUBroj((string)vratiRange(worksheet, j , i, range)); break;
-                                        case 11: nummer.Post_sted = (string)vratiRange(worksheet, j , i, range); break;
+                                        case 11: break;
                                         case 12: nummer.Epost_for_sporings_informasjon = (string)vratiRange(worksheet, j , i, range); break;
                                         case 13: nummer.Epost = (string)vratiRange(worksheet, j , i, range); break;
                                         case 14: nummer.Tilleggsinfo_ansatt_ID = konvertujUBroj((string)vratiRange(worksheet, j , i, range)); break;
@@ -954,9 +976,12 @@ namespace TeliaMVC.Controllers
                                         default:
                                             break;
                                     }
+                                   // nummer.Post_sted = (string)VratiPostSted(nummer.post_nr_);
+                                   // nummer.Bedrift_som_skal_faktureres = db.Fakturaoppsetts.Where(s => s.NavnPaKostnadssted.Contains(nummer.Kostnadsted)).First().Fakturaformat;
                                 }
                                 //brojac za greske koliko se pojavile 
-
+                                nummer.Post_sted = (string)VratiPostSted(nummer.post_nr_);
+                                nummer.Bedrift_som_skal_faktureres = db.Fakturaoppsetts.Where(s => s.NavnPaKostnadssted.Contains(nummer.Kostnadsted)).First().Fakturaformat;
                                 ProveriNummer(nummer, ref nIspravno, ref nGreske, id_sesije);
                             }
                             ViewData["Ispravno"] = nIspravno;
@@ -1137,7 +1162,7 @@ namespace TeliaMVC.Controllers
                                         case 8: nummer.Hus_nummer = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
                                         case 9: nummer.Hus_bokstav = (string)vratiRange(worksheet, j + 1, i, range); break;
                                         case 10: nummer.post_nr_ = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
-                                        case 11: nummer.Post_sted = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 11: nummer.Post_sted = (string)VratiPostSted(nummer.post_nr_); break;
                                         case 12: nummer.Epost_for_sporings_informasjon = (string)vratiRange(worksheet, j + 1, i, range); break;
                                         case 13: nummer.Epost = (string)vratiRange(worksheet, j + 1, i, range); break;
                                         case 14: nummer.Tilleggsinfo_ansatt_ID = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
@@ -1251,7 +1276,7 @@ namespace TeliaMVC.Controllers
         public void ProveriFakture(string broj, ref bool f)
         {
             if (broj != null)
-                if (broj == "EHF" || broj == "Epost" || broj == "Papirgebyr kommer") ;
+                if (broj == "EHF" || broj == "Epost" || broj == "Papirfaktura") ;
                 else
                 {
                     f = true;

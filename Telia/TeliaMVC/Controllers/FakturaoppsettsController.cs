@@ -158,6 +158,7 @@ namespace TeliaMVC.Controllers
         {
             fakturaoppset.Kostnadssted = fakturaoppset.NavnPaKostnadssted;
             fakturaoppset.Fakturaformat = selected;
+            fakturaoppset.Sted = vratiSted(fakturaoppset.Postnummer);
             if (ModelState.IsValid)
             {
                 db.Fakturaoppsetts.Add(fakturaoppset);
@@ -194,6 +195,7 @@ namespace TeliaMVC.Controllers
         {
             fakturaoppsett.Fakturaformat = selected;
             fakturaoppsett.Kostnadssted = fakturaoppsett.NavnPaKostnadssted;
+            fakturaoppsett.Sted = vratiSted(fakturaoppsett.Postnummer);
             if (ModelState.IsValid)
             {
                 db.Entry(fakturaoppsett).State = EntityState.Modified;
@@ -247,5 +249,24 @@ namespace TeliaMVC.Controllers
             return View(fakturaoppsett);
         }
         #endregion
+        public string vratiSted(int? numm)
+        {
+            try
+            {
+                if (numm == null)
+                {
+                    return "";
+                }
+                else
+                {
+                    return db.Postnummers.Where(s => s.PostNr.Contains(numm.ToString())).First().Poststed;
+
+                }
+            }
+            catch
+            {
+                return "";
+            }
+        }
     }
 }
