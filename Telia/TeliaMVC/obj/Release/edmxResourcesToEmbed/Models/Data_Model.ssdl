@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TeliaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Abonementype">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="25" />
+    <Property Name="Num_type" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Orgnummer" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FirmaNavn" Type="nvarchar" MaxLength="50" />
+    <Property Name="GateNavn" Type="nvarchar" MaxLength="50" />
+    <Property Name="HusNummer" Type="int" />
+    <Property Name="HusBokStav" Type="nvarchar" MaxLength="20" />
+    <Property Name="PostNummer" Type="int" />
+    <Property Name="Sted" Type="nvarchar" MaxLength="50" />
+    <Property Name="Epost" Type="nvarchar" MaxLength="20" />
+    <Property Name="KontaktNavn" Type="nvarchar" MaxLength="30" />
+    <Property Name="KontaktEpost" Type="nvarchar" MaxLength="20" />
+    <Property Name="KontaktTlfnr" Type="nvarchar" MaxLength="30" />
+    <Property Name="TekniskKontaktNavn" Type="nvarchar" MaxLength="20" />
+    <Property Name="TekniskKontaktEpost" Type="nvarchar" MaxLength="30" />
+    <Property Name="TekniskKontaktTlfnr" Type="nvarchar" MaxLength="30" />
+    <Property Name="Id_abonementype" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ConnectionType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_abom" Type="int" Nullable="false" />
+    <Property Name="Id_type" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Fakturaoppsett">
+    <Key>
+      <PropertyRef Name="Kostnadssted" />
+    </Key>
+    <Property Name="NavnPaKostnadssted" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Tileggsinfo kostnadssted" Type="nvarchar" MaxLength="200" />
+    <Property Name="Fakturaformat" Type="nvarchar" MaxLength="50" />
+    <Property Name="Fakturaadresse" Type="nvarchar" MaxLength="50" />
+    <Property Name="Husnr" Type="int" />
+    <Property Name="Bokstav" Type="nvarchar" MaxLength="200" />
+    <Property Name="Postnummer" Type="int" />
+    <Property Name="Sted" Type="nvarchar" MaxLength="50" />
+    <Property Name="Epost" Type="nvarchar" MaxLength="50" />
+    <Property Name="Kostnadssted" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Orgnummer" Type="nvarchar" MaxLength="50" />
+    <Property Name="Date" Type="date" />
+    <Property Name="Id_client" Type="int" />
+  </EntityType>
+  <EntityType Name="Nummer">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Telefonnummer" Type="nvarchar" MaxLength="20" />
+    <Property Name="Abonnementstype" Type="nvarchar" MaxLength="50" />
+    <Property Name="Fornavn" Type="nvarchar" MaxLength="50" />
+    <Property Name="Etternavn" Type="nvarchar" MaxLength="50" />
+    <Property Name="Bedrift som skal faktureres" Type="nvarchar" MaxLength="50" />
+    <Property Name="c/o adresse for SIM levering" Type="nvarchar" MaxLength="50" />
+    <Property Name="Gateadresse SIM Skal sendes til" Type="nvarchar" MaxLength="50" />
+    <Property Name="Hus nummer" Type="int" />
+    <Property Name="Hus bokstav" Type="nvarchar" MaxLength="50" />
+    <Property Name="post nr." Type="int" />
+    <Property Name="Post sted" Type="nvarchar" MaxLength="50" />
+    <Property Name="Epost for sporings informasjon" Type="nvarchar" MaxLength="50" />
+    <Property Name="Epost" Type="nvarchar" MaxLength="50" />
+    <Property Name="Kostnadsted" Type="nvarchar" MaxLength="50" />
+    <Property Name="Tilleggsinfo/ansatt ID" Type="int" />
+    <Property Name="Ekstra talesim " Type="int" />
+    <Property Name="Ekstra datasim" Type="int" />
+    <Property Name="Orgnummer" Type="nvarchar" MaxLength="50" />
+    <Property Name="Date" Type="date" />
+    <Property Name="Pending" Type="bit" />
+    <Property Name="Katalogoppforing" Type="nvarchar" MaxLength="45" />
+    <Property Name="Porteringsdatoog tid" Type="datetime" />
+    <Property Name="Binding" Type="bit" />
+    <Property Name="Postnummer" Type="int" />
+    <Property Name="Antall TrillingSIM" Type="int" />
+    <Property Name="allDataSIM" Type="int" />
+    <Property Name="Manuell Top-up" Type="bit" />
+    <Property Name="Sperre Top-up" Type="bit" />
+    <Property Name="Norden" Type="bit" />
+    <Property Name="Tale og SMS til EU" Type="bit" />
+    <Property Name="TBN" Type="nvarchar" MaxLength="15" />
+    <Property Name="HovedSIM" Type="int" />
+    <Property Name="TrillingSIM1" Type="int" />
+    <Property Name="TrillingSIM2" Type="int" />
+    <Property Name="DataSIM1" Type="int" />
+    <Property Name="DataSIM2" Type="int" />
+    <Property Name="DataSIM3" Type="int" />
+    <Property Name="DataSIM4" Type="int" />
+    <Property Name="DataSIM5" Type="int" />
+    <Property Name="DeliveryMethodCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="DeliveryStreetName" Type="nvarchar" MaxLength="20" />
+    <Property Name="DeliveryStreetNumber" Type="nvarchar" MaxLength="10" />
+    <Property Name="DeliveryStreetSuffix" Type="nvarchar" MaxLength="10" />
+    <Property Name="DeliveryCity" Type="nvarchar" MaxLength="20" />
+    <Property Name="DeliveryZIP" Type="nvarchar" MaxLength="20" />
+    <Property Name="DeliveryCountryCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="DeliveryContractEmail" Type="nvarchar" MaxLength="20" />
+    <Property Name="DeliveryContractCountryCode" Type="nvarchar" MaxLength="20" />
+    <Property Name="DeliveryContractLocalNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="DeliveryIndividualFirstName" Type="nvarchar" MaxLength="15" />
+    <Property Name="DeliveryIndividualLastName" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Postnummer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PostNr" Type="nvarchar(max)" />
+    <Property Name="Poststed" Type="nvarchar(max)" />
+    <Property Name="Kommunenummer" Type="nvarchar(max)" />
+    <Property Name="Kommunenavn" Type="nvarchar(max)" />
+    <Property Name="Kategory" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="Type">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="35" />
+    <Property Name="Reference_code" Type="nvarchar" MaxLength="15" />
+  </EntityType>
+  <Association Name="FK__Client__Id_abone__41EDCAC5">
+    <End Role="Abonementype" Type="Self.Abonementype" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Client" Type="Self.Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Abonementype">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="Id_abonementype" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Connectio__Id_ab__40058253">
+    <End Role="Abonementype" Type="Self.Abonementype" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ConnectionType" Type="Self.ConnectionType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Abonementype">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ConnectionType">
+        <PropertyRef Name="Id_abom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Connectio__Id_ty__40F9A68C">
+    <End Role="Type" Type="Self.Type" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ConnectionType" Type="Self.ConnectionType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ConnectionType">
+        <PropertyRef Name="Id_type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Client_dbo_Client_Id">
+    <End Role="Client" Type="Self.Client" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Fakturaoppsett">
+        <PropertyRef Name="Id_client" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
+    <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Nummer" Type="Self.Nummer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fakturaoppsett">
+        <PropertyRef Name="Kostnadssted" />
+      </Principal>
+      <Dependent Role="Nummer">
+        <PropertyRef Name="Kostnadsted" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TeliaModelStoreContainer">
+    <EntitySet Name="Abonementype" EntityType="Self.Abonementype" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ConnectionType" EntityType="Self.ConnectionType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Fakturaoppsett" EntityType="Self.Fakturaoppsett" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Nummer" EntityType="Self.Nummer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Postnummer" EntityType="Self.Postnummer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Type" EntityType="Self.Type" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Client__Id_abone__41EDCAC5" Association="Self.FK__Client__Id_abone__41EDCAC5">
+      <End Role="Abonementype" EntitySet="Abonementype" />
+      <End Role="Client" EntitySet="Client" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Connectio__Id_ab__40058253" Association="Self.FK__Connectio__Id_ab__40058253">
+      <End Role="Abonementype" EntitySet="Abonementype" />
+      <End Role="ConnectionType" EntitySet="ConnectionType" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Connectio__Id_ty__40F9A68C" Association="Self.FK__Connectio__Id_ty__40F9A68C">
+      <End Role="Type" EntitySet="Type" />
+      <End Role="ConnectionType" EntitySet="ConnectionType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Client_dbo_Client_Id" Association="Self.FK_dbo_Client_dbo_Client_Id">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Fakturaoppsett" EntitySet="Fakturaoppsett" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" Association="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
+      <End Role="Fakturaoppsett" EntitySet="Fakturaoppsett" />
+      <End Role="Nummer" EntitySet="Nummer" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

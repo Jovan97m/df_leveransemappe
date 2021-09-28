@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Forside";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<h2>Import</h2>
+<p>@ViewBag.Error</p>
+

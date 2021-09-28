@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "Telia"
 :setvar DefaultFilePrefix "Telia"
-:setvar DefaultDataPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
-:setvar DefaultLogPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
+:setvar DefaultDataPath "C:\Users\jovan\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
+:setvar DefaultLogPath "C:\Users\jovan\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
 
 GO
 :on error exit
@@ -40,13 +40,35 @@ USE [$(DatabaseName)];
 
 
 GO
-PRINT N'Altering [dbo].[Nummer]...';
+/*
+The type for column PostNummer in table [dbo].[Client] is currently  NVARCHAR (50) NULL but is being changed to  INT NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  INT NULL.
+*/
+
+IF EXISTS (select top 1 1 from [dbo].[Client])
+    RAISERROR (N'Rows were detected. The schema update is terminating because data loss might occur.', 16, 127) WITH NOWAIT
+
+GO
+/*
+The type for column post nr. in table [dbo].[Nummer] is currently  NVARCHAR (50) NULL but is being changed to  INT NULL. Data loss could occur and deployment may fail if the column contains data that is incompatible with type  INT NULL.
+*/
+
+IF EXISTS (select top 1 1 from [dbo].[Nummer])
+    RAISERROR (N'Rows were detected. The schema update is terminating because data loss might occur.', 16, 127) WITH NOWAIT
+
+GO
+PRINT N'Altering Table [dbo].[Client]...';
 
 
 GO
-ALTER TABLE [dbo].[Nummer] ALTER COLUMN [Katalogoppforing] NVARCHAR (45) NULL;
+ALTER TABLE [dbo].[Client] ALTER COLUMN [PostNummer] INT NULL;
 
-ALTER TABLE [dbo].[Nummer] ALTER COLUMN [TBN] NVARCHAR (15) NULL;
+
+GO
+PRINT N'Altering Table [dbo].[Nummer]...';
+
+
+GO
+ALTER TABLE [dbo].[Nummer] ALTER COLUMN [post nr.] INT NULL;
 
 
 GO

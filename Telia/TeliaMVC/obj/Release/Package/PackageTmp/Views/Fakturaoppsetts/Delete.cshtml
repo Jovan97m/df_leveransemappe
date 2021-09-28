@@ -1,0 +1,141 @@
+﻿@model TeliaMVC.Models.Fakturaoppsett
+
+@{
+    ViewBag.Title = "Delete";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+<style>
+    .ButtonBack {
+        background-color: darkred;
+        font-size: larger;
+        font-weight: bold;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+        .ButtonBack:hover {
+            color: white;
+            background-color: red;
+            box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
+        }
+        .ButtonBack:active {
+            transform: translateY(+2px);
+            background-color: darkred;
+        }
+    .ButtonEdit {
+        background-color: darkgreen;
+        font-size: larger;
+        font-weight: bold;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+        .ButtonEdit:hover {
+            color: white;
+            background-color: forestgreen;
+            box-shadow: 0 13px 18px 0 darkgreen, 0 16px 45px 0 rgba(0,0,0,0.21);
+        }
+        .ButtonEdit:active {
+            transform: translateY(+2px);
+            background-color: darkblue;
+        }
+</style>
+<h1 style="color:red;font-weight:bold;font-size:large;">Are you sure you want to delete selected item?</h1>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NavnPaKostnadssted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NavnPaKostnadssted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tileggsinfo_kostnadssted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tileggsinfo_kostnadssted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fakturaformat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fakturaformat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fakturaadresse)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fakturaadresse)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Husnr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Husnr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bokstav)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bokstav)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Postnummer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Postnummer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Epost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Epost)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    <div class="col-md-offset-2 col-md-10">
+        <button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts", new { id = ViewBag.id_sesije })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Back to list</button>
+        <input type="submit" value="Delete" class="ButtonEdit shadow-lg" />
+    </div>
+    
+</div>
+        }
+    </div>

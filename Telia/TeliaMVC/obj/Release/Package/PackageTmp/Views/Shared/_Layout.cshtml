@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="@Url.Content("~/Resources/telia.png")"/>
+    <title>@ViewBag.Title - Telia Company</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .Padajuci {
+            
+            background-color: rgb(245,245,245);
+            border-radius: 6px;
+            box-shadow: 3px 4px 8px 8px rgb(206, 192, 209);
+            text-align: left;
+        }
+        .dugme {
+            background-color: #1a001a;
+            
+            color: antiquewhite;
+        }
+        .senka {
+            box-shadow: 3px 4px 8px 8px rgb(206, 192, 209);
+            font-size: 16px;
+            margin: 5%;
+        }
+        .dugmeLogout {
+            background-color: #1a001a;
+            width: 100%;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="        background-color: #1a001a;
+                                                               font-size: large;
+                                                               color:white;
+                                                               font-weight: bold;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="~/Resources/telia-company.png" width="200" height="28" class="d-inline-block align-top" alt="">
+                    
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right" >
+                    <li>
+                        <a type="button" class="dropdown-item dugmeLogout" href="@Url.Action("LogOut", "Login")"> Logout  <span class="glyphicon glyphicon-log-out"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<!-- RenderBody crta ceo View. 
+-->
+    
+    <div style="margin-left: 13px; margin-right:12px;">
+        @RenderBody()
+    </div>
+    <hr />
+
+    <footer style="margin-left:10px;">
+        <p>
+            www.teliacompany.com]www.teliacompany.com
+
+            Hvervenmoveien 49, 3511 Hønefoss, Norge
+
+            Telia Company AB, Stockholm 556103-4249
+        </p>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

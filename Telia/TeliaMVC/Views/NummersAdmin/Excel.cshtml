@@ -1,0 +1,301 @@
+﻿@{ ViewBag.Title = "Excel";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    } }
+<style>
+    .standardtabell {
+        background-color: blueviolet;
+        margin-top: 2%;
+    }
+
+    label {
+        margin-right: 3px;
+    }
+
+    .inputtext {
+        width: 40%;
+    }
+
+    .Table {
+        box-shadow: 2px 2px 1px 3px lightgray;
+        border-radius: 14px;
+    }
+
+    .button {
+        font-size: smaller;
+        color: white;
+        text-shadow: 1px 1px black;
+        margin-right: 2px;
+        margin-bottom: 2px;
+        border-radius: 12px;
+    }
+
+    .ButtonCreate {
+        background-color: #990AE4;
+        font-size: larger;
+        font-weight: bold;
+        color: white;
+        padding: 10px 15px;
+        border: solid 1px black;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 1px 8px 15px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+
+        .ButtonCreate:hover {
+            color: white;
+            background-color: purple;
+            box-shadow: 0 13px 18px 0 #990AE4, 0 16px 45px 0 rgba(0,0,0,0.21);
+        }
+
+        .ButtonCreate:active {
+            transform: translateY(+2px);
+            background-color: darkblue;
+        }
+
+    .NotNeeded {
+        background-color: #F9B3A7;
+    }
+
+    .ButtonBack {
+        background-color: darkred;
+        font-size: larger;
+        font-weight: bold;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+
+        .ButtonBack:hover {
+            color: white;
+            background-color: red;
+            box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
+        }
+
+        .ButtonBack:active {
+            transform: translateY(+2px);
+            background-color: darkred;
+        }
+
+    .inputRadio {
+        border-radius: 10px;
+        box-shadow: inset 0 1px 1px hsla(0,0%,100%,.8), 0 0 0 1px hsla(0,0%,0%,.6), 0 2px 3px hsla(0,0%,0%,.6), 0 4px 3px hsla(0,0%,0%,.4), 0 6px 6px hsla(0,0%,0%,.2), 0 10px 6px hsla(0,0%,0%,.2);
+        cursor: pointer;
+        display: inline-block;
+        height: 15px;
+        margin-right: 16px;
+        position: relative;
+        width: 15px;
+        -webkit-appearance: none;
+    }
+
+        .inputRadio:hover {
+            background-color: #c86cf9;
+        }
+
+        .inputRadio:checked {
+            background-color: #990ae4;
+        }
+
+    .SelectBox {
+        color: black;
+        font-size: medium;
+        font-size: small;
+        font-weight: bold;
+        margin-right: 2px;
+        margin-bottom: 2px;
+        border-radius: 16px;
+        outline-offset: 4px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 20px 0 rgba(0,0,0,0.19);
+    }
+
+    .ContainerGreen {
+        box-shadow: 2px 2px 1px 3px #b3ffb3;
+        margin-bottom: 5px;
+    }
+
+    .ContainerRed {
+        box-shadow: 2px 2px 1px 3px #ff9999;
+        margin-bottom: 5px;
+    }
+</style>
+<div class="row" style="margin-left: 7px; ">
+    <div class=" jumbo" style="background-color: #ffaa80; ">
+        <h3 class="text" style="font-weight:bolder">Legge til nye tall:</h3>
+        <p class=" text">
+            <span class="row">
+                Hvis du har samme tabell som samme kolonnenavn som på forrige side, er det nok å velge "Standardtabell", og deretter klikke "Tilføye".
+            </span>
+            <span class="row">
+                Hvis tabellen ikke er den samme, bør du merke kolonnene du legger til, og koble dem til kolonnene i Excel-filen. Obligatoriske kolonner er:Telefonnummer,Abonnementstype,Kostnadsted.
+            </span>
+        </p>
+    </div>
+</div>
+<div class="row">
+    @using (Html.BeginForm("Action", "NummersAdmin", FormMethod.Post, new { name = ViewBag.Name, id_sesije = ViewBag.Clijent }))
+    {
+        <div style="display:none;">
+            @Html.TextBox("id_sesije", ViewBag.Clijent as string);
+        </div>
+        <div style="display:none;">
+            @Html.TextBox("name", ViewBag.Name as string);
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc1", false)<label>Telefonnummer</label>@Html.DropDownList("u1", new SelectList((List<string>)ViewData["Kolone"], "-Select-"), new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc2", false)<label>Abonnementstype</label>@Html.DropDownList("u2", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc3", false)<label>Fornavn</label>@Html.DropDownList("u3", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc4", false)<label>Etternavn</label>@Html.DropDownList("u4", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc5", false)<label>Bedrift_som_skal_faktureres</label>@Html.DropDownList("u5", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc6", false)<label>c_o_adresse_for_SIM_levering</label>@Html.DropDownList("u6", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc7", false)<label>Gateadresse_SIM_Skal_sendes_til</label>@Html.DropDownList("u7", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc8", false)<label>Hus_nummer</label>@Html.DropDownList("u8", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc9", false)<label>Hus_bokstav</label>@Html.DropDownList("u9", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc10", false)<label>post_nr_</label>@Html.DropDownList("u10", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc11", false)<label>Post_sted</label>@Html.DropDownList("u11", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc12", false)<label>Epost_for_sporings_informasjon</label>@Html.DropDownList("u12", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc13", false)<label>Epost</label>@Html.DropDownList("u13", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc14", false)<label>Tilleggsinfo_ansatt_ID</label>@Html.DropDownList("u14", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc15", false)<label>Ekstra_talesim_</label>@Html.DropDownList("u15", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc16", false)<label>Ekstra_datasim</label>@Html.DropDownList("u16", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("uc17", false)<label>Kostnadsted</label>@Html.DropDownList("u17", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3 standardtabell SelectBox">
+            @Html.CheckBox("uc18", false)<label>Standardtabell</label>
+        </div><div class="col-sm-3">
+        </div>
+        <div class="col-sm-3" style="margin-top:10px;float:right;flex-direction:column-reverse">
+            <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                    title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                    onclick="location.href = '@Url.Action("Action", "NummersAdmin")'">
+                Tilføye
+            </button>
+        </div>
+    }
+</div>
+<div class="row" style="margin-left: 7px; ">
+    <div class=" jumbo" style="background-color: #ffaa80; ">
+        <h3 class="text" style="font-weight:bolder">Slik endrer du eksisterende talldata:</h3>
+        <p class=" text">
+            <span class="row">
+                Hvis du har samme tabell som samme kolonnenavn som på forrige side, er det nok å velge "Standardtabell", og deretter klikke "Oppdatering".
+            </span>
+            <span class="row">
+                Hvis tabellen ikke er den samme, bør du merke kolonnene du legger til, og koble dem til kolonnene i Excel-filen. Obligatoriske kolonner er:Telefonnummer.
+            </span>
+        </p>
+    </div>
+</div>
+<div class="row">
+    @using (Html.BeginForm("Update", "NummersAdmin", FormMethod.Post, new { name = ViewBag.Name, id_sesije = ViewBag.ID }))
+    {
+        <div style="display:none;">
+            @Html.TextBox("id_sesije", ViewBag.ID as string);
+        </div>
+        <div style="display:none;">
+            @Html.TextBox("name", ViewBag.Name as string);
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c1", false)<label>Telefonnummer</label>@Html.DropDownList("1", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c2", false)<label>Abonnementstype</label>@Html.DropDownList("2", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c3", false)<label>Fornavn</label>@Html.DropDownList("3", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c4", false)<label>Etternavn</label>@Html.DropDownList("4", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c5", false)<label>Bedrift_som_skal_faktureres</label>@Html.DropDownList("5", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c6", false)<label>c_o_adresse_for_SIM_levering</label>@Html.DropDownList("6", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c7", false)<label>Gateadresse_SIM_Skal_sendes_til</label>@Html.DropDownList("7", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c8", false)<label>Hus_nummer</label>@Html.DropDownList("8", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c9", false)<label>Hus_bokstav</label>@Html.DropDownList("9", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c10", false)<label>post_nr_</label>@Html.DropDownList("10", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c11", false)<label>Post_sted</label>@Html.DropDownList("11", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c12", false)<label>Epost_for_sporings_informasjon</label>@Html.DropDownList("12", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c13", false)<label>Epost</label>@Html.DropDownList("13", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c14", false)<label>Tilleggsinfo_ansatt_ID</label>@Html.DropDownList("14", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c15", false)<label>Ekstra_talesim_</label>@Html.DropDownList("15", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c16", false)<label>Ekstra_datasim</label>@Html.DropDownList("16", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3">
+            @Html.CheckBox("c17", false)<label>Kostnadsted</label>@Html.DropDownList("17", new SelectList((List<string>)ViewData["Kolone"]), "-Select-", new { @class = "form-control SelectBox" })
+        </div>
+        <div class="col-sm-3 standardtabell SelectBox">
+            @Html.CheckBox("c18", false)<label>Standardtabell</label>
+        </div><div class="col-sm-3">
+        </div>
+        <div class="col-sm-3" style="margin-top:10px;float:right;flex-direction:column-reverse">
+            <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                    title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                    onclick="location.href = '@Url.Action("Update", "NummersAdmin")'">
+                Oppdatering
+            </button>
+        </div>
+    }
+</div>         

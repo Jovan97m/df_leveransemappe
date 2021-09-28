@@ -183,7 +183,7 @@
                 </fieldset>
             }
         </div>
-        <div class="col-sm-8" style="margin-bottom: 20px;">
+        <div class="col-sm-4" style="margin-bottom: 20px;">
             @using (Html.BeginForm("Creating", "NummersAdmin", FormMethod.Get))
             {
                 <fieldset>
@@ -214,7 +214,7 @@
                 </fieldset>
             }
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-4">
             <fieldset>
                 <legend>
                     Instruksjoner for bruk av Excell-filer
@@ -227,16 +227,18 @@
                         <span class="glyphicon glyphicon-download"></span> Create Excell
                     </button>
                 </div>
-                <div class="col-md-4 " style="margin-bottom: 4px;">
+                <div class="col-md-6 " style="margin-bottom: 5px;">
                     <p>Last inn dataene fra Excel-filen</p>
-                    @using (Html.BeginForm("ImportExcel", "NummersAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("Excel", "NummersAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
+                        <div>
+                            @Html.DropDownList("id_sesije", new SelectList(ViewBag.nummerAdd), new { @class = "form-control SelectBox" })
+                        </div>
                         @Html.Raw(ViewBag.Error)
                         <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
-                        <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                                title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                                onclick="location.href = '@Url.Action("ImportExcel", "NummersAdmin")'">
-                            <span class="glyphicon glyphicon-download"></span>Lese en Excel-tabell
+                        <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                                onclick="location.href = '@Url.Action("Excel", "NummersAdmin",new { id_sesija = ViewBag.ID })'">
+                            <span class="glyphicon glyphicon-import"></span>Importer excel-fil
                         </button>
                     }
                 </div>

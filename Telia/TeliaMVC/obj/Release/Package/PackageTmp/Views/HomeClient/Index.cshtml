@@ -1,0 +1,108 @@
+﻿@model PagedList.IPagedList<TeliaMVC.Models.Client>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Home Page";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+<style>
+    hr {
+        border: 0;
+        height: 3px;
+        background-image: linear-gradient(to right, azure,pink, purple, pink,azure);
+        box-shadow: 0 10px 10px -10px purple inset;
+    }
+    .ButtonEdit {
+        background-color: darkblue;
+        font-size: larger;
+        font-weight: bold;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+
+    .ButtonEdit:hover {
+        color: white;
+        background-color: blue;
+        box-shadow: 0 13px 18px 0 rgb(30, 20, 210), 0 16px 45px 0 rgba(0,0,0,0.21);
+    }
+
+    .ButtonEdit:active {
+        transform: translateY(+2px);
+        background-color: darkblue;
+    }
+
+    .buttonLink {
+        color: black;
+        font-weight: bold;
+        font-size: medium;
+        font-family: 'Times New Roman';
+        border-radius: 14px;
+        box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .buttonLink {
+        background-color: darkslategrey;
+        font-size: medium;
+        font-weight: bold;
+        color: white;
+        padding: 6px 9px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+
+        .buttonLink:hover {
+            color: white;
+            background-color: darkslateblue;
+            box-shadow: 0 13px 18px 0 gray, 0 16px 45px 0 rgba(0,0,0,0.19);
+        }
+
+        .buttonLink:active {
+            transform: translateY(+2px);
+            background-color: darkslategray;
+        }
+    
+    
+    .jumbo {
+        margin-top:1px;
+        margin-right:13px;
+        padding:10px;
+        color:black;
+        font-size: 17px;
+        box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.17), 0 4px 19px 0 rgba(0, 0, 0, 0.12);
+    }
+</style>
+
+<hr/>
+<div class="row" style="margin-left: 7px; ">
+    <div class=" jumbo" style="background-color: #ffaa80; ">
+        <h3 class="text" style="font-weight:bolder">Hjelp</h3>
+        <p class=" text" >
+            <span style="font-weight: bold;">Fakture oppstett:</span>  Dette kan brukes til å manipulere kontoer og kontoer ny.
+        </p>
+        <p class=" text">
+            <span style="font-weight: bold;">
+                Nummers:
+            </span>  Knapp for å legge til nye tall.
+        </p>
+       
+    </div>
+</div>
+<div class="row" style="margin-left: 10px;margin-top:10px;">
+    <div class="col-md-2">
+        <p><button class="btn ButtonEdit" onclick="location.href = '@Url.Action("Details", "HomeClient",new { id = ViewBag.id_sesije })'"><span class="glyphicon glyphicon-user"></span>Profile &raquo;</button></p>
+       <hr/>
+        <p><button class="btn buttonLink" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts",new { id = ViewBag.id_sesije })'">FakturaOppsett &raquo;</button></p>
+        <p><button class="btn buttonLink" onclick="location.href = '@Url.Action("Index", "Nummers",new { id_sesije =ViewBag.id_sesije })'">Nummers &raquo;</button></p>
+    </div>
+</div>
+

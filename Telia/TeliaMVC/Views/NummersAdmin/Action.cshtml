@@ -1,0 +1,316 @@
+﻿@using TeliaMVC.Models;
+@model PagedList.IPagedList<TeliaMVC.Models.Nummer>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Import";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+<style>
+    #myBtn {
+        display: none; /* Hidden by default */
+        position: fixed; /* Fixed/sticky position */
+        bottom: 20px; /* Place the button at the bottom of the page */
+        right: 30px; /* Place the button 30px from the right */
+        z-index: 99; /* Make sure it does not overlap */
+        border: none; /* Remove borders */
+        outline: none; /* Remove outline */
+        background-color: red; /* Set a background color */
+        color: white; /* Text color */
+        cursor: pointer; /* Add a mouse pointer on hover */
+        padding: 15px; /* Some padding */
+        border-radius: 10px; /* Rounded corners */
+        font-size: 18px; /* Increase font size */
+    }
+
+        #myBtn:hover {
+            background-color: #555; /* Add a dark-grey background on hover */
+        }
+
+    .Table {
+        box-shadow: 2px 2px 1px 3px lightgray;
+        border-radius: 14px;
+    }
+
+    .button {
+        font-size: smaller;
+        color: white;
+        text-shadow: 1px 1px black;
+        margin-right: 2px;
+        margin-bottom: 2px;
+        border-radius: 12px;
+    }
+
+    .NotNeeded {
+        background-color: #F9B3A7;
+    }
+
+    .ButtonBack {
+        background-color: darkred;
+        font-size: larger;
+        font-weight: bold;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+
+        .ButtonBack:hover {
+            color: white;
+            background-color: red;
+            box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
+        }
+
+        .ButtonBack:active {
+            transform: translateY(+2px);
+            background-color: darkred;
+        }
+
+    .inputRadio {
+        border-radius: 10px;
+        box-shadow: inset 0 1px 1px hsla(0,0%,100%,.8), 0 0 0 1px hsla(0,0%,0%,.6), 0 2px 3px hsla(0,0%,0%,.6), 0 4px 3px hsla(0,0%,0%,.4), 0 6px 6px hsla(0,0%,0%,.2), 0 10px 6px hsla(0,0%,0%,.2);
+        cursor: pointer;
+        display: inline-block;
+        height: 15px;
+        margin-right: 16px;
+        position: relative;
+        width: 15px;
+        -webkit-appearance: none;
+    }
+
+        .inputRadio:hover {
+            background-color: #c86cf9;
+        }
+
+        .inputRadio:checked {
+            background-color: #990ae4;
+        }
+
+    .SelectBox {
+        color: black;
+        font-size: medium;
+        font-weight: bold;
+        margin-right: 2px;
+        margin-bottom: 2px;
+        border-radius: 16px;
+        outline-offset: 4px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+
+    .HeaderTable {
+        color: white;
+        text-shadow: 1px 2px black;
+    }
+
+    #Cell {
+        background-color: red;
+    }
+
+    .ButtonCreate {
+        background-color: #990AE4;
+        font-size: larger;
+        font-weight: bold;
+        color: white;
+        padding: 10px 15px;
+        border: solid 1px black;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 1px 8px 15px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+
+        .ButtonCreate:hover {
+            color: white;
+            background-color: purple;
+            box-shadow: 0 13px 18px 0 #990AE4, 0 16px 45px 0 rgba(0,0,0,0.21);
+        }
+
+        .ButtonCreate:active {
+            transform: translateY(+2px);
+            background-color: darkblue;
+        }
+
+    .ButtonSearch {
+        background-color: dodgerblue;
+        font-size: medium;
+        font-weight: bold;
+        color: black;
+        padding: 7px 12px;
+        border: solid 1px black;
+        border-radius: 16px;
+        border-color: transparent;
+        box-shadow: 1px 8px 15px 0 rgba(0,0,0,0.24), 0 13px 24px 0 rgba(0,0,0,0.19);
+    }
+
+        .ButtonSearch:hover {
+            color: white;
+            background-color: blue;
+            box-shadow: 0 13px 18px 0 dodgerblue, 0 16px 45px 0 rgba(0,0,0,0.21);
+        }
+
+        .ButtonSearch:active {
+            transform: translateY(+2px);
+            background-color: dodgerblue;
+        }
+</style>
+<h2>
+    Riktig oppgitte data
+</h2>
+<div style="overflow-x: auto; margin-left: 11px; margin-right: 12px;border-radius:12px;" class=".scrollbar-lady-lips">
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    <table class="table-hover table-striped Table " id="ispravno" style="font-size: 13px; font-weight: bold; table-layout: fixed;">
+
+        <thead class="HeaderTable" style=" background-color: lawngreen;">
+            <tr>
+                <th class="col-sm-2">Telefonumer</th>
+                <th class="col-sm-2">Abonnementstype</th>
+                <th class="col-sm-2">Fornavn</th>
+                <th class="col-sm-2">Etternavn</th>
+                <th class="col-sm-2">Bedrift_som_skal_faktureres</th>
+                <th class="col-sm-2">c_o_adresse_for_SIM_levering</th>
+                <th class="col-sm-2">Gateadresse_SIM_Skal_sendes_til</th>
+                <th class="col-sm-2">Hus_nummer</th>
+                <th class="col-sm-2">Hus_bokstav</th>
+                <th class="col-sm-2">post_nr_</th>
+                <th class="col-sm-2">Post_sted</th>
+                <th class="col-sm-2">Epost_for_sporings_informasjon</th>
+                <th class="col-sm-2">Epost</th>
+                <th class="col-sm-2">Tilleggsinfo_ansatt_ID</th>
+                <th class="col-sm-2">Ekstra_talesim_</th>
+                <th class="col-sm-2">Ekstra_datasim</th>
+                <th class="col-sm-2">Kostnadsted</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in (List<Nummer>)ViewData["Ispravno"])
+            {
+                <tr>
+                    <td class="col-sm-2">@p.Telefonnummer</td>
+                    <td class="col-sm-2">@p.Abonnementstype</td>
+                    <td class="col-sm-2">@p.Fornavn</td>
+                    <td class="col-sm-2">@p.Etternavn</td>
+                    <td class="col-sm-2">@p.Bedrift_som_skal_faktureres</td>
+                    <td class="col-sm-2">@p.c_o_adresse_for_SIM_levering</td>
+                    <td class="col-sm-2">@p.Gateadresse_SIM_Skal_sendes_til</td>
+                    <td class="col-sm-2">@p.Hus_nummer</td>
+                    <td class="col-sm-2">@p.Hus_bokstav</td>
+                    <td class="col-sm-2">@p.post_nr_</td>
+                    <td class="col-sm-2">@p.Post_sted</td>
+                    <td class="col-sm-2">@p.Epost_for_sporings_informasjon</td>
+                    <td class="col-sm-2">@p.Epost</td>
+                    <td class="col-sm-2">@p.Tilleggsinfo_ansatt_ID</td>
+                    <td class="col-sm-2">@p.Ekstra_talesim_</td>
+                    <td class="col-sm-2">@p.Ekstra_datasim</td>
+                    <td class="col-sm-2">@p.Kostnadsted</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <br />
+
+</div>
+<br />
+<br />
+<h2>
+    Ugyldig data
+</h2>
+
+<div id="grid" style="overflow-x: auto; margin-left: 11px; margin-right: 12px;border-radius:12px;" class=".scrollbar-lady-lips">
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    <table class="table-hover table-striped Table neispravno" style="font-size: 13px; font-weight: bold;  table-layout: fixed;">
+        <thead class="HeaderTable" style="background-color: red;">
+            <tr>
+                <th class="col-sm-2">Telefonumer</th>
+                <th class="col-sm-2">Abonnementstype</th>
+                <th class="col-sm-2">Fornavn</th>
+                <th class="col-sm-2">Etternavn</th>
+                <th class="col-sm-2">Bedrift_som_skal_faktureres</th>
+                <th class="col-sm-2">c_o_adresse_for_SIM_levering</th>
+                <th class="col-sm-2">Gateadresse_SIM_Skal_sendes_til</th>
+                <th class="col-sm-2">Hus_nummer</th>
+                <th class="col-sm-2">Hus_bokstav</th>
+                <th class="col-sm-2">post_nr_</th>
+                <th class="col-sm-2">Post_sted</th>
+                <th class="col-sm-2">Epost_for_sporings_informasjon</th>
+                <th class="col-sm-2">Epost</th>
+                <th class="col-sm-2">Tilleggsinfo_ansatt_ID</th>
+                <th class="col-sm-2">Ekstra_talesim_</th>
+                <th class="col-sm-2">Ekstra_datasim</th>
+                <th class="col-sm-2">Kostnadsted</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p1 in (List<Nummer>)ViewData["Neispravno"])
+            {
+                <tr readonly="readonly">
+                    <td class="col-sm-2">@p1.Telefonnummer</td>
+                    <td class="col-sm-2">@p1.Abonnementstype</td>
+                    <td class="col-sm-2">@p1.Fornavn</td>
+                    <td class="col-sm-2">@p1.Etternavn</td>
+                    <td class="col-sm-2">@p1.Bedrift_som_skal_faktureres</td>
+                    <td class="col-sm-2">@p1.c_o_adresse_for_SIM_levering</td>
+                    <td class="col-sm-2">@p1.Gateadresse_SIM_Skal_sendes_til</td>
+                    <td class="col-sm-2">@p1.Hus_nummer</td>
+                    <td class="col-sm-2">@p1.Hus_bokstav</td>
+                    <td class="col-sm-2">@p1.post_nr_</td>
+                    <td class="col-sm-2">@p1.Post_sted</td>
+                    <td class="col-sm-2">@p1.Epost_for_sporings_informasjon</td>
+                    <td class="col-sm-2">@p1.Epost</td>
+                    <td class="col-sm-2">@p1.Tilleggsinfo_ansatt_ID</td>
+                    <td class="col-sm-2">@p1.Ekstra_talesim_</td>
+                    <td class="col-sm-2">@p1.Ekstra_datasim</td>
+                    <td class="col-sm-2">@p1.Kostnadsted</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+
+</div>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-8">
+        <button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "NummersAdmin", new { id_sesije = ViewBag.ID })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Back to list</button>
+    </div>
+</div>
+<script>
+    document.querySelectorAll(".neispravno tr td").forEach(function (node) {
+        node.ondblclick = function () {
+            var val = this.innerHTML;
+            var input = document.createElement("input");
+            input.value = val;
+            input.onblur = function () {
+                var val = this.value;
+                this.parentNode.innerHTML = val;
+            }
+            this.innerHTML = "";
+            this.appendChild(input);
+            input.focus();
+        }
+    });
+    mybutton = document.getElementById("myBtn");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function () { scrollFunction() };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+</script>

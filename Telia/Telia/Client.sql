@@ -1,8 +1,8 @@
 ﻿CREATE TABLE [dbo].[Client]
 (
 	[Id] INT IDENTITY (1, 1) NOT NULL,
-    [Orgnummer]       NVARCHAR (50) NOT NULL,
-    [Password]      NVARCHAR (50) NOT NULL,
+    [Orgnummer] NVARCHAR (50) NOT NULL,
+    [Password] NVARCHAR (50) NOT NULL,
     [FirmaNavn] NVARCHAR(50),
     [GateNavn] NVARCHAR(50),
     [HusNummer] INT,

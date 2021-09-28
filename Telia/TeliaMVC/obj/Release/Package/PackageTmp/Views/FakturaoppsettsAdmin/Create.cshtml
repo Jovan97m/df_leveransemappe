@@ -1,0 +1,206 @@
+﻿@model TeliaMVC.Models.Fakturaoppsett
+
+@{
+    ViewBag.Title = "Create";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+
+<style>
+    hr {
+        border: 0;
+        height: 4px;
+        background-image: linear-gradient(to right, azure,pink, purple, pink,azure);
+        box-shadow: 0 10px 10px -10px purple inset;
+    }
+
+    .TextBox {
+        border: 1px solid Purple;
+        font-weight: bold;
+        color: black;
+        box-shadow: 0 8px 8px -9px black inset;
+    }
+
+        .TextBox:scope, .TextBox:active, .TextBox::after, .TextBox + span {
+            box-shadow: 0 5px 5px -7px purple inset;
+        }
+
+    .SelectBox {
+        border: 1px solid Purple;
+        font-weight: bold;
+        color: black;
+        box-shadow: 0 8px 8px -9px black inset;
+    }
+
+        .SelectBox:scope, .SelectBox:active, .SelectBox::after, .SelectBox + span {
+            box-shadow: 0 5px 5px -7px purple inset;
+        }
+
+    .Labela {
+        margin-bottom: 3px;
+        font-size: 17px;
+        color: black;
+        font-weight: bolder;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+
+    .ButtonBack {
+        background-color: darkred;
+        font-size: larger;
+        font-weight: bold;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+
+        .ButtonBack:hover {
+            color: white;
+            background-color: red;
+            box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
+        }
+
+        .ButtonBack:active {
+            transform: translateY(+2px);
+            background-color: darkred;
+        }
+
+
+    .ButtonEdit {
+        background-color: darkblue;
+        font-size: larger;
+        font-weight: bold;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+
+        .ButtonEdit:hover {
+            color: white;
+            background-color: blue;
+            box-shadow: 0 13px 18px 0 rgb(30, 20, 210), 0 16px 45px 0 rgba(0,0,0,0.21);
+        }
+
+        .ButtonEdit:active {
+            transform: translateY(+2px);
+            background-color: darkblue;
+        }
+
+    .elementsForm {
+        float: left;
+    }
+</style>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.NavnPaKostnadssted, htmlAttributes: new { @class = "control-label col-md-3 Labela" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.NavnPaKostnadssted, new { htmlAttributes = new { @class = "form-control TextBox" } })
+            @Html.ValidationMessageFor(model => model.NavnPaKostnadssted, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Tileggsinfo_kostnadssted, htmlAttributes: new { @class = "control-label col-md-3 Labela" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Tileggsinfo_kostnadssted, new { htmlAttributes = new { @class = "form-control TextBox" } })
+            @Html.ValidationMessageFor(model => model.Tileggsinfo_kostnadssted, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Fakturaformat, htmlAttributes: new { @class = "control-label col-md-3 Labela" })
+        <div class="col-md-6">
+            @Html.DropDownList("selected", new List<SelectListItem>
+                             { new SelectListItem { Text = "Papirfaktura", Value = "Papirfaktura", Selected=true},
+                               new SelectListItem { Text = "EHF", Value = "EHF"},
+                               new SelectListItem { Text = "Epost-faktura", Value = "Epost-faktura"}}, htmlAttributes: new { @class = "form-control SelectBox" })
+
+            @Html.ValidationMessageFor(model => model.Fakturaformat, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Fakturaadresse, htmlAttributes: new { @class = "control-label col-md-3 Labela" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Fakturaadresse, new { htmlAttributes = new { @class = "form-control TextBox" } })
+            @Html.ValidationMessageFor(model => model.Fakturaadresse, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Husnr, htmlAttributes: new { @class = "control-label col-md-3 Labela" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Husnr, new { htmlAttributes = new { @class = "form-control TextBox" } })
+            @Html.ValidationMessageFor(model => model.Husnr, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Bokstav, htmlAttributes: new { @class = "control-label col-md-3 Labela" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Bokstav, new { htmlAttributes = new { @class = "form-control TextBox" } })
+            @Html.ValidationMessageFor(model => model.Bokstav, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Postnummer, htmlAttributes: new { @class = "control-label col-md-3 Labela" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Postnummer, new { htmlAttributes = new { @class = "form-control TextBox" } })
+            @Html.ValidationMessageFor(model => model.Postnummer, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Sted, htmlAttributes: new { @class = "control-label col-md-3 Labela" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Sted, new { htmlAttributes = new { @class = "form-control TextBox" } })
+            @Html.ValidationMessageFor(model => model.Sted, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Epost, htmlAttributes: new { @class = "control-label col-md-3 Labela" })
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Epost, new { htmlAttributes = new { @class = "form-control TextBox" } })
+            @Html.ValidationMessageFor(model => model.Epost, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div style="display:none;">
+        @Html.TextBox("client", ViewBag.ORG as string)
+    </div>
+
+    <div class="form-group" style="display:none;">
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Kostnadssted, new { htmlAttributes = new { @class = "form-control", @Value = "a" } })
+        </div>
+    </div>
+    <div class="form-group" style="display:none;">
+        <div class="col-md-6">
+            @Html.EditorFor(model => model.Fakturaformat, new { htmlAttributes = new { @class = "form-control LoadTextbox", @Value = "ss" } })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10"><input type="submit" value="Save" class="ButtonEdit" /></div>
+        <div class="col-md-offset-2 col-md-10"><button class="ButtonBack" onclick="location.href='@Url.Action("Index", "FakturaoppsettsAdmin")';return false;">Back</button></div>
+    </div>
+</div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

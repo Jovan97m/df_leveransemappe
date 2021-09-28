@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TeliaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Fakturaoppsett">
+    <Key>
+      <PropertyRef Name="Kostnadssted" />
+    </Key>
+    <Property Name="NavnPaKostnadssted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Tileggsinfo_kostnadssted" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Fakturaformat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Fakturaadresse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Husnr" Type="Int32" />
+    <Property Name="Bokstav" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Postnummer" Type="Int32" />
+    <Property Name="Sted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Epost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Kostnadssted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Nummers" Relationship="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" FromRole="Fakturaoppsett" ToRole="Nummer" />
+    <Property Name="Orgnummer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Id_client" Type="Int32" />
+    <NavigationProperty Name="Client" Relationship="TeliaModel.FK_dbo_Client_dbo_Client_Id" FromRole="Fakturaoppsett" ToRole="Client" />
+  </EntityType>
+  <EntityType Name="Nummer">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" annotation:StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Telefonnummer" Type="String" annotation:StoreGeneratedPattern="None" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="Abonnementstype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Fornavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Etternavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Bedrift_som_skal_faktureres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="c_o_adresse_for_SIM_levering" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Gateadresse_SIM_Skal_sendes_til" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Hus_nummer" Type="Int32" />
+    <Property Name="Hus_bokstav" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="post_nr_" Type="Int32" />
+    <Property Name="Post_sted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Epost_for_sporings_informasjon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Epost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Kostnadsted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Tilleggsinfo_ansatt_ID" Type="Int32" />
+    <Property Name="Ekstra_talesim_" Type="Int32" />
+    <Property Name="Ekstra_datasim" Type="Int32" />
+    <NavigationProperty Name="Fakturaoppsett" Relationship="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" FromRole="Nummer" ToRole="Fakturaoppsett" />
+    <Property Name="Orgnummer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Pending" Type="Boolean" />
+    <Property Name="Katalogoppforing" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+    <Property Name="Porteringsdatoog_tid" Type="DateTime" Precision="3" />
+    <Property Name="Binding" Type="Boolean" />
+    <Property Name="Postnummer" Type="Int32" />
+    <Property Name="Antall_TrillingSIM" Type="Int32" />
+    <Property Name="allDataSIM" Type="Int32" />
+    <Property Name="Manuell_Top_up" Type="Boolean" />
+    <Property Name="Sperre_Top_up" Type="Boolean" />
+    <Property Name="Norden" Type="Boolean" />
+    <Property Name="Tale_og_SMS_til_EU" Type="Boolean" />
+    <Property Name="TBN" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="HovedSIM" Type="Int32" />
+    <Property Name="TrillingSIM1" Type="Int32" />
+    <Property Name="TrillingSIM2" Type="Int32" />
+    <Property Name="DataSIM1" Type="Int32" />
+    <Property Name="DataSIM2" Type="Int32" />
+    <Property Name="DataSIM3" Type="Int32" />
+    <Property Name="DataSIM4" Type="Int32" />
+    <Property Name="DataSIM5" Type="Int32" />
+    <Property Name="DeliveryMethodCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryStreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryStreetNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryStreetSuffix" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryCity" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryZIP" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryCountryCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryContractEmail" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryContractCountryCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryContractLocalNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryIndividualFirstName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="DeliveryIndividualLastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
+    <End Role="Fakturaoppsett" Type="Self.Fakturaoppsett" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Nummer" Type="Self.Nummer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Fakturaoppsett">
+        <PropertyRef Name="Kostnadssted" />
+      </Principal>
+      <Dependent Role="Nummer">
+        <PropertyRef Name="Kostnadsted" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TeliaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Admins" EntityType="Self.Admin" />
+    <EntitySet Name="Fakturaoppsetts" EntityType="Self.Fakturaoppsett" />
+    <EntitySet Name="Nummers" EntityType="Self.Nummer" />
+    <AssociationSet Name="FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted" Association="Self.FK_dbo_Nummer_dbo_Fakturaoppsett_NavnPåKostnadssted">
+      <End Role="Fakturaoppsett" EntitySet="Fakturaoppsetts" />
+      <End Role="Nummer" EntitySet="Nummers" />
+    </AssociationSet>
+    <EntitySet Name="Clients" EntityType="TeliaModel.Client" />
+    <AssociationSet Name="FK_dbo_Client_dbo_Client_Id" Association="TeliaModel.FK_dbo_Client_dbo_Client_Id">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="Fakturaoppsett" EntitySet="Fakturaoppsetts" />
+    </AssociationSet>
+    <EntitySet Name="Abonementypes" EntityType="TeliaModel.Abonementype" />
+    <EntitySet Name="ConnectionTypes" EntityType="TeliaModel.ConnectionType" />
+    <EntitySet Name="Types" EntityType="TeliaModel.Type" />
+    <AssociationSet Name="FK__Client__Id_abone__41EDCAC5" Association="TeliaModel.FK__Client__Id_abone__41EDCAC5">
+      <End Role="Abonementype" EntitySet="Abonementypes" />
+      <End Role="Client" EntitySet="Clients" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Connectio__Id_ab__40058253" Association="TeliaModel.FK__Connectio__Id_ab__40058253">
+      <End Role="Abonementype" EntitySet="Abonementypes" />
+      <End Role="ConnectionType" EntitySet="ConnectionTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Connectio__Id_ty__40F9A68C" Association="TeliaModel.FK__Connectio__Id_ty__40F9A68C">
+      <End Role="Type" EntitySet="Types" />
+      <End Role="ConnectionType" EntitySet="ConnectionTypes" />
+    </AssociationSet>
+    <EntitySet Name="Postnummers" EntityType="TeliaModel.Postnummer" />
+  </EntityContainer>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Orgnummer" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FirmaNavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="GateNavn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="HusNummer" Type="Int32" />
+    <Property Name="HusBokStav" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="PostNummer" Type="Int32" />
+    <Property Name="Sted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Epost" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="KontaktNavn" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="KontaktEpost" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="KontaktTlfnr" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="TekniskKontaktNavn" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="TekniskKontaktEpost" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="TekniskKontaktTlfnr" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Fakturaoppsetts" Relationship="TeliaModel.FK_dbo_Client_dbo_Client_Id" FromRole="Client" ToRole="Fakturaoppsett" />
+    <Property Name="Id_abonementype" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Abonementype" Relationship="TeliaModel.FK__Client__Id_abone__41EDCAC5" FromRole="Client" ToRole="Abonementype" />
+  </EntityType>
+  <Association Name="FK_dbo_Client_dbo_Client_Id">
+    <End Type="TeliaModel.Client" Role="Client" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TeliaModel.Fakturaoppsett" Role="Fakturaoppsett" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Fakturaoppsett">
+        <PropertyRef Name="Id_client" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Abonementype">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Clients" Relationship="TeliaModel.FK__Client__Id_abone__41EDCAC5" FromRole="Abonementype" ToRole="Client" />
+    <NavigationProperty Name="ConnectionTypes" Relationship="TeliaModel.FK__Connectio__Id_ab__40058253" FromRole="Abonementype" ToRole="ConnectionType" />
+    <Property Name="Num_type" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ConnectionType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Id_abom" Type="Int32" Nullable="false" />
+    <Property Name="Id_type" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Abonementype" Relationship="TeliaModel.FK__Connectio__Id_ab__40058253" FromRole="ConnectionType" ToRole="Abonementype" />
+    <NavigationProperty Name="Type" Relationship="TeliaModel.FK__Connectio__Id_ty__40F9A68C" FromRole="ConnectionType" ToRole="Type" />
+  </EntityType>
+  <EntityType Name="Type">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="35" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ConnectionTypes" Relationship="TeliaModel.FK__Connectio__Id_ty__40F9A68C" FromRole="Type" ToRole="ConnectionType" />
+    <Property Name="Reference_code" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK__Client__Id_abone__41EDCAC5">
+    <End Type="TeliaModel.Abonementype" Role="Abonementype" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TeliaModel.Client" Role="Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Abonementype">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="Id_abonementype" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Connectio__Id_ab__40058253">
+    <End Type="TeliaModel.Abonementype" Role="Abonementype" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TeliaModel.ConnectionType" Role="ConnectionType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Abonementype">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ConnectionType">
+        <PropertyRef Name="Id_abom" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Connectio__Id_ty__40F9A68C">
+    <End Type="TeliaModel.Type" Role="Type" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TeliaModel.ConnectionType" Role="ConnectionType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ConnectionType">
+        <PropertyRef Name="Id_type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Postnummer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PostNr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Poststed" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Kommunenummer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Kommunenavn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Kategory" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+  </EntityType>
+</Schema>

@@ -142,7 +142,8 @@
             <br />
         }
     </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
+            <div class="row">
             <fieldset>
                 <legend>
                     Angi bestemt type tall
@@ -160,7 +161,7 @@
                         <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
                                 title="Angi et fasttelefonnummer. Dette nummeret er tillatt for alle klienter å angi."
                                 onclick="location.href = '@Url.Action("CreateFixed", "Nummers",new { sesija = ViewBag.ID })'">
-                            <span class="glyphicon glyphicon-phone-alt"></span> Fixed
+                            <span class="glyphicon glyphicon-phone-alt"><br /></span> Fixed
                         </button>
                     </div>
 
@@ -173,13 +174,21 @@
                     </div>
                 </div>
             </fieldset>
+                </div>
         </div>
         <div class="col-sm-4">
-
             <fieldset>
                 <legend>
                     Instruksjoner for bruk av Excell-filer
                 </legend>
+                <div class="col-md-6 " style="margin-bottom: 5px;">
+                    <p>Opprett fil som data skal lastes inn i</p>
+                    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                            title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                            onclick="location.href = '@Url.Action("Export", "Nummers")'">
+                        <span class="glyphicon glyphicon-download"></span> Create Excell
+                    </button>
+                </div>
                 <div class="col-md-6 " style="margin-bottom: 5px;">
                     <p>Last inn dataene fra Excel-filen</p>
                     @using (Html.BeginForm("Excel", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))

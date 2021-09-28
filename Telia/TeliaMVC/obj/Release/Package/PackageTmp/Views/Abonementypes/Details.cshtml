@@ -1,0 +1,128 @@
+﻿@model TeliaMVC.Models.Abonementype
+
+@{
+    ViewBag.Title = "Details";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<style>
+    hr {
+        border: 0;
+        height: 4px;
+        background-image: linear-gradient(to right, azure,pink, purple, pink,azure);
+        box-shadow: 0 10px 10px -10px purple inset;
+    }
+    .ButtonBack {
+        background-color: darkred;
+        font-size: medium;
+        font-weight: bold;
+        cursor: pointer;
+        color: white;
+        margin-top: 10px;
+        padding: 9px 20px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+
+        .ButtonBack:hover {
+            color: white;
+            background-color: red;
+            box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
+        }
+
+        .ButtonBack:active {
+            transform: translateY(+2px);
+            background-color: darkred;
+        }
+    .btnEdit {
+        font-size: small;
+        border-radius: 6px;
+        font-weight: bold;
+        color: white;
+        margin: 2px;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,0.29), 0 3px 2px 0 rgba(0,0,0,0.3);
+        margin-left: 15px;
+        background-color: darkblue;
+    }
+
+        .btnEdit:hover {
+            color: white;
+            background-color: blue;
+            box-shadow: 0 9px 13px 0 darkblue, 0 12px 20px 0 rgba(0,0,0,0.19);
+        }
+
+        .btnEdit:active {
+            transform: translateY(+2px);
+            background-color: darkblue;
+        }
+    .btnDelete {
+        font-size: small;
+        border-radius: 6px;
+        font-weight: bold;
+        color: white;
+        margin: 2px;
+        box-shadow: 0 2px 3px 0 rgba(0,0,0,0.29), 0 3px 2px 0 rgba(0,0,0,0.3);
+        margin-left: 15px;
+        background-color: darkred;
+    }
+
+        .btnDelete:hover {
+            color: white;
+            background-color: red;
+            box-shadow: 0 9px 13px 0 darkred, 0 12px 20px 0 rgba(0,0,0,0.19);
+        }
+
+        .btnDelete:active {
+            transform: translateY(+2px);
+            background-color: darkred;
+        }
+    .HeaderTable {
+        font-size: 19px;
+        font-style: italic;
+        background-color: blanchedalmond;
+        text-align: center;
+    }
+</style>
+<div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+
+            <table class="table-bordered table-hover table-striped" style="font-weight:bold;">
+                <thead class="HeaderTable">
+                    <tr>
+                        <th class="col-sm-1">Abonementype</th>
+                        <th class="col-sm-1">Reference Code</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in (List<TeliaMVC.Models.Type>)ViewData["Tipovi"])
+                    {
+                        <tr>
+                            <td readonly="readonly" class="col-sm-1">@p.Name</td>
+                            <td readonly="readonly" class="col-sm-1">@p.Reference_code</td>
+                            <td class="col-sm-1">
+                                <button class="btnEdit" data-toggle="tooltip" data-placement="bottom" title="Endre navnet på typen"
+                                        onclick="location.href = '@Url.Action("EditType", "Abonementypes", new {id = p.Id , id_abom = ViewBag.id})'">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                                <button class="btnDelete" data-toggle="tooltip" data-placement="bottom" title="Slett valgt abonementype"
+                                        onclick="location.href = '@Url.Action("DeleteType", "Abonementypes", new {id = p.Id, id_abom = ViewBag.id})'">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+</div>
+<p style="margin-left:10px;margin-top:12px;"><a class="ButtonBack" onclick="location.href = '@Url.Action("Index", "Abonementypes")'">Return &raquo;</a></p>

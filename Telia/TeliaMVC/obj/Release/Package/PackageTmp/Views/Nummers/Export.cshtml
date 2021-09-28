@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Export";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+<style>
+    hr {
+        border: 0;
+        height: 3px;
+        background-image: linear-gradient(to right, azure,pink, purple, pink,azure);
+        box-shadow: 0 10px 10px -10px purple inset;
+    }
+    p{
+        font-size: 18px;
+        font-weight:bold;
+        font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+
+    }
+</style>
+<h1 style="color:darkgreen">Vellykket eksport</h1>
+<p>
+    Du har opprettet en tom Excell-fil.
+
+</p>
+<p>
+    Filen er nå plassert på <span style="font-style: italic;">C:\Users\Public\Downloads </span>
+</p>
+
+
