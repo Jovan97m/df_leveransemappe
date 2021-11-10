@@ -14,6 +14,7 @@ namespace TeliaMVC.Models
     
     public partial class Nummer
     {
+        public int ID { get; set; }
         public string Telefonnummer { get; set; }
         public string Abonnementstype { get; set; }
         public string Fornavn { get; set; }
@@ -31,7 +32,6 @@ namespace TeliaMVC.Models
         public Nullable<int> Tilleggsinfo_ansatt_ID { get; set; }
         public Nullable<int> Ekstra_talesim_ { get; set; }
         public Nullable<int> Ekstra_datasim { get; set; }
-        public int ID { get; set; }
         public string Orgnummer { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<bool> Pending { get; set; }

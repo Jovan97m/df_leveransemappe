@@ -376,6 +376,8 @@
     <Content Include="Views\NummersAdmin\Excel.cshtml" />
     <Content Include="Views\NummersAdmin\Action.cshtml" />
     <Content Include="Views\NummersAdmin\Update.cshtml" />
+    <Content Include="Views\Home\Delete.cshtml" />
+    <Content Include="Views\Home\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,172 @@
+﻿@model TeliaMVC.Models.Client
+
+@{
+    ViewBag.Title = "Delete";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Client</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Orgnummer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Orgnummer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirmaNavn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirmaNavn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GateNavn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GateNavn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HusNummer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HusNummer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HusBokStav)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HusBokStav)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostNummer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostNummer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Epost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Epost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KontaktNavn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KontaktNavn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KontaktEpost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KontaktEpost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KontaktTlfnr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KontaktTlfnr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TekniskKontaktNavn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TekniskKontaktNavn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TekniskKontaktEpost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TekniskKontaktEpost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TekniskKontaktTlfnr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TekniskKontaktTlfnr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Id_abonemetypeF)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id_abonemetypeF)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Id_abonementypeI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id_abonementypeI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Abonementype.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Abonementype.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

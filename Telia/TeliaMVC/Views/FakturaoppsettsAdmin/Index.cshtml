@@ -168,6 +168,7 @@
                     color: white;
                     text-shadow: 1px 2px black;">
                 <tr>
+                    <th style="width:35px;"></th>
                     <th scope="row" class="col-sm-2">
                         Kostnadssted
                         <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href='@Url.Action("Index", "FakturaoppsettsAdmin",new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })'">
@@ -213,7 +214,6 @@
                     <th class="col-sm-2">
                         Epost
                     </th>
-                    <th style="width:35px;"></th>
                 </tr>
             </thead>
             <tbody style="color:black; font-size: 13px;">
@@ -230,6 +230,19 @@
                     foreach (var item in Model)
                     {
                         <tr>
+                            <td style="background-color:azure;">
+                                <div style="display:flex; align-items:stretch;">
+
+                                    <button class="btn-primary btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
+                                            onclick="location.href='@Url.Action("Edit", "FakturaoppsettsAdmin", new { id = item.Kostnadssted })'">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
+                                    <button class="btn-danger btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du slette valgt rad"
+                                            onclick="location.href='@Url.Action("Delete", "FakturaoppsettsAdmin", new { id = item.Kostnadssted })'">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                </div>
+                            </td>
                             <td class="col-sm-1">
                                 @Html.DisplayFor(modelItem => item.NavnPaKostnadssted)
                             </td>
@@ -256,19 +269,6 @@
                             </td>
                             <td style="color:darkblue; font-style:italic;font-weight: bold;">
                                 @Html.DisplayFor(modelItem => item.Epost)
-                            </td>
-                            <td style="background-color:azure;">
-                                <div style="display:flex; align-items:stretch;">
-
-                                    <button class="btn-primary btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
-                                            onclick="location.href='@Url.Action("Edit", "FakturaoppsettsAdmin", new { id = item.Kostnadssted })'">
-                                        <span class="glyphicon glyphicon-pencil"></span>
-                                    </button>
-                                    <button class="btn-danger btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du slette valgt rad"
-                                            onclick="location.href='@Url.Action("Delete", "FakturaoppsettsAdmin", new { id = item.Kostnadssted })'">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </button>
-                                </div>
                             </td>
                         </tr>
                     }

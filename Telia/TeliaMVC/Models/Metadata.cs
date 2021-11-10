@@ -41,6 +41,14 @@ namespace TeliaMVC.Models
         public string TekniskKontaktNavn { get; set; }
         public string TekniskKontaktEpost { get; set; }
         public string TekniskKontaktTlfnr { get; set; }
+
+        [Display(Name = "Mobile Abonementype")]
+        public int Id_abonementype { get; set; }
+
+        [Display(Name = "Fixed Abonementype")]
+        public int Id_abonemetypeF { get; set; }
+        [Display(Name = "Internet Abonementype")]
+        public int Id_abonementypeI { get; set; }
     }
 
     public class MetadataFakturaoppsett

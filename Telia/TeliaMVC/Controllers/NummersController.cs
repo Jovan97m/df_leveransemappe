@@ -200,7 +200,7 @@ namespace TeliaMVC.Controllers
         {
             Client client = db.Clients.Find(sesija);
             ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
-            ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype,"F"); // selectbox za abonementype
+            ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonemetypeF,"F"); // selectbox za abonementype
             ViewBag.ORG = client.Id.ToString();
             return View();
         }
@@ -209,7 +209,7 @@ namespace TeliaMVC.Controllers
         {
             Client client = db.Clients.Find(sesija);
             ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
-            ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype,"I"); // selectbox za abonementype
+            ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementypeI,"I"); // selectbox za abonementype
             ViewBag.ORG = client.Id.ToString();
             return View();
         }
@@ -482,19 +482,12 @@ namespace TeliaMVC.Controllers
             List<int> ids = new List<int>();
 
 
-            var tipovi = db.Abonementypes.Where(s => s.Num_type.Contains(type));
-            foreach (var item in tipovi)
+            var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(id));
+            foreach (var item in veza)
             {
-                var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(item.Id));
-                foreach (var i in veza)
-                {
-                    types.Add(db.Types.Where(s => s.Id.Equals(i.Id_type)).First().Name.ToString());
-                }
-
+                types.Add(db.Types.Where(s => s.Id.Equals(item.Id_type)).First().Name.ToString());
             }
             return types;
-
-                      
         }
 
         public string VratiPostSted(int? numm)

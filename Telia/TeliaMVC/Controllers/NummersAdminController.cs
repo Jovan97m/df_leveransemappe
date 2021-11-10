@@ -120,7 +120,7 @@ namespace TeliaMVC.Controllers
                     //selected nije potreban 
                     Client client = db.Clients.Find(GetId(selected));
                     ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
-                    ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype, Type); // selectbox za abonementype
+                    ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonemetypeF, Type); // selectbox za abonementype
                     ViewBag.ORG = client.Id.ToString();
                     ViewBag.tip = Type;
                     //  return RedirectToAction("CreateFixed", "NummersAdmin" , new { sesija = client.Id});
@@ -139,7 +139,7 @@ namespace TeliaMVC.Controllers
                 {
                     Client client = db.Clients.Find(GetId(selected));
                     ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
-                    ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype, Type); // selectbox za abonementype
+                    ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementypeI, Type); // selectbox za abonementype
                     ViewBag.ORG = client.Id.ToString();
                     ViewBag.tip = Type;
                     return View("CreateInternet");
@@ -1195,34 +1195,12 @@ namespace TeliaMVC.Controllers
         {
             List<String> types = new List<String>();
             List<int> ids = new List<int>();
-
-            if (type == "M")
-            {
                 var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(id));
                 foreach (var item in veza)
                 {
                     types.Add(db.Types.Where(s => s.Id.Equals(item.Id_type)).First().Name.ToString());
                 }
                 return types;
-            }
-            else
-                if (type == "F" || type == "I")
-            {
-                var tipovi = db.Abonementypes.Where(s => s.Num_type.Contains(type));
-                foreach (var item in tipovi)
-                {
-                    var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(item.Id));
-                    foreach (var i in veza)
-                    {
-                        types.Add(db.Types.Where(s => s.Id.Equals(i.Id_type)).First().Name.ToString());
-                    }
-                    return types;
-                }
-            }
-            return types;
-            {
-
-            }
 
         }
         public List<String> FillKostnadstedSelectBox(int id)

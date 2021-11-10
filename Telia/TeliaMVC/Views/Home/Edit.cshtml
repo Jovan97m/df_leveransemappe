@@ -1,14 +1,12 @@
 ﻿@model TeliaMVC.Models.Client
 
 @{
-    ViewBag.Title = "Create client";
+    ViewBag.Title = "Edit";
     if (Session["Id"] == null)
     {
         Response.Redirect("~/Login/Index");
     }
 }
-
-
 
 <style>
     .Label {
@@ -16,6 +14,7 @@
         font-size: medium;
         font-weight: bold;
     }
+
     .ButtonEdit {
         background-color: darkblue;
         font-size: larger;
@@ -27,15 +26,18 @@
         text-shadow: 1px 1px black;
         box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
     }
+
         .ButtonEdit:hover {
             color: white;
             background-color: blue;
             box-shadow: 0 13px 18px 0 rgb(30, 20, 210), 0 16px 45px 0 rgba(0,0,0,0.21);
         }
+
         .ButtonEdit:active {
             transform: translateY(+2px);
             background-color: darkblue;
         }
+
     .ButtonBack {
         background-color: darkred;
         font-size: larger;
@@ -58,6 +60,7 @@
             transform: translateY(+2px);
             background-color: darkred;
         }
+
     .SelectBox {
         color: black;
         font-size: medium;
@@ -70,6 +73,7 @@
         cursor: pointer;
         box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
     }
+
     .textboxPink {
         color: black;
         font-size: medium;
@@ -83,17 +87,26 @@
         border: 1px solid #ffe6ff;
     }
 </style>
-<hr />
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
 <div class="form-horizontal">
+    <fieldset>
+        <legend>
+            FirmaNavn: @Model.FirmaNavn
+        </legend>
+        <p style="font-size:14px;"> GateNavn: @Model.GateNavn</p>
+        <p style="color: darkgreen";font-size: 13px;> Previous Password: @Model.Password</p>
+
+    </fieldset>
+    <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
     <div class="form-group">
         @Html.LabelFor(model => model.Orgnummer, htmlAttributes: new { @class = "control-label Label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Orgnummer, new { htmlAttributes = new { @class = "form-control textboxPink", @minlength = "9", @maxlength = "9" } })
+            @Html.EditorFor(model => model.Orgnummer, new { htmlAttributes = new { @class = "form-control textboxPink" } })
             @Html.ValidationMessageFor(model => model.Orgnummer, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -108,16 +121,48 @@
     <div class="form-group" style="display:none;">
         <div class="col-md-10">
             @Html.EditorFor(model => model.Id_abonementype, new { htmlAttributes = new { @class = "form-control LoadTextbox", @Value = 1 } })
-        </div>
-    </div>
-    <div class="form-group" style="display:none;">
+        </div>ep
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Id_abonementypeI, new { htmlAttributes = new { @class = "form-control LoadTextbox", @Value = 1 } })
+            @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control LoadTextbox" } })
         </div>
-    </div>
-    <div class="form-group" style="display:none;">
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Id_abonemetypeF, new { htmlAttributes = new { @class = "form-control LoadTextbox", @Value = 1 } })
+            @Html.EditorFor(model => model.FirmaNavn, new { htmlAttributes = new { @class = "form-control LoadTextbox" } })
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.GateNavn, new { htmlAttributes = new { @class = "form-control LoadTextbox" } })
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.HusNummer, new { htmlAttributes = new { @class = "form-control LoadTextbox" } })
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.HusBokStav, new { htmlAttributes = new { @class = "form-control LoadTextbox" } })
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PostNummer, new { htmlAttributes = new { @class = "form-control LoadTextbox"} })
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Sted, new { htmlAttributes = new { @class = "form-control LoadTextbox" } })
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Epost, new { htmlAttributes = new { @class = "form-control LoadTextbox" } })
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.KontaktNavn, new { htmlAttributes = new { @class = "form-control LoadTextbox" } })
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.KontaktEpost, new { htmlAttributes = new { @class = "form-control LoadTextbox" } })
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.KontaktTlfnr, new { htmlAttributes = new { @class = "form-control LoadTextbox"} })
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TekniskKontaktEpost, new { htmlAttributes = new { @class = "form-control LoadTextbox" } })
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TekniskKontaktNavn, new { htmlAttributes = new { @class = "form-control LoadTextbox" } })
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.TekniskKontaktTlfnr, new { htmlAttributes = new { @class = "form-control LoadTextbox" } })
         </div>
     </div>
     <div class="form-group">
@@ -141,15 +186,13 @@
             @Html.ValidationMessageFor(model => model.Abonementype, "", new { @class = "text-danger" })
         </div>
     </div>
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <button class="ButtonBack" onclick="location.href = '@Url.Action("Index", "Home")';return false;"> Back</button>
-            <input type="submit" value="Save" class="ButtonEdit" />
+            <input type="submit" value="Edit" class="ButtonEdit" />
         </div>
     </div>
 </div>
 }
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
