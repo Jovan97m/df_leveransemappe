@@ -142,21 +142,40 @@
             <br />
         }
     </div>
-        <div class="col-sm-3">
-            <div class="row">
+    <div class="col-sm-6">
+        <div class="row">
             <fieldset>
                 <legend>
                     Angi bestemt type tall
                 </legend>
                 <div class="row">
-                    <div class="col-md-6" style="margin-bottom: 5px;">
-                        <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                                title="Skriv inn mobilnummeret ditt "
-                                onclick="location.href = '@Url.Action("Create", "Nummers",new { sesija = ViewBag.ID })'">
-                            <span class="glyphicon glyphicon-phone"></span> Telefonnummer
-                        </button>
-                    </div>
+                    <div class="col-lg-8" style="flex-direction:row">
+                        <div class="col-md-6" style="margin-bottom: 5px;">
+                            <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                                    title="Skriv inn mobilnummeret ditt "
+                                    onclick="location.href = '@Url.Action("Create", "Nummers",new { sesija = ViewBag.ID })'">
+                                <span class="glyphicon glyphicon-phone"></span> Telefonnummer
+                            </button>
+                            @using (Html.BeginForm("Excel", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
+                            {
+                                <div style="display:none;">
+                                    @Html.TextBox("id_sesije", ViewBag.ID as string);
+                                </div>
+                                @Html.Raw(ViewBag.Error)
+                                <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
+                                <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                                        onclick="location.href = '@Url.Action("Excel", "Nummers",new { id_sesija = ViewBag.ID })'">
+                                    <span class="glyphicon glyphicon-import"></span>Importer excel-fil
+                                </button>
+                            }
+                            <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                                    title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                                    onclick="location.href = '@Url.Action("Export", "Nummers")'">
+                                <span class="glyphicon glyphicon-download"></span> Create Excell
+                            </button>
+                        </div>
 
+                    </div>
                     <div class="col-md-8" style="margin-bottom: 5px;">
                         <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
                                 title="Angi et fasttelefonnummer. Dette nummeret er tillatt for alle klienter å angi."
@@ -174,8 +193,9 @@
                     </div>
                 </div>
             </fieldset>
-                </div>
         </div>
+    </div>
+    <!--
         <div class="col-sm-4">
             <fieldset>
                 <legend>
@@ -206,6 +226,7 @@
                 </div>
             </fieldset>
         </div>
+    -->
 </div>
 
 <div style="overflow-x: auto; margin-left: 6px; margin-right: 15px;" class="shadow">

@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "Telia"
 :setvar DefaultFilePrefix "Telia"
-:setvar DefaultDataPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
-:setvar DefaultLogPath "C:\Users\Marko Miloradovic\AppData\Local\Microsoft\VisualStudio\SSDT\Database\Telia"
+:setvar DefaultDataPath "C:\Users\JOVAN\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
+:setvar DefaultLogPath "C:\Users\JOVAN\AppData\Local\Microsoft\VisualStudio\SSDT\Telia"
 
 GO
 :on error exit
@@ -40,48 +40,246 @@ USE [$(DatabaseName)];
 
 
 GO
-/*
-The column [dbo].[Client].[Id_abonementype_F] is being dropped, data loss could occur.
-
-The column [dbo].[Client].[Id_abonementype_I] is being dropped, data loss could occur.
-
-The column [dbo].[Client].[Id_abonementype_M] is being dropped, data loss could occur.
-
-The column [dbo].[Client].[Id_abonementype] on table [dbo].[Client] must be added, but the column has no default value and does not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this issue you must either: add a default value to the column, mark it as allowing NULL values, or enable the generation of smart-defaults as a deployment option.
-
-The column [dbo].[Client].[Id_abonementypeI] on table [dbo].[Client] must be added, but the column has no default value and does not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this issue you must either: add a default value to the column, mark it as allowing NULL values, or enable the generation of smart-defaults as a deployment option.
-
-The column [dbo].[Client].[Id_abonemetypeF] on table [dbo].[Client] must be added, but the column has no default value and does not allow NULL values. If the table contains data, the ALTER script will not work. To avoid this issue you must either: add a default value to the column, mark it as allowing NULL values, or enable the generation of smart-defaults as a deployment option.
-*/
-
-IF EXISTS (select top 1 1 from [dbo].[Client])
-    RAISERROR (N'Rows were detected. The schema update is terminating because data loss might occur.', 16, 127) WITH NOWAIT
-
-GO
-PRINT N'Dropping unnamed constraint on [dbo].[Client]...';
+IF EXISTS (SELECT 1
+           FROM   [master].[dbo].[sysdatabases]
+           WHERE  [name] = N'$(DatabaseName)')
+    BEGIN
+        ALTER DATABASE [$(DatabaseName)]
+            SET ARITHABORT ON,
+                CONCAT_NULL_YIELDS_NULL ON,
+                CURSOR_DEFAULT LOCAL 
+            WITH ROLLBACK IMMEDIATE;
+    END
 
 
 GO
-ALTER TABLE [dbo].[Client] DROP CONSTRAINT [FK__Client__Id_abone__607251E5];
+IF EXISTS (SELECT 1
+           FROM   [master].[dbo].[sysdatabases]
+           WHERE  [name] = N'$(DatabaseName)')
+    BEGIN
+        ALTER DATABASE [$(DatabaseName)]
+            SET PAGE_VERIFY NONE 
+            WITH ROLLBACK IMMEDIATE;
+    END
 
 
 GO
-PRINT N'Altering [dbo].[Client]...';
+ALTER DATABASE [$(DatabaseName)]
+    SET TARGET_RECOVERY_TIME = 0 SECONDS 
+    WITH ROLLBACK IMMEDIATE;
 
 
 GO
-ALTER TABLE [dbo].[Client] DROP COLUMN [Id_abonementype_F], COLUMN [Id_abonementype_I], COLUMN [Id_abonementype_M];
+IF EXISTS (SELECT 1
+           FROM   [master].[dbo].[sysdatabases]
+           WHERE  [name] = N'$(DatabaseName)')
+    BEGIN
+        ALTER DATABASE [$(DatabaseName)]
+            SET QUERY_STORE (QUERY_CAPTURE_MODE = ALL, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 367), MAX_STORAGE_SIZE_MB = 100) 
+            WITH ROLLBACK IMMEDIATE;
+    END
 
 
 GO
-ALTER TABLE [dbo].[Client]
-    ADD [Id_abonementype]  INT NOT NULL,
-        [Id_abonemetypeF]  INT NOT NULL,
-        [Id_abonementypeI] INT NOT NULL;
+PRINT N'Rename refactoring operation with key 3612fca1-4f17-4b39-b934-d88c654b39d1 is skipped, element [dbo].[Nummer].[11. Katalogoppforing] (SqlSimpleColumn) will not be renamed to Katalogoppforing';
 
 
 GO
-PRINT N'Creating unnamed constraint on [dbo].[Client]...';
+PRINT N'Rename refactoring operation with key c2f7a30c-baad-407f-8bd7-7b012d77f648 is skipped, element [dbo].[Nummer].[13. Porteringsdatoog tid] (SqlSimpleColumn) will not be renamed to Porteringsdatoog tid';
+
+
+GO
+PRINT N'Rename refactoring operation with key b197c2cd-7dba-4677-b31a-6305baa47e1e is skipped, element [dbo].[Nummer].[DeliveryContract] (SqlSimpleColumn) will not be renamed to DeliveryContractCountryCode';
+
+
+GO
+PRINT N'Rename refactoring operation with key 75ddc9fd-fe11-4032-bb4a-b135747e2507 is skipped, element [dbo].[Postnummer].[Id] (SqlSimpleColumn) will not be renamed to ID';
+
+
+GO
+PRINT N'Creating Table [dbo].[Abonementype]...';
+
+
+GO
+CREATE TABLE [dbo].[Abonementype] (
+    [Id]       INT           IDENTITY (1, 1) NOT NULL,
+    [Name]     NVARCHAR (25) NULL,
+    [Num_type] CHAR (1)      NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating Table [dbo].[Admin]...';
+
+
+GO
+CREATE TABLE [dbo].[Admin] (
+    [Id]       INT           IDENTITY (1, 1) NOT NULL,
+    [UserName] NVARCHAR (50) NOT NULL,
+    [Password] NVARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating Table [dbo].[Client]...';
+
+
+GO
+CREATE TABLE [dbo].[Client] (
+    [Id]                  INT           IDENTITY (1, 1) NOT NULL,
+    [Orgnummer]           NVARCHAR (50) NOT NULL,
+    [Password]            NVARCHAR (50) NOT NULL,
+    [FirmaNavn]           NVARCHAR (50) NULL,
+    [GateNavn]            NVARCHAR (50) NULL,
+    [HusNummer]           INT           NULL,
+    [HusBokStav]          NVARCHAR (20) NULL,
+    [PostNummer]          INT           NULL,
+    [Sted]                NVARCHAR (50) NULL,
+    [Epost]               NVARCHAR (20) NULL,
+    [KontaktNavn]         NVARCHAR (30) NULL,
+    [KontaktEpost]        NVARCHAR (20) NULL,
+    [KontaktTlfnr]        NVARCHAR (30) NULL,
+    [TekniskKontaktNavn]  NVARCHAR (20) NULL,
+    [TekniskKontaktEpost] NVARCHAR (30) NULL,
+    [TekniskKontaktTlfnr] NVARCHAR (30) NULL,
+    [Id_abonementype]     INT           NOT NULL,
+    [Id_abonemetypeF]     INT           NOT NULL,
+    [Id_abonementypeI]    INT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating Table [dbo].[ConnectionType]...';
+
+
+GO
+CREATE TABLE [dbo].[ConnectionType] (
+    [Id]      INT IDENTITY (1, 1) NOT NULL,
+    [Id_abom] INT NOT NULL,
+    [Id_type] INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating Table [dbo].[Fakturaoppsett]...';
+
+
+GO
+CREATE TABLE [dbo].[Fakturaoppsett] (
+    [NavnPaKostnadssted]       NVARCHAR (50)  NOT NULL,
+    [Tileggsinfo kostnadssted] NVARCHAR (200) NULL,
+    [Fakturaformat]            NVARCHAR (50)  NULL,
+    [Fakturaadresse]           NVARCHAR (50)  NULL,
+    [Husnr]                    INT            NULL,
+    [Bokstav]                  NVARCHAR (200) NULL,
+    [Postnummer]               INT            NULL,
+    [Sted]                     NVARCHAR (50)  NULL,
+    [Epost]                    NVARCHAR (50)  NULL,
+    [Kostnadssted]             NVARCHAR (50)  NOT NULL,
+    [Orgnummer]                NVARCHAR (50)  NULL,
+    [Date]                     DATE           NULL,
+    [Id_client]                INT            NULL,
+    PRIMARY KEY CLUSTERED ([Kostnadssted] ASC)
+);
+
+
+GO
+PRINT N'Creating Table [dbo].[Nummer]...';
+
+
+GO
+CREATE TABLE [dbo].[Nummer] (
+    [Id]                              INT           IDENTITY (1, 1) NOT NULL,
+    [Telefonnummer]                   NVARCHAR (20) NULL,
+    [Abonnementstype]                 NVARCHAR (50) NULL,
+    [Fornavn]                         NVARCHAR (50) NULL,
+    [Etternavn]                       NVARCHAR (50) NULL,
+    [Bedrift som skal faktureres]     NVARCHAR (50) NULL,
+    [c/o adresse for SIM levering]    NVARCHAR (50) NULL,
+    [Gateadresse SIM Skal sendes til] NVARCHAR (50) NULL,
+    [Hus nummer]                      INT           NULL,
+    [Hus bokstav]                     NVARCHAR (50) NULL,
+    [post nr.]                        INT           NULL,
+    [Post sted]                       NVARCHAR (50) NULL,
+    [Epost for sporings informasjon]  NVARCHAR (50) NULL,
+    [Epost]                           NVARCHAR (50) NULL,
+    [Kostnadsted]                     NVARCHAR (50) NULL,
+    [Tilleggsinfo/ansatt ID]          INT           NULL,
+    [Ekstra talesim ]                 INT           NULL,
+    [Ekstra datasim]                  INT           NULL,
+    [Orgnummer]                       NVARCHAR (50) NULL,
+    [Date]                            DATE          NULL,
+    [Pending]                         BIT           NULL,
+    [Katalogoppforing]                NVARCHAR (45) NULL,
+    [Porteringsdatoog tid]            DATETIME      NULL,
+    [Binding]                         BIT           NULL,
+    [Postnummer]                      INT           NULL,
+    [Antall TrillingSIM]              INT           NULL,
+    [allDataSIM]                      INT           NULL,
+    [Manuell Top-up]                  BIT           NULL,
+    [Sperre Top-up]                   BIT           NULL,
+    [Norden]                          BIT           NULL,
+    [Tale og SMS til EU]              BIT           NULL,
+    [TBN]                             NVARCHAR (15) NULL,
+    [HovedSIM]                        INT           NULL,
+    [TrillingSIM1]                    INT           NULL,
+    [TrillingSIM2]                    INT           NULL,
+    [DataSIM1]                        INT           NULL,
+    [DataSIM2]                        INT           NULL,
+    [DataSIM3]                        INT           NULL,
+    [DataSIM4]                        INT           NULL,
+    [DataSIM5]                        INT           NULL,
+    [DeliveryMethodCode]              NVARCHAR (20) NULL,
+    [DeliveryStreetName]              NVARCHAR (20) NULL,
+    [DeliveryStreetNumber]            NVARCHAR (10) NULL,
+    [DeliveryStreetSuffix]            NVARCHAR (10) NULL,
+    [DeliveryCity]                    NVARCHAR (20) NULL,
+    [DeliveryZIP]                     NVARCHAR (20) NULL,
+    [DeliveryCountryCode]             NVARCHAR (20) NULL,
+    [DeliveryContractEmail]           NVARCHAR (20) NULL,
+    [DeliveryContractCountryCode]     NVARCHAR (20) NULL,
+    [DeliveryContractLocalNumber]     NVARCHAR (20) NULL,
+    [DeliveryIndividualFirstName]     NVARCHAR (15) NULL,
+    [DeliveryIndividualLastName]      NVARCHAR (20) NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating Table [dbo].[Postnummer]...';
+
+
+GO
+CREATE TABLE [dbo].[Postnummer] (
+    [ID]            INT            IDENTITY (1, 1) NOT NULL,
+    [PostNr]        NVARCHAR (MAX) NULL,
+    [Poststed]      NVARCHAR (MAX) NULL,
+    [Kommunenummer] NVARCHAR (MAX) NULL,
+    [Kommunenavn]   NVARCHAR (MAX) NULL,
+    [Kategory]      CHAR (1)       NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC)
+);
+
+
+GO
+PRINT N'Creating Table [dbo].[Type]...';
+
+
+GO
+CREATE TABLE [dbo].[Type] (
+    [Id]             INT           IDENTITY (1, 1) NOT NULL,
+    [Name]           NVARCHAR (35) NULL,
+    [Reference_code] NVARCHAR (15) NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
+GO
+PRINT N'Creating Foreign Key unnamed constraint on [dbo].[Client]...';
 
 
 GO
@@ -90,11 +288,73 @@ ALTER TABLE [dbo].[Client] WITH NOCHECK
 
 
 GO
+PRINT N'Creating Foreign Key unnamed constraint on [dbo].[ConnectionType]...';
+
+
+GO
+ALTER TABLE [dbo].[ConnectionType] WITH NOCHECK
+    ADD FOREIGN KEY ([Id_abom]) REFERENCES [dbo].[Abonementype] ([Id]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Creating Foreign Key unnamed constraint on [dbo].[ConnectionType]...';
+
+
+GO
+ALTER TABLE [dbo].[ConnectionType] WITH NOCHECK
+    ADD FOREIGN KEY ([Id_type]) REFERENCES [dbo].[Type] ([Id]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Creating Foreign Key [dbo].[FK_dbo.Client_dbo.Client_Id]...';
+
+
+GO
+ALTER TABLE [dbo].[Fakturaoppsett] WITH NOCHECK
+    ADD CONSTRAINT [FK_dbo.Client_dbo.Client_Id] FOREIGN KEY ([Id_client]) REFERENCES [dbo].[Client] ([Id]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Creating Foreign Key [dbo].[FK_dbo.Nummer_dbo.Fakturaoppsett_NavnPåKostnadssted]...';
+
+
+GO
+ALTER TABLE [dbo].[Nummer] WITH NOCHECK
+    ADD CONSTRAINT [FK_dbo.Nummer_dbo.Fakturaoppsett_NavnPåKostnadssted] FOREIGN KEY ([Kostnadsted]) REFERENCES [dbo].[Fakturaoppsett] ([Kostnadssted]) ON DELETE CASCADE;
+
+
+GO
+-- Refactoring step to update target server with deployed transaction logs
+
+IF OBJECT_ID(N'dbo.__RefactorLog') IS NULL
+BEGIN
+    CREATE TABLE [dbo].[__RefactorLog] (OperationKey UNIQUEIDENTIFIER NOT NULL PRIMARY KEY)
+    EXEC sp_addextendedproperty N'microsoft_database_tools_support', N'refactoring log', N'schema', N'dbo', N'table', N'__RefactorLog'
+END
+GO
+IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = '3612fca1-4f17-4b39-b934-d88c654b39d1')
+INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('3612fca1-4f17-4b39-b934-d88c654b39d1')
+IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = 'c2f7a30c-baad-407f-8bd7-7b012d77f648')
+INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('c2f7a30c-baad-407f-8bd7-7b012d77f648')
+IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = 'b197c2cd-7dba-4677-b31a-6305baa47e1e')
+INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('b197c2cd-7dba-4677-b31a-6305baa47e1e')
+IF NOT EXISTS (SELECT OperationKey FROM [dbo].[__RefactorLog] WHERE OperationKey = '75ddc9fd-fe11-4032-bb4a-b135747e2507')
+INSERT INTO [dbo].[__RefactorLog] (OperationKey) values ('75ddc9fd-fe11-4032-bb4a-b135747e2507')
+
+GO
+
+GO
 PRINT N'Checking existing data against newly created constraints';
 
 
 GO
 USE [$(DatabaseName)];
+
+
+GO
+ALTER TABLE [dbo].[Fakturaoppsett] WITH CHECK CHECK CONSTRAINT [FK_dbo.Client_dbo.Client_Id];
+
+ALTER TABLE [dbo].[Nummer] WITH CHECK CHECK CONSTRAINT [FK_dbo.Nummer_dbo.Fakturaoppsett_NavnPåKostnadssted];
 
 
 GO
@@ -113,7 +373,7 @@ DECLARE tableconstraintnames CURSOR LOCAL FORWARD_ONLY
                [name],
                0
         FROM   [sys].[objects]
-        WHERE  [parent_object_id] IN (OBJECT_ID(N'dbo.Client'))
+        WHERE  [parent_object_id] IN (OBJECT_ID(N'dbo.Client'), OBJECT_ID(N'dbo.ConnectionType'))
                AND [type] IN (N'F', N'C')
                    AND [object_id] IN (SELECT [object_id]
                                        FROM   [sys].[check_constraints]
