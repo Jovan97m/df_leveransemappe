@@ -381,7 +381,7 @@ namespace TeliaMVC.Controllers
             ViewBag.ID = nummer.Orgnummer ;
             nummer.Abonnementstype = selected;
             nummer.Pending = true;
-            nummer.Date = null;
+            nummer.Date = DateTime.Today;
             nummer.Kostnadsted = kostnadsted;
             nummer.Bedrift_som_skal_faktureres= db.Fakturaoppsetts.Where(s => s.NavnPaKostnadssted.Contains(kostnadsted)).First().Fakturaformat;
             nummer.Post_sted = VratiPostSted(nummer.post_nr_);
@@ -392,10 +392,19 @@ namespace TeliaMVC.Controllers
                 {
                     db.SaveChanges();
                 }
-                catch (Exception)
+                catch (DbEntityValidationException dbEx)
                 {
-
-                    throw;
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            Trace.TraceInformation(
+                                  "Class: {0}, Property: {1}, Error: {2}",
+                                  validationErrors.Entry.Entity.GetType().FullName,
+                                  validationError.PropertyName,
+                                  validationError.ErrorMessage);
+                        }
+                    }
                 }
 
                 return RedirectToAction("Index", new { id_sesije = c.Id });
@@ -500,14 +509,36 @@ namespace TeliaMVC.Controllers
                 }
                 else
                 {
-                    return db.Postnummers.Where(s => s.PostNr.Contains(numm.ToString())).First().Poststed;
-                    
+                    string number = FormProperPostNummer(numm);
+                   // return db.Postnummers.Where(s => s.PostNr.Contains(FormProperPostNummer(numm))).First().Poststed;
+                    var PostSted = db.Postnummers.Where(s => s.PostNr.Contains(number)).FirstOrDefault();
+                    if (PostSted == null)
+                        return "Feil postnummer";
+                    return PostSted.Poststed;
                 }
             }
             catch
             {
                 return "";
             }
+        }
+        public string FormProperPostNummer(int? numm)
+        {
+            string finalString = numm.ToString();
+            if (finalString.Length == 1)
+            {
+                finalString = "000" + finalString;
+            }
+            else if(finalString.Length == 2)
+            {
+                finalString = "00" + finalString;
+            }
+            else if(finalString.Length == 3)
+            {
+                finalString = "0" + finalString;
+            }
+            return finalString;
+                 
         }
 
         #region excel
