@@ -514,7 +514,7 @@ namespace TeliaMVC.Controllers
 
         public ActionResult Excel(HttpPostedFileBase excelfile, string id_sesije)
         {
-            if (excelfile.ContentLength == 0)
+            if (excelfile.ContentLength == null)
             {
                 ViewBag.Error = "Du har ikke valgt noen filer";
                 return View();
@@ -639,6 +639,7 @@ namespace TeliaMVC.Controllers
                 application.Quit();
                 Marshal.FinalReleaseComObject(application);
                 ViewBag.Result = "Done";
+                
             }
             catch (Exception ex)
             {
@@ -791,7 +792,7 @@ namespace TeliaMVC.Controllers
                                         case 2: nummer.Abonnementstype = (string)vratiRange(worksheet, j + 1, i, range); break;
                                         case 3: nummer.Fornavn = (string)vratiRange(worksheet, j + 1, i, range); break;
                                         case 4: nummer.Etternavn = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                        case 5:break;
+                                        case 5:nummer.Bedrift_som_skal_faktureres = (string)vratiRange(worksheet, j + 1, i, range);break;
                                         case 6: nummer.c_o_adresse_for_SIM_levering = (string)vratiRange(worksheet, j + 1, i, range); break;
                                         case 7: nummer.Gateadresse_SIM_Skal_sendes_til = (string)vratiRange(worksheet, j + 1, i, range); break;
                                         case 8: nummer.Hus_nummer = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
@@ -811,7 +812,6 @@ namespace TeliaMVC.Controllers
                                 }
                                 //brojac za greske koliko se pojavile 
                                 nummer.Post_sted = (string)VratiPostSted(nummer.post_nr_);
-                                nummer.Bedrift_som_skal_faktureres = db.Fakturaoppsetts.Where(s => s.NavnPaKostnadssted.Contains(nummer.Kostnadsted)).First().Fakturaformat;
                                 ProveriNummer(nummer, ref nIspravno, ref nGreske, id_sesije);
                             }
                             ViewData["Ispravno"] = nIspravno;
@@ -839,19 +839,7 @@ namespace TeliaMVC.Controllers
             else
             {
                 try
-                {
-
-
-                    if (name.Length == 0)
-                    {
-                        ViewBag.Error = "Du har ikke valgt noen filer";
-                        return View();
-
-                    }
-                    else
-                    {
-
-                        if (name.EndsWith(".xls") || name.EndsWith(".xlsx"))
+                {       if (name.EndsWith(".xls") || name.EndsWith(".xlsx"))
                         {
                             string fileLocation = Server.MapPath("~/Content/" + name);
                             Excel.Application application = new Excel.Application();
@@ -914,7 +902,7 @@ namespace TeliaMVC.Controllers
                             ViewBag.Error = "Du har valgt feil fil";
                             return View();
                         }
-                    }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -1166,7 +1154,7 @@ namespace TeliaMVC.Controllers
                 Proveri_Ekstra_talesim_(Convert.ToInt32(n.Ekstra_talesim_), ref f);
                 Proveri_Abonnementstype(n.Abonnementstype, ref f,id_sesije,tip);
                 ProveriKonstasned(n.Kostnadsted, ref f,id_sesije);
-
+                ProveriMail(n);
                 if(f)
                 {
                     nGreske.Add(n);
@@ -1178,7 +1166,17 @@ namespace TeliaMVC.Controllers
                 }
             
         }
-
+        public void ProveriMail(Nummer n)
+        {
+            if (n.Epost == "")
+            {
+                n.Epost = null;
+            }
+            if (n.Epost_for_sporings_informasjon == "")
+            {
+                n.Epost_for_sporings_informasjon = null;
+            }
+        }
         [HttpPost]
         public void AddNummer(Nummer ispravno,string id_sesije)
         {
@@ -1186,7 +1184,24 @@ namespace TeliaMVC.Controllers
             ispravno.HovedSIM = 42;
             //ispravno.Kostnadsted = "Faktura";
             db.Nummers.Add(ispravno);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation(
+                              "Class: {0}, Property: {1}, Error: {2}",
+                              validationErrors.Entry.Entity.GetType().FullName,
+                              validationError.PropertyName,
+                              validationError.ErrorMessage);
+                    }
+                }
+            }
         }
 
         public void ProveriFakture(string broj, ref bool f)
