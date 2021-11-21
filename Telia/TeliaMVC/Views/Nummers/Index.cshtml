@@ -60,6 +60,9 @@
         border-radius: 6px;
         margin: 1px;
     }
+    tbody {
+        background-color: RGB(230,231,231);
+    }
 
     .inputRadio:hover {
         background-color: #c86cf9;
@@ -105,8 +108,34 @@
         padding-left: 3px;
         padding-right: 3px;
     }
+    .aNav{
+        cursor:pointer;
+    }
+    li {
+        cursor: default;
+        font-weight: bold;
+        font-size: large;
+    }
+    .buttonInfoColor {
+        width: 15px;
+        height: 15px;
+        margin-right: 10px;
+        cursor: default;
+        margin-left: 15px;
+    }
+
+        .buttonInfoColor:hover {
+            cursor: default;
+        }
 </style>
 
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a  class="aNav "onclick="location.href = '@Url.Action("Details", "HomeClient",new { id = ViewBag.ID})'"> Profile</a></li>
+        <li class="breadcrumb-item"><a class="aNav" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts",new { id = ViewBag.ID})'">Fakturaoppsetts</a></li>
+        <li class="breadcrumb-item" aria-current="page">Nummers</li>
+    </ol>
+</nav>
 
 
 
@@ -230,7 +259,7 @@
 </div>
 
 <div style="overflow-x: auto; margin-left: 6px; margin-right: 15px;" class="shadow">
-    <table class="table-bordered table-sm table-hover table-striped " style="font-size: 14px;font-weight: bold;color:black;table-layout:fixed;border-radius: 5px;">
+    <table class="table-bordered table-sm table-hover table-striped table-condensed" style="font-size: 14px;font-weight: bold;color:black;table-layout:fixed;border-radius: 5px;">
         <thead style="background-color: #990AE4;
                       color: white;
                       text-shadow: 1px 1px black;">
@@ -433,9 +462,17 @@
     <br />
     @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
     @Html.PagedListPager(Model, page => Url.Action("Index",
-        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID }))
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, id = ViewBag.ID }))
 </div>
-<button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "HomeClient", new { id=ViewBag.ID })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Tilbake</button>
+<div>
+    <div style="display:inline">
+        <div><button style="background-color:indianred; " class="buttonInfoColor"></button>Data er ikke nødvendig</div>
+    </div>
+    <div style="display:inline">
+        <div><button style="background-color:green; " class="buttonInfoColor"></button>Data må settes inn</div>
+    </div>
+</div>
+<button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts", new { id=ViewBag.ID })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Tilbake</button>
 
 
 

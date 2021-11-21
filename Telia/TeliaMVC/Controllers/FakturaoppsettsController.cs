@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using TeliaMVC.Models;
 using PagedList; // dodato za prikaz podataka po stranicama
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace TeliaMVC.Controllers
 {
@@ -19,7 +21,7 @@ namespace TeliaMVC.Controllers
         //SearchParameter -je atribut koji se prosledjuje iz selektovanog radio-button-a
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page,string SearchParameter,int? id) // id_sesije za prenos kada se vrsi search, a int? id za prenos id direktno
         {
-            ViewBag.id_sesije = id;
+            ViewBag.ID = id;
             var faktures = from s in db.Fakturaoppsetts
                            select s;
             faktures = faktures.Where(s => s.Id_client == id);
@@ -163,7 +165,20 @@ namespace TeliaMVC.Controllers
             {
                 db.Fakturaoppsetts.Add(fakturaoppset);
                 try { db.SaveChanges(); }
-                catch (Exception) { throw; }
+                catch (DbEntityValidationException dbEx)
+                {
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            Trace.TraceInformation(
+                                  "Class: {0}, Property: {1}, Error: {2}",
+                                  validationErrors.Entry.Entity.GetType().FullName,
+                                  validationError.PropertyName,
+                                  validationError.ErrorMessage);
+                        }
+                    }
+                }
                 return RedirectToAction("Index",new { id = fakturaoppset.Id_client});
             }
 

@@ -175,7 +175,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.post_nr_, htmlAttributes: new { @class = "control-label col-md-5 Labela" })
             <div class="col-md-6">
-                @Html.EditorFor(model => model.post_nr_, new { htmlAttributes = new { @class = "form-control TextBox" } })
+                @Html.EditorFor(model => model.post_nr_, new { htmlAttributes = new { @class = "form-control TextBox"} })
                 @Html.ValidationMessageFor(model => model.post_nr_, "", new { @class = "text-danger" })
             </div>
 

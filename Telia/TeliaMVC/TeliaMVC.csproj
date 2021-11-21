@@ -378,6 +378,7 @@
     <Content Include="Views\NummersAdmin\Update.cshtml" />
     <Content Include="Views\Home\Delete.cshtml" />
     <Content Include="Views\Home\Edit.cshtml" />
+    <Content Include="Views\Nummers\Popup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

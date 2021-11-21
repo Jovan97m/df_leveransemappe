@@ -21,14 +21,14 @@ namespace TeliaMVC.Controllers
         private TeliaEntities db = new TeliaEntities();
 
         // GET: Nummers
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString,string id_sesije, int? page)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString,int? id, int? page)
         {
             var nummers = from s in db.Nummers
                           select s;
-            Client client = db.Clients.Find(Convert.ToInt32(id_sesije));
+            Client client = db.Clients.Find(Convert.ToInt32(id));
             //formiraj listu za odredjenog klijenta
             nummers = nummers.Where(s => s.Orgnummer.Contains(client.Id.ToString()));
-            ViewBag.ID = Convert.ToInt32(id_sesije);
+            ViewBag.ID = id;
             ViewBag.CurrentSort = sortOrder; // za paging,da ostane sortirano kad se radi stranicenje
             ViewBag.Telefonnummer = String.IsNullOrEmpty(sortOrder) ? "telefonnummer_desc" : "";
             ViewBag.Abonnementstype = sortOrder == "Abonnementstype" ? "abonnementstype_desc" : "Abonnementstype"; // mislim da ne bi trebalo da ima ova
@@ -184,7 +184,7 @@ namespace TeliaMVC.Controllers
             return View(nummer);
         }
 
-
+       
         #region CREATE
         
         public ActionResult Create(int? sesija, string id_sesije)
@@ -193,6 +193,7 @@ namespace TeliaMVC.Controllers
             ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
             ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype,"M"); // selectbox za abonementype
             ViewBag.ORG = client.Id.ToString();
+            ViewData["PostNummer"] = getPostnummers();
             return View();
         }
 
@@ -498,7 +499,16 @@ namespace TeliaMVC.Controllers
             }
             return types;
         }
-
+        public Dictionary<string, string> getPostnummers()
+        {
+            List<Postnummer> Lista = db.Postnummers.ToList();
+            Dictionary<string, string> mapa = new Dictionary<string, string>();
+            foreach (var item in Lista)
+            {
+                mapa.Add(item.PostNr, item.Poststed);
+            }
+            return mapa;
+        }
         public string VratiPostSted(int? numm)
         {
             try

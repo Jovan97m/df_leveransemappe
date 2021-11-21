@@ -271,7 +271,7 @@ namespace TeliaMVC.Controllers
         }
 
 
-        public ActionResult UpdateColumn(string sortOrder,string currentFilter,string CopyColumn,string currentSelected,int? a)
+        public string UpdateColumn(string sortOrder,string currentFilter,string CopyColumn,string currentSelected,int? a)
         {
             var nummers = from s in db.Nummers
                           select s;
@@ -302,7 +302,7 @@ namespace TeliaMVC.Controllers
             ViewBag.filter = currentFilter;
             ViewBag.Copy = CopyColumn;
             ViewBag.selected = currentSelected;
-            return View();
+            return ViewBag.value;
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
