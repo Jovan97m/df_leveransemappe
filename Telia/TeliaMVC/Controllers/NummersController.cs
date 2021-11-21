@@ -514,7 +514,7 @@ namespace TeliaMVC.Controllers
 
         public ActionResult Excel(HttpPostedFileBase excelfile, string id_sesije)
         {
-            if (excelfile.ContentLength == null)
+            if (excelfile.ContentLength == 0)
             {
                 ViewBag.Error = "Du har ikke valgt noen filer";
                 return View();
@@ -766,6 +766,7 @@ namespace TeliaMVC.Controllers
                             List<Nummer> nGreske = new List<Nummer>();
                             bool tacno = true;
                             List<int> indexi = new List<int>();
+                            List<int> mesto = new List<int>();
                             Excel.Range range1 = worksheet.UsedRange;
                             Microsoft.Office.Interop.Excel.Range range = null;
                             for (int i = 1; i <= range1.Columns.Count; i++)
@@ -775,40 +776,42 @@ namespace TeliaMVC.Controllers
                                 {
                                     if (kolone[j] == r && r != "")
                                     {
-                                        indexi.Add(j + 1);
+                                        indexi.Add(i);
+                                        mesto.Add(j + 1);
+                                        j = kolone.Count();
                                     }
                                 }
                             }
-
                             for (int i = 2; i <= range1.Rows.Count; i++)
                             {
                                 Nummer nummer = new Nummer();
-                                for (int j = 0; j < range1.Columns.Count; j++)
+                                for (int j = 0; j < indexi.Count; j++)
                                 {
-                                    switch (indexi[j])
+                                    switch (mesto[j])
                                     {
 
-                                        case 1: nummer.Telefonnummer = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                        case 2: nummer.Abonnementstype = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                        case 3: nummer.Fornavn = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                        case 4: nummer.Etternavn = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                        case 5:nummer.Bedrift_som_skal_faktureres = (string)vratiRange(worksheet, j + 1, i, range);break;
-                                        case 6: nummer.c_o_adresse_for_SIM_levering = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                        case 7: nummer.Gateadresse_SIM_Skal_sendes_til = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                        case 8: nummer.Hus_nummer = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
-                                        case 9: nummer.Hus_bokstav = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                        case 10: nummer.post_nr_ = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
-                                        case 11:break;
-                                        case 12: nummer.Epost_for_sporings_informasjon = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                        case 13: nummer.Epost = (string)vratiRange(worksheet, j + 1, i, range); break;
-                                        case 14: nummer.Tilleggsinfo_ansatt_ID = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
-                                        case 15: nummer.Ekstra_talesim_ = (konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range))); break;
-                                        case 16: nummer.Ekstra_datasim = konvertujUBroj((string)vratiRange(worksheet, j + 1, i, range)); break;
-                                        case 17: nummer.Kostnadsted = (string)vratiRange(worksheet, j + 1, i, range); break;
+                                        case 1: nummer.Telefonnummer = (string)vratiRange(worksheet, indexi[j], i, range); break;
+                                        case 2: nummer.Abonnementstype = (string)vratiRange(worksheet, indexi[j], i, range); break;
+                                        case 3: nummer.Fornavn = (string)vratiRange(worksheet, indexi[j], i, range); break;
+                                        case 4: nummer.Etternavn = (string)vratiRange(worksheet, indexi[j], i, range); break;
+                                        case 5: nummer.Bedrift_som_skal_faktureres = (string)vratiRange(worksheet, indexi[j], i, range); break;
+                                        case 6: nummer.c_o_adresse_for_SIM_levering = (string)vratiRange(worksheet, indexi[j], i, range); break;
+                                        case 7: nummer.Gateadresse_SIM_Skal_sendes_til = (string)vratiRange(worksheet, indexi[j], i, range); break;
+                                        case 8: nummer.Hus_nummer = konvertujUBroj((string)vratiRange(worksheet, indexi[j], i, range)); break;
+                                        case 9: nummer.Hus_bokstav = (string)vratiRange(worksheet, indexi[j], i, range); break;
+                                        case 10: nummer.post_nr_ = konvertujUBroj((string)vratiRange(worksheet, indexi[j], i, range)); break;
+                                        case 11: break;
+                                        case 12: nummer.Epost_for_sporings_informasjon = (string)vratiRange(worksheet, indexi[j],i, range); break;
+                                        case 13: nummer.Epost = (string)vratiRange(worksheet, indexi[j], i, range); break;
+                                        case 14: nummer.Tilleggsinfo_ansatt_ID = konvertujUBroj((string)vratiRange(worksheet, indexi[j], i, range)); break;
+                                        case 15: nummer.Ekstra_talesim_ = (konvertujUBroj((string)vratiRange(worksheet, indexi[j], i, range))); break;
+                                        case 16: nummer.Ekstra_datasim = konvertujUBroj((string)vratiRange(worksheet, indexi[j], i, range)); break;
+                                        case 17: nummer.Kostnadsted = (string)vratiRange(worksheet, indexi[j], i, range); break;
                                         default:
                                             break;
                                     }
-                                    
+                                    // nummer.Post_sted = (string)VratiPostSted(nummer.post_nr_);
+                                    // nummer.Bedrift_som_skal_faktureres = db.Fakturaoppsetts.Where(s => s.NavnPaKostnadssted.Contains(nummer.Kostnadsted)).First().Fakturaformat;
                                 }
                                 //brojac za greske koliko se pojavile 
                                 nummer.Post_sted = (string)VratiPostSted(nummer.post_nr_);
@@ -1146,16 +1149,18 @@ namespace TeliaMVC.Controllers
         }
         public void ProveriNummer(Nummer n,ref List<Nummer> nIspravno,ref List<Nummer> nGreske,string id_sesije)
         {
+            if (n.Telefonnummer != "")
+            {
                 string tip = null;
                 bool f = false;
-                tip=ProveriBroj(n.Telefonnummer, ref f);
-                ProveriFakture(n.Bedrift_som_skal_faktureres, ref f);
+                tip = ProveriBroj(n.Telefonnummer, ref f);
+                //ProveriFakture(n.Bedrift_som_skal_faktureres, ref f);
                 Proveri_Data_sim(Convert.ToInt32(n.Ekstra_datasim), ref f);
                 Proveri_Ekstra_talesim_(Convert.ToInt32(n.Ekstra_talesim_), ref f);
-                Proveri_Abonnementstype(n.Abonnementstype, ref f,id_sesije,tip);
-                ProveriKonstasned(n.Kostnadsted, ref f,id_sesije);
+                Proveri_Abonnementstype(n.Abonnementstype, ref f, id_sesije, tip);
+                ProveriKonstasned(ref n, ref f, id_sesije);
                 ProveriMail(n);
-                if(f)
+                if (f)
                 {
                     nGreske.Add(n);
                 }
@@ -1164,6 +1169,7 @@ namespace TeliaMVC.Controllers
                     AddNummer(n, id_sesije);
                     nIspravno.Add(n);
                 }
+            }
             
         }
         public void ProveriMail(Nummer n)
@@ -1294,17 +1300,25 @@ namespace TeliaMVC.Controllers
             }
         }
 
-        public void ProveriKonstasned(string broj, ref bool f,string sesija)
+        public void ProveriKonstasned(ref Nummer broj, ref bool f,string sesija)
         {
             bool flag = true;
             int i = Convert.ToInt32(sesija);
             var fak = db.Fakturaoppsetts.Where(s => s.Id_client == i);
             foreach (var item in fak)
             {
-                if (item.NavnPaKostnadssted == broj)
+                if (item.NavnPaKostnadssted == broj.Kostnadsted)
                     flag = false;
             }
-            if (flag) f = true;
+            if (flag)
+            {
+                f = true;
+                
+                Fakturaoppsett faktura = new Fakturaoppsett();
+                faktura.NavnPaKostnadssted = "samlefaktura";
+                
+                broj.Kostnadsted = faktura.NavnPaKostnadssted;
+            }
         }
         #endregion
         
