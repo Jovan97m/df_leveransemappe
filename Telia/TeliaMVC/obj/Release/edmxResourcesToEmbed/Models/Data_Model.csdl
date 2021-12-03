@@ -153,6 +153,8 @@
     <NavigationProperty Name="Fakturaoppsetts" Relationship="TeliaModel.FK_dbo_Client_dbo_Client_Id" FromRole="Client" ToRole="Fakturaoppsett" />
     <Property Name="Id_abonementype" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Abonementype" Relationship="TeliaModel.FK__Client__Id_abone__41EDCAC5" FromRole="Client" ToRole="Abonementype" />
+    <Property Name="Id_abonemetypeF" Type="Int32" Nullable="false" />
+    <Property Name="Id_abonementypeI" Type="Int32" Nullable="false" />
   </EntityType>
   <Association Name="FK_dbo_Client_dbo_Client_Id">
     <End Type="TeliaModel.Client" Role="Client" Multiplicity="0..1">

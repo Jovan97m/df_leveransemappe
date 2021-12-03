@@ -123,6 +123,7 @@ namespace TeliaMVC.Controllers
                     ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonemetypeF, Type); // selectbox za abonementype
                     ViewBag.ORG = client.Id.ToString();
                     ViewBag.tip = Type;
+                    ViewData["FirmaNavn"] = getFirmaNavn(selected);
                     //  return RedirectToAction("CreateFixed", "NummersAdmin" , new { sesija = client.Id});
                     return View("CreateFixed");
                 }
@@ -133,6 +134,7 @@ namespace TeliaMVC.Controllers
                     ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype, Type); // selectbox za abonementype
                     ViewBag.ORG = client.Id.ToString();
                     ViewBag.tip = Type;
+                    ViewData["FirmaNavn"] = getFirmaNavn(selected);
                     return View("Create");
                 }
                 else
@@ -142,6 +144,7 @@ namespace TeliaMVC.Controllers
                     ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementypeI, Type); // selectbox za abonementype
                     ViewBag.ORG = client.Id.ToString();
                     ViewBag.tip = Type;
+                    ViewData["FirmaNavn"] = getFirmaNavn(selected);
                     return View("CreateInternet");
                 }
             }
@@ -1337,6 +1340,13 @@ namespace TeliaMVC.Controllers
             }
             else
                 return c.FirstOrDefault().Id;
+        }
+
+        public string getFirmaNavn(string selected)
+        {
+            
+            Client klijent = db.Clients.Find(GetId(selected));
+            return klijent.FirmaNavn;
         }
         #endregion
     }

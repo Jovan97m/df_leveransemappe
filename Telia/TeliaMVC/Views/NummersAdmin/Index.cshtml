@@ -25,12 +25,8 @@
         }
 
         .button {
-            font-size: smaller;
-            color: white;
-            text-shadow: 1px 1px black;
-            margin-right: 2px;
-            margin-bottom: 2px;
-            border-radius: 12px;
+            border-radius: 6px;
+            margin: 1px;
         }
 
         .NotNeeded {
@@ -218,11 +214,6 @@
                     </label>
                     <br />
                     <input type="submit" value="Skriv inn et tall" class="ButtonCreate" />
-                    <!--
-                    <button class=" ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om bruker lsit" onclick="location.href = '@Url.Action("Index", "NummersAdmin")'">
-                        <span class="glyphicon glyphicon-repeat"></span>   Refresh
-                    </button>
-                        -->
                 </fieldset>
             }
         </div>
@@ -261,7 +252,7 @@
         <table class="table-hover table-condensed Table" style="font-size: 13px;font-weight:bold;table-layout:fixed;">
             <thead class="HeaderTable">
                 <tr>
-                    <th style="width:35px;"></th>
+                    <th style="width:35px;">     E / D       </th>
                     <th class="col-sm-2">
                         Telefonnummer
                         <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.Telefonnummer, currentFilter = ViewBag.CurrentFilter, currentSelected = ViewBag.CurrentSelected })'">
@@ -307,26 +298,6 @@
                             <span class="glyphicon glyphicon-arrow-down"></span>
                         </button>
                     </th>
-                    <!--
-                    <th class="col-sm-2">
-                        Bedrift_som_skal_faktureres
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin", new { sortOrder = ViewBag.Bedrift_som_skal_faktureresSortParm, currentFilter = ViewBag.CurrentFilter, currentSelected = ViewBag.CurrentSelected })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        c_o_adresse_for_SIM_levering
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href='@Url.Action("Index", "NummersAdmin", new { sortOrder = ViewBag.c_o_adresse_for_SIM_leveringSortParm, currentFilter = ViewBag.CurrentFilter, currentSelected = ViewBag.CurrentSelected })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Gateadresse_SIM_Skal_sendes_til
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin", new { sortOrder = ViewBag.Gateadresse_SIM_Skal_sendes_tilSortParm, currentFilter = ViewBag.CurrentFilter, currentSelected = ViewBag.CurrentSelected })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                        -->
                     <th class="col-sm-2">
                         Hus_nummer
                         <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.Hus_nummerSortParm, currentFilter = ViewBag.CurrentFilter, currentSelected = ViewBag.CurrentSelected })'">
@@ -481,120 +452,7 @@
                             <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                         </button>
                     </th>
-                    <!--
-                    <th class="col-sm-2">
-                        DeliveryMethodCode
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.DeliveryMethodCodeSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-
-                    <th class="col-sm-2">
-                        DeliveryStreetName
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.DeliveryStreetNameSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-
-                    <th class="col-sm-2">
-                        DeliveryStreetNumber
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.DeliveryStreetNumberSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-
-                    <th class="col-sm-2">
-                        DeliveryStreetSuffix
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.DeliveryStreetSuffixSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        DeliveryCity
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.DeliveryCitySortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        DeliveryZIP
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.DeliveryZIPSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-
-                    <th class="col-sm-2">
-                        DeliveryCountryCode
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.DeliveryCountryCodeSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-
-                    <th class="col-sm-2">
-                        DeliveryContractEmail
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.DeliveryContractEmailSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-
-                    <th class="col-sm-2">
-                        DeliveryContractCountryCode
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.DeliveryContractCountryCodeSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-
-                    <th class="col-sm-2">
-                        DeliveryContractLocalNumber
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.DeliveryContractLocalNumberSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-
-                    <th class="col-sm-2">
-                        DeliveryIndividualFirstName
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.DeliveryIndividualFirstNameSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-
-                    <th class="col-sm-2">
-                        DeliveryIndividualLastName
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.DeliveryIndividualLastNameSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    -->
-                    <!--Ova cuda ne bi trebalo dase prikazu:-->
-                    <!--
-                    <th class="col-sm-2">
-                        Post_sted
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.Post_stedSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Epost_for_sporings_informasjon
-                    </th>
-                    <th class="col-sm-2">
-                        Epost
-                    </th>
-                    <th class="col-sm-2">
-                        Tilleggsinfo_ansatt_ID
-                    </th>
-                    <th class="col-sm-2">
-                        Ekstra_talesim_
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.Ekstra_talesimSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Ekstra_datasim
-                        <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href = '@Url.Action("Index", "NummersAdmin",new { sortOrder = ViewBag.Ekstra_datasimSortParm, currentFilter = ViewBag.CurrentFilter })'">
-                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                        -->
-
+                    
                 </tr>
             </thead>
             <tbody style=" color: black; font-size: 13px;">

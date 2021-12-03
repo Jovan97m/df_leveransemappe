@@ -133,6 +133,7 @@ namespace TeliaMVC.Controllers
 
             int pageSize = 10;
             int pageNumber = (page ?? 1);
+            ViewData["FirmaNavn"] = getFirmaNavn(id);
             return View(faktures.ToPagedList(pageNumber, pageSize));
         }
        
@@ -147,7 +148,9 @@ namespace TeliaMVC.Controllers
         #region CRUD operacije
         public ActionResult Create(int? id)
         {
-            ViewBag.id_sesije = id;
+            ViewBag.ID = id;
+            ViewData["FirmaNavn"] = getFirmaNavn(id);
+
             return View();
         }
 
@@ -181,7 +184,7 @@ namespace TeliaMVC.Controllers
                 }
                 return RedirectToAction("Index",new { id = fakturaoppset.Id_client});
             }
-
+           
             return View(fakturaoppset);
         }
 
@@ -197,7 +200,7 @@ namespace TeliaMVC.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.id_sesije = fakturaoppsett.Id_client;
+            ViewBag.ID = fakturaoppsett.Id_client;
             return View(fakturaoppsett);
         }
 
@@ -234,7 +237,7 @@ namespace TeliaMVC.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.id_sesije = fakturaoppsett.Id_client;
+            ViewBag.ID = fakturaoppsett.Id_client;
             return View(fakturaoppsett);
         }
 
@@ -264,6 +267,7 @@ namespace TeliaMVC.Controllers
             return View(fakturaoppsett);
         }
         #endregion
+
         public string vratiSted(int? numm)
         {
             try
@@ -282,6 +286,12 @@ namespace TeliaMVC.Controllers
             {
                 return "";
             }
+        }
+        public string getFirmaNavn(int? id)
+        {
+
+            Client klijent = db.Clients.Find(id);
+            return klijent.FirmaNavn;
         }
     }
 }

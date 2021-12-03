@@ -65,7 +65,9 @@
         box-shadow: 2px 2px 1px 3px #ff9999;
         margin-bottom: 5px;
     }
-
+    table,th,td{
+        color:black;
+    }
     .aNav {
         cursor: pointer;
     }
@@ -85,13 +87,18 @@
 
 @if (Model.FirmaNavn != null || Model.GateNavn != null || Model.Epost != null || Model.Sted != null || Model.PostNummer != null || Model.HusBokStav != null)
 {
-    <nav aria-label="breadcrumb" class="main-breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item" aria-current="page"> Profile</li>
-            <li class="breadcrumb-item"><a class="aNav" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts",new { id = Model.Id})'">Fakturaoppsetts</a></li>
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    
+    <ol class="breadcrumb">
+        <h3>@Html.DisplayFor(model => model.FirmaNavn)</h3>
+        <li class="breadcrumb-item" aria-current="page"> Profile</li>
+        <li class="breadcrumb-item"><a class="aNav" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts",new { id = Model.Id})'">Fakturaoppsetts</a></li>
+        @if (ViewBag.numberOfFaktures > 0)
+        {
             <li class="breadcrumb-item"><a class="aNav" onclick="location.href = '@Url.Action("Index", "Nummers", new { id = Model.Id })'">Nummers</a></li>
-        </ol>
-    </nav>
+        }
+    </ol>
+</nav>
 }
 else
 {
@@ -114,9 +121,11 @@ else
                                 @Html.DisplayNameFor(model => model.Orgnummer)
                             </strong>
                         </td>
-                        <td class="text-primary">
+                        <td><strong>
+                            
                             @Html.DisplayFor(model => model.Orgnummer)
-                        </td>
+                        </strong></td>
+                        
                     </tr>
                     <tr>
                         <td>
@@ -125,8 +134,11 @@ else
                                 @Html.DisplayNameFor(model => model.Password)
                             </strong>
                         </td>
-                        <td class="text-primary" style="visibility:hidden;">
-                            @Html.DisplayFor(model => model.Password)
+                        <td> 
+                            <strong style="visibility:hidden">
+
+                                @Html.DisplayFor(model => model.Password)
+                            </strong>
                         </td>
                     </tr>
                     <tr>
@@ -136,8 +148,11 @@ else
                                 @Html.DisplayNameFor(model => model.FirmaNavn)
                             </strong>
                         </td>
-                        <td class="text-primary">
-                            @Html.DisplayFor(model => model.FirmaNavn)
+                        <td>
+                            <strong>
+
+                                @Html.DisplayFor(model => model.FirmaNavn)
+                            </strong>
                         </td>
                     </tr>
 
@@ -148,8 +163,11 @@ else
                                 @Html.DisplayNameFor(model => model.GateNavn)
                             </strong>
                         </td>
-                        <td class="text-primary">
-                            @Html.DisplayFor(model => model.GateNavn)
+                        <td>
+                            <strong>
+
+                                @Html.DisplayFor(model => model.GateNavn)
+                            </strong>
                         </td>
                     </tr>
 
@@ -161,8 +179,11 @@ else
                                 @Html.DisplayNameFor(model => model.HusNummer)
                             </strong>
                         </td>
-                        <td class="text-primary">
-                            @Html.DisplayFor(model => model.HusNummer)
+                        <td>
+                            <strong>
+
+                                @Html.DisplayFor(model => model.HusNummer)
+                            </strong>
                         </td>
                     </tr>
                     <tr>
@@ -172,8 +193,11 @@ else
                                 @Html.DisplayNameFor(model => model.HusBokStav)
                             </strong>
                         </td>
-                        <td class="text-primary">
-                            @Html.DisplayFor(model => model.HusBokStav)
+                        <td>
+                            <strong>
+
+                                @Html.DisplayFor(model => model.HusBokStav)
+                            </strong>
                         </td>
                     </tr>
                     <tr>
@@ -183,8 +207,11 @@ else
                                 @Html.DisplayNameFor(model => model.PostNummer)
                             </strong>
                         </td>
-                        <td class="text-primary">
-                            @Html.DisplayFor(model => model.PostNummer)
+                        <td>
+                            <strong>
+
+                                @Html.DisplayFor(model => model.PostNummer)
+                            </strong>
                         </td>
                     </tr>
                     <tr>
@@ -194,8 +221,11 @@ else
                                 @Html.DisplayNameFor(model => model.Sted)
                             </strong>
                         </td>
-                        <td class="text-primary">
-                            @Html.DisplayFor(model => model.Sted)
+                        <td>
+                            <strong>
+
+                                @Html.DisplayFor(model => model.Sted)
+                            </strong>
                         </td>
                     </tr>
                     <tr>
@@ -205,8 +235,11 @@ else
                                 @Html.DisplayNameFor(model => model.Epost)
                             </strong>
                         </td>
-                        <td class="text-primary">
-                            @Html.DisplayFor(model => model.Epost)
+                        <td >
+                            <strong >
+
+                                @Html.DisplayFor(model => model.Epost)
+                            </strong>
                         </td>
                     </tr>
                 </tbody>
@@ -231,8 +264,11 @@ else
                                 @Html.DisplayNameFor(model => model.KontaktNavn)
                             </strong>
                         </td>
-                        <td class="text-primary">
-                            @Html.DisplayFor(model => model.KontaktNavn)
+                        <td>
+                            <strong>
+
+                                @Html.DisplayFor(model => model.KontaktNavn)
+                            </strong>
                         </td>
                     </tr>
                     <tr>
@@ -242,8 +278,11 @@ else
                                 @Html.DisplayNameFor(model => model.KontaktEpost)
                             </strong>
                         </td>
-                        <td class="text-primary">
-                            @Html.DisplayFor(model => model.KontaktEpost)
+                        <td>
+                            <strong>
+
+                                @Html.DisplayFor(model => model.KontaktEpost)
+                            </strong>
                         </td>
                     </tr>
                     <tr>
@@ -253,8 +292,11 @@ else
                                 @Html.DisplayNameFor(model => model.KontaktTlfnr)
                             </strong>
                         </td>
-                        <td class="text-primary">
-                            @Html.DisplayFor(model => model.KontaktTlfnr)
+                        <td>
+                            <strong>
+
+                                @Html.DisplayFor(model => model.KontaktTlfnr)
+                            </strong>
                         </td>
                     </tr>
 
@@ -275,8 +317,11 @@ else
                                 @Html.DisplayNameFor(model => model.TekniskKontaktNavn)
                             </strong>
                         </td>
-                        <td class="text-primary">
-                            @Html.DisplayFor(model => model.TekniskKontaktNavn)
+                        <td>
+                            <strong>
+
+                                @Html.DisplayFor(model => model.TekniskKontaktNavn)
+                            </strong>
                         </td>
                     </tr>
                     <tr>
@@ -286,8 +331,11 @@ else
                                 @Html.DisplayNameFor(model => model.TekniskKontaktEpost)
                             </strong>
                         </td>
-                        <td class="text-primary">
-                            @Html.DisplayFor(model => model.TekniskKontaktEpost)
+                        <td>
+                            <strong>
+
+                                @Html.DisplayFor(model => model.TekniskKontaktEpost)
+                            </strong>
                         </td>
                     </tr>
                     <tr>
@@ -297,172 +345,62 @@ else
                                 @Html.DisplayNameFor(model => model.TekniskKontaktTlfnr)
                             </strong>
                         </td>
-                        <td class="text-primary">
-                            @Html.DisplayFor(model => model.TekniskKontaktTlfnr)
+                        <td>
+                            <strong>
+
+                                @Html.DisplayFor(model => model.TekniskKontaktTlfnr)
+                            </strong>
                         </td>
+                        
                     </tr>
 
                 </tbody>
             </table>
         </div>
     </div>
+    <div class="col-md-6">
+        <strong>Kontrakter</strong><br>
+        <div class="table-responsive">
+            <table class="table table-user-information" style="background-color: #cce6ff">
+                <tbody>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-user text-primary"></span>
+                                Abonemetype Mobile:
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                            <strong style="color:black"><p>@ViewBag.Mobile</p></strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-envelope  text-primary"></span>
+                                Abonemetype Fixed:
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                            <strong style="color:black"><p>@ViewBag.Fixed</p></strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-phone text-primary"></span>
+                                Abonemetype Internet:
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                            <strong style="color:black"><p>@ViewBag.Internet</p></strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
-@*<div>
-        <br />
-        <dl class="dl-horizontal">
-            <div class="row" style="margin-left: 10px;">
-                    <fieldset>
-                        <legend>
-                            Kundeinformasjon
-                        </legend>
-                        <div class="col-md-8" style="background-color: #DBF7B9">
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Orgnummer)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.Orgnummer)
-                            </dd>
-
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Password)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.Password)
-                            </dd>
-
-                            <dt>
-                                @Html.DisplayNameFor(model => model.FirmaNavn)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.FirmaNavn)
-                            </dd>
-
-                            <dt>
-                                @Html.DisplayNameFor(model => model.GateNavn)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.GateNavn)
-                            </dd>
-
-                            <dt>
-                                @Html.DisplayNameFor(model => model.HusNummer)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.HusNummer)
-                            </dd>
-
-                            <dt>
-                                @Html.DisplayNameFor(model => model.HusBokStav)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.HusBokStav)
-                            </dd>
-
-                            <dt>
-                                @Html.DisplayNameFor(model => model.PostNummer)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.PostNummer)
-                            </dd>
-
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Sted)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.Sted)
-                            </dd>
-
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Epost)
-                            </dt>
-
-                            <dd>
-                                @Html.DisplayFor(model => model.Epost)
-                            </dd>
-                    </fieldset>
-                </div>
-            <div class="row" style="margin-left: 10px;">
-                <fieldset>
-                    <legend>
-                        Kontaktperson
-                    </legend>
-                    <div class="col-md-6 ContainerRed" style="background-color: #F9B3A7">
-                        <dt>
-                            @Html.DisplayNameFor(model => model.KontaktNavn)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.KontaktNavn)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.KontaktEpost)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.KontaktEpost)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.KontaktTlfnr)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.KontaktTlfnr)
-                        </dd>
-                    </div>
-                </fieldset>
-
-            </div>
-            <div class="row" style="margin-left: 10px;">
-                <fieldset>
-                    <legend>
-                        Teknisk kontaktperson
-                    </legend>
-                    <div class="col-md-6 ContainerRed" style="background-color: #F9B3A7">
-                        <dt>
-                            @Html.DisplayNameFor(model => model.TekniskKontaktNavn)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.TekniskKontaktNavn)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.TekniskKontaktEpost)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.TekniskKontaktEpost)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.TekniskKontaktTlfnr)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.TekniskKontaktTlfnr)
-                        </dd>
-                    </div>
-                </fieldset>
-            </div>
-        </dl>
-    </div>*@
-@*<hr />*@
-
-@*@if (Model.FirmaNavn == null && Model.GateNavn == null && Model.Epost == null && Model.Sted == null && Model.PostNummer == null && Model.HusBokStav == null)
-    {
-        <p><button class="btn buttonLink" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts", new { id = Model.Id })'">FakturaOppsett &raquo;</button></p>
-    }
-    <button class="ButtonEdit" onclick="location.href = '@Url.Action("Edit", "HomeClient", new { id = Model.Id })'"><span class="glyphicon glyphicon-edit"></span>  Edit profile </button>*@
-
 
 

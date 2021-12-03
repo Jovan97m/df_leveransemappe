@@ -131,17 +131,16 @@
 
 <nav aria-label="breadcrumb" class="main-breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a  class="aNav "onclick="location.href = '@Url.Action("Details", "HomeClient",new { id = ViewBag.ID})'"> Profile</a></li>
+        <h3>@ViewData["FirmaNavn"]</h3>
+        <li class="breadcrumb-item"><a class="aNav " onclick="location.href = '@Url.Action("Details", "HomeClient",new { id = ViewBag.ID})'"> Profile</a></li>
         <li class="breadcrumb-item"><a class="aNav" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts",new { id = ViewBag.ID})'">Fakturaoppsetts</a></li>
         <li class="breadcrumb-item" aria-current="page">Nummers</li>
     </ol>
 </nav>
 
-
-
 <div style="overflow-x:auto; margin-left:9px; margin-right:10px;" class="shadow">
     <div class="col-sm-4">
-        @using (Html.BeginForm("Index", "Nummers", FormMethod.Get, new { id_sesije = ViewBag.ID }))
+        @using (Html.BeginForm("Index", "Nummers", FormMethod.Get, new { id = ViewBag.ID }))
         {
             <fieldset>
                 <legend>Søkealternativer</legend>
@@ -156,11 +155,7 @@
                 <label class="radio-inline">
                     @Html.RadioButton("SearchParameter", "Etternavn", htmlAttributes: new { @class = "inputRadio" })<label>Etternavn</label>
                 </label>
-
             </fieldset>
-            <div style="display:none;">
-                @Html.TextBox("id_sesije", ViewBag.ID as string);
-            </div>
             <p style="font-size: medium;font-weight:bold;color:black;margin-left:15px;">
                 Søk etter:  @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
                 <input type="submit" value="Search" class="btn btn-info shadow-lg" style="color: black;font-size: medium;border-radius: 14px;" />
@@ -182,10 +177,10 @@
                         <div class="col-md-6" style="margin-bottom: 5px;">
                             <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
                                     title="Skriv inn mobilnummeret ditt "
-                                    onclick="location.href = '@Url.Action("Create", "Nummers",new { sesija = ViewBag.ID })'">
+                                    onclick="location.href = '@Url.Action("Create", "Nummers",new { id = ViewBag.ID })'">
                                 <span class="glyphicon glyphicon-phone"></span> Telefonnummer
                             </button>
-                            @using (Html.BeginForm("Excel", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
+                            @using (Html.BeginForm("Excel", "Nummers", FormMethod.Post, new { id = ViewBag.ID, enctype = "multipart/form-data" }))
                             {
                                 <div style="display:none;">
                                     @Html.TextBox("id_sesije", ViewBag.ID as string);
@@ -193,7 +188,7 @@
                                 @Html.Raw(ViewBag.Error)
                                 <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
                                 <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                                        onclick="location.href = '@Url.Action("Excel", "Nummers",new { id_sesija = ViewBag.ID })'">
+                                        onclick="location.href = '@Url.Action("Excel", "Nummers",new { id = ViewBag.ID })'">
                                     <span class="glyphicon glyphicon-import"></span>Importer excel-fil
                                 </button>
                             }
@@ -208,7 +203,7 @@
                     <div class="col-md-8" style="margin-bottom: 5px;">
                         <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
                                 title="Angi et fasttelefonnummer. Dette nummeret er tillatt for alle klienter å angi."
-                                onclick="location.href = '@Url.Action("CreateFixed", "Nummers",new { sesija = ViewBag.ID })'">
+                                onclick="location.href = '@Url.Action("CreateFixed", "Nummers",new { id = ViewBag.ID })'">
                             <span class="glyphicon glyphicon-phone-alt"><br /></span> Fixed
                         </button>
                     </div>
@@ -216,7 +211,7 @@
                     <div class="col-md-6" style="margin-bottom: 5px;">
                         <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
                                 title="Skriv inn internettnummeret , som har en regel som starter på 58 og har 12 sifre"
-                                onclick="location.href = '@Url.Action("CreateInternet", "Nummers",new { sesija = ViewBag.ID })'">
+                                onclick="location.href = '@Url.Action("CreateInternet", "Nummers",new { id = ViewBag.ID })'">
                             <span class="glyphicon glyphicon-globe"></span> InternetNummer
                         </button>
                     </div>
@@ -224,45 +219,11 @@
             </fieldset>
         </div>
     </div>
-    <!--
-        <div class="col-sm-4">
-            <fieldset>
-                <legend>
-                    Instruksjoner for bruk av Excell-filer
-                </legend>
-                <div class="col-md-6 " style="margin-bottom: 5px;">
-                    <p>Opprett fil som data skal lastes inn i</p>
-                    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                            title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                            onclick="location.href = '@Url.Action("Export", "Nummers")'">
-                        <span class="glyphicon glyphicon-download"></span> Create Excell
-                    </button>
-                </div>
-                <div class="col-md-6 " style="margin-bottom: 5px;">
-                    <p>Last inn dataene fra Excel-filen</p>
-                    @using (Html.BeginForm("Excel", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
-                    {
-                        <div style="display:none;">
-                            @Html.TextBox("id_sesije", ViewBag.ID as string);
-                        </div>
-                        @Html.Raw(ViewBag.Error)
-                        <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
-                        <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                                onclick="location.href = '@Url.Action("Excel", "Nummers",new { id_sesija = ViewBag.ID })'">
-                            <span class="glyphicon glyphicon-import"></span>Importer excel-fil
-                        </button>
-                    }
-                </div>
-            </fieldset>
-        </div>
-    -->
 </div>
 
 <div style="overflow-x: auto; margin-left: 6px; margin-right: 15px;" class="shadow">
     <table class="table-bordered table-sm table-hover table-striped table-condensed" style="font-size: 14px;font-weight: bold;color:black;table-layout:fixed;border-radius: 5px;">
-        <thead style="background-color: #990AE4;
-                      color: white;
-                      text-shadow: 1px 1px black;">
+        <thead style="background-color: #990AE4;color: white;text-shadow: 1px 1px black;">
             <tr>
                 <th class="col-sm-2">         E / D</th>
                 <th class="col-sm-2">
@@ -290,12 +251,6 @@
                     </button>
                 </th>
                 <th class="col-sm-2">
-                    Bedrift
-                    <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Bedrift_som_skal_faktureresSortParm, currentFilter = ViewBag.CurrentFilter , id_sesije = ViewBag.ID})'">
-                        <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                    </button>
-                </th>
-                <th class="col-sm-2">
                     c_o_adresse
                     <button class="btn btn-sm btnSort" style="background-color:transparent; padding:4px;" onclick="location.href='@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.c_o_adresse_for_SIM_leveringSortParm, currentFilter = ViewBag.CurrentFilter , id_sesije = ViewBag.ID})'">
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
@@ -319,14 +274,6 @@
                         <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                     </button>
                 </th>
-                <!--
-    <th class="col-sm-2">
-        post_nr_
-        <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.post_nr_SortParm, currentFilter = ViewBag.CurrentFilter , id_sesije = ViewBag.ID})'">
-            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-        </button>
-    </th>
-        -->
                 <th class="col-sm-2">
                     Post_sted
                     <button class="btn btn-sm btnSort" onclick="location.href = '@Url.Action("Index", "Nummers",new { sortOrder = ViewBag.Post_stedSortParm, currentFilter = ViewBag.CurrentFilter, id_sesije = ViewBag.ID })'">
@@ -334,10 +281,10 @@
                     </button>
                 </th>
                 <th class="col-sm-2">
-                    Epost_for_sporings_informasjon
+                    Epost
                 </th>
                 <th class="col-sm-2">
-                    Epost
+                    Epost_for_sporings_informasjon
                 </th>
                 <th class="col-sm-2">
                     Tilleggsinfo_ansatt_ID
@@ -400,9 +347,6 @@
                 @Html.DisplayFor(modelItem => item.Etternavn)
             </td>
             <td class="col-sm-1">
-                @Html.DisplayFor(modelItem => item.Bedrift_som_skal_faktureres)
-            </td>
-            <td class="col-sm-1">
                 @Html.DisplayFor(modelItem => item.c_o_adresse_for_SIM_levering)
             </td>
             <td class="col-sm-1">
@@ -414,11 +358,6 @@
             <td class="col-sm-1">
                 @Html.DisplayFor(modelItem => item.Hus_bokstav)
             </td>
-            <!--
-    <td class="col-sm-1">
-        @Html.DisplayFor(modelItem => item.post_nr_)
-    </td>
-        -->
             @if (item.Post_sted == "Feil postnummer")
             {
                 <td class="col-sm-1" style="background-color: red;color:white;">
@@ -431,14 +370,11 @@
                     @Html.DisplayFor(modelItem => item.Post_sted)
                 </td>
             }
-
-
-
-            <td class="col-sm-1" style="color:darkblue; font-style:italic;font-weight: bold;">
-                @Html.DisplayFor(modelItem => item.Epost_for_sporings_informasjon)
-            </td>
             <td class="col-sm-1" style="color:darkblue; font-style:italic;font-weight: bold;">
                 @Html.DisplayFor(modelItem => item.Epost)
+            </td>
+            <td class="col-sm-1" style="color:darkblue; font-style:italic;font-weight: bold;">
+                @Html.DisplayFor(modelItem => item.Epost_for_sporings_informasjon)
             </td>
             <td class="col-sm-1">
                 @Html.DisplayFor(modelItem => item.Tilleggsinfo_ansatt_ID)
@@ -452,10 +388,9 @@
             <td class="col-sm-1">
                 @Html.DisplayFor(modelItem => item.Fakturaoppsett.NavnPaKostnadssted)
             </td>
-
         </tr>
-                }
-            }
+        }
+    }
         </tbody>
     </table>
 

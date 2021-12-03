@@ -39,6 +39,10 @@ namespace TeliaMVC.Controllers
                 return HttpNotFound();
             }
             ViewBag.ID = client.Id;
+            ViewBag.Mobile =  getAbonementype(client.Id_abonementype);
+            ViewBag.Fixed = getAbonementype(client.Id_abonemetypeF);
+            ViewBag.Internet = getAbonementype(client.Id_abonementypeI);
+            ViewBag.numberOfFaktures = getNumberOFFaktures(client.Id); 
             return View(client);
         }
         public ActionResult Edit(int? id)
@@ -53,6 +57,8 @@ namespace TeliaMVC.Controllers
                 return HttpNotFound();
             }
             ViewBag.Id_abonemetype = client.Id_abonementype;
+            ViewBag.Id_abonemetypeI = client.Id_abonementypeI;
+            ViewBag.Id_abonemetypeF = client.Id_abonemetypeF;
             return View(client);
         }
         // POST: Clients/Edit/5
@@ -60,7 +66,7 @@ namespace TeliaMVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Orgnummer,Password,FirmaNavn,GateNavn,HusNummer,HusBokStav,PostNummer,Sted,Epost,KontaktNavn,KontaktEpost,KontaktTlfnr,TekniskKontaktNavn,TekniskKontaktEpost,TekniskKontaktTlfnr,Id_abonementype")] Client client)
+        public ActionResult Edit([Bind(Include = "Id,Orgnummer,Password,FirmaNavn,GateNavn,HusNummer,HusBokStav,PostNummer,Sted,Epost,KontaktNavn,KontaktEpost,KontaktTlfnr,TekniskKontaktNavn,TekniskKontaktEpost,TekniskKontaktTlfnr,Id_abonementype,Id_abonementypeI,Id_abonemetypeF")] Client client)
         {
             if (ModelState.IsValid)
             {
@@ -70,6 +76,17 @@ namespace TeliaMVC.Controllers
                 return RedirectToAction("Details",new { id = client.Id});
             }
             return View(client);
+        }
+
+        public string getAbonementype(int id)
+        {
+            return db.Abonementypes.Find(id).Name;
+        }
+
+        public int getNumberOFFaktures(int id)
+        {
+            var faktures = db.Fakturaoppsetts.Where(c=> c.Id_client == id);
+            return faktures.Count();
         }
 
     }

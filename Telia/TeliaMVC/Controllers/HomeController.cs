@@ -169,6 +169,7 @@ namespace TeliaMVC.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ID = c.Id;
             return View(c);
         }
         [HttpPost, ActionName("Delete")]

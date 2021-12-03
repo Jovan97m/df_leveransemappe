@@ -17,15 +17,13 @@ namespace TeliaMVC.Controllers
 {
     public class NummersController : Controller
     {
-        
         private TeliaEntities db = new TeliaEntities();
 
-        // GET: Nummers
         public ActionResult Index(string sortOrder, string currentFilter, string searchString,int? id, int? page)
         {
             var nummers = from s in db.Nummers
                           select s;
-            Client client = db.Clients.Find(Convert.ToInt32(id));
+            Client client = db.Clients.Find(id);
             //formiraj listu za odredjenog klijenta
             nummers = nummers.Where(s => s.Orgnummer.Contains(client.Id.ToString()));
             ViewBag.ID = id;
@@ -61,11 +59,10 @@ namespace TeliaMVC.Controllers
             }
             switch (sortOrder)
             {
-                //prva kolona
                 case "telefonnummer_desc":
                     nummers = nummers.OrderByDescending(s => s.Telefonnummer);
                     break;
-                //druga kolona:
+
                 case "Abonnementstype":
                     nummers = nummers.OrderBy(s => s.Abonnementstype);
                     break;
@@ -73,19 +70,20 @@ namespace TeliaMVC.Controllers
                     nummers = nummers.OrderByDescending(s => s.Abonnementstype);
                     break;
 
-                //treca kolona,fakture
                 case "Etternavn":
                     nummers = nummers.OrderBy(s => s.Etternavn);
                     break;
                 case "etternavn_desc":
                     nummers = nummers.OrderByDescending(s => s.Etternavn);
                     break;
+
                 case "Fornavn":
                         nummers = nummers.OrderBy(s=>s.Fornavn);
                     break;
                 case "fornavn_desc":
                         nummers = nummers.OrderByDescending(s=>s.Fornavn);
                     break;
+
                 case "Bedrift_som_skal_faktureres":
                     nummers = nummers.OrderBy(s=>s.Bedrift_som_skal_faktureres);
                     break;
@@ -93,8 +91,6 @@ namespace TeliaMVC.Controllers
                     nummers = nummers.OrderByDescending(s=>s.Bedrift_som_skal_faktureres);
                     break;
 
-
-                //cetvrta kolona,adrese za fakture
                 case "c_o_adresse_for_SIM_levering":
                     nummers =nummers.OrderBy(s => s.c_o_adresse_for_SIM_levering);
                     break;
@@ -102,7 +98,6 @@ namespace TeliaMVC.Controllers
                     nummers = nummers.OrderByDescending(s => s.c_o_adresse_for_SIM_levering);
                     break;
 
-                //Peta kolona, Husnr
                 case "Gateadresse_SIM_Skal_sendes_til":
                     nummers = nummers.OrderBy(s => s.Gateadresse_SIM_Skal_sendes_til);
                     break;
@@ -111,12 +106,10 @@ namespace TeliaMVC.Controllers
                     nummers = nummers.OrderByDescending(s => s.Gateadresse_SIM_Skal_sendes_til);
                     break;
 
-
                 case "husnr_desc":
                     nummers = nummers.OrderByDescending(s => s.Gateadresse_SIM_Skal_sendes_til);
                     break;
 
-                //sesta kolona, Bokstav , mozda i ne mora
                 case "Hus_nummer":
                     nummers = nummers.OrderBy(s => s.Hus_nummer);
                     break;
@@ -124,7 +117,6 @@ namespace TeliaMVC.Controllers
                     nummers = nummers.OrderByDescending(s => s.Hus_nummer);
                     break;
 
-                //sedma kolona PostNummer
                 case "Hus_bokstav":
                     nummers = nummers.OrderBy(s => s.Hus_bokstav);
                     break;
@@ -166,69 +158,64 @@ namespace TeliaMVC.Controllers
 
             int pageSize = 10;
             int pageNumber = (page ?? 1);
-             return View(nummers.ToPagedList(pageNumber, pageSize));
+            ViewData["FirmaNavn"] = getFirmaNavn(id);
+            return View(nummers.ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Nummer nummer = db.Nummers.Find(id);
-            if (nummer == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(nummer);
-        }
-
-       
         #region CREATE
-        
-        public ActionResult Create(int? sesija, string id_sesije)
+        public ActionResult Create(int? id)
         {
-            Client client = db.Clients.Find(sesija);
+            Client client = db.Clients.Find(id);
             ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
             ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype,"M"); // selectbox za abonementype
-            ViewBag.ORG = client.Id.ToString();
+            ViewBag.ID = client.Id;
+            ViewBag.Mobile = client.Id_abonementype;
+            ViewBag.Fixed = client.Id_abonemetypeF;
+            ViewBag.Internet = client.Id_abonementypeI;
             ViewData["PostNummer"] = getPostnummers();
+
             return View();
         }
 
-        public ActionResult CreateFixed(int? sesija)
+        public ActionResult CreateFixed(int? id)
         {
-            Client client = db.Clients.Find(sesija);
+            Client client = db.Clients.Find(id);
             ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
             ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonemetypeF,"F"); // selectbox za abonementype
-            ViewBag.ORG = client.Id.ToString();
+            ViewBag.ID = client.Id;
+            ViewBag.Mobile = client.Id_abonementype;
+            ViewBag.Fixed = client.Id_abonemetypeF;
+            ViewBag.Internet = client.Id_abonementypeI;
+            ViewData["PostNummer"] = getPostnummers();
+
             return View();
         }
 
-        public ActionResult CreateInternet(int? sesija)
+        public ActionResult CreateInternet(int? id)
         {
-            Client client = db.Clients.Find(sesija);
+            Client client = db.Clients.Find(id);
             ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
             ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementypeI,"I"); // selectbox za abonementype
-            ViewBag.ORG = client.Id.ToString();
+            ViewBag.ID = client.Id;
+            ViewBag.Mobile = client.Id_abonementype;
+            ViewBag.Fixed = client.Id_abonemetypeF;
+            ViewBag.Internet = client.Id_abonementypeI;
+            ViewData["PostNummer"] = getPostnummers();
+
             return View();
         }
 
-        // POST: Nummers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,Orgnummer,HovedSIM")] Nummer nummer,string selected,string kostnadsted)
+        public ActionResult Create([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,HovedSIM")] Nummer nummer,string selected,string kostnadsted,int? id)
         {
             nummer.Abonnementstype = selected; // ucitaj selektovani
             nummer.Pending = true;
             Fakturaoppsett fakturaoppsett = db.Fakturaoppsetts.Where(s => s.NavnPaKostnadssted.Contains(kostnadsted)).FirstOrDefault();
             nummer.Kostnadsted = fakturaoppsett.Kostnadssted;
             nummer.Post_sted = VratiPostSted(nummer.post_nr_);
-            nummer.Bedrift_som_skal_faktureres = fakturaoppsett.Fakturaformat;
-            var idc = db.Clients.Find(Convert.ToInt32(nummer.Orgnummer));
+            var idc = db.Clients.Find(id);
+            nummer.Orgnummer = id.ToString();
             if (ModelState.IsValid)
              {
                 var errors2 = ModelState.Values.SelectMany(v => v.Errors);
@@ -251,26 +238,27 @@ namespace TeliaMVC.Controllers
                         }
                     }
                 }
-                return RedirectToAction("Index","Nummers", new {id_sesije = idc.Id });
+                return RedirectToAction("Index","Nummers", new {id = idc.Id });
             }
             var errors = ModelState.Values.SelectMany(v => v.Errors);
             Client client = db.Clients.Find(idc.Id);
             ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype,"M");
             ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
-            ViewBag.ORG =idc.Id.ToString();
+
+            ViewBag.ORG = id;
             return View(nummer);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateFixed([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,Orgnummer,HovedSIM")] Nummer nummer, string selected, string kostnadsted)
+        public ActionResult CreateFixed([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,HovedSIM")] Nummer nummer, string selected, string kostnadsted, int? id)
         {
             nummer.Abonnementstype = selected; // ucitaj selektovani
             nummer.Pending = true;
             Fakturaoppsett fakturaoppsett = db.Fakturaoppsetts.Where(s => s.NavnPaKostnadssted.Contains(kostnadsted)).FirstOrDefault();
             nummer.Kostnadsted = fakturaoppsett.Kostnadssted;
             nummer.Post_sted = VratiPostSted(nummer.post_nr_);
-            nummer.Bedrift_som_skal_faktureres = fakturaoppsett.Fakturaformat;
-            var idc = db.Clients.Find(Convert.ToInt32(nummer.Orgnummer));
+            var idc = db.Clients.Find(id);
+            nummer.Orgnummer = id.ToString();
             if (ModelState.IsValid)
             {
                 var errors2 = ModelState.Values.SelectMany(v => v.Errors);
@@ -293,26 +281,26 @@ namespace TeliaMVC.Controllers
                         }
                     }
                 }
-                return RedirectToAction("Index", "Nummers", new { id_sesije = idc.Id });
+                return RedirectToAction("Index", "Nummers", new { id = idc.Id });
             }
             var errors = ModelState.Values.SelectMany(v => v.Errors);
             Client client = db.Clients.Find(idc.Id);
             ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype, "F");
             ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
-            ViewBag.ORG = idc.Id.ToString();
+            ViewBag.ID = id;
             return View(nummer);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateInternet([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,Orgnummer,HovedSIM")] Nummer nummer, string selected, string kostnadsted)
+        public ActionResult CreateInternet([Bind(Include = "Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,HovedSIM")] Nummer nummer, string selected, string kostnadsted,int? id)
         {
-            nummer.Abonnementstype = selected; // ucitaj selektovani
+            nummer.Abonnementstype = selected;
             nummer.Pending = true;
             Fakturaoppsett fakturaoppsett = db.Fakturaoppsetts.Where(s => s.NavnPaKostnadssted.Contains(kostnadsted)).FirstOrDefault();
             nummer.Kostnadsted = fakturaoppsett.Kostnadssted;
             nummer.Post_sted = VratiPostSted(nummer.post_nr_);
-            nummer.Bedrift_som_skal_faktureres = fakturaoppsett.Fakturaformat;
-            var idc = db.Clients.Find(Convert.ToInt32(nummer.Orgnummer));
+            var idc = db.Clients.Find(id);
+            nummer.Orgnummer = id.ToString();
             if (ModelState.IsValid)
             {
                 var errors2 = ModelState.Values.SelectMany(v => v.Errors);
@@ -335,20 +323,18 @@ namespace TeliaMVC.Controllers
                         }
                     }
                 }
-                return RedirectToAction("Index", "Nummers", new { id_sesije = idc.Id });
+                return RedirectToAction("Index", "Nummers", new { id = idc.Id });
             }
             var errors = ModelState.Values.SelectMany(v => v.Errors);
             Client client = db.Clients.Find(idc.Id);
             ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype, "I");
             ViewBag.Kostnadsted = FillKostnadstedSelectBox(client.Id);
-            ViewBag.ORG = idc.Id.ToString();
+            ViewBag.ID = id;
             return View(nummer);
         }
 
         #endregion
 
-
-        // GET: Nummers/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -360,32 +346,38 @@ namespace TeliaMVC.Controllers
             {
                 return HttpNotFound();
             }
-
-
             var c = db.Clients.Find(Convert.ToInt32(GetId(nummer.Orgnummer)));
             ViewBag.Kostnadsted = FillKostnadstedSelectBox(c.Id);
-            ViewBag.Types = FillAbonementtypeSelectBox(c.Id_abonementype,"M"); // selectbox za abonementype
-            ViewBag.ID = GetId(nummer.Orgnummer);
+            if (nummer.Telefonnummer.StartsWith("4") || nummer.Telefonnummer.StartsWith("9"))
+                ViewBag.Types = FillAbonementtypeSelectBox(c.Id_abonementype, "M");
+            else if (nummer.Telefonnummer.StartsWith("58"))
+                ViewBag.Types = FillAbonementtypeSelectBox(c.Id_abonementypeI, "I");
+            else
+                ViewBag.Types = FillAbonementtypeSelectBox(c.Id_abonemetypeF, "F");
+            ViewBag.ID = c.Id;
             ViewBag.Orgnummer = nummer.Orgnummer;
             return View(nummer);
         }
 
-        // POST: Nummers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,Orgnummer,HovedSIM")] Nummer nummer, string selected,string kostnadsted)
+        public ActionResult Edit([Bind(Include = "ID,Telefonnummer,Abonnementstype,Fornavn,Etternavn,Bedrift_som_skal_faktureres,c_o_adresse_for_SIM_levering,Gateadresse_SIM_Skal_sendes_til,Hus_nummer,Hus_bokstav,post_nr_,Post_sted,Epost_for_sporings_informasjon,Epost,Kostnadsted,Tilleggsinfo_ansatt_ID,Ekstra_talesim_,Ekstra_datasim,HovedSIM")] Nummer nummer, string selected,string kostnadsted,int? id)
         {
-            Client c = db.Clients.Find(Convert.ToInt32(nummer.Orgnummer));
+            Client c = db.Clients.Find(id);
 
-            ViewBag.ID = nummer.Orgnummer ;
+            ViewBag.ID = id;
+            if (nummer.Telefonnummer.StartsWith("4") || nummer.Telefonnummer.StartsWith("9"))
+                ViewBag.Types = FillAbonementtypeSelectBox(c.Id_abonementype, "M");
+            else if (nummer.Telefonnummer.StartsWith("58"))
+                ViewBag.Types = FillAbonementtypeSelectBox(c.Id_abonementypeI, "I");
+            else
+                ViewBag.Types = FillAbonementtypeSelectBox(c.Id_abonemetypeF, "F");
             nummer.Abonnementstype = selected;
             nummer.Pending = true;
             nummer.Date = DateTime.Today;
             nummer.Kostnadsted = kostnadsted;
-            nummer.Bedrift_som_skal_faktureres= db.Fakturaoppsetts.Where(s => s.NavnPaKostnadssted.Contains(kostnadsted)).First().Fakturaformat;
             nummer.Post_sted = VratiPostSted(nummer.post_nr_);
+
             if (ModelState.IsValid)
             {
                 db.Entry(nummer).State = EntityState.Modified;
@@ -408,12 +400,11 @@ namespace TeliaMVC.Controllers
                     }
                 }
 
-                return RedirectToAction("Index", new { id_sesije = c.Id });
+                return RedirectToAction("Index", new { id = c.Id });
             }
-            var errors = ModelState.Values.SelectMany(v => v.Errors);
-            ViewBag.Types = FillAbonementtypeSelectBox(c.Id_abonementype,"M");
+            
             ViewBag.Kostnadsted = FillKostnadstedSelectBox(c.Id);
-            //ViewBag.Kostnadsted = new SelectList(db.Fakturaoppsetts, "Kostnadssted", "NavnPaKostnadssted", nummer.Kostnadsted);
+
             return View(nummer);
         }
 
@@ -429,7 +420,9 @@ namespace TeliaMVC.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ID = GetId(nummer.Orgnummer);
+            var c = db.Clients.Find(Convert.ToInt32(GetId(nummer.Orgnummer)));
+            ViewBag.ID = c.Id;
+
             return View(nummer);
         }
 
@@ -439,8 +432,6 @@ namespace TeliaMVC.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Nummer nummer = db.Nummers.Find(id);
-           //Client c = db.Clients.Find(Convert.ToInt32(nummer.Orgnummer));
-            //nummer.Orgnummer = c.Orgnummer;
             ViewBag.ID = GetId(nummer.Orgnummer);
             db.Nummers.Remove(nummer);
             try
@@ -449,10 +440,9 @@ namespace TeliaMVC.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
-            return RedirectToAction("Index", new { id_sesije = ViewBag.ID });
+            return RedirectToAction("Index", new { id = ViewBag.ID });
         }
 
         protected override void Dispose(bool disposing)
@@ -1280,7 +1270,6 @@ namespace TeliaMVC.Controllers
                                 flag = false;
                             }
                         }
-
                     }
                 }
                 if (flag) f = true;
@@ -1347,7 +1336,11 @@ namespace TeliaMVC.Controllers
             }
             if (flag) f = true;
         }
+        public string getFirmaNavn(int? id)
+        {
+            Client klijent = db.Clients.Find(id);
+            return klijent.FirmaNavn;
+        }
         #endregion
-        
     }
 }
