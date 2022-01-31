@@ -311,8 +311,7 @@ namespace TeliaMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UpdateColumn(string sortOrder, string currentFilter, string CopyColumn, string currentSelected)
         {
-            var nummers = from s in db.Nummers
-                          select s;
+            var nummers = from s in db.Nummers select s;
             if (currentSelected != "" || currentSelected!= null)
             {
                 if (currentSelected != "All")
@@ -354,7 +353,6 @@ namespace TeliaMVC.Controllers
                     }
                 }
             }
-
             return RedirectToAction("Index","NummersAdmin", new { sortOrder = sortOrder,currentFilter = currentFilter , currentSelected = currentSelected });
         }
         #endregion

@@ -14,6 +14,8 @@ namespace TeliaMVC.Controllers
         // GET: Login
         public ActionResult Index()
         {
+            ViewBag.Admin = "admin";
+            ViewBag.Client = "client";
             return View();
         }
         [HttpPost]
@@ -28,6 +30,8 @@ namespace TeliaMVC.Controllers
                     if (userDetail == null)
                     {
                         admin.LoginErrorMsg = "Invalid UserName or Password";
+                        admin.UserName = "";
+                        admin.Password = "";
                         return View("Index", admin);
                     }
                     else
@@ -42,6 +46,8 @@ namespace TeliaMVC.Controllers
                     if (userDetail == null)
                     {
                         admin.LoginErrorMsg = "Invalid UserName or Password";
+                        admin.UserName = "";
+                        admin.Password = "";
                         return View("Index", admin);
                     }
                     else
@@ -58,6 +64,8 @@ namespace TeliaMVC.Controllers
         public ActionResult LogOut()
         {
             Session.Abandon();
+            ViewBag.Admin = "admin";
+            ViewBag.Client = "client";
             return RedirectToAction("Index", "Login");
         }
     }

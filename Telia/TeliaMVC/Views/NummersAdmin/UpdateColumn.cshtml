@@ -70,9 +70,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <p >Verdi som skal kopieres i alle merkede rader: <span style="        text-decoration: underline;
-        font-weight: bold;
-">@ViewBag.Value</span></p>
+    <p >Verdi som skal kopieres i alle merkede rader: <span style="text-decoration: underline;font-weight: bold;">@ViewBag.Value</span></p>
 
     <div style="display:none;">
         @Html.TextBox("sortOrder", ViewBag.sort as string);
@@ -87,5 +85,5 @@
         @Html.TextBox("currentSelected", ViewBag.selected as string);
     </div>
     <input type="submit" value="Kopi" class="ButtonEdit" />
-    <button class="ButtonBack" onclick="location.href = '@Url.Action("Index", "NummersAdmin", new { id_sesije = ViewBag.ID })';return false;">Tilbake</button>
+    <button class="ButtonBack" onclick="location.href = '@Url.Action("Index", "NummersAdmin", new { id = ViewBag.ID })';return false;">Tilbake</button>
 }

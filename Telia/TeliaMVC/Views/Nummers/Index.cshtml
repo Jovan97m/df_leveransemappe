@@ -139,7 +139,7 @@
 </nav>
 
 <div style="overflow-x:auto; margin-left:9px; margin-right:10px;" class="shadow">
-    <div class="col-sm-4">
+    <div class="col-sm-4" style="margin-bottom: 10px;">
         @using (Html.BeginForm("Index", "Nummers", FormMethod.Get, new { id = ViewBag.ID }))
         {
             <fieldset>
@@ -166,55 +166,80 @@
             <br />
         }
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-8" >
         <div class="row">
             <fieldset>
                 <legend>
                     Angi bestemt type tall
                 </legend>
-                <div class="row">
-                    <div class="col-lg-8" style="flex-direction:row">
-                        <div class="col-md-6" style="margin-bottom: 5px;">
+                <div >
+                    <div class="col-lg-6" style="flex-direction:row">
+                        <div class="col-md-8" style="margin-bottom: 5px;">
                             <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
                                     title="Skriv inn mobilnummeret ditt "
                                     onclick="location.href = '@Url.Action("Create", "Nummers",new { id = ViewBag.ID })'">
                                 <span class="glyphicon glyphicon-phone"></span> Telefonnummer
                             </button>
-                            @using (Html.BeginForm("Excel", "Nummers", FormMethod.Post, new { id = ViewBag.ID, enctype = "multipart/form-data" }))
-                            {
-                                <div style="display:none;">
-                                    @Html.TextBox("id_sesije", ViewBag.ID as string);
-                                </div>
-                                @Html.Raw(ViewBag.Error)
-                                <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
-                                <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                                        onclick="location.href = '@Url.Action("Excel", "Nummers",new { id = ViewBag.ID })'">
-                                    <span class="glyphicon glyphicon-import"></span>Importer excel-fil
-                                </button>
-                            }
+
+                            @*@using (Html.BeginForm("Excel", "Nummers", FormMethod.Post, new { id = ViewBag.ID, enctype = "multipart/form-data" }))
+                {
+                    <div style="display:none;">
+                        @Html.TextBox("id_sesije", ViewBag.ID as string);
+                    </div>
+                    @Html.Raw(ViewBag.Error)
+                    <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
+                    <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                            onclick="location.href = '@Url.Action("Excel", "Nummers",new { id = ViewBag.ID })'">
+                        <span class="glyphicon glyphicon-import"></span>Importer excel-fil
+                    </button>
+                }
+                                        <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                                                title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                                                onclick="location.href = '@Url.Action("Export", "Nummers")'">
+                                            <span class="glyphicon glyphicon-download"></span> Create Excell
+                                        </button>
+                                    </div>*@
+
+
+
+
+                        </div>
+                        <div class="col-md-8" style="margin-bottom: 5px;">
                             <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                                    title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                                    onclick="location.href = '@Url.Action("Export", "Nummers")'">
-                                <span class="glyphicon glyphicon-download"></span> Create Excell
+                                    title="Angi et fasttelefonnummer. Dette nummeret er tillatt for alle klienter å angi."
+                                    onclick="location.href = '@Url.Action("CreateFixed", "Nummers",new { id = ViewBag.ID })'">
+                                <span class="glyphicon glyphicon-phone-alt"><br /></span> FixedNummer
                             </button>
                         </div>
 
+                        <div class="col-md-8" style="margin-bottom: 5px;">
+                            <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                                    title="Skriv inn internettnummeret , som har en regel som starter på 58 og har 12 sifre"
+                                    onclick="location.href = '@Url.Action("CreateInternet", "Nummers",new { id = ViewBag.ID })'">
+                                <span class="glyphicon glyphicon-globe"></span> InternetNummer
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-md-8" style="margin-bottom: 5px;">
+                    <div class="col-lg-4">
+                        @using (Html.BeginForm("Excel", "Nummers", FormMethod.Post, new { id = ViewBag.ID, enctype = "multipart/form-data" }))
+                        {
+                            <div style="display:none;">
+                                @Html.TextBox("id_sesije", ViewBag.ID as string);
+                            </div>
+                            @Html.Raw(ViewBag.Error)
+                            <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
+                            <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                                    onclick="location.href = '@Url.Action("Excel", "Nummers",new { id = ViewBag.ID })'">
+                                <span class="glyphicon glyphicon-import"></span>Importer excel-fil
+                            </button>
+                        }
                         <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                                title="Angi et fasttelefonnummer. Dette nummeret er tillatt for alle klienter å angi."
-                                onclick="location.href = '@Url.Action("CreateFixed", "Nummers",new { id = ViewBag.ID })'">
-                            <span class="glyphicon glyphicon-phone-alt"><br /></span> Fixed
+                                title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                                onclick="location.href = '@Url.Action("Export", "Nummers")'">
+                            <span class="glyphicon glyphicon-download"></span> Create Excell
                         </button>
                     </div>
-
-                    <div class="col-md-6" style="margin-bottom: 5px;">
-                        <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                                title="Skriv inn internettnummeret , som har en regel som starter på 58 og har 12 sifre"
-                                onclick="location.href = '@Url.Action("CreateInternet", "Nummers",new { id = ViewBag.ID })'">
-                            <span class="glyphicon glyphicon-globe"></span> InternetNummer
-                        </button>
-                    </div>
+                </div> 
                 </div>
             </fieldset>
         </div>
@@ -335,7 +360,11 @@
                 </div>
             </td>
             <td class="col-sm-1">
-                @Html.DisplayFor(modelItem => item.Telefonnummer)
+
+                @if (item.Telefonnummer.StartsWith("4") || item.Telefonnummer.StartsWith("9"))
+                {
+                    <span class="glyphicon glyphicon-phone"><br /></span> @Html.DisplayFor(modelItem => item.Telefonnummer)
+                }
             </td>
             <td class="col-sm-1">
                 @Html.DisplayFor(modelItem => item.Abonnementstype)
