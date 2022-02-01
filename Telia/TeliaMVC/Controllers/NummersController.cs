@@ -967,7 +967,6 @@ namespace TeliaMVC.Controllers
             return klijent.FirmaNavn;
         }
         #endregion
-<<<<<<< HEAD
         [HttpPost]
         public ActionResult Verify(List<string> mapa)
         {
@@ -1102,7 +1101,5 @@ namespace TeliaMVC.Controllers
             ViewData["lose"] = Neispravno;
             return View();
         }
-=======
->>>>>>> New-Branch
     }
 }

@@ -180,7 +180,6 @@
                                     onclick="location.href = '@Url.Action("Create", "Nummers",new { id = ViewBag.ID })'">
                                 <span class="glyphicon glyphicon-phone"></span> Telefonnummer
                             </button>
-<<<<<<< HEAD
                             @using (Html.BeginForm("Ocitaj", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
                             {
                                 <div style="display:none;">
@@ -193,7 +192,7 @@
                                     <span class="glyphicon glyphicon-import"></span>Importer excel-fil
                                 </button>
                             }
-=======
+
 
                             @*@using (Html.BeginForm("Excel", "Nummers", FormMethod.Post, new { id = ViewBag.ID, enctype = "multipart/form-data" }))
                 {
@@ -219,7 +218,7 @@
 
                         </div>
                         <div class="col-md-8" style="margin-bottom: 5px;">
->>>>>>> New-Branch
+
                             <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
                                     title="Angi et fasttelefonnummer. Dette nummeret er tillatt for alle klienter å angi."
                                     onclick="location.href = '@Url.Action("CreateFixed", "Nummers",new { id = ViewBag.ID })'">
@@ -235,7 +234,7 @@
                             </button>
                         </div>
                     </div>
-<<<<<<< HEAD
+
                     <div>
                         <div class="col-md-8" style="margin-bottom: 5px;">
                             <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
@@ -244,24 +243,21 @@
                                 <span class="glyphicon glyphicon-phone-alt"><br /></span> Fixed
                             </button>
                         </div>
-                        @using (Html.BeginForm("Ocitaj1", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
-=======
-                    <div class="col-lg-4">
-                        @using (Html.BeginForm("Excel", "Nummers", FormMethod.Post, new { id = ViewBag.ID, enctype = "multipart/form-data" }))
->>>>>>> New-Branch
-                        {
-                            <div style="display:none;">
-                                @Html.TextBox("id_sesije", ViewBag.ID as string);
-                            </div>
-                            @Html.Raw(ViewBag.Error)
-                            <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
-                            <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-<<<<<<< HEAD
-                                    onclick="location.href = '@Url.Action("Ocitaj1", "Nummers",new { id_sesija = ViewBag.ID })'">
-                                <span class="glyphicon glyphicon-import"></span>Importer excel-fil
-                            </button>
-                        }
-                    </div>
+                        
+                        <div class="col-lg-4">
+                            @using (Html.BeginForm("Ocitaj1", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
+                            {
+                                <div style="display:none;">
+                                    @Html.TextBox("id_sesije", ViewBag.ID as string);
+                                </div>
+                                @Html.Raw(ViewBag.Error)
+                                <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
+                                <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                                        onclick="location.href = '@Url.Action("Ocitaj1", "Nummers",new { id_sesija = ViewBag.ID })'">
+                                    <span class="glyphicon glyphicon-import"></span>Importer excel-fil
+                                </button>
+                            }
+                        </div>
 
                         <div class="col-md-6" style="margin-bottom: 5px;">
                             <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
@@ -271,20 +267,8 @@
                             </button>
                         </div>
                     </div>
-=======
-                                    onclick="location.href = '@Url.Action("Excel", "Nummers",new { id = ViewBag.ID })'">
-                                <span class="glyphicon glyphicon-import"></span>Importer excel-fil
-                            </button>
-                        }
-                        <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                                title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                                onclick="location.href = '@Url.Action("Export", "Nummers")'">
-                            <span class="glyphicon glyphicon-download"></span> Create Excell
-                        </button>
-                    </div>
                 </div> 
                 </div>
->>>>>>> New-Branch
             </fieldset>
         </div>
     </div>
