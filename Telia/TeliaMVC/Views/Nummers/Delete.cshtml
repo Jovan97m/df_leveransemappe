@@ -96,14 +96,6 @@
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.Bedrift_som_skal_faktureres)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Bedrift_som_skal_faktureres)
-                    </dd>
-
-                    <dt>
                         @Html.DisplayNameFor(model => model.c_o_adresse_for_SIM_levering)
                     </dt>
 
@@ -208,7 +200,7 @@
 
         <div class="form-actions no-color">
             <div class="col-md-offset-2 col-md-10" style="margin-bottom: 15px;padding-bottom:15px;">
-                <button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "Nummers", new { id_sesije = ViewBag.ID })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Back to list</button>
+                <button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "Nummers", new { id = ViewBag.ID })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Back to list</button>
                 <input type="submit" value="Delete" class="ButtonEdit" />
             </div>
         </div>

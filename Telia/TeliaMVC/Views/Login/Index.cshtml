@@ -35,21 +35,21 @@
         }
 
         .login-form {
-            left: 60%;
-            top: 80%;
-            margin-left: -25%;
-            position: absolute;
-            margin-top: -25%;
+            /*left: 60%;*/
+           /* top: 80%;*/
+            /*margin-left: -25%;*/
+           /* position: absolute;*/
+            /*margin-top: -25%;*/
             background-color: rgb(245,245,245,0.5);
             width: 500px;
             height: 400px;
             border-radius: 6px;
             box-shadow: 3px 4px 8px 8px rgb(206, 192, 209);
         }
-
+        
         #form-image {
             margin-top: 10px;
-            margin-left: 130px;
+            /*margin-left: 130px;*/
             width: center;
         }
 
@@ -64,6 +64,7 @@
         .radio {
             grid-template-columns: min-content auto;
             grid-gap: 0.5em;
+            padding: 2px;
         }
 
         .textInput input {
@@ -83,8 +84,18 @@
         .textInput label {
             font-size: 1.2em;
         }
+        #form-submit-2 input[type=submit] {
+            background-color: rebeccapurple;
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            font-size: 1em;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
 
-        #form-submit input[type=submit] {
+        #form-submit-1 input[type=submit] {
             background-color: rebeccapurple;
             border: none;
             color: white;
@@ -101,79 +112,236 @@
 
 
         #form-username {
+            display:none;
             position: absolute;
             left: 25%;
             top: 130px;
         }
 
         #form-password {
+            display: none;
             position: absolute;
             left: 25%;
             top: 220px;
         }
 
-        #form-submit {
+        #form-submit-1 {
+            display:none;
             position: absolute;
             left: 38%;
             top: 310px;
+        }
+        #form-submit-2 {
+            display:none;
+            position: absolute;
+            left: 38%;
+            top: 310px;
+        }
+        .split,.left:hover #form-username{
+            
+            display:block;
+            
+        }
+        .split, .left:hover #form-password {
+            display: block;
+        }
+        .split, .left:hover {
+            background: none;
+            
+        }
+        .split, .left:hover #form-submit-1{
+            display: block;
+        }
+        .split, .right:hover #form-submit-2 {
+            display: block;
+        }
+        .split, .right:hover #form-password{
+            display:block;
+        }
+        .split, .right:hover #form-username {
+            display: block;
+        }
+        .split, .right:hover {
+            background: none;
+        }
+        /* Split the screen in half */
+        .split {
+            height: 100%;
+            width: 50%;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+
+        /* Control the left side */
+        .left {
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        /* Control the right side */
+        .right {
+            right: 0;
+            background-color: rgba(255, 0, 0, 0.4);
+        }
+
+        /* If you want the content centered horizontally and vertically */
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
         }
     </style>
 </head>
 
 <body class="bg">
-    <div class="login-form" id="login-div">
-        <div id="form-image"><img src="../../Resources/Telia-Company.png"></div>
-        @using (Html.BeginForm("Authorise", "Login", FormMethod.Post))
-        {
-            <div id="form-radio-buttons">
-                <label for="radioButtonClient">
-                    <span class="radio__input">
-                        <input type="radio" name="usertype" id="radioButtonClient" class="radio" value="client" checked="checked">
-                        <span class="radio__control"></span>
-                    </span>
-                    Client
-                </label>
+    <div class="split left">
+        <div class="centered">
+            <div class="login-form" id="login-div">
+                <div id="form-image"><img src="../../Resources/Telia-Company.png"></div>
+                @using (Html.BeginForm("Authorise", "Login", FormMethod.Post))
+                {
+                    <div id="form-radio-buttons">
+                        <label for="radioButtonClient">
+                            <label for="radioButtonClient" style="font-size:50px;">Client</label>
+                        </label>
+                    </div>
+                    <br />
+                    <div id="form-username" class="textInput" style="margin-top:20px">
+                        @Html.LabelFor(model => model.UserName, "Orgnummer")<br>
+                        @Html.EditorFor(model => model.UserName)
+                        <div class="form-error-message">
+                            @Html.ValidationMessageFor(model => model.UserName)
+                        </div>
+                    </div>
 
-                <label for="radioButtonAdmin">
-                    <span class="radio__input">
-                        <input type="radio" name="usertype" id="radioButtonAdmin" class="radio" value="admin">
-                        <span class="radio__control">
-                        </span>
-                    Admin
-                    </span>
-                </label>
-            </div>
-            <br />
-            <div id="form-username" class="textInput">
-                @Html.LabelFor(model => model.UserName, "Username or Orgnummer")<br>
-                @Html.EditorFor(model => model.UserName)
-                <div class="form-error-message">
-                    @Html.ValidationMessageFor(model => model.UserName)
-                </div>
-            </div>
+                    <br />
+                    <div id="form-password" class="textInput">
+                        @Html.LabelFor(model => model.Password)<br>
+                        @Html.EditorFor(model => model.Password)
+                        <div class="form-error-message">
+                            @Html.ValidationMessageFor(model => model.Password)
 
-            <br />
-            <div id="form-password" class="textInput">
-                @Html.LabelFor(model => model.Password)<br>
-                @Html.EditorFor(model => model.Password)
-                <div class="form-error-message">
-                    @Html.ValidationMessageFor(model => model.Password)
+                        </div>
+                        <div class="form-error-message">
+                            @Html.DisplayFor(model => model.LoginErrorMsg)
+                        </div>
+                        <div style="display:none;">
+                            @Html.TextBox("usertype", ViewBag.Client as string)
+                        </div>
+                    </div>
 
-                </div>
-                <div class="form-error-message">
-                    @Html.DisplayFor(model => model.LoginErrorMsg)
-                </div>
+                    <br />
+                    <div id="form-submit-1">
+                        <input type="submit" value="Login">
+                    </div>
+                }
             </div>
-            
-            <br />
-            <div id="form-submit">
-                <input type="submit" value="Login">
-            </div>
-        }
-
-        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-        <script src="~/Scripts/jquery.validate.min.js"></script>
-        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+        </div>
     </div>
+    <div class="split right">
+        <div class="centered">
+            <div class="login-form" id="login-div">
+                <div id="form-image"><img src="../../Resources/Telia-Company.png"></div>
+                @using (Html.BeginForm("Authorise", "Login", FormMethod.Post))
+                {
+                    <div id="form-radio-buttons" >
+                        <label for="radioButtonAdmin">
+                            <span class="radio__input">
+                                <label for="radioButtonAdmin" style="font-size:50px;">Admin</label>
+                            </span>
+                        </label>
+                    </div>
+
+                    <br />
+                    <div id="form-username" class="textInput" style="margin-top: 20px">
+                        @Html.LabelFor(model => model.UserName, "Username")<br>
+                        @Html.EditorFor(model => model.UserName)
+                        <div class="form-error-message">
+                            @Html.ValidationMessageFor(model => model.UserName)
+                        </div>
+                    </div>
+
+                    <br />
+                    <div id="form-password" class="textInput">
+                        @Html.LabelFor(model => model.Password)<br>
+                        @Html.EditorFor(model => model.Password)
+                        <div class="form-error-message">
+                            @Html.ValidationMessageFor(model => model.Password)
+
+                        </div>
+                        <div class="form-error-message">
+                            @Html.DisplayFor(model => model.LoginErrorMsg)
+                        </div>
+                        <div style="display:none;">
+                            @Html.TextBox("usertype", ViewBag.Admin as string)
+                        </div>
+                    </div>
+
+                    <br />
+                    <div id="form-submit-2">
+                        <input type="submit" value="Login">
+                    </div>
+                }
+            </div>
+    </div>
+    @*<div class="login-form" id="login-div">
+            <div id="form-image"><img src="../../Resources/Telia-Company.png"></div>
+            @using (Html.BeginForm("Authorise", "Login", FormMethod.Post))
+            {
+                <div id="form-radio-buttons">
+                    <label for="radioButtonClient">
+                        <span class="radio__input">
+                            <input type="radio" name="usertype" id="radioButtonClient" class="radio" value="client" checked="checked">
+                            <span class="radio__control"></span>
+                        </span>
+                        Client
+                    </label>
+
+                    <label for="radioButtonAdmin">
+                        <span class="radio__input">
+                            <input type="radio" name="usertype" id="radioButtonAdmin" class="radio" value="admin">
+                            <span class="radio__control">
+                            </span>
+                        Admin
+                        </span>
+                    </label>
+                </div>
+                <br />
+                <div id="form-username" class="textInput">
+                    @Html.LabelFor(model => model.UserName, "Username or Orgnummer")<br>
+                    @Html.EditorFor(model => model.UserName)
+                    <div class="form-error-message">
+                        @Html.ValidationMessageFor(model => model.UserName)
+                    </div>
+                </div>
+
+                <br />
+                <div id="form-password" class="textInput">
+                    @Html.LabelFor(model => model.Password)<br>
+                    @Html.EditorFor(model => model.Password)
+                    <div class="form-error-message">
+                        @Html.ValidationMessageFor(model => model.Password)
+
+                    </div>
+                    <div class="form-error-message">
+                        @Html.DisplayFor(model => model.LoginErrorMsg)
+                    </div>
+                </div>
+
+                <br />
+                <div id="form-submit">
+                    <input type="submit" value="Login">
+                </div>
+            }
+
+            <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+            <script src="~/Scripts/jquery.validate.min.js"></script>
+            <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+        </div>*@
 </body>
 </html>

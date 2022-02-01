@@ -48,11 +48,15 @@
             transform: translateY(+2px);
             background-color: darkblue;
         }
+    .ContainerRed {
+        box-shadow: 2px 2px 1px 3px #ff9999;
+        margin-bottom: 5px;
+    }
 </style>
 <h1 style="color:red;font-weight:bold;font-size:large;">Are you sure you want to delete selected item?</h1>
 <div>
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal ContainerRed" >
         <dt>
             @Html.DisplayNameFor(model => model.NavnPaKostnadssted)
         </dt>
@@ -130,12 +134,11 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-<div class="form-actions no-color">
-    <div class="col-md-offset-2 col-md-10">
-        <button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts", new { id = ViewBag.id_sesije })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Back to list</button>
-        <input type="submit" value="Delete" class="ButtonEdit shadow-lg" />
+    <div class="form-actions no-color">
+        <div class="col-md-offset-2 col-md-10">
+            <button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts", new { id = ViewBag.ID })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>Tilbake</button>
+            <input type="submit" value="Delete" class="ButtonEdit shadow-lg" />
+        </div>    
     </div>
-    
+}
 </div>
-        }
-    </div>

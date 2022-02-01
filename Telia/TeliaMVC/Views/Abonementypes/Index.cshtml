@@ -213,7 +213,10 @@
                 <th class="col-md-1 HeaderTable">
                     @Html.DisplayNameFor(model => model.Num_type)
                 </th>
-                <th class="col-sm-push-0 HeaderTable"></th>
+                <th class="col-md-1 HeaderTable">Edit</th>
+                <th class="col-md-1 HeaderTable">Delete</th>
+                <th class="col-md-1 HeaderTable">ViewList</th>
+                <th class="col-md-1 HeaderTable">Add</th>
             </tr>
             @if (Model.Count() == 0)
             {
@@ -227,33 +230,40 @@
             {
                 foreach (var item in Model)
                 {
-                    <tr>
-                        <td class="col-md-1">
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td class="col-md-1">
-                            @Html.DisplayFor(modelItem => item.Num_type)
-                        </td>
-                        <td class="col-sm-0">
-                            <button class="btnEdit" data-toggle="tooltip" data-placement="bottom" title="Endre navnet på typen"
-                                    onclick="location.href = '@Url.Action("Edit", "Abonementypes", new { id = item.Id })'">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                            </button>
-                            <button class="btnDelete" data-toggle="tooltip" data-placement="bottom" title="Slett valgt abonementype"
-                                    onclick="location.href = '@Url.Action("Delete", "Abonementypes", new { id = item.Id })'">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </button>
-                            <button class="btnDetails" data-toggle="tooltip" data-placement="bottom" title="Se alle abonemetyper som er koblet til denne avtalen"
-                                    onclick="location.href = '@Url.Action("Details", "Abonementypes", new { id = item.Id })'">
-                                <span class="glyphicon glyphicon-th-list"></span>
-                            </button>
-                            <button class="btnType" data-toggle="tooltip" data-placement="bottom" title="Legg til ny type for valgt abonementype"
-                                    onclick="location.href = '@Url.Action("AddType", "Abonementypes", new { id = item.Id })'">
-                                <span class="glyphicon glyphicon-duplicate"></span>
-                            </button>
+        <tr>
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.Num_type)
+            </td>
+            <td >
+                
+                <button class="btnEdit"  data-toggle="tooltip" data-placement="bottom" title="Endre navnet på typen"
+                        onclick="location.href = '@Url.Action("Edit", "Abonementypes", new { id = item.Id })'">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                
+            </td>
+            <td>
+                <button class="btnDelete" data-toggle="tooltip" data-placement="bottom" title="Slett valgt abonementype"
+                        onclick="location.href = '@Url.Action("Delete", "Abonementypes", new { id = item.Id })'">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+                </td>
+            <td>
+                <button class="btnDetails" data-toggle="tooltip" data-placement="bottom" title="Se alle abonemetyper som er koblet til denne avtalen"
+                        onclick="location.href = '@Url.Action("Details", "Abonementypes", new { id = item.Id })'">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                </button>
+            <td>
+                <button class="btnType" data-toggle="tooltip" data-placement="bottom" title="Legg til ny type for valgt abonementype"
+                        onclick="location.href = '@Url.Action("AddType", "Abonementypes", new { id = item.Id })'">
+                    <span class="glyphicon glyphicon-duplicate"></span>
+                </button>
 
-                        </td>
-                    </tr>
+            </td>
+        </tr>
                 }
             }
             </table>

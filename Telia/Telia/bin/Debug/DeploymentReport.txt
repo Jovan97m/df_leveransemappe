@@ -1,0 +1,27 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       None
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Create
+       [dbo].[Postnummer] (Table)
+       [dbo].[Type] (Table)
+       [dbo].[ConnectionType] (Table)
+       [dbo].[Abonementype] (Table)
+       [dbo].[Client] (Table)
+       [dbo].[Fakturaoppsett] (Table)
+       [dbo].[Nummer] (Table)
+       [dbo].[Admin] (Table)
+       Foreign Key: unnamed constraint on [dbo].[ConnectionType] (Foreign Key)
+       Foreign Key: unnamed constraint on [dbo].[ConnectionType] (Foreign Key)
+       Foreign Key: unnamed constraint on [dbo].[Client] (Foreign Key)
+       [dbo].[FK_dbo.Client_dbo.Client_Id] (Foreign Key)
+       [dbo].[FK_dbo.Nummer_dbo.Fakturaoppsett_NavnPåKostnadssted] (Foreign Key)
+
+** Supporting actions

@@ -392,10 +392,14 @@
     <Content Include="Views\NummersAdmin\Update.cshtml" />
     <Content Include="Views\Home\Delete.cshtml" />
     <Content Include="Views\Home\Edit.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Nummers\Ocitaj.cshtml" />
     <Content Include="Views\Nummers\Verify.cshtml" />
     <Content Include="Views\Nummers\Ocitaj1.cshtml" />
     <Content Include="Views\Nummers\Verify1.cshtml" />
+=======
+    <Content Include="Views\Nummers\Popup.cshtml" />
+>>>>>>> New-Branch
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

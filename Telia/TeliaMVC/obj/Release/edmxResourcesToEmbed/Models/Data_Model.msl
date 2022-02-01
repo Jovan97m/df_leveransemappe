@@ -90,6 +90,8 @@
     <EntitySetMapping Name="Clients">
       <EntityTypeMapping TypeName="TeliaModel.Client">
         <MappingFragment StoreEntitySet="Client">
+          <ScalarProperty Name="Id_abonementypeI" ColumnName="Id_abonementypeI" />
+          <ScalarProperty Name="Id_abonemetypeF" ColumnName="Id_abonemetypeF" />
           <ScalarProperty Name="Id_abonementype" ColumnName="Id_abonementype" />
           <ScalarProperty Name="TekniskKontaktTlfnr" ColumnName="TekniskKontaktTlfnr" />
           <ScalarProperty Name="TekniskKontaktEpost" ColumnName="TekniskKontaktEpost" />

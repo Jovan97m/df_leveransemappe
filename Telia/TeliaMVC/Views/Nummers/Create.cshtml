@@ -1,5 +1,5 @@
 ﻿@model TeliaMVC.Models.Nummer
-
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Create";
     if (Session["Id"] == null)
@@ -7,7 +7,8 @@
         Response.Redirect("~/Login/Index");
     }
 }
-
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
 <style>
     .TextBox {
         border: 1px solid Purple;
@@ -137,15 +138,6 @@
             @Html.ValidationMessageFor(model => model.Etternavn, "", new { @class = "text-danger" })
         </div>
     </div>
-    <!--
-        <div class="form-group">
-            @Html.LabelFor(model => model.Bedrift_som_skal_faktureres, htmlAttributes: new { @class = "control-label Labela col-md-3" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.Bedrift_som_skal_faktureres, new { htmlAttributes = new { @class = "form-control TextBox" } })
-                @Html.ValidationMessageFor(model => model.Bedrift_som_skal_faktureres, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    -->
     <div class="form-group">
         @Html.LabelFor(model => model.c_o_adresse_for_SIM_levering, htmlAttributes: new { @class = "control-label col-md-3 Labela" })
         <div class="col-md-6">
@@ -177,23 +169,55 @@
             @Html.ValidationMessageFor(model => model.Hus_bokstav, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         @Html.LabelFor(model => model.post_nr_, htmlAttributes: new { @class = "control-label col-md-3 Labela" })
-        <div class="col-md-6">
+        <div class="col-md-2">
             @Html.EditorFor(model => model.post_nr_, new { htmlAttributes = new { @class = "form-control TextBox" } })
             @Html.ValidationMessageFor(model => model.post_nr_, "", new { @class = "text-danger" })
         </div>
-    </div>
-    <!--
-    <div class="form-group">
-        @Html.LabelFor(model => model.Post_sted, htmlAttributes: new { @class = "control-label col-md-3 Labela" })
-        <div class="col-md-6">
-            @Html.EditorFor(model => model.Post_sted, new { htmlAttributes = new { @class = "form-control TextBox" } })
-            @Html.ValidationMessageFor(model => model.Post_sted, "", new { @class = "text-danger" })
+        <div>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open"></span>Info</button>
         </div>
     </div>
-        -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h3 class="modal-title">Tilgjengelige postnummer</h3>
+                </div>
+                <div class="modal-body">
+                    <div style="overflow-x: auto; margin-left: 6px; margin-right: 15px;" class="shadow">
+                        <table class="table-bordered table-sm table-hover table-striped " style="font-size: 14px;font-weight: bold;color:black;table-layout:fixed;border-radius: 5px;">
+                            <thead style="background-color: #990AE4;color: white;text-shadow: 1px 1px black;">
+                                <tr>
+                                    <th class="col-sm-2">
+                                        PostNummer
+                                    </th>
+                                    <th scope="row" class="col-sm-2">
+                                        PostSted
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody style=" color: black; font-size: 12px;">
+
+
+                                @foreach (var p in (Dictionary<string, string>)ViewData["PostNummer"])
+                                {
+                                    <tr>
+                                        <td class="col-sm-2">@p.Key</td>
+                                        <td class="col-sm-2">@p.Value</td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="form-group">
         @Html.LabelFor(model => model.Epost_for_sporings_informasjon, htmlAttributes: new { @class = "control-label Labela  col-md-3" })
         <div class="col-md-6">
@@ -245,12 +269,7 @@
 
     <div class="form-group" style="display:none;">
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Orgnummer, new { htmlAttributes = new { @class = "form-control LoadTextbox", @Value = ViewBag.ORG } })
-        </div>
-    </div>
-
-    <div class="form-group" style="display:none;">
-        <div class="col-md-10">
+            @Html.TextBox("ID", ViewBag.ID as int?)
             @Html.EditorFor(model => model.Abonnementstype, new { htmlAttributes = new { @class = "form-control LoadTextbox", @Value = "12345679812345678912" } })
         </div>
     </div>
@@ -271,5 +290,5 @@
     </div>
 </div>
 }
-<button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "Nummers", new { id_sesije = ViewBag.ORG })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Back to list</button>
+<button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "Nummers", new { id = ViewBag.ID })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Back to list</button>
 

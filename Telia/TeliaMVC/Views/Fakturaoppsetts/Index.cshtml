@@ -12,18 +12,14 @@
 
 <style>
     .button {
-        font-size: smaller;
-        color: white;
-        text-shadow: 1px 1px black;
-        margin-right: 4px;
-        margin-top: 4px;
-        margin-bottom: 4px;
-        margin-left: 4px;
-        border-radius: 12px;
+        border-radius: 6px;
+        margin: 1px;
     }
-    .button:active {
-        transform: translateY(+2px);
-    }
+
+        .button:active {
+            transform: translateY(+2px);
+        }
+
     .ButtonCreate {
         background-color: #990AE4;
         font-size: medium;
@@ -47,29 +43,37 @@
             transform: translateY(+2px);
             background-color: darkblue;
         }
+
     .inputRadio {
-            border-radius: 10px;
-            box-shadow: inset 0 1px 1px hsla(0,0%,100%,.8), 0 0 0 1px hsla(0,0%,0%,.6), 0 2px 3px hsla(0,0%,0%,.6), 0 4px 3px hsla(0,0%,0%,.4), 0 6px 6px hsla(0,0%,0%,.2), 0 10px 6px hsla(0,0%,0%,.2);
-            cursor: pointer;
-            display: inline-block;
-            height: 15px;
-            margin-right: 16px;
-            position: relative;
-            width: 15px;
-            -webkit-appearance: none;
-        }
-    .inputRadio:hover {
+        border-radius: 10px;
+        box-shadow: inset 0 1px 1px hsla(0,0%,100%,.8), 0 0 0 1px hsla(0,0%,0%,.6), 0 2px 3px hsla(0,0%,0%,.6), 0 4px 3px hsla(0,0%,0%,.4), 0 6px 6px hsla(0,0%,0%,.2), 0 10px 6px hsla(0,0%,0%,.2);
+        cursor: pointer;
+        display: inline-block;
+        height: 15px;
+        margin-right: 16px;
+        position: relative;
+        width: 15px;
+        -webkit-appearance: none;
+    }
+
+        .inputRadio:hover {
             background-color: #c86cf9;
         }
-    .inputRadio:checked {
+
+        .inputRadio:checked {
             background-color: #990ae4;
         }
+
     hr {
         border: 0;
         height: 3px;
         background-image: linear-gradient(to right, azure,pink, purple, pink,azure);
         box-shadow: 0 10px 10px -10px purple inset;
     }
+    tbody{
+        background-color: RGB(230,231,231);
+    }
+
     .ButtonBack {
         background-color: darkred;
         font-size: medium;
@@ -92,14 +96,44 @@
             transform: translateY(+2px);
             background-color: darkred;
         }
+    .aNav {
+        cursor: pointer;
+    }
+
+    li {
+        cursor: default;
+        font-weight: bold;
+        font-size: large;
+    }
+    .buttonInfoColor {
+        width: 15px;
+        height: 15px;
+        margin-right: 10px;
+        cursor: default;
+        margin-left: 15px;
+    }
+
+        .buttonInfoColor:hover {
+            cursor: default;
+        }
 </style>
-<br />
+@if (Model.Count() != 0)
+{
+    <nav aria-label="breadcrumb" class="main-breadcrumb" style="background-color:transparent;">
+        <ol class="breadcrumb">
+            <h3>@ViewData["FirmaNavn"]</h3>
+            <li class="breadcrumb-item"> <a class="aNav" onclick="location.href = '@Url.Action("Details", "HomeClient",new { id = ViewBag.ID})'">Profile</a></li>
+            <li class="breadcrumb-item" aria-current="page">Fakturaoppsetts</li>
+            <li class="breadcrumb-item"><a class="aNav" onclick="location.href = '@Url.Action("Index", "Nummers", new { id =ViewBag.ID })'">Nummers</a></li>
+        </ol>
+    </nav>
+}
 
 <div class="row">
     <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
 
-        <div class="col-sm-5">
-            @using (Html.BeginForm("Index", "Fakturaoppsetts", FormMethod.Get, new { id = ViewBag.id_sesije }))
+        <div class="col-sm-4">
+            @using (Html.BeginForm("Index", "Fakturaoppsetts", FormMethod.Get, new { id = ViewBag.ID }))
             {
                 <fieldset>
                     <legend>Søkealternativer</legend>
@@ -116,9 +150,6 @@
                     </label>
                     <br />
                 </fieldset>
-                <div style="display:none;">
-                    @Html.TextBox("id_sesije", ViewBag.id_sesije as string);
-                </div>
                 <p style="font-size: medium;font-weight:bold;color:black;margin-left:15px;">
                     Søk etter @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
                     <input type="submit" value="Search" class="btn btn-info shadow-lg" style="color: black;
@@ -128,15 +159,15 @@
             }
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <fieldset>
                 <legend>
                     Legger til nytt fakturaoppset
                 </legend>
-                <button class="ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href='@Url.Action("Create", "Fakturaoppsetts",new { id = ViewBag.id_sesije})'">
+                <button class="ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href='@Url.Action("Create", "Fakturaoppsetts",new { id = ViewBag.ID})'">
                     <span class="glyphicon glyphicon-plus"></span>   Skape
                 </button>
-                <button class=" ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts",new { id = ViewBag.id_sesije})'">
+                <button class=" ButtonCreate " data-toggle="tooltip" data-placement="bottom" title="Hvis du klikker på denne knappen, kan du legge til ny informasjon om fakturaoppsett" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts",new { id = ViewBag.ID})'">
                     <span class="glyphicon glyphicon-repeat"></span>   Refresh
                 </button>
             </fieldset>
@@ -144,11 +175,12 @@
     </div>
     <div style="overflow-x:auto; margin-left:15px; margin-right:15px;" class="shadow">
         <!--podeseno da se pojavi klizac kad se umanjuje slika-->
-        <table class="table-bordered table-sm table-hover table-striped " style="font-size: 14px;table-layout:fixed;">
+        <table class="table-bordered table-sm table-hover table-striped table-condensed" style="font-size: 14px;font-weight: bold;color:black;table-layout:fixed;border-radius: 5px;">
             <thead style="background-color: #990AE4;
                     color: white;
                     text-shadow: 1px 2px black;">
                 <tr>
+                    <th style="width:35px;margin-left: 25px;">   E / D</th>
                     <th scope="row" class="col-sm-2">
                         Kostnadssted
                         <button class="btn btn-sm" style="background-color:transparent; padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter , id = ViewBag.id_sesije })'">
@@ -171,21 +203,9 @@
                             <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                         </button>
                     </th>
-                    <!--
-                <th class="col-sm-2">
-                    Husnr<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.HusnrSortParm, currentFilter = ViewBag.CurrentFilter, id = ViewBag.id_sesije })'">
-                        <span class="glyphicon glyphicon-sort"></span>
-                    </button>
-                </th>
-                    -->
                     <th class="col-sm-1">
                         Bokstav<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.BokstavSortParm, currentFilter = ViewBag.CurrentFilter, id = ViewBag.id_sesije })'">
                             <span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                        </button>
-                    </th>
-                    <th class="col-sm-2">
-                        Postnummer<button class="btn" style="background-color:transparent;padding:4px;" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new { sortOrder = ViewBag.PostnummerSortParm, currentFilter = ViewBag.CurrentFilter, id = ViewBag.id_sesije })'">
-                            <span class="glyphicon glyphicon-sort"></span>
                         </button>
                     </th>
                     <th class="col-sm-2">
@@ -196,7 +216,6 @@
                     <th class="col-sm-2">
                         Epost
                     </th>
-                    <th style="width:35px;"></th>
                 </tr>
             </thead>
             <tbody style="color:black; font-size: 14px;font-weight:bold;">
@@ -213,36 +232,7 @@
                     foreach (var item in Model)
                     {
                         <tr>
-                            <td class="col-sm-1">
-                                @Html.DisplayFor(modelItem => item.NavnPaKostnadssted)
-                            </td>
-                            <td class="col-sm-1">
-                                @Html.DisplayFor(modelItem => item.Tileggsinfo_kostnadssted)
-                            </td>
-                            <td class="col-sm-1">
-                                @Html.DisplayFor(modelItem => item.Fakturaformat)
-                            </td>
-                            <td class="col-sm-1">
-                                @Html.DisplayFor(modelItem => item.Fakturaadresse)
-                            </td>
-                            <!--
-                        <td class="col-sm-1">
-                            @Html.DisplayFor(modelItem => item.Husnr)
-                        </td>
-                            -->
-                            <td class="col-sm-1">
-                                @Html.DisplayFor(modelItem => item.Bokstav)
-                            </td>
-                            <td class="col-sm-1">
-                                @Html.DisplayFor(modelItem => item.Postnummer)
-                            </td>
-                            <td class="col-sm-1">
-                                @Html.DisplayFor(modelItem => item.Sted)
-                            </td>
-                            <td style="color:darkblue; font-style:italic;font-weight: bold;">
-                                @Html.DisplayFor(modelItem => item.Epost)
-                            </td>
-                            <td style="background-color:azure;">
+                            <td style="background-color: azure; font-style: italic; font-size: 15px;">
                                 <div style="display:flex; align-items:stretch;">
 
                                     <button class="btn-primary btn-group-sm shadow-lg button" data-toggle="tooltip" data-placement="bottom" title="Ved å klikke på denne knappen kan du oppdatere informasjon i valgt rad"
@@ -255,6 +245,27 @@
                                     </button>
                                 </div>
                             </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.NavnPaKostnadssted)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Tileggsinfo_kostnadssted)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Fakturaformat)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Fakturaadresse)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Bokstav)
+                            </td>
+                            <td class="col-sm-1">
+                                @Html.DisplayFor(modelItem => item.Sted)
+                            </td>
+                            <td style="color:darkblue; font-style:italic;font-weight: bold;">
+                                @Html.DisplayFor(modelItem => item.Epost)
+                            </td>
                         </tr>
                     }
                 }
@@ -263,12 +274,14 @@
         <br />
         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
         @Html.PagedListPager(Model, page => Url.Action("Index",
-     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, id = ViewBag.id_sesije }))
+     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, id = ViewBag.ID }))
 
-        
+
     </div>
     <div class="col-sm-2">
-        <button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "HomeClient", new { id=ViewBag.id_sesije })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Tilbake</button>
+        @if (Model.Count() == 0)
+        {<p><span style="color:red; text-shadow: 0.5px 0.8px white; font-weight: bold;">Opprett nye fakturer slik at du kan legge til tall</span></p>}
+        <!----><button class=" ButtonBack" onclick="location.href = '@Url.Action("Details", "HomeClient", new { id = ViewBag.ID })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Tilbake</button>
     </div>
 </div>
 

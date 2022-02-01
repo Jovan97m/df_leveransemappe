@@ -98,6 +98,7 @@ namespace TeliaMVC.Models
         public Nullable<int> Hus_nummer { get; set; }
         [StringLength(20)]
         public string Hus_bokstav { get; set; }
+        [Range(1, 9999)]
         public Nullable<int> post_nr_ { get; set; }
         [Display(Name = "Post-sted")]
         public string Post_sted { get; set; }

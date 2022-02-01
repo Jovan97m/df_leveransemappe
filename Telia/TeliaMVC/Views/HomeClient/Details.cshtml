@@ -16,15 +16,17 @@
         color: white;
         padding: 10px 15px;
         border-radius: 16px;
-        border-color:transparent;
+        border-color: transparent;
         text-shadow: 1px 1px black;
         box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
     }
+
         .ButtonBack:hover {
             color: white;
             background-color: red;
             box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
         }
+
         .ButtonBack:active {
             transform: translateY(+2px);
             background-color: darkred;
@@ -53,6 +55,7 @@
             transform: translateY(+2px);
             background-color: darkblue;
         }
+
     .ContainerGreen {
         box-shadow: 2px 2px 1px 3px #b3ffb3;
         margin-bottom: 5px;
@@ -62,160 +65,342 @@
         box-shadow: 2px 2px 1px 3px #ff9999;
         margin-bottom: 5px;
     }
+    table,th,td{
+        color:black;
+    }
+    .aNav {
+        cursor: pointer;
+    }
+
+    li {
+        cursor: default;
+        font-weight: bold;
+        font-size: large;
+    }
+    body {
+        background-image: url(../../Resources/background2.jpg);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+    }
 </style>
+
+@if (Model.FirmaNavn != null || Model.GateNavn != null || Model.Epost != null || Model.Sted != null || Model.PostNummer != null || Model.HusBokStav != null)
+{
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    
+    <ol class="breadcrumb">
+        <h3>@Html.DisplayFor(model => model.FirmaNavn)</h3>
+        <li class="breadcrumb-item" aria-current="page"> Profile</li>
+        <li class="breadcrumb-item"><a class="aNav" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts",new { id = Model.Id})'">Fakturaoppsetts</a></li>
+        @if (ViewBag.numberOfFaktures > 0)
+        {
+            <li class="breadcrumb-item"><a class="aNav" onclick="location.href = '@Url.Action("Index", "Nummers", new { id = Model.Id })'">Nummers</a></li>
+        }
+    </ol>
+</nav>
+}
+else
+{
+    <h2 style="color: darkblue; font-weight: bold;">Velkommen. Fyll ut informasjon om profilen din.</h2>
+}
+
 
 
 @Html.AntiForgeryToken()
 <div>
-    <br />
-    <dl class="dl-horizontal">
-        <div class="row" style="margin-left: 10px;">
-            <fieldset>
-                <legend>
-                    Kundeinformasjon
-                </legend>
-                <div class="col-md-8" style="background-color: #DBF7B9">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Orgnummer)
-                    </dt>
+    <div class="col-md-6">
+        <strong>Kundeinformasjon</strong><br>
+        <div class="table-responsive">
+            <table class="table table-user-information" style="background-color: #DBF7B9">
+                <tbody>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                @Html.DisplayNameFor(model => model.Orgnummer)
+                            </strong>
+                        </td>
+                        <td><strong>
+                            
+                            @Html.DisplayFor(model => model.Orgnummer)
+                        </strong></td>
+                        
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-eye-open  text-primary"></span>
+                                @Html.DisplayNameFor(model => model.Password)
+                            </strong>
+                        </td>
+                        <td> 
+                            <strong style="visibility:hidden">
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Orgnummer)
-                    </dd>
+                                @Html.DisplayFor(model => model.Password)
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-home text-primary"></span>
+                                @Html.DisplayNameFor(model => model.FirmaNavn)
+                            </strong>
+                        </td>
+                        <td>
+                            <strong>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Password)
-                    </dt>
+                                @Html.DisplayFor(model => model.FirmaNavn)
+                            </strong>
+                        </td>
+                    </tr>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Password)
-                    </dd>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-question-sign text-primary"></span>
+                                @Html.DisplayNameFor(model => model.GateNavn)
+                            </strong>
+                        </td>
+                        <td>
+                            <strong>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.FirmaNavn)
-                    </dt>
+                                @Html.DisplayFor(model => model.GateNavn)
+                            </strong>
+                        </td>
+                    </tr>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.FirmaNavn)
-                    </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.GateNavn)
-                    </dt>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-eye-open text-primary"></span>
+                                @Html.DisplayNameFor(model => model.HusNummer)
+                            </strong>
+                        </td>
+                        <td>
+                            <strong>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.GateNavn)
-                    </dd>
+                                @Html.DisplayFor(model => model.HusNummer)
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-book text-primary"></span>
+                                @Html.DisplayNameFor(model => model.HusBokStav)
+                            </strong>
+                        </td>
+                        <td>
+                            <strong>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.HusNummer)
-                    </dt>
+                                @Html.DisplayFor(model => model.HusBokStav)
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                @Html.DisplayNameFor(model => model.PostNummer)
+                            </strong>
+                        </td>
+                        <td>
+                            <strong>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.HusNummer)
-                    </dd>
+                                @Html.DisplayFor(model => model.PostNummer)
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-question-sign text-primary"></span>
+                                @Html.DisplayNameFor(model => model.Sted)
+                            </strong>
+                        </td>
+                        <td>
+                            <strong>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.HusBokStav)
-                    </dt>
+                                @Html.DisplayFor(model => model.Sted)
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-envelope text-primary"></span>
+                                @Html.DisplayNameFor(model => model.Epost)
+                            </strong>
+                        </td>
+                        <td >
+                            <strong >
 
-                    <dd>
-                        @Html.DisplayFor(model => model.HusBokStav)
-                    </dd>
+                                @Html.DisplayFor(model => model.Epost)
+                            </strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.PostNummer)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.PostNummer)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Sted)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Sted)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Epost)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Epost)
-                    </dd>
-            </fieldset>
         </div>
-        <div class="row" style="margin-left: 10px;">
-            <fieldset>
-                <legend>
-                    Kontaktperson
-                </legend>
-                <div class="col-md-6 ContainerRed" style="background-color: #F9B3A7">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.KontaktNavn)
-                    </dt>
+        @if (Model.FirmaNavn == null && Model.GateNavn == null && Model.Epost == null && Model.Sted == null && Model.PostNummer == null && Model.HusBokStav == null)
+        {
+            <p><button class="btn buttonLink" onclick="location.href = '@Url.Action("Index", "Fakturaoppsetts", new { id = Model.Id })'">FakturaOppsett &raquo;</button></p>
+        }
+        <button class="ButtonEdit" onclick="location.href = '@Url.Action("Edit", "HomeClient", new { id = Model.Id })'"><span class="glyphicon glyphicon-edit"></span>  Edit profile </button>
+    </div>
+    <div class="col-md-6">
+        <strong>Kontaktperson</strong><br>
+        <div class="table-responsive">
+            <table class="table table-user-information" style="background-color: #F9B3A7">
+                <tbody>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-user text-primary"></span>
+                                @Html.DisplayNameFor(model => model.KontaktNavn)
+                            </strong>
+                        </td>
+                        <td>
+                            <strong>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.KontaktNavn)
-                    </dd>
+                                @Html.DisplayFor(model => model.KontaktNavn)
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-envelope text-primary"></span>
+                                @Html.DisplayNameFor(model => model.KontaktEpost)
+                            </strong>
+                        </td>
+                        <td>
+                            <strong>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.KontaktEpost)
-                    </dt>
+                                @Html.DisplayFor(model => model.KontaktEpost)
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-phone text-primary"></span>
+                                @Html.DisplayNameFor(model => model.KontaktTlfnr)
+                            </strong>
+                        </td>
+                        <td>
+                            <strong>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.KontaktEpost)
-                    </dd>
+                                @Html.DisplayFor(model => model.KontaktTlfnr)
+                            </strong>
+                        </td>
+                    </tr>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.KontaktTlfnr)
-                    </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.KontaktTlfnr)
-                    </dd>
-                </div>
-            </fieldset>
-
+                </tbody>
+            </table>
         </div>
-        <div class="row" style="margin-left: 10px;">
-            <fieldset>
-                <legend>
-                    Teknisk kontaktperson
-                </legend>
-                <div class="col-md-6 ContainerRed" style="background-color: #F9B3A7">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.TekniskKontaktNavn)
-                    </dt>
+    </div>
+    <div class="col-md-6">
+        <strong>Teknisk kontaktperson</strong><br>
+        <div class="table-responsive">
+            <table class="table table-user-information" style="background-color: #F9B3A7">
+                <tbody>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-user text-primary"></span>
+                                @Html.DisplayNameFor(model => model.TekniskKontaktNavn)
+                            </strong>
+                        </td>
+                        <td>
+                            <strong>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.TekniskKontaktNavn)
-                    </dd>
+                                @Html.DisplayFor(model => model.TekniskKontaktNavn)
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-envelope  text-primary"></span>
+                                @Html.DisplayNameFor(model => model.TekniskKontaktEpost)
+                            </strong>
+                        </td>
+                        <td>
+                            <strong>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.TekniskKontaktEpost)
-                    </dt>
+                                @Html.DisplayFor(model => model.TekniskKontaktEpost)
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-phone text-primary"></span>
+                                @Html.DisplayNameFor(model => model.TekniskKontaktTlfnr)
+                            </strong>
+                        </td>
+                        <td>
+                            <strong>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.TekniskKontaktEpost)
-                    </dd>
+                                @Html.DisplayFor(model => model.TekniskKontaktTlfnr)
+                            </strong>
+                        </td>
+                        
+                    </tr>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.TekniskKontaktTlfnr)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.TekniskKontaktTlfnr)
-                    </dd>
-                    </div>
-            </fieldset>
+                </tbody>
+            </table>
         </div>
-    </dl>
+    </div>
+    <div class="col-md-6">
+        <strong>Kontrakter</strong><br>
+        <div class="table-responsive">
+            <table class="table table-user-information" style="background-color: #cce6ff">
+                <tbody>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-user text-primary"></span>
+                                Abonemetype Mobile:
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                            <strong style="color:black"><p>@ViewBag.Mobile</p></strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-envelope  text-primary"></span>
+                                Abonemetype Fixed:
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                            <strong style="color:black"><p>@ViewBag.Fixed</p></strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                <span class="glyphicon glyphicon-phone text-primary"></span>
+                                Abonemetype Internet:
+                            </strong>
+                        </td>
+                        <td class="text-primary">
+                            <strong style="color:black"><p>@ViewBag.Internet</p></strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
-<hr />
-<button class=" ButtonBack" onclick="location.href = '@Url.Action("Index", "HomeClient", new { id = Model.Id })'"><span class="glyphicon glyphicon-arrow-left"></span>  Back to list</button>
-    <button class="ButtonEdit" onclick="location.href = '@Url.Action("Edit", "HomeClient", new { id = Model.Id })'"><span class="glyphicon glyphicon-edit"></span>  Edit profile </button>
+
 

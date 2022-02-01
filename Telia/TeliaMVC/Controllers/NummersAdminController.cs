@@ -123,6 +123,7 @@ namespace TeliaMVC.Controllers
                     ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonemetypeF, Type); // selectbox za abonementype
                     ViewBag.ORG = client.Id.ToString();
                     ViewBag.tip = Type;
+                    ViewData["FirmaNavn"] = getFirmaNavn(selected);
                     //  return RedirectToAction("CreateFixed", "NummersAdmin" , new { sesija = client.Id});
                     return View("CreateFixed");
                 }
@@ -133,6 +134,7 @@ namespace TeliaMVC.Controllers
                     ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementype, Type); // selectbox za abonementype
                     ViewBag.ORG = client.Id.ToString();
                     ViewBag.tip = Type;
+                    ViewData["FirmaNavn"] = getFirmaNavn(selected);
                     return View("Create");
                 }
                 else
@@ -142,6 +144,7 @@ namespace TeliaMVC.Controllers
                     ViewBag.Types = FillAbonementtypeSelectBox(client.Id_abonementypeI, Type); // selectbox za abonementype
                     ViewBag.ORG = client.Id.ToString();
                     ViewBag.tip = Type;
+                    ViewData["FirmaNavn"] = getFirmaNavn(selected);
                     return View("CreateInternet");
                 }
             }
@@ -271,7 +274,7 @@ namespace TeliaMVC.Controllers
         }
 
 
-        public ActionResult UpdateColumn(string sortOrder,string currentFilter,string CopyColumn,string currentSelected,int? a)
+        public string UpdateColumn(string sortOrder,string currentFilter,string CopyColumn,string currentSelected,int? a)
         {
             var nummers = from s in db.Nummers
                           select s;
@@ -302,14 +305,13 @@ namespace TeliaMVC.Controllers
             ViewBag.filter = currentFilter;
             ViewBag.Copy = CopyColumn;
             ViewBag.selected = currentSelected;
-            return View();
+            return ViewBag.value;
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult UpdateColumn(string sortOrder, string currentFilter, string CopyColumn, string currentSelected)
         {
-            var nummers = from s in db.Nummers
-                          select s;
+            var nummers = from s in db.Nummers select s;
             if (currentSelected != "" || currentSelected!= null)
             {
                 if (currentSelected != "All")
@@ -351,7 +353,6 @@ namespace TeliaMVC.Controllers
                     }
                 }
             }
-
             return RedirectToAction("Index","NummersAdmin", new { sortOrder = sortOrder,currentFilter = currentFilter , currentSelected = currentSelected });
         }
         #endregion
@@ -1337,6 +1338,13 @@ namespace TeliaMVC.Controllers
             }
             else
                 return c.FirstOrDefault().Id;
+        }
+
+        public string getFirmaNavn(string selected)
+        {
+            
+            Client klijent = db.Clients.Find(GetId(selected));
+            return klijent.FirmaNavn;
         }
         #endregion
     }
