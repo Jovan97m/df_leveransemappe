@@ -1,0 +1,304 @@
+﻿
+@{
+    ViewBag.Title = "Ocitaj";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<h2>@ViewBag.Error</h2>
+
+<style>
+    #myBtn {
+        display: none; /* Hidden by default */
+        position: fixed; /* Fixed/sticky position */
+        bottom: 20px; /* Place the button at the bottom of the page */
+        right: 30px; /* Place the button 30px from the right */
+        z-index: 99; /* Make sure it does not overlap */
+        border: none; /* Remove borders */
+        outline: none; /* Remove outline */
+        background-color: red; /* Set a background color */
+        color: white; /* Text color */
+        cursor: pointer; /* Add a mouse pointer on hover */
+        padding: 15px; /* Some padding */
+        border-radius: 10px; /* Rounded corners */
+        font-size: 18px; /* Increase font size */
+    }
+
+        #myBtn:hover {
+            background-color: #555; /* Add a dark-grey background on hover */
+        }
+
+    .Table {
+        box-shadow: 2px 2px 1px 3px lightgray;
+        border-radius: 14px;
+    }
+
+    .button {
+        font-size: smaller;
+        color: white;
+        text-shadow: 1px 1px black;
+        margin-right: 2px;
+        margin-bottom: 2px;
+        border-radius: 12px;
+    }
+
+    .NotNeeded {
+        background-color: #F9B3A7;
+    }
+
+    .ButtonBack {
+        background-color: darkred;
+        font-size: larger;
+        font-weight: bold;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+
+        .ButtonBack:hover {
+            color: white;
+            background-color: red;
+            box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
+        }
+
+        .ButtonBack:active {
+            transform: translateY(+2px);
+            background-color: darkred;
+        }
+
+    .inputRadio {
+        border-radius: 10px;
+        box-shadow: inset 0 1px 1px hsla(0,0%,100%,.8), 0 0 0 1px hsla(0,0%,0%,.6), 0 2px 3px hsla(0,0%,0%,.6), 0 4px 3px hsla(0,0%,0%,.4), 0 6px 6px hsla(0,0%,0%,.2), 0 10px 6px hsla(0,0%,0%,.2);
+        cursor: pointer;
+        display: inline-block;
+        height: 15px;
+        margin-right: 16px;
+        position: relative;
+        width: 15px;
+        -webkit-appearance: none;
+    }
+
+        .inputRadio:hover {
+            background-color: #c86cf9;
+        }
+
+        .inputRadio:checked {
+            background-color: #990ae4;
+        }
+
+    .SelectBox {
+        color: black;
+        font-size: medium;
+        font-weight: bold;
+        margin-right: 2px;
+        margin-bottom: 2px;
+        border-radius: 16px;
+        outline-offset: 4px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+       width:100px
+    }
+
+    .HeaderTable {
+        color: white;
+        text-shadow: 1px 2px black;
+    }
+
+    #Cell {
+        background-color: red;
+    }
+
+    .ButtonCreate {
+        background-color: #990AE4;
+        font-size: larger;
+        font-weight: bold;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 16px;
+        border-color: transparent;
+        text-shadow: 1px 1px black;
+        box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
+    }
+
+        .ButtonCreate:hover {
+            color: white;
+            background-color: red;
+            box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
+        }
+
+        .ButtonCreate:active {
+            transform: translateY(+2px);
+            background-color: darkred;
+        }
+
+    .ButtonSearch {
+        background-color: dodgerblue;
+        font-size: medium;
+        font-weight: bold;
+        color: black;
+        padding: 7px 12px;
+        border: solid 1px black;
+        border-radius: 16px;
+        border-color: transparent;
+        box-shadow: 1px 8px 15px 0 rgba(0,0,0,0.24), 0 13px 24px 0 rgba(0,0,0,0.19);
+    }
+
+        .ButtonSearch:hover {
+            color: white;
+            background-color: blue;
+            box-shadow: 0 13px 18px 0 dodgerblue, 0 16px 45px 0 rgba(0,0,0,0.21);
+        }
+
+        .ButtonSearch:active {
+            transform: translateY(+2px);
+            background-color: dodgerblue;
+        }
+</style>
+<div class="col-lg-12">
+<div class="col-lg-6">
+    <button class="ButtonBack" onclick="location.href = '@Url.Action("Index", "Nummers", new { id_sesije=ViewBag.ID })';return false;"><span class="glyphicon glyphicon-arrow-left"></span>  Tilbake</button>
+</div>
+<div class="col-lg-6">
+    <div style="display:none;">
+        @Html.TextBox("id_sesije", ViewBag.ID as string);
+    </div>
+    <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+            title="Skriv inn mobilnummeret ditt "
+            onclick=Verify()>
+        Verifisere
+    </button>
+</div>
+</div>
+<div style="overflow-x: auto; margin-left: 11px; margin-right: 12px;border-radius:12px;" class="col-lg-12 .scrollbar-lady-lips">
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    <table class="table-hover table-striped Table " id="ispravno" style="font-size: 13px; font-weight: bold; table-layout: fixed;">
+
+        <thead class="HeaderTable" style=" background-color: lawngreen;">
+            @foreach (var p1 in (Dictionary<int, List<string>>)ViewData["Mapa"])
+            {
+
+
+
+                if (p1.Key == 0)
+                {
+            <tr >
+                @foreach (var p2 in (List<string>)p1.Value)
+                {
+
+                        <th class="col-sm-3">@p2</th>
+
+                }
+            </tr>
+            <tr>
+                @for (int i = 0; i < p1.Value.Count(); i++)
+                {
+                   var t = (List<string>)ViewData["Naslov"];
+                <th class="col-sm-3">
+                    <select class="form-control SelectBox @i" id=@i name="StudentGender">
+                        @for (int z = 0; z < t.Count(); z++)
+                        {
+                        <option value=@z>@t[z]</option>
+                        }
+                    </select>
+                </th>
+                    
+
+                }
+            </tr>
+                }
+            }
+
+        </thead>
+        <tbody>
+            @foreach (var p1 in (Dictionary<int, List<string>>)ViewData["Mapa"])
+            {
+                if (p1.Key != 0)
+                {
+
+                    <tr readonly="readonly">
+                        @foreach (var p2 in (List<string>)p1.Value)
+                        {
+                            <td class="col-sm-3">@p2</td>
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <br />
+
+</div>
+
+<script>
+    document.querySelectorAll("tr td").forEach(function (node) {
+        node.ondblclick = function () {
+            var val = this.innerHTML;
+            var input = document.createElement("input");
+            input.value = val;
+            input.onblur = function () {
+                var val = this.value;
+                this.parentNode.innerHTML = val;
+            }
+            this.innerHTML = "";
+            this.appendChild(input);
+            input.focus();
+        }
+    });
+    mybutton = document.getElementById("myBtn");
+    window.onscroll = function () { scrollFunction() };
+    function Verify() {
+
+       
+            var Id = document.getElementById("id_sesije").value;
+            var table = document.querySelector("table");
+            var totalRows = document.querySelector("table").rows.length;
+        var totalCol = document.querySelector("table").rows[0].cells.length;
+        var list = new Array();
+        list.push(Id);
+        list.push(totalRows);
+        list.push(totalCol);
+        for (var z = 0; z < totalCol; z++) {
+            var select = document.getElementById(''+z);
+            var value = select.options[select.selectedIndex].value;
+            list.push(value);
+        }
+        for (var x = 2; x < totalRows; x++) {
+            for (var y = 0; y < totalCol; y++) {
+                list.push(table.rows[x].cells[y].innerText);
+            }
+        }
+        $.ajax({
+            type: "POST",
+            url: "/Nummers/Verify",
+            data: JSON.stringify(list),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    alert(r + "Radiiiii");
+                }
+            });
+        
+
+        
+    }
+    
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+</script>

@@ -156,7 +156,7 @@
                                     onclick="location.href = '@Url.Action("Create", "Nummers",new { sesija = ViewBag.ID })'">
                                 <span class="glyphicon glyphicon-phone"></span> Telefonnummer
                             </button>
-                            @using (Html.BeginForm("Excel", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
+                            @using (Html.BeginForm("Ocitaj", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
                             {
                                 <div style="display:none;">
                                     @Html.TextBox("id_sesije", ViewBag.ID as string);
@@ -164,7 +164,7 @@
                                 @Html.Raw(ViewBag.Error)
                                 <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
                                 <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
-                                        onclick="location.href = '@Url.Action("Excel", "Nummers",new { id_sesija = ViewBag.ID })'">
+                                        onclick="location.href = '@Url.Action("Ocitaj", "Nummers",new { id_sesija = ViewBag.ID })'">
                                     <span class="glyphicon glyphicon-import"></span>Importer excel-fil
                                 </button>
                             }
@@ -176,22 +176,36 @@
                         </div>
 
                     </div>
-                    <div class="col-md-8" style="margin-bottom: 5px;">
-                        <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                                title="Angi et fasttelefonnummer. Dette nummeret er tillatt for alle klienter å angi."
-                                onclick="location.href = '@Url.Action("CreateFixed", "Nummers",new { sesija = ViewBag.ID })'">
-                            <span class="glyphicon glyphicon-phone-alt"><br /></span> Fixed
-                        </button>
+                    <div>
+                        <div class="col-md-8" style="margin-bottom: 5px;">
+                            <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                                    title="Angi et fasttelefonnummer. Dette nummeret er tillatt for alle klienter å angi."
+                                    onclick="location.href = '@Url.Action("CreateFixed", "Nummers",new { sesija = ViewBag.ID })'">
+                                <span class="glyphicon glyphicon-phone-alt"><br /></span> Fixed
+                            </button>
+                        </div>
+                        @using (Html.BeginForm("Ocitaj1", "Nummers", FormMethod.Post, new { id_sesija = ViewBag.ID, enctype = "multipart/form-data" }))
+                        {
+                            <div style="display:none;">
+                                @Html.TextBox("id_sesije", ViewBag.ID as string);
+                            </div>
+                            @Html.Raw(ViewBag.Error)
+                            <input type="file" name="excelfile" class="ButtonCreate shadow-lg" />
+                            <button class="ButtonCreate shadow-lg" title="Denne knappen oppretter Excell-fil på datamaskinen, slik at du kan fylle den med data"
+                                    onclick="location.href = '@Url.Action("Ocitaj1", "Nummers",new { id_sesija = ViewBag.ID })'">
+                                <span class="glyphicon glyphicon-import"></span>Importer excel-fil
+                            </button>
+                        }
                     </div>
 
-                    <div class="col-md-6" style="margin-bottom: 5px;">
-                        <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
-                                title="Skriv inn internettnummeret , som har en regel som starter på 58 og har 12 sifre"
-                                onclick="location.href = '@Url.Action("CreateInternet", "Nummers",new { sesija = ViewBag.ID })'">
-                            <span class="glyphicon glyphicon-globe"></span> InternetNummer
-                        </button>
+                        <div class="col-md-6" style="margin-bottom: 5px;">
+                            <button class="ButtonCreate shadow-lg" data-toggle="tooltip" data-placement="bottom"
+                                    title="Skriv inn internettnummeret , som har en regel som starter på 58 og har 12 sifre"
+                                    onclick="location.href = '@Url.Action("CreateInternet", "Nummers",new { sesija = ViewBag.ID })'">
+                                <span class="glyphicon glyphicon-globe"></span> InternetNummer
+                            </button>
+                        </div>
                     </div>
-                </div>
             </fieldset>
         </div>
     </div>

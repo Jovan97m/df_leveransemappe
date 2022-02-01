@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "Verify";
+    if (Session["Id"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<h2>Verify</h2>
+
