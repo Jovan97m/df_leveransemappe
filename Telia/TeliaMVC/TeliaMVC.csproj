@@ -397,6 +397,7 @@
     <Content Include="Views\Nummers\Ocitaj1.cshtml" />
     <Content Include="Views\Nummers\Verify1.cshtml" />
     <Content Include="Views\Nummers\Popup.cshtml" />
+    <Content Include="Views\Login\LoginAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
