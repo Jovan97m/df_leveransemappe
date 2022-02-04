@@ -46,7 +46,7 @@
             border-radius: 6px;
             box-shadow: 3px 4px 8px 8px rgb(206, 192, 209);
         }
-        
+
         #form-image {
             margin-top: 35px;
             margin-left: 130px;
@@ -70,6 +70,7 @@
         .textInput label {
             font-size: 1.2em;
         }
+
         #form-submit input[type=submit] {
             background-color: rebeccapurple;
             border: none;
@@ -81,21 +82,22 @@
             cursor: pointer;
             border-radius: 6px;
         }
-        #form-submit input[type=submit]:hover {
-            background-color: purple;
-            cursor: pointer;
-        }
+
+            #form-submit input[type=submit]:hover {
+                background-color: purple;
+                cursor: pointer;
+            }
 
         .form-error-message {
             display: block;
-            position:absolute;
-            left:25%;
-            top:285px;
+            position: absolute;
+            left: 25%;
+            top: 285px;
             color: red;
         }
 
         #form-username {
-            display:block;
+            display: block;
             position: absolute;
             left: 25%;
             top: 130px;
@@ -107,12 +109,13 @@
             left: 25%;
             top: 220px;
         }
+
         #form-submit {
             position: absolute;
             left: 38%;
             top: 310px;
         }
-       
+
         /* If you want the content centered horizontally and vertically */
         .centered {
             position: absolute;
@@ -121,14 +124,17 @@
             transform: translate(-50%, -50%);
             text-align: center;
         }
+
         #form-adminLogin {
             display: block;
             position: absolute;
             left: 50%;
             top: 150px;
         }
-        .adminButton{
-            background-color: transparent;
+
+        .adminButton {
+            background-color: lightpink;
+            opacity: 75%;
             color: black;
         }
     </style>
@@ -137,11 +143,11 @@
 <body class="bg">
     <div class="login-form" id="login-div">
         <div id="form-image"><img src="../../Resources/Telia-Company.png"></div>
-        @using (Html.BeginForm("Authorise", "Login", FormMethod.Post))
+        @using (Html.BeginForm("AuthoriseAdmin", "Login", FormMethod.Post))
         {
             <br />
             <div id="form-username" class="textInput">
-                @Html.LabelFor(model => model.UserName, "Orgnummer")<br>
+                @Html.LabelFor(model => model.UserName, "Admin username:")<br>
                 @Html.EditorFor(model => model.UserName)
                 <div class="form-error-message">
                     @Html.ValidationMessageFor(model => model.UserName)
@@ -163,13 +169,9 @@
             <div id="form-submit">
                 <input type="submit" value="Login">
             </div>
-            <!--Button that opens Admin login-->
+
         }
-        <div style="margin-top: 235px;transform: translate(450px,0px);">
-            <button class=" btn adminButton" onclick="location.href='@Url.Action("LoginAdmin", "Login")'">
-                <span class="glyphicon-lock">Admin</span>
-            </button>
-        </div>
+
         <script src="~/Scripts/jquery-3.4.1.min.js"></script>
         <script src="~/Scripts/jquery.validate.min.js"></script>
         <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
