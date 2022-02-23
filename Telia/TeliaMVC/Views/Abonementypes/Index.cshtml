@@ -15,21 +15,23 @@
         background-image: linear-gradient(to right, azure,pink, purple, pink,azure);
         box-shadow: 0 10px 10px -10px purple inset;
     }
-    .Table{
-        font-weight:bold;
+
+    .Table {
+        font-weight: bold;
         font-size: 15px;
         font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
-        color:black;
-        text-shadow: 1px 0.1px white;
+        color: black;
         margin-left: 10px;
         border: 1px solid black;
     }
-    .HeaderTable{
+
+    .HeaderTable {
         font-size: 19px;
         font-style: italic;
         background-color: blanchedalmond;
         text-align: center;
     }
+
     .btn {
         font-size: medium;
         font-weight: bold;
@@ -39,20 +41,19 @@
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.29), 0 15px 30px 0 rgba(0,0,0,0.3);
         margin-left: 24px;
     }
+
     .btnEdit {
         font-size: medium;
-        border-radius: 6px;
         font-weight: bold;
         color: white;
-        margin: 2px;
+        margin: 1.1px;
         padding-top: 4px;
         padding-bottom: 4px;
         padding-left: 11px;
         padding-right: 11px;
-        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.29), 0 15px 30px 0 rgba(0,0,0,0.3);
-        margin-left: 32px;
         background-color: darkblue;
     }
+
         .btnEdit:hover {
             color: white;
             background-color: blue;
@@ -66,16 +67,14 @@
 
     .btnDelete {
         font-size: medium;
-        border-radius: 6px;
         font-weight: bold;
         color: white;
-        margin: 2px;
+        margin: 1.1px;
         padding-top: 4px;
         padding-bottom: 4px;
         padding-left: 11px;
         padding-right: 11px;
-        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.29), 0 15px 30px 0 rgba(0,0,0,0.3);
-        margin-left: 31px;
+        margin-left: 5px;
         background-color: darkred;
     }
 
@@ -92,16 +91,14 @@
 
     .btnDetails {
         font-size: medium;
-        border-radius: 5px;
         font-weight: bold;
         color: white;
-        margin: 2px;
+        margin: 1.1px;
         padding-top: 4px;
         padding-bottom: 4px;
         padding-left: 11px;
         padding-right: 11px;
-        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.29), 0 15px 30px 0 rgba(0,0,0,0.3);
-        margin-left: 31px;
+        margin-left: 14px;
         background-color: darkgreen;
     }
 
@@ -115,18 +112,16 @@
             transform: translateY(+2px);
             background-color: darkgreen;
         }
+
     .btnType {
         font-size: medium;
-        border-radius: 6px;
         font-weight: bold;
         color: white;
-        margin: 2px;
+        margin: 1.1px;
         padding-top: 4px;
         padding-bottom: 4px;
         padding-left: 11px;
         padding-right: 11px;
-        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.29), 0 15px 30px 0 rgba(0,0,0,0.3);
-        margin-left: 31px;
         background-color: blue;
     }
 
@@ -141,7 +136,6 @@
             background-color: blue;
         }
 
-
     .ButtonAdd {
         background-color: darkgreen;
         font-size: medium;
@@ -154,6 +148,7 @@
         text-shadow: 1px 1px black;
         box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
     }
+
         .ButtonAdd:hover {
             color: white;
             background-color: forestgreen;
@@ -164,20 +159,22 @@
             transform: translateY(+2px);
             background-color: darkgreen;
         }
+
     .ButtonBack {
         background-color: darkred;
         font-size: medium;
         font-weight: bold;
         cursor: pointer;
         color: white;
-        margin-top:10px;
+        margin-top: 10px;
         padding: 9px 20px;
         border-radius: 16px;
         border-color: transparent;
         text-shadow: 1px 1px black;
         box-shadow: 0 8px 14px 0 rgba(0,0,0,0.24), 0 13px 30px 0 rgba(0,0,0,0.19);
     }
-    .ButtonBack:hover {
+
+        .ButtonBack:hover {
             color: white;
             background-color: red;
             box-shadow: 0 13px 18px 0 rgb(200, 0, 0), 0 16px 45px 0 rgba(0,0,0,0.19);
@@ -187,25 +184,20 @@
             transform: translateY(+2px);
             background-color: darkred;
         }
-
 </style>
 
 <h1>Avtales</h1>
-<p>
-    Seksjon for å legge til og redigere avtale for klienter
-</p>
-<hr/>
-<div class=" row">
-    <div class="col-sm-3" style="margin-left:10px;">
+<p>Seksjon for å legge til og redigere avtale for klienter</p>
+<hr />
+
+
+<div class="row">
+    <div class="col-lg-6 col-md-4 col-sm-2">
         <button class=" ButtonAdd" data-toggle="tooltip" data-placement="bottom" title="Opprett ny abonementype"
                 onclick="location.href = '@Url.Action("Create", "Abonementypes")'">
             <span class="glyphicon glyphicon-duplicate"></span> Legg til ny Avtale
         </button>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-6">
-        <table class="table-bordered table-hover table-striped Table" style="margin-top:15px;">
+        <table class="table-bordered table-hover Table" style="margin-top:15px;">
             <tr>
                 <th class="col-md-1 HeaderTable">
                     @Html.DisplayNameFor(model => model.Name)
@@ -221,7 +213,7 @@
             @if (Model.Count() == 0)
             {
                 <tr>
-                    <td coldspan="10" style="font-size:18px;color:red;margin-left:5px;">
+                    <td coldspan="10" style="font-size:18px;color:red;margin-left:6px;">
                         No document found
                     </td>
                 </tr>
@@ -230,48 +222,53 @@
             {
                 foreach (var item in Model)
                 {
-        <tr>
-            <td class="col-md-1">
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td class="col-md-1">
-                @Html.DisplayFor(modelItem => item.Num_type)
-            </td>
-            <td >
-                
-                <button class="btnEdit"  data-toggle="tooltip" data-placement="bottom" title="Endre navnet på typen"
-                        onclick="location.href = '@Url.Action("Edit", "Abonementypes", new { id = item.Id })'">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </button>
-                
-            </td>
-            <td>
-                <button class="btnDelete" data-toggle="tooltip" data-placement="bottom" title="Slett valgt abonementype"
-                        onclick="location.href = '@Url.Action("Delete", "Abonementypes", new { id = item.Id })'">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </button>
-                </td>
-            <td>
-                <button class="btnDetails" data-toggle="tooltip" data-placement="bottom" title="Se alle abonemetyper som er koblet til denne avtalen"
-                        onclick="location.href = '@Url.Action("Details", "Abonementypes", new { id = item.Id })'">
-                    <span class="glyphicon glyphicon-th-list"></span>
-                </button>
-            <td>
-                <button class="btnType" data-toggle="tooltip" data-placement="bottom" title="Legg til ny type for valgt abonementype"
-                        onclick="location.href = '@Url.Action("AddType", "Abonementypes", new { id = item.Id })'">
-                    <span class="glyphicon glyphicon-duplicate"></span>
-                </button>
+                    <tr>
+                        <td class="col-md-1">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td class="col-md-1">
+                            @Html.DisplayFor(modelItem => item.Num_type)
+                        </td>
+                        <td class="col-md-1">
 
-            </td>
-        </tr>
+                            <button class="btnEdit" data-toggle="tooltip" data-placement="bottom" title="Endre navnet på typen"
+                                    onclick="location.href = '@Url.Action("Edit", "Abonementypes", new { id = item.Id })'">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+
+                        </td>
+                        <td class="col-md-1">
+                            <button class="btnDelete" data-toggle="tooltip" data-placement="bottom" title="Slett valgt abonementype"
+                                    onclick="location.href = '@Url.Action("Delete", "Abonementypes", new { id = item.Id })'">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td>
+                        <td class="col-md-1">
+                            <button class="btnDetails" data-toggle="tooltip" data-placement="bottom" title="Se alle abonemetyper som er koblet til denne avtalen"
+                                    onclick="location.href = '@Url.Action("Details", "Abonementypes", new { id = item.Id })'">
+                                <span class="glyphicon glyphicon-th-list"></span>
+                            </button>
+                        <td class="col-md-1">
+                            <button class="btnType" data-toggle="tooltip" data-placement="bottom" title="Legg til ny type for valgt abonementype"
+                                    onclick="location.href = '@Url.Action("AddType", "Abonementypes", new { id = item.Id })'">
+                                <span class="glyphicon glyphicon-duplicate"></span>
+                            </button>
+                        </td>
+                    </tr>
                 }
             }
-            </table>
+        </table>
+    </div>
+    <div class="col-lg-6 col-md-4 col-sm-3">
+        <div style="background-color: powderblue;">
+            <h3 class="text">Hjelp</h3>
+        </div>
+
     </div>
 </div>
-<div class="col-sm-6">
 
-</div>
-    <p style="margin-left:10px;margin-top:12px;"><a class="ButtonBack" onclick="location.href = '@Url.Action("Index", "Home")'">Return &raquo;</a></p>
+<p style="margin-left:10px;margin-top:12px;"><a class="ButtonBack" onclick="location.href = '@Url.Action("Index", "Home")'">Tilbake &raquo;</a></p>
 
-   
+
+
+

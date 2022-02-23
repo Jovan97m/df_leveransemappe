@@ -13,14 +13,11 @@ namespace TeliaMVC.Controllers
     public class AbonementypesController : Controller
     {
         private TeliaEntities db = new TeliaEntities();
-
-        // GET: Abonementypes
         public ActionResult Index()
         {
             return View(db.Abonementypes.ToList());
         }
 
-        // GET: Abonementypes/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,15 +34,11 @@ namespace TeliaMVC.Controllers
             return View(abonementype);
         }
 
-        // GET: Abonementypes/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Abonementypes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Num_type")] Abonementype abonementype,string NumType)
@@ -60,7 +53,6 @@ namespace TeliaMVC.Controllers
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
                 return RedirectToAction("Index");
@@ -87,6 +79,7 @@ namespace TeliaMVC.Controllers
             }
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddType([Bind(Include = "Id,Name,Reference_code")] TeliaMVC.Models.Type type,string selected)
@@ -117,7 +110,6 @@ namespace TeliaMVC.Controllers
             }
             else
             {
-                //DEFAULT
                 if (ModelState.IsValid)
                 {
                     db.Types.Add(type);
@@ -136,8 +128,6 @@ namespace TeliaMVC.Controllers
                     return View(type);
             }
         }
-        // GET: Abonementypes/Edit/5
-
 
         public ActionResult Edit(int? id)
         {
@@ -181,7 +171,6 @@ namespace TeliaMVC.Controllers
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
                 return RedirectToAction("Details",new { id=test });
@@ -189,9 +178,6 @@ namespace TeliaMVC.Controllers
             return View(tip);
         }
 
-        // POST: Abonementypes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Num_type")] Abonementype abonementype,string NumType)
@@ -214,7 +200,6 @@ namespace TeliaMVC.Controllers
             return View(abonementype);
         }
 
-        // GET: Abonementypes/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -243,7 +228,6 @@ namespace TeliaMVC.Controllers
             return View(type);
         }
 
-        // POST: Abonementypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -261,7 +245,7 @@ namespace TeliaMVC.Controllers
             }
             return RedirectToAction("Index");
         }
-        // POST: Abonementypes/Delete/5
+
         [HttpPost, ActionName("DeleteType")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteTypeConfirmed(int id,int? test)
@@ -274,7 +258,6 @@ namespace TeliaMVC.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
             return RedirectToAction("Details",new { id=test});
@@ -298,7 +281,7 @@ namespace TeliaMVC.Controllers
             var veza = db.ConnectionTypes.Where(s => s.Id_abom.Equals(id));
             foreach (var item in veza)
             {
-              types.Add(db.Types.Find(item.Id_type));
+              types.Add(db.Types.Find(item.Id_type)); // zameniti sa listom. Query iznad da se izvrsi
             }
             return types;
         }

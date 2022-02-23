@@ -169,7 +169,7 @@
 
     <div class="form-group" style="display:none;">
         <div class="col-md-6">
-            @Html.EditorFor(model => model.Id_client, new { htmlAttributes = new { @class = "form-control LoadTextbox", @Value = ViewBag.id_sesije } })
+            @Html.EditorFor(model => model.Id_client, new { htmlAttributes = new { @class = "form-control LoadTextbox", @Value = ViewBag.ID } })
         </div>
     </div>
     <div class="form-group" style="display:none;">
@@ -185,7 +185,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <button class="ButtonBack" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new {id= ViewBag.ID})';return false;">Back</button>
+            <button class="ButtonBack" onclick="location.href='@Url.Action("Index", "Fakturaoppsetts",new {id = ViewBag.ID})';return false;">Back</button>
             <input type="submit" value="Save" class="ButtonEdit" />
         </div>
     </div>
